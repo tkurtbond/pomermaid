@@ -1,0 +1,20 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-0a141e rgb #0a141e
+.defcolor pm-e8e8e8 rgb #e8e8e8
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+spline -> from (0.351, -0.214) to (0.568, -0.214) to (0.785, -0.214) outlined "pm-0a141e" thickness 2
+box wid 0.351 ht 0.427 at (0.175, -0.214) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]A\m[]\f[]"  at (0.175, -0.214)
+box wid 0.351 ht 0.427 at (0.96, -0.214) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]B\m[]\f[]"  at (0.96, -0.214)
+.PE
+.ps \n[pm*ps]z
+.vs \n[pm*vs]u

@@ -1,0 +1,30 @@
+#!/bin/sh
+# render POMERMAID OUTDIR [CASEDIR]
+#
+# Draws each case, CASEDIR/<name>.mmd (test/cases by default) that has
+# an expected .layout or .pic, with POMERMAID -t pic in groff's Times
+# (not the cases' test font), one to a page, in OUTDIR/cases.pdf, for
+# looking at. Needs groff; make test does not run it.
+
+if [ $# -lt 2 ]; then
+  echo "usage: render POMERMAID OUTDIR [CASEDIR]" >&2
+  exit 2
+fi
+prog=$1
+outdir=$2
+casedir=${3:-test/cases}
+
+mkdir -p "$outdir" || exit 2
+ms=$outdir/cases.ms
+: > "$ms"
+first=1
+for mmd in "$casedir"/*.mmd; do
+  name=${mmd%.mmd}
+  [ -f "$name.layout" ] || [ -f "$name.pic" ] || continue
+  [ $first -eq 1 ] || echo .bp >> "$ms"
+  first=0
+  printf '.SH\n%s\n.LP\n' "$(basename "$name")" >> "$ms"
+  "$prog" -t pic "$mmd" >> "$ms" || exit 1
+done
+groff -ms -p -Tpdf -wall "$ms" > "$outdir/cases.pdf" || exit 1
+echo "$outdir/cases.pdf"

@@ -1,21 +1,21 @@
-layout direction TB width=593.22 height=547.9
-node Driver rank=0 order=0 x=346.65 y=15.38 w=67.95 h=30.75
-node Generator rank=2 order=0 x=346.65 y=89.38 w=183.55 h=30.75
-node Interpreter rank=4 order=0 x=346.65 y=163.38 w=125.85 h=30.75
-node Dice rank=6 order=0 x=50.93 y=237.38 w=101.85 h=30.75
-node Mask rank=6 order=1 x=190.98 y=237.38 w=115.75 h=30.75
-node Row rank=6 order=2 x=311.88 y=237.38 w=63.55 h=30.75
-node Actions rank=8 order=0 x=311.88 y=311.38 w=72.65 h=30.75
-node ActKind rank=10 order=0 x=426.95 y=421.95 w=103.9 h=103.9
-node Context rank=12 order=0 x=426.95 y=532.53 w=101.95 h=30.75
-edge Driver -> Generator points=(346.65,30.75) (346.65,52.38) (346.65,74) label=(346.65,52.38)
-edge Generator -> Interpreter points=(346.65,104.75) (346.65,126.38) (346.65,148) label=(346.65,126.38)
-edge Interpreter -> Dice points=(283.73,178.75) (50.93,200.38) (50.93,222) label=(50.93,200.38)
-edge Interpreter -> Mask points=(283.73,178.75) (190.98,200.38) (190.98,222) label=(190.98,200.38)
-edge Interpreter -> Row points=(332.2,178.75) (311.88,200.38) (311.88,222) label=(311.88,200.38)
-edge Row -> Actions points=(311.88,252.75) (311.88,274.38) (311.88,296) label=(311.88,274.38)
-edge Actions -> ActKind points=(311.88,326.75) (311.88,348.38) (413.69,383.26) label=(311.88,348.38)
-edge ActKind -> Context points=(426.95,473.9) (426.95,495.53) (426.95,517.15) label=(426.95,495.53)
-edge ActKind -> Interpreter reversed points=(407.09,389.86) (381.43,348.38) (381.43,311.38) (381.43,274.38) (381.43,237.38) (381.43,200.38) (361.1,178.75) label=(381.43,274.38)
-edge ActKind -> Interpreter reversed points=(446.81,389.86) (472.47,348.38) (472.47,311.38) (472.47,274.38) (472.47,237.38) (472.47,200.38) (398.94,178.75) label=(472.47,274.38)
-edge ActKind -> Interpreter reversed points=(437.77,380.82) (561.13,348.38) (561.13,311.38) (561.13,274.38) (561.13,237.38) (561.13,200.38) (409.58,178.75) label=(561.13,274.38)
+layout direction TB width=427.12 height=403.13
+node Driver rank=0 order=0 x=249.59 y=11.07 w=48.92 h=22.14
+node Generator rank=2 order=0 x=249.59 y=68.67 w=84.28 h=30.78
+node Interpreter rank=4 order=0 x=249.59 y=126.27 w=90.61 h=22.14
+node Dice rank=6 order=0 x=36.67 y=179.55 w=73.33 h=22.14
+node Mask rank=6 order=1 x=137.5 y=179.55 w=83.34 h=22.14
+node Row rank=6 order=2 x=224.55 y=179.55 w=45.76 h=22.14
+node Actions rank=8 order=0 x=224.55 y=232.83 w=52.31 h=22.14
+node ActKind rank=10 order=0 x=307.4 y=312.44 w=74.81 h=74.81
+node Context rank=12 order=0 x=307.4 y=392.06 w=73.4 h=22.14
+edge Driver -> Generator points=(249.59,22.14) (249.59,37.71) (249.59,53.28) label=(249.59,37.71)
+edge Generator -> Interpreter points=(249.59,84.06) (249.59,99.63) (249.59,115.2) label=(249.59,99.63)
+edge Interpreter -> Dice points=(204.28,137.34) (36.67,152.91) (36.67,168.48) label=(36.67,152.91)
+edge Interpreter -> Mask points=(204.28,137.34) (137.5,152.91) (137.5,168.48) label=(137.5,152.91)
+edge Interpreter -> Row points=(239.18,137.34) (224.55,152.91) (224.55,168.48) label=(224.55,152.91)
+edge Row -> Actions points=(224.55,190.62) (224.55,206.19) (224.55,221.76) label=(224.55,206.19)
+edge Actions -> ActKind points=(224.55,243.9) (224.55,259.47) (297.86,284.58) label=(224.55,259.47)
+edge ActKind -> Context points=(307.4,349.85) (307.4,365.42) (307.4,380.99) label=(307.4,365.42)
+edge ActKind -> Interpreter reversed points=(293.11,289.34) (274.63,259.47) (274.63,232.83) (274.63,206.19) (274.63,179.55) (274.63,152.91) (259.99,137.34) label=(274.63,206.19)
+edge ActKind -> Interpreter reversed points=(321.7,289.34) (340.18,259.47) (340.18,232.83) (340.18,206.19) (340.18,179.55) (340.18,152.91) (287.23,137.34) label=(340.18,206.19)
+edge ActKind -> Interpreter reversed points=(315.19,282.83) (404.01,259.47) (404.01,232.83) (404.01,206.19) (404.01,179.55) (404.01,152.91) (294.89,137.34) label=(404.01,206.19)

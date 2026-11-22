@@ -276,7 +276,7 @@ before it turns aside, so that it misses taller neighbours; and an
 end is clipped to a shape along the edge's last piece, not toward the
 centre, so it stays in the node's box.
 
-### Phase 5: the pic writer
+### Phase 5: the pic writer [done]
 
 **Change:** `PmPic`: nodes in their shapes, edges as splines with
 their heads and labels, `classDef` colours and widths, label colour;
@@ -287,7 +287,32 @@ render` wraps each in a small ms document and makes PDFs with `groff
 -k -p -Tpdf`; the user's diagrams look at least as good as the
 hand-drawn version.
 
-**Done:** no.
+**Done:** `PmPic` writes, in a `.PS`/`.PE` block, every shape
+(polygons as closed `line`s, rounded and stadium boxes with `rad`, the
+subroutine's inner lines, the cylinder as ellipses and lines, single
+and double circles), edges as splines with `->`, `<-` or `<->`, circle
+and cross markers, edge labels on Mermaid's grey, and the colours,
+widths and dashes of `classDef`, `class`, `:::`, `style` and
+`linkStyle` (CSS hex, `rgb()`, about 35 names; others are ignored with
+a warning). Mermaid's default theme, its pixel sizes scaled to the
+text. It differs from the plan in these ways:
+- Colours are `.defcolor`ed as `pm-rrggbb`, named by their value, so
+  that one diagram's never clash with another's.
+- The text's `.ps` and `.vs` are set for the block and restored after
+  it, the old values saved in `pm*ps` and `pm*vs`; `maxpswid` and
+  `maxpsht` are raised so pic never scales the diagram itself.
+- `--width` (6 inches by default; `0` for no limit) does not scale the
+  picture: a diagram that is too wide is laid out again at a smaller
+  text size, to a tenth of a point, so the text stays the size the
+  boxes were measured for.
+- A label wider than Mermaid's 200 pixels is wrapped at spaces, as
+  Mermaid wraps it, but its box is as wide as its widest line, where
+  Mermaid's is 200 pixels.
+- pic cannot dash a spline, and groff dashes each piece of a line on
+  its own, so a dashed or dotted edge is sampled along its curve and
+  each dash written as a line of its own, its heads as short lines.
+`make render` (`tools/render`) draws each case with a layout in
+groff's Times, one to a page, in `build/render/cases.pdf`.
 
 ### Phase 6: the MetaPost writer
 
@@ -499,3 +524,15 @@ through another node) and 29 case tests (new: six `-t layout` cases,
 among them `loops`, with the made-up font `test/fonts/devpdf/TS`).
 The `-O2` and `-OC` layouts are the same. Nothing was drawn yet; the
 layouts were not compared with Mermaid's.
+
+2026-11-22, Phase 5: `make test` passes under `-O2` and `-OC`:
+`PmIOTest`, `PmMetricsTest`, `PmLayoutTest` and 36 case tests (new:
+`-t pic` for `shapes`, `edges`, `loops`, `styles`, `gbh-map` and
+`colours`, which warns of two colours it does not know; `--width 6x`,
+6; the `.layout` files and `options.out` regenerated for wrapping and
+`--width`). `make render` draws the seven layout cases with groff
+1.25.0 and `-wall` without a warning; each page was looked at: the
+shapes, markers, dotted and thick edges, self-loops, styles and the
+user's three diagrams are drawn as intended, and the overview has
+the hand-drawn version's layout, with Mermaid's curves. Not compared
+with Mermaid's own drawings.

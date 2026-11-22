@@ -8,6 +8,8 @@ pomermaid [OPTIONS] [FILE]
       Set labels in this groff font (TR by default).
   --size <arg>
       Set labels at this size, in points (10 by default).
+  --width <arg>
+      Make a diagram no wider than this, in inches, or with a unit, c or p (6i by default; 0 for no limit).
   --font-path <arg>
       Look for groff's fonts in these directories, separated by colons.
   -v, --version

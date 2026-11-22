@@ -35,8 +35,9 @@ one silently: ask, then record the decision, dated, under
 
 As of 2026-11-22: Phases 1 (the skeleton), 2 (the flowchart
 reader, `PmLex`, `PmFlow`, `PmDump`), 3 (text metrics from groff's
-font files, `PmMetrics`) and 4 (layout: `PmGeom`, `PmLayout`,
-`PmFlowLayout`, written by `-t layout`) are done. See PLAN.md's
+font files, `PmMetrics`), 4 (layout: `PmGeom`, `PmLayout`,
+`PmFlowLayout`, written by `-t layout`) and 5 (the pic writer,
+`PmPic`, `-t pic`; `make render`) are done. See PLAN.md's
 State.
 
 ## Reference material
@@ -103,9 +104,10 @@ AGENTS.md describes.
   are made up, `test/fonts/devpdf/TT` and `TS`.
 - `make check-groff` (where groff is installed) compares the widths
   `PmMetrics` gives with groff's `\w`, through `tools/checkwidths`.
-- `make render` (where groff and ConTeXt are installed) wraps the case
-  tests' output in small ms and ConTeXt documents and makes PDFs, for
-  looking at.
+- `make render` (where groff is installed) draws each case that has a
+  layout with `-t pic` in groff's Times, one to a page, in
+  `build/render/cases.pdf` (`tools/render`), for looking at; ConTeXt
+  pages come with Phase 6.
 
 ## Exit statuses
 

@@ -23,6 +23,7 @@ VAR
   font*: String;   (* --font: the groff font labels are set in *)
   size*: REAL;     (* --size: their size, in points *)
   fontPath*: String; (* --font-path: where groff's fonts are, "" for PmMetrics' default *)
+  width*: REAL;    (* --width: the widest a diagram may be, in points; 0 for no limit *)
   done*: BOOLEAN;  (* --help or --version was given: nothing more to do *)
   inputs: INTEGER;
   parser: ArgParser.Parser;
@@ -66,9 +67,10 @@ BEGIN
   RETURN TRUE
 END SetFontPath;
 
-(* --size: a decimal number of points, more than 0 and at most 1000 *)
-PROCEDURE SetSize(VAR arg: ARRAY OF CHAR): BOOLEAN;
-  VAR i: INTEGER; x, frac: REAL; digits: BOOLEAN;
+(* A decimal number at arg[i], such as 10 or 10.5: FALSE if there is
+   none. i is left after it. *)
+PROCEDURE Number(VAR arg: ARRAY OF CHAR; VAR i: INTEGER; VAR x: REAL): BOOLEAN;
+  VAR frac: REAL; digits: BOOLEAN;
 BEGIN
   x := 0; i := 0; digits := FALSE;
   WHILE (i < LEN(arg)) & (arg[i] >= "0") & (arg[i] <= "9") DO
@@ -80,12 +82,43 @@ BEGIN
       frac := frac / 10; x := x + frac * (ORD(arg[i]) - ORD("0")); INC(i); digits := TRUE
     END
   END;
-  IF ~digits OR (i < LEN(arg)) & (arg[i] # 0X) OR (x <= 0) OR (x > 1000) THEN
+  RETURN digits
+END Number;
+
+(* --size: a decimal number of points, more than 0 and at most 1000 *)
+PROCEDURE SetSize(VAR arg: ARRAY OF CHAR): BOOLEAN;
+  VAR i: INTEGER; x: REAL;
+BEGIN
+  IF ~Number(arg, i, x) OR (i < LEN(arg)) & (arg[i] # 0X) OR (x <= 0) OR (x > 1000) THEN
     PmIO.Fail("", "--size takes a number of points, such as 10 or 10.5", PmIO.OptionError)
   END;
   size := x;
   RETURN TRUE
 END SetSize;
+
+(* --width: a decimal number with a unit, i (inches, the default), c
+   (centimetres) or p (points); 0 for no limit *)
+PROCEDURE SetWidth(VAR arg: ARRAY OF CHAR): BOOLEAN;
+  VAR i: INTEGER; x: REAL; ok: BOOLEAN;
+BEGIN
+  ok := Number(arg, i, x);
+  IF ok & (i < LEN(arg)) & (arg[i] # 0X) THEN
+    CASE arg[i] OF
+      "i": x := x * 72
+    | "c": x := x * 72 / 2.54
+    | "p":
+    ELSE ok := FALSE
+    END;
+    INC(i);
+    ok := ok & ((i >= LEN(arg)) OR (arg[i] = 0X))
+  ELSE x := x * 72
+  END;
+  IF ~ok OR (x > 72000) THEN
+    PmIO.Fail("", "--width takes a length, such as 6i, 15c or 432p, or 0 for no limit", PmIO.OptionError)
+  END;
+  width := x;
+  RETURN TRUE
+END SetWidth;
 
 PROCEDURE AddInput(startIdx: INTEGER; VAR arg: ARRAY OF CHAR): BOOLEAN;
 BEGIN
@@ -110,6 +143,8 @@ BEGIN
     "Set labels in this groff font (TR by default).", SetFont));
   parser.AddOption(ArgParser.MakeStringOption(0X, "size",
     "Set labels at this size, in points (10 by default).", SetSize));
+  parser.AddOption(ArgParser.MakeStringOption(0X, "width",
+    "Make a diagram no wider than this, in inches, or with a unit, c or p (6i by default; 0 for no limit).", SetWidth));
   parser.AddOption(ArgParser.MakeStringOption(0X, "font-path",
     "Look for groff's fonts in these directories, separated by colons.", SetFontPath));
   parser.AddOption(ArgParser.MakeOption("v", "version",
@@ -121,5 +156,5 @@ END Parse;
 
 BEGIN
   to := "pic"; output := ""; input := "-"; done := FALSE; inputs := 0;
-  font := "TR"; size := 10; fontPath := ""
+  font := "TR"; size := 10; fontPath := ""; width := 6 * 72
 END PmOptions.

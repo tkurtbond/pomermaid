@@ -6,7 +6,8 @@
 # test/<Name>Test.expected and its standard error with
 # test/<Name>Test.errors (empty if there is no such file); then it runs
 # the case tests, test/cases/, with each pomermaid (tools/runcases).
-# None of it needs groff, ConTeXt or Mermaid's tools.
+# None of it needs groff, ConTeXt or Mermaid's tools. `make render`
+# draws the cases with groff, in build/render/cases.pdf.
 # `make install` installs the pomermaid built under $(MODEL), -OC by
 # default, in $(BINDIR), and its documentation in $(DOCDIR), under
 # $(PREFIX), ~/.local by default, or $(DESTDIR)$(PREFIX) for a package;
@@ -35,7 +36,7 @@ SRCS := $(wildcard src/*.Mod)
 TESTS := $(patsubst test/%.Mod,%,$(wildcard test/*Test.Mod))
 CASES := $(wildcard test/cases/*)
 
-.PHONY: all test test-o2 test-oc check-groff install uninstall clean FORCE
+.PHONY: all test test-o2 test-oc check-groff render install uninstall clean FORCE
 .SECONDEXPANSION:
 
 all: $(MODELS:%=$(BUILD)/%/pomermaid)
@@ -81,6 +82,11 @@ $(BUILD)/%/cases.passed: $(BUILD)/%/pomermaid $(CASES) tools/runcases
 check-groff:
 	set -e; for f in "TR 10" "TI 9" "HB 12" "CR 10.5"; do \
 	  POC=$(POC) POCLIBDIR=$(POCLIBDIR) tools/checkwidths $$f; done
+
+# The cases drawn with groff, one to a page, in build/render/cases.pdf,
+# for looking at. Needs groff, so make test does not run it.
+render: $(BUILD)/OC/pomermaid
+	tools/render $(BUILD)/OC/pomermaid $(BUILD)/render
 
 install: $(BUILD)/$(MODEL)/pomermaid
 	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(DOCDIR)
