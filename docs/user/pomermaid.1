@@ -1,0 +1,256 @@
+.\" pomermaid.1 - the manual page of pomermaid.
+.\" SPDX-License-Identifier: BSD-3-Clause
+.Dd November 22, 2026
+.Dt POMERMAID 1
+.Os
+.Sh NAME
+.Nm pomermaid
+.Nd draw Mermaid diagrams in pic, MetaPost and SVG
+.Sh SYNOPSIS
+.Nm
+.Op Fl t Ar format
+.Op Fl o Ar file
+.Op Fl -font Ar font
+.Op Fl -size Ar points
+.Op Fl -width Ar length
+.Op Fl -font-path Ar dirs
+.Op Fl -mp-macros Cm inline | input
+.Op Fl -svg-text Cm text | outline
+.Op Fl -svg-engine Cm mutool | pdftocairo
+.Op Ar file
+.Nm
+.Fl h | v
+.Sh DESCRIPTION
+.Nm
+reads one Mermaid diagram from
+.Ar file ,
+or from the standard input when no
+.Ar file
+is given, and draws it in pic, for groff's ms and mom documents, in
+MetaPost, for ConTeXt, or as SVG, for HTML.
+It reads flowcharts,
+.Ql flowchart
+and
+.Ql graph .
+.Pp
+The labels are set in the document's own fonts.
+For pic and SVG they are measured with groff's font description files;
+for MetaPost, ConTeXt measures them and MetaPost places the nodes to
+fit them.
+.Pp
+The options are:
+.Bl -tag -width Ds
+.It Fl t Ar format , Fl -to Ar format
+The output format:
+.Bl -tag -width "svg-ms"
+.It Cm pic
+the diagram's colours as
+.Ql .defcolor
+requests, then a
+.Ql .PS
+\&...
+.Ql .PE
+block (the default);
+.It Cm mp
+a
+.Ql \estartMPcode
+\&...
+.Ql \estopMPcode
+block of MetaFun;
+.It Cm svg
+an SVG document, made by groff from the pic drawing as a PDF and
+turned into SVG by
+.Xr mutool 1
+or
+.Xr pdftocairo 1 ;
+.It Cm svg-ms
+the groff document the SVG is made from.
+.El
+.Pp
+.Cm dump
+and
+.Cm layout
+write the diagram as read and as laid out, for the tests.
+.It Fl o Ar file , Fl -output Ar file
+Write to
+.Ar file
+rather than the standard output.
+.It Fl -font Ar font
+Set the labels in this groff font:
+.Cm TR
+by default.
+.It Fl -size Ar points
+Set the labels at this size, in points: 10 by default.
+.It Fl -width Ar length
+Make the diagram no wider than
+.Ar length ,
+in inches, or with the unit
+.Cm i ,
+.Cm c
+or
+.Cm p :
+.Cm 6i
+by default;
+.Cm 0
+for no limit.
+With pic and SVG a wider diagram is laid out again at a smaller size;
+with MetaPost it is scaled down.
+.It Fl -font-path Ar dirs
+Look for groff's fonts in these directories, separated by colons, each
+holding
+.Pa devpdf
+or
+.Pa devps .
+For SVG they are also passed to groff as
+.Fl F .
+.It Fl -mp-macros Cm inline | input
+For
+.Cm mp :
+copy the MetaPost macros into the drawing
+.Pq Cm inline ,
+the default, or write
+.Ql input pomermaid ;
+.Pq Cm input
+for a document that finds the installed
+.Pa pomermaid.mp .
+.It Fl -svg-text Cm text | outline
+For
+.Cm svg :
+keep the labels as text, the default, or draw their glyphs as
+outlines.
+.Xr pdftocairo 1
+always draws outlines.
+.It Fl -svg-engine Cm mutool | pdftocairo
+For
+.Cm svg :
+the program that turns groff's PDF into SVG.
+By default
+.Xr mutool 1
+if it is found, else
+.Xr pdftocairo 1 .
+.It Fl v , Fl -version
+Show the version.
+.It Fl h , Fl -help
+Show the options.
+.El
+.Sh ENVIRONMENT
+.Bl -tag -width Ds
+.It Ev GROFF_FONT_PATH
+Where to look for groff's fonts when
+.Fl -font-path
+is not given.
+After it,
+.Nm
+looks in the
+.Pa site-font
+and
+.Pa current/font
+directories of the groff found in
+.Ev PATH ,
+then under
+.Pa /usr/local ,
+.Pa /usr/pkg
+and
+.Pa /usr .
+.It Ev TMPDIR
+Where
+.Cm svg
+makes its temporary directory, which it removes when it is done.
+.El
+.Sh FILES
+.Bl -tag -width Ds
+.It Pa share/pomermaid/pomermaid.mp
+The MetaPost macros, under the installation prefix, for
+.Fl -mp-macros Ns = Ns Cm input .
+.It Pa share/doc/pomermaid/pomermaid.lua
+A pandoc Lua filter that runs
+.Nm
+on each fenced
+.Ql mermaid
+code block.
+.El
+.Sh EXIT STATUS
+.Bl -tag -width Ds -compact
+.It 0
+success
+.It 1
+a file that cannot be read or written
+.It 2
+an unknown option
+.It 6
+a bad option value, or more than one
+.Ar file
+.It 22
+an unknown output format
+.It 43
+groff,
+.Xr mutool 1
+or
+.Xr pdftocairo 1
+failed
+.It 47
+groff,
+.Xr mutool 1
+or
+.Xr pdftocairo 1
+was not found
+.It 64
+a diagram
+.Nm
+cannot read; the message gives its line and column
+.It 97
+the font was not found
+.El
+.Sh EXAMPLES
+Draw a diagram in an ms document, read with
+.Ql .so diagram.pic :
+.Bd -literal -offset indent
+pomermaid -t pic diagram.mmd > diagram.pic
+groff -s -ms -p -Tpdf doc.ms > doc.pdf
+.Ed
+.Pp
+The same in a mom document:
+.Bd -literal -offset indent
+pdfmom -s -p doc.mom > doc.pdf
+.Ed
+.Pp
+Draw it for ConTeXt, read with
+.Ql \einput diagram :
+.Bd -literal -offset indent
+pomermaid -t mp diagram.mmd > diagram.tex
+.Ed
+.Pp
+Make SVG for a web page:
+.Bd -literal -offset indent
+pomermaid -t svg -o diagram.svg diagram.mmd
+.Ed
+.Pp
+Draw every
+.Ql mermaid
+block of a markdown document with pandoc:
+.Bd -literal -offset indent
+pandoc --lua-filter pomermaid.lua -s -t html doc.md -o doc.html
+.Ed
+.Sh SEE ALSO
+.Xr groff 1 ,
+.Xr mutool 1 ,
+.Xr pdfmom 1 ,
+.Xr pdftocairo 1 ,
+.Xr pic 1 ,
+.Xr groff_mom 7 ,
+.Xr groff_ms 7
+.Pp
+.Pa share/doc/pomermaid/pomermaid.md
+and
+.Pa differences.md ,
+the full documentation, and where
+.Nm
+draws differently from Mermaid.
+.Sh AUTHORS
+.An T. Kurt Bond
+.Sh BUGS
+Only flowcharts are read.
+.Ql click
+and other links, a subgraph's
+.Ql direction ,
+Mermaid's themes and markdown strings are not drawn yet.

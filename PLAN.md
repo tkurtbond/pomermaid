@@ -453,7 +453,9 @@ paragraph macro between them, the second was set at 10,000 points.
 It is now `u`. Also found: a pic file read with `.so` needs groff's
 `-s` (soelim) as well as `-p`, and podoc runs ConTeXt in a temporary
 directory, so a diagram `\input` there needs an absolute path; both
-are in the documentation. The man page is an open question.
+are in the documentation. The user then asked for a man page in mdoc
+(decision 11): `docs/user/pomermaid.1`, installed in
+`$(MANDIR)/man1`, `$(PREFIX)/share/man` by default.
 
 ### Phase 10: the rest of the flowchart syntax
 
@@ -528,9 +530,7 @@ Mermaid's documentation and record the Mermaid version it follows.
 These are the user's to decide. Each decision is recorded, dated,
 under "Decisions".
 
-11. **A man page** (Phase 9): should pomermaid have one,
-    `pomermaid.1`, written by hand in groff's `man` macros (or `mdoc`)
-    and installed by `make install`, beside `docs/user/pomermaid.md`?
+None at present.
 
 ## Decisions
 
@@ -559,6 +559,11 @@ under "Decisions".
     into SVG. No SVG writer of pomermaid's own, for now. This settles
     the question of how SVG labels are measured (Q10): groff measures
     them.
+
+2026-11-22, at the end of Phase 9:
+
+11. **A man page:** yes, `pomermaid.1`, in mdoc, installed by `make
+    install` beside the markdown documentation.
 
 ## Later
 
@@ -697,4 +702,6 @@ podoc with raw `ms` and `context` blocks (`--pdf-engine=pdfroff` with
 `-s` and `-p`; ConTeXt with an absolute path). Each PDF and the page
 were looked at. `make install` and `make uninstall` with a scratch
 `PREFIX`, and with `DESTDIR`, install and remove the program, the
-macros and the documentation.
+macros and the documentation. `pomermaid.1` passes `mandoc -Tlint`
+and formats without a warning with `groff -mdoc -wall` (1.25.0 and
+1.23.0).

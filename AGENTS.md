@@ -43,7 +43,8 @@ font files, `PmMetrics`), 4 (layout: `PmGeom`, `PmLayout`,
 (subgraphs: clusters in `PmLayout` and `pomermaid.mp`, boxes in both
 writers), 8 (SVG through groff and mutool or pdftocairo: `PmSvg`,
 `PmRun`, `-t svg` and `-t svg-ms`) and 9 (the user documentation,
-`docs/user/pomermaid.md` and `docs/user/differences.md`, and the
+`docs/user/pomermaid.md`, `docs/user/differences.md` and the man page
+`docs/user/pomermaid.1`, and the
 pandoc filter `docs/examples/pomermaid.lua`) are done. See PLAN.md's
 State.
 

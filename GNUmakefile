@@ -12,7 +12,8 @@
 # SVG, in build/render/svg/, if mutool or pdftocairo is found.
 # `make install` installs the pomermaid built under $(MODEL), -OC by
 # default, in $(BINDIR), the MetaPost macros, pomermaid.mp, in
-# $(DATADIR), and its documentation in $(DOCDIR), under
+# $(DATADIR), its manual page, pomermaid.1, in $(MANDIR)/man1, and its
+# documentation in $(DOCDIR), under
 # $(PREFIX), ~/.local by default, or $(DESTDIR)$(PREFIX) for a package;
 # `make uninstall` removes them. `make clean` removes build/.
 #
@@ -28,6 +29,7 @@ POCLIBDIR ?= $(HOME)/.local/lib/poc
 BINDIR ?= $(PREFIX)/bin
 DOCDIR ?= $(PREFIX)/share/doc/pomermaid
 DATADIR ?= $(PREFIX)/share/pomermaid
+MANDIR ?= $(PREFIX)/share/man
 MODEL ?= OC
 BUILD := build
 # -trap-heap-exhausted: a NEW that finds no memory stops pomermaid with
@@ -100,7 +102,9 @@ render: $(BUILD)/OC/pomermaid
 	tools/render $(BUILD)/OC/pomermaid $(BUILD)/render
 
 install: $(BUILD)/$(MODEL)/pomermaid
-	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(DATADIR) $(DESTDIR)$(DOCDIR)
+	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(DATADIR) $(DESTDIR)$(DOCDIR) \
+	  $(DESTDIR)$(MANDIR)/man1
+	install -m 644 docs/user/pomermaid.1 $(DESTDIR)$(MANDIR)/man1
 	install -m 755 $(BUILD)/$(MODEL)/pomermaid $(DESTDIR)$(BINDIR)/pomermaid
 	install -m 644 mp/pomermaid.mp $(DESTDIR)$(DATADIR)
 	install -m 644 LICENSE docs/user/pomermaid.md docs/user/differences.md \
@@ -109,6 +113,7 @@ install: $(BUILD)/$(MODEL)/pomermaid
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/pomermaid
 	rm -f $(DESTDIR)$(DATADIR)/pomermaid.mp
+	rm -f $(DESTDIR)$(MANDIR)/man1/pomermaid.1
 	rm -f $(DESTDIR)$(DOCDIR)/LICENSE $(DESTDIR)$(DOCDIR)/pomermaid.md \
 	  $(DESTDIR)$(DOCDIR)/differences.md $(DESTDIR)$(DOCDIR)/pomermaid.lua
 	-rmdir $(DESTDIR)$(DATADIR) $(DESTDIR)$(DOCDIR)

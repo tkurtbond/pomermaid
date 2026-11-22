@@ -49,6 +49,7 @@ tests under both. They need no groff, ConTeXt, MuPDF or Mermaid.
 
 - the `-OC` build, as `$(PREFIX)/bin/pomermaid`;
 - the MetaPost macros, as `$(PREFIX)/share/pomermaid/pomermaid.mp`;
+- the manual page, as `$(PREFIX)/share/man/man1/pomermaid.1`;
 - this documentation and the example filter, in
   `$(PREFIX)/share/doc/pomermaid`.
 
