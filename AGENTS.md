@@ -36,8 +36,10 @@ one silently: ask, then record the decision, dated, under
 As of 2026-11-22: Phases 1 (the skeleton), 2 (the flowchart
 reader, `PmLex`, `PmFlow`, `PmDump`), 3 (text metrics from groff's
 font files, `PmMetrics`), 4 (layout: `PmGeom`, `PmLayout`,
-`PmFlowLayout`, written by `-t layout`) and 5 (the pic writer,
-`PmPic`, `-t pic`; `make render`) are done. See PLAN.md's
+`PmFlowLayout`, written by `-t layout`), 5 (the pic writer,
+`PmPic`, `-t pic`; `make render`) and 6 (the MetaPost writer,
+`PmMp`, `-t mp`, with the macros `mp/pomermaid.mp`, made into
+`PmMpMacros` by `tools/mp2mod`; styles shared in `PmStyle`) are done. See PLAN.md's
 State.
 
 ## Reference material
@@ -97,7 +99,7 @@ AGENTS.md describes.
 - `make test` runs the unit tests (`test/<Name>Test.Mod`, printing
   `ok   - ` and `FAIL - ` lines, compared with `<Name>Test.expected`)
   and the case tests (`test/cases/<name>.mmd`, with optional
-  `<name>.args`, against the expected `<name>.dump`, `<name>.layout`,
+  `<name>.args`, and `<name>.<ext>.args` for one format, against the expected `<name>.dump`, `<name>.layout`,
   `<name>.pic`, `<name>.mp` and, for SVG, the groff document
   `<name>.svg.ms` beside it), under both models. It
   must not need groff, ConTeXt or Mermaid's tools: the tests' fonts
@@ -106,8 +108,15 @@ AGENTS.md describes.
   `PmMetrics` gives with groff's `\w`, through `tools/checkwidths`.
 - `make render` (where groff is installed) draws each case that has a
   layout with `-t pic` in groff's Times, one to a page, in
-  `build/render/cases.pdf` (`tools/render`), for looking at; ConTeXt
-  pages come with Phase 6.
+  `build/render/cases.pdf` (`tools/render`), for looking at; where
+  ConTeXt is installed, with `-t mp` too, at 12 and 8 points, in
+  `build/render/cases-context.pdf`. Run it under a `systemd-run`
+  memory cap.
+- `mp/pomermaid.mp` is the only source of the MetaPost macros: edit
+  it, and `make` regenerates `src/PmMpMacros.Mod` (kept in the
+  repository). Test the macros in ConTeXt LMTX; a declared MetaPost
+  variable must not end in a digit, `and` and `or` do not short-cut,
+  and a statement that begins with `begingroup` needs its `;`.
 
 ## Exit statuses
 

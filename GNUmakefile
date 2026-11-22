@@ -7,11 +7,16 @@
 # test/<Name>Test.errors (empty if there is no such file); then it runs
 # the case tests, test/cases/, with each pomermaid (tools/runcases).
 # None of it needs groff, ConTeXt or Mermaid's tools. `make render`
-# draws the cases with groff, in build/render/cases.pdf.
+# draws the cases with groff, in build/render/cases.pdf, and with
+# ConTeXt, if it is found, in build/render/cases-context.pdf.
 # `make install` installs the pomermaid built under $(MODEL), -OC by
-# default, in $(BINDIR), and its documentation in $(DOCDIR), under
+# default, in $(BINDIR), the MetaPost macros, pomermaid.mp, in
+# $(DATADIR), and its documentation in $(DOCDIR), under
 # $(PREFIX), ~/.local by default, or $(DESTDIR)$(PREFIX) for a package;
 # `make uninstall` removes them. `make clean` removes build/.
+#
+# src/PmMpMacros.Mod is made from mp/pomermaid.mp by tools/mp2mod, and
+# kept in the repository, so a build needs no awk.
 #
 # The libraries pomermaid uses are found in $(POCLIBDIR),
 # ~/.local/lib/poc by default, where their own makefiles install them.
@@ -21,6 +26,7 @@ PREFIX ?= $(HOME)/.local
 POCLIBDIR ?= $(HOME)/.local/lib/poc
 BINDIR ?= $(PREFIX)/bin
 DOCDIR ?= $(PREFIX)/share/doc/pomermaid
+DATADIR ?= $(PREFIX)/share/pomermaid
 MODEL ?= OC
 BUILD := build
 # -trap-heap-exhausted: a NEW that finds no memory stops pomermaid with
@@ -54,6 +60,10 @@ $(BUILD)/%/pomermaid: $(SRCS) $(POC_STAMP)
 	mkdir -p $(BUILD)/$*
 	$(POC) -$* $(POCFLAGS) -library-path $(POCLIBDIR) -import-path src \
 	  -output-dir $(BUILD)/$* -o $@ src/pomermaid.Mod
+
+# the macros, copied into each drawing by -t mp
+src/PmMpMacros.Mod: mp/pomermaid.mp tools/mp2mod
+	tools/mp2mod mp/pomermaid.mp $@
 
 test: test-o2 test-oc
 
@@ -89,14 +99,16 @@ render: $(BUILD)/OC/pomermaid
 	tools/render $(BUILD)/OC/pomermaid $(BUILD)/render
 
 install: $(BUILD)/$(MODEL)/pomermaid
-	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(DOCDIR)
+	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(DATADIR) $(DESTDIR)$(DOCDIR)
 	install -m 755 $(BUILD)/$(MODEL)/pomermaid $(DESTDIR)$(BINDIR)/pomermaid
+	install -m 644 mp/pomermaid.mp $(DESTDIR)$(DATADIR)
 	install -m 644 LICENSE $(DESTDIR)$(DOCDIR)
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/pomermaid
+	rm -f $(DESTDIR)$(DATADIR)/pomermaid.mp
 	rm -f $(DESTDIR)$(DOCDIR)/LICENSE
-	-rmdir $(DESTDIR)$(DOCDIR)
+	-rmdir $(DESTDIR)$(DATADIR) $(DESTDIR)$(DOCDIR)
 
 clean:
 	rm -rf $(BUILD)

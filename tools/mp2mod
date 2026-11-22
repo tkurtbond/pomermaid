@@ -1,0 +1,49 @@
+#!/bin/sh
+# mp2mod MACROS MODULE
+#
+# Writes MODULE, src/PmMpMacros.Mod, from MACROS, mp/pomermaid.mp: an
+# Oberon module whose Write writes the macros, without their comments
+# and blank lines, for the MetaPost writer's --mp-macros=inline. The
+# macros have one source, MACROS; MODULE is made from it. A line of
+# MACROS must not have both kinds of quote, nor a "%" in a string.
+
+if [ $# -ne 2 ]; then
+  echo "usage: mp2mod MACROS MODULE" >&2
+  exit 2
+fi
+
+awk -v src="$1" '
+BEGIN {
+  print "MODULE PmMpMacros;"
+  print "(* PmMpMacros: the MetaPost macros of " src ", without their comments,"
+  print "   for the MetaPost writer. Made from " src " by tools/mp2mod: do not"
+  print "   edit it; edit " src ". *)"
+  print ""
+  print "IMPORT PmIO;"
+  print ""
+  print "PROCEDURE L(s: ARRAY OF CHAR);"
+  print "BEGIN"
+  print "  PmIO.WriteString(s); PmIO.WriteLn"
+  print "END L;"
+  print ""
+  print "(* Writes the macros *)"
+  print "PROCEDURE Write*;"
+  print "BEGIN"
+}
+{
+  line = $0
+  sub(/%.*/, "", line)
+  sub(/[ \t]+$/, "", line)
+  if (line == "") next
+  if (index(line, "\"") && index(line, "\047")) {
+    print src ":" NR ": both kinds of quote on a line" > "/dev/stderr"; bad = 1
+  }
+  if (index(line, "\"")) q = "\047"; else q = "\""
+  print "  L(" q line q ");"
+}
+END {
+  print "END Write;"
+  print ""
+  print "END PmMpMacros."
+  exit bad
+}' "$1" > "$2.new" && mv "$2.new" "$2" || { rm -f "$2.new"; exit 1; }

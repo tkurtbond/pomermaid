@@ -2,9 +2,11 @@
 # render POMERMAID OUTDIR [CASEDIR]
 #
 # Draws each case, CASEDIR/<name>.mmd (test/cases by default) that has
-# an expected .layout or .pic, with POMERMAID -t pic in groff's Times
-# (not the cases' test font), one to a page, in OUTDIR/cases.pdf, for
-# looking at. Needs groff; make test does not run it.
+# an expected .layout, .pic or .mp, with POMERMAID -t pic in groff's
+# Times (not the cases' test font), one to a page, in OUTDIR/cases.pdf,
+# for looking at; and, if ConTeXt's context is found, with POMERMAID -t
+# mp, each in a 12 point and an 8 point body font, in
+# OUTDIR/cases-context.pdf. Needs groff; make test does not run it.
 
 if [ $# -lt 2 ]; then
   echo "usage: render POMERMAID OUTDIR [CASEDIR]" >&2
@@ -20,7 +22,7 @@ ms=$outdir/cases.ms
 first=1
 for mmd in "$casedir"/*.mmd; do
   name=${mmd%.mmd}
-  [ -f "$name.layout" ] || [ -f "$name.pic" ] || continue
+  [ -f "$name.layout" ] || [ -f "$name.pic" ] || [ -f "$name.mp" ] || continue
   [ $first -eq 1 ] || echo .bp >> "$ms"
   first=0
   printf '.SH\n%s\n.LP\n' "$(basename "$name")" >> "$ms"
@@ -28,3 +30,25 @@ for mmd in "$casedir"/*.mmd; do
 done
 groff -ms -p -Tpdf -wall "$ms" > "$outdir/cases.pdf" || exit 1
 echo "$outdir/cases.pdf"
+
+command -v context > /dev/null 2>&1 || exit 0
+tex=$outdir/cases-context.tex
+printf '%s\n' '\setuppapersize[A4]\setuplayout[width=middle,backspace=1.5cm]\starttext' > "$tex"
+first=1
+for mmd in "$casedir"/*.mmd; do
+  name=${mmd%.mmd}
+  [ -f "$name.layout" ] || [ -f "$name.pic" ] || [ -f "$name.mp" ] || continue
+  for size in 12 8; do
+    [ $first -eq 1 ] || printf '%s\n' '\page' >> "$tex"
+    first=0
+    printf '\\switchtobodyfont[%spt]\\subject{%s, %s point}\n' \
+      "$size" "$(basename "$name")" "$size" >> "$tex"
+    "$prog" -t mp "$mmd" >> "$tex" || exit 1
+  done
+done
+printf '%s\n' '\stoptext' >> "$tex"
+(cd "$outdir" && context --batchmode --noconsole cases-context.tex > /dev/null) || {
+  echo "render: context failed; see $outdir/cases-context.log" >&2
+  exit 1
+}
+echo "$outdir/cases-context.pdf"

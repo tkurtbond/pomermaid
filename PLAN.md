@@ -314,7 +314,7 @@ text. It differs from the plan in these ways:
 `make render` (`tools/render`) draws each case with a layout in
 groff's Times, one to a page, in `build/render/cases.pdf`.
 
-### Phase 6: the MetaPost writer
+### Phase 6: the MetaPost writer [done]
 
 **Change:** `pomermaid.mp`, the geometry half of the layout in
 MetaPost; `PmMp`, the topology as MetaPost data and the macros, in a
@@ -325,7 +325,37 @@ small ConTeXt document and runs ConTeXt LMTX; the labels fit their
 boxes in the document's font, with a large and a small body font; no
 overlaps in the user's diagrams.
 
-**Done:** no.
+**Done:** `mp/pomermaid.mp` holds the macros; `tools/mp2mod` makes
+`PmMpMacros` from it, which `--mp-macros=inline` (the default) copies
+into each block, and `make install` installs it in
+`$(PREFIX)/share/pomermaid` for `--mp-macros=input`. `PmMp` writes the
+layout's topology: each node, dummies too, with its rank, its order,
+where the estimate put it along the rank, its shape, label and style;
+each edge with its chain of dummies, heads, line and label. The style
+code that `PmPic` had is now `PmStyle`, shared by both writers. In
+MetaPost, the macros measure the em and each label (`textext` of a
+`\framed`), size the nodes as `PmMetrics.ShapeSize` does, place the
+ranks as `PmLayout` does, route the edges (self-loops, faces, rank
+bands, reversed edges), turn the drawing to its direction, clip the
+ends to the outlines, and draw as `PmPic` does. It differs from the
+plan in these ways:
+- The coordinates along each rank are not Brandes and Köpf's: each
+  rank is placed by isotonic regression (pool adjacent violators)
+  towards the estimate's positions, scaled by the ratio of the
+  document's em to the estimate's size, keeping nodes the spacing
+  apart. This keeps the estimate's alignment, and is quick in
+  MetaPost.
+- `--width` scales the finished picture down, where `-t pic` lays the
+  diagram out again at a smaller size: MetaPost cannot ask pomermaid
+  for another layout.
+- Line widths, dashes, markers and spacing are the estimate's pixel
+  sizes scaled with the document's em, so they grow with the body
+  font.
+- Labels are wrapped by pomermaid, in the estimate's font; MetaPost
+  sets each line as it is. The characters TeX treats specially, and
+  `"`, are written as `{\charN}`.
+- `make render` draws each case with ConTeXt too, at a 12 point and an
+  8 point body font, in `build/render/cases-context.pdf`.
 
 ### Phase 7: subgraphs
 
@@ -536,3 +566,16 @@ shapes, markers, dotted and thick edges, self-loops, styles and the
 user's three diagrams are drawn as intended, and the overview has
 the hand-drawn version's layout, with Mermaid's curves. Not compared
 with Mermaid's own drawings.
+
+2026-11-22, Phase 6: `make test` passes under `-O2` and `-OC`:
+`PmIOTest`, `PmMetricsTest`, `PmLayoutTest` and 45 case tests (new:
+`-t mp` for `shapes`, `edges`, `loops`, `styles`, `colours`, `gbh-map`
+and `aftermath`, with `--mp-macros=input` from `<name>.mp.args`, which
+`tools/runcases` now reads; `mpInline`, with the macros inline and
+special characters; `--mp-macros=both`, 6; `options.out`
+regenerated). The `-O2` and `-OC` outputs are the same. `make render`
+runs ConTeXt LMTX on all nine cases at 12 and 8 points without an
+error; each page was looked at: the labels fit their boxes at both
+sizes, nothing overlaps, and the shapes, heads, markers, dashes,
+self-loops and styles are drawn as with `-t pic`. Two diagrams in one
+document, with the macros inline, also work.

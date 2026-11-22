@@ -5,7 +5,7 @@
 # default) and each expected output beside it, <name>.<ext>, where <ext>
 # is a format (dump, layout, pic, mp, svg-ms) or "out", runs
 #
-#     POMERMAID -t <ext> [the words of <name>.args] <name>.mmd
+#     POMERMAID -t <ext> [the words of <name>.args] [of <name>.<ext>.args] <name>.mmd
 #
 # ("out" gives no -t) in CASEDIR, and compares its standard output with
 # <name>.<ext>, its standard error with <name>.<ext>.errors, or
@@ -38,10 +38,12 @@ for mmd in *.mmd; do
     [ -f "$name.$ext" ] || continue
     total=$((total + 1))
     to="-t $ext"
+    extargs=
+    [ -f "$name.$ext.args" ] && extargs=$(cat "$name.$ext.args")
     [ "$ext" = out ] && to=
     # $to and $args are split into words on purpose
     # shellcheck disable=SC2086
-    "$prog" $to $args "$mmd" > "$outdir/$name.$ext" 2> "$outdir/$name.$ext.err"
+    "$prog" $to $args $extargs "$mmd" > "$outdir/$name.$ext" 2> "$outdir/$name.$ext.err"
     status=$?
     errors=/dev/null
     if [ -f "$name.$ext.errors" ]; then errors=$name.$ext.errors

@@ -24,6 +24,7 @@ VAR
   size*: REAL;     (* --size: their size, in points *)
   fontPath*: String; (* --font-path: where groff's fonts are, "" for PmMetrics' default *)
   width*: REAL;    (* --width: the widest a diagram may be, in points; 0 for no limit *)
+  mpInput*: BOOLEAN; (* --mp-macros=input: the MetaPost writer inputs pomermaid.mp *)
   done*: BOOLEAN;  (* --help or --version was given: nothing more to do *)
   inputs: INTEGER;
   parser: ArgParser.Parser;
@@ -120,6 +121,17 @@ BEGIN
   RETURN TRUE
 END SetWidth;
 
+(* --mp-macros: inline, the macros copied into each MetaPost block, or
+   input, "input pomermaid ;" *)
+PROCEDURE SetMpMacros(VAR arg: ARRAY OF CHAR): BOOLEAN;
+BEGIN
+  IF arg = "inline" THEN mpInput := FALSE
+  ELSIF arg = "input" THEN mpInput := TRUE
+  ELSE PmIO.Fail("", "--mp-macros takes inline or input", PmIO.OptionError)
+  END;
+  RETURN TRUE
+END SetMpMacros;
+
 PROCEDURE AddInput(startIdx: INTEGER; VAR arg: ARRAY OF CHAR): BOOLEAN;
 BEGIN
   INC(inputs);
@@ -147,6 +159,8 @@ BEGIN
     "Make a diagram no wider than this, in inches, or with a unit, c or p (6i by default; 0 for no limit).", SetWidth));
   parser.AddOption(ArgParser.MakeStringOption(0X, "font-path",
     "Look for groff's fonts in these directories, separated by colons.", SetFontPath));
+  parser.AddOption(ArgParser.MakeStringOption(0X, "mp-macros",
+    "For mp: copy pomermaid.mp's macros into the drawing (inline, the default) or input it (input).", SetMpMacros));
   parser.AddOption(ArgParser.MakeOption("v", "version",
     "Show pomermaid's version.", ShowVersion));
   parser.AddOption(ArgParser.MakeOption("h", "help",
@@ -156,5 +170,6 @@ END Parse;
 
 BEGIN
   to := "pic"; output := ""; input := "-"; done := FALSE; inputs := 0;
-  font := "TR"; size := 10; fontPath := ""; width := 6 * 72
+  font := "TR"; size := 10; fontPath := ""; width := 6 * 72;
+  mpInput := FALSE
 END PmOptions.

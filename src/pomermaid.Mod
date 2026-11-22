@@ -2,7 +2,7 @@ MODULE pomermaid;
 (* pomermaid: Mermaid diagrams drawn in pic, for groff, and MetaPost,
    for ConTeXt. The command line is PmOptions'. See PLAN.md. *)
 
-IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic;
+IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp;
 
 VAR
   text: PmIO.Text;
@@ -34,6 +34,7 @@ BEGIN
     IF O.to = "dump" THEN PmDump.Write(g)
     ELSIF O.to = "layout" THEN FL.Fit(g, font, O.size, O.width, lay); PmDump.WriteLayout(lay)
     ELSIF O.to = "pic" THEN FL.Fit(g, font, O.size, O.width, lay); PmPic.Write(lay, O.font)
+    ELSIF O.to = "mp" THEN FL.Make(g, font, O.size, lay); PmMp.Write(lay, O.width, O.mpInput)
     ELSE PmIO.Fail("", "no writer for this format yet", PmIO.UnknownWriter)
     END
   END;
