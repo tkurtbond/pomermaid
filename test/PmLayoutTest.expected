@@ -1,0 +1,105 @@
+ok   - chain: ranks
+ok   - chain: straight
+ok   - chain: y of the second
+ok   - chain: width
+ok   - chain: height
+ok   - chain: edge points
+ok   - chain: leaves the bottom
+ok   - chain: reaches the top
+ok   - diamond: ranks
+ok   - diamond: orders
+ok   - diamond: top centred
+ok   - diamond: bottom centred
+ok   - diamond: apart
+ok   - diamond: no overlaps
+ok   - diamond: no crossings
+ok   - cycle: one edge turned
+ok   - cycle: the closing one
+ok   - cycle: ranks
+ok   - cycle: turned edge starts at its tail
+ok   - long edge: dummies
+ok   - long edge: points
+ok   - long edge: beside the middle node
+ok   - long edge: no overlaps
+ok   - long edge: no crossings
+ok   - minlen 2: rank
+ok   - label: its dummy
+ok   - label: at the middle rank
+ok   - label: between the nodes
+ok   - label: widens the drawing
+ok   - label: no overlaps
+ok   - self-loop: points
+ok   - self-loop: its dummy
+ok   - self-loop: to the right
+ok   - self-loop: from its node
+ok   - self-loop: back to its node
+ok   - self-loop: left of its label
+ok   - self-loop: label right of the node
+ok   - self-loop: ranks
+ok   - LR: across
+ok   - LR: gap
+ok   - LR: height
+ok   - RL: back
+ok   - RL: at 0
+ok   - BT: up
+ok   - BT: edge goes up
+ok   - two parts: both from rank 0
+ok   - two parts: side by side
+ok   - crossing: ordered away
+ok   - crossing: no overlaps
+ok   - dense graph: no overlaps
+ok   - dense graph: no overlaps
+ok   - dense graph: no overlaps
+ok   - dense graph: no overlaps
+# dense graphs: edges through other nodes: 0
+ok   - basis: points
+ok   - basis: starts
+ok   - basis: ends
+ok   - basis: first piece
+ok   - basis: a line
+ok   - rect: side
+ok   - rect: top
+ok   - circle
+ok   - diamond: right corner
+ok   - diamond: a side
+ok   - load TS
+ok   - gbh-overview TB: no overlaps
+ok   - gbh-overview TB: no crossings
+ok   - gbh-overview BT: no overlaps
+ok   - gbh-overview BT: no crossings
+ok   - gbh-overview LR: no overlaps
+ok   - gbh-overview LR: no crossings
+ok   - gbh-overview RL: no overlaps
+ok   - gbh-overview RL: no crossings
+ok   - gbh-map TB: no overlaps
+ok   - gbh-map TB: no crossings
+ok   - gbh-map BT: no overlaps
+ok   - gbh-map BT: no crossings
+ok   - gbh-map LR: no overlaps
+ok   - gbh-map LR: no crossings
+ok   - gbh-map RL: no overlaps
+ok   - gbh-map RL: no crossings
+ok   - aftermath TB: no overlaps
+ok   - aftermath TB: no crossings
+ok   - aftermath BT: no overlaps
+ok   - aftermath BT: no crossings
+ok   - aftermath LR: no overlaps
+ok   - aftermath LR: no crossings
+ok   - aftermath RL: no overlaps
+ok   - aftermath RL: no crossings
+ok   - edges TB: no overlaps
+ok   - edges TB: no crossings
+ok   - edges BT: no overlaps
+ok   - edges BT: no crossings
+ok   - edges LR: no overlaps
+ok   - edges LR: no crossings
+ok   - edges RL: no overlaps
+ok   - edges RL: no crossings
+ok   - shapes TB: no overlaps
+ok   - shapes TB: no crossings
+ok   - shapes BT: no overlaps
+ok   - shapes BT: no crossings
+ok   - shapes LR: no overlaps
+ok   - shapes LR: no crossings
+ok   - shapes RL: no overlaps
+ok   - shapes RL: no crossings

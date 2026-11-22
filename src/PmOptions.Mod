@@ -103,7 +103,7 @@ PROCEDURE Parse*;
 BEGIN
   parser := ArgParser.NewParser("pomermaid [OPTIONS] [FILE]", AddInput);
   parser.AddOption(ArgParser.MakeStringOption("t", "to",
-    "The output format: pic, mp, or dump (the diagram read, for tests).", SetTo));
+    "The output format: pic, mp, dump (the diagram read) or layout (its layout), the last two for tests.", SetTo));
   parser.AddOption(ArgParser.MakeStringOption("o", "output",
     "Write to this file rather than standard output.", SetOutput));
   parser.AddOption(ArgParser.MakeStringOption(0X, "font",

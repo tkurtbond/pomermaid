@@ -245,7 +245,7 @@ for `-t pic` and `-t mp`; a missing font ends pomermaid with 97.
 `PmMetricsTest` checks a made-up font, `test/fonts`;
 `tools/checkwidths` and `make check-groff` compare widths with groff.
 
-### Phase 4: layout
+### Phase 4: layout [done]
 
 **Change:** `PmLayout`, both halves: cycle removal, ranking, dummy
 nodes, crossing reduction; coordinates, edge routes, all four
@@ -257,7 +257,24 @@ adds the ranks and orders, each node's box and each edge's points.
 long edge, a self-loop) with known ranks, orders and coordinates; no
 two nodes overlap and no edge crosses a node in the user's diagrams.
 
-**Done:** no.
+**Done:** `PmGeom` (points, the intersections, curveBasis to Bézier
+curves), `PmLayout` (dagre's steps: a DFS feedback arc set, network
+simplex per component on a grid of half ranks, dummy chains with the
+label dummy at the middle, barycentre sweeps keeping the order with
+fewest crossings, Brandes and Köpf's four alignments balanced, routes,
+the turn for BT, LR and RL) and `PmFlowLayout` (a flowchart's nodes
+sized by `PmMetrics`, Mermaid's spacing scaled to the text, edge ends
+clipped to the shapes' outlines). The layout is written by a new
+`-t layout`, not by `-t dump` as planned, so the reader's tests stay
+as they are. Where it is clearer (decision 2) the layout differs from
+dagre's: a self-loop leaves the node's side and comes back lower down,
+round the gap before its label, instead of circling a point away from
+the node; an edge leaves and enters by the face of the box toward the
+next rank, not by a side; where its node is shorter than its rank, it
+goes straight out to the edge of the rank's band (a doubled point)
+before it turns aside, so that it misses taller neighbours; and an
+end is clipped to a shape along the edge's last piece, not toward the
+centre, so it stays in the node's box.
 
 ### Phase 5: the pic writer
 
@@ -470,3 +487,15 @@ Latin-1 accents, ligatures, kerns, typographic quotes and dashes,
 runs of spaces) give groff's `\w` width, to the unit, in TR 10, TI 9,
 HB 12 and CR 10.5, with groff 1.25.0 and with the system's 1.23.0
 (old charset lines); also in HR 7, TB 11 and HI 8 with 1.25.0.
+
+2026-11-22, Phase 4: `make test` passes under `-O2` and `-OC`:
+`PmIOTest`, `PmMetricsTest`, `PmLayoutTest` (104 checks: a chain, a
+diamond, a cycle, a long edge, labels, a self-loop, the four
+directions, components, a crossing, random dense graphs of 12 to 30
+nodes in each direction, and the user's three diagrams with `shapes`
+and `edges` in each direction: no node overlaps a node or a label,
+and no edge's curve, sampled 21 times per Bézier piece, passes
+through another node) and 29 case tests (new: six `-t layout` cases,
+among them `loops`, with the made-up font `test/fonts/devpdf/TS`).
+The `-O2` and `-OC` layouts are the same. Nothing was drawn yet; the
+layouts were not compared with Mermaid's.

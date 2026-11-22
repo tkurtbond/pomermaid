@@ -1,7 +1,7 @@
 pomermaid [OPTIONS] [FILE]
 
   -t <arg>, --to <arg>
-      The output format: pic, mp, or dump (the diagram read, for tests).
+      The output format: pic, mp, dump (the diagram read) or layout (its layout), the last two for tests.
   -o <arg>, --output <arg>
       Write to this file rather than standard output.
   --font <arg>

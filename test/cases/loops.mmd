@@ -1,0 +1,7 @@
+flowchart LR
+    A[Start] --> B{Again?}
+    B -->|yes| A
+    B -->|no| C([Done])
+    C --> C
+    B -.->|later| D[(Store)]
+    A ---> D

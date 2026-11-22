@@ -4,7 +4,7 @@ MODULE PmDump;
    lines come in the model's order, so the same input always gives the
    same output. *)
 
-IMPORT PmIO, F := PmFlow;
+IMPORT PmIO, F := PmFlow, FL := PmFlowLayout, L := PmLayout;
 
 PROCEDURE Quoted(s: F.Str);
   VAR i: LONGINT;
@@ -153,5 +153,52 @@ BEGIN
     d := d.next
   END
 END Write;
+
+PROCEDURE Num(name: ARRAY OF CHAR; x: REAL);
+BEGIN
+  PmIO.WriteChar(" "); PmIO.WriteString(name); PmIO.WriteChar("="); PmIO.WriteReal(x, 2)
+END Num;
+
+PROCEDURE Pt(x, y: REAL);
+BEGIN
+  PmIO.WriteChar("("); PmIO.WriteReal(x, 2); PmIO.WriteChar(","); PmIO.WriteReal(y, 2);
+  PmIO.WriteChar(")")
+END Pt;
+
+(* Writes the layout l of a flowchart (-t layout): its size, then each
+   node's rank (on the grid of half ranks), place in its rank, centre
+   and size, then each edge's points and its label's centre, in
+   points, rounded to 2 decimals *)
+PROCEDURE WriteLayout*(l: FL.Layout);
+  VAR n: F.Node; e: F.Edge; ln: L.Node; le: L.Edge; i: INTEGER;
+BEGIN
+  PmIO.WriteString("layout direction "); Dir(l.graph.dir);
+  Num("width", l.g.width); Num("height", l.g.height); PmIO.WriteLn;
+  n := l.graph.nodes;
+  WHILE n # NIL DO
+    ln := l.g.node[n.index];
+    PmIO.WriteString("node "); PmIO.WriteString(n.id^);
+    PmIO.WriteString(" rank="); PmIO.WriteInt(ln.rank);
+    PmIO.WriteString(" order="); PmIO.WriteInt(ln.order);
+    Num("x", ln.x); Num("y", ln.y); Num("w", ln.w); Num("h", ln.h);
+    PmIO.WriteLn;
+    n := n.next
+  END;
+  e := l.graph.edges;
+  WHILE e # NIL DO
+    le := l.g.edge[e.index];
+    PmIO.WriteString("edge "); PmIO.WriteString(e.from.id^); PmIO.WriteString(" -> ");
+    PmIO.WriteString(e.to.id^);
+    IF le.reversed THEN PmIO.WriteString(" reversed") END;
+    PmIO.WriteString(" points=");
+    FOR i := 0 TO le.nPoints - 1 DO
+      IF i > 0 THEN PmIO.WriteChar(" ") END;
+      Pt(le.points[i].x, le.points[i].y)
+    END;
+    IF le.hasLabel THEN PmIO.WriteString(" label="); Pt(le.labelX, le.labelY) END;
+    PmIO.WriteLn;
+    e := e.next
+  END
+END WriteLayout;
 
 END PmDump.

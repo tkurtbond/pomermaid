@@ -34,8 +34,9 @@ one silently: ask, then record the decision, dated, under
 ## Status
 
 As of 2026-11-22: Phases 1 (the skeleton), 2 (the flowchart
-reader, `PmLex`, `PmFlow`, `PmDump`) and 3 (text metrics from groff's
-font files, `PmMetrics`) are done. See PLAN.md's
+reader, `PmLex`, `PmFlow`, `PmDump`), 3 (text metrics from groff's
+font files, `PmMetrics`) and 4 (layout: `PmGeom`, `PmLayout`,
+`PmFlowLayout`, written by `-t layout`) are done. See PLAN.md's
 State.
 
 ## Reference material
@@ -94,10 +95,12 @@ AGENTS.md describes.
   `build/OC`.
 - `make test` runs the unit tests (`test/<Name>Test.Mod`, printing
   `ok   - ` and `FAIL - ` lines, compared with `<Name>Test.expected`)
-  and the case tests (`test/cases/<name>.mmd` against the expected
+  and the case tests (`test/cases/<name>.mmd`, with optional
+  `<name>.args`, against the expected `<name>.dump`, `<name>.layout`,
   `<name>.pic`, `<name>.mp` and, for SVG, the groff document
   `<name>.svg.ms` beside it), under both models. It
-  must not need groff, ConTeXt or Mermaid's tools.
+  must not need groff, ConTeXt or Mermaid's tools: the tests' fonts
+  are made up, `test/fonts/devpdf/TT` and `TS`.
 - `make check-groff` (where groff is installed) compares the widths
   `PmMetrics` gives with groff's `\w`, through `tools/checkwidths`.
 - `make render` (where groff and ConTeXt are installed) wraps the case

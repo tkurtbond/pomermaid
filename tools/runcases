@@ -3,7 +3,7 @@
 #
 # Runs the case tests: for each CASEDIR/<name>.mmd (test/cases by
 # default) and each expected output beside it, <name>.<ext>, where <ext>
-# is a format (dump, pic, mp, svg-ms) or "out", runs
+# is a format (dump, layout, pic, mp, svg-ms) or "out", runs
 #
 #     POMERMAID -t <ext> [the words of <name>.args] <name>.mmd
 #
@@ -34,7 +34,7 @@ for mmd in *.mmd; do
   name=${mmd%.mmd}
   args=
   [ -f "$name.args" ] && args=$(cat "$name.args")
-  for ext in dump pic mp svg-ms out; do
+  for ext in dump layout pic mp svg-ms out; do
     [ -f "$name.$ext" ] || continue
     total=$((total + 1))
     to="-t $ext"
