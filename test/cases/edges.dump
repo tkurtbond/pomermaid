@@ -1,0 +1,42 @@
+direction TB
+node A shape=rect label="A"
+node B shape=rect label="B"
+node C shape=rect label="C"
+node D shape=rect label="D"
+node orange shape=rect label="orange"
+node xylophone shape=rect label="xylophone"
+edge A -> B head=arrow tail=none line=normal len=1
+edge A -> B head=none tail=none line=normal len=1
+edge A -> B head=none tail=none line=normal len=2
+edge A -> B head=arrow tail=none line=normal len=3
+edge A -> B head=arrow tail=none line=thick len=1
+edge A -> B head=none tail=none line=thick len=1
+edge A -> B head=arrow tail=none line=thick len=3
+edge A -> B head=arrow tail=none line=dotted len=1
+edge A -> B head=none tail=none line=dotted len=1
+edge A -> B head=arrow tail=none line=dotted len=2
+edge A -> B head=arrow tail=none line=dotted len=1
+edge A -> B head=none tail=none line=invisible len=1
+edge A -> B head=none tail=none line=invisible len=2
+edge A -> B head=arrow tail=arrow line=normal len=1
+edge A -> B head=cross tail=cross line=normal len=1
+edge A -> B head=circle tail=circle line=normal len=1
+edge A -> B head=cross tail=none line=normal len=1
+edge A -> B head=circle tail=none line=normal len=1
+edge A -> B head=arrow tail=arrow line=thick len=1
+edge A -> B head=arrow tail=arrow line=dotted len=1
+edge A -> B head=arrow tail=none line=normal len=1 label="label"
+edge A -> B head=arrow tail=none line=normal len=1 label="text"
+edge A -> B head=arrow tail=none line=thick len=1 label="thick text"
+edge A -> B head=arrow tail=none line=dotted len=1 label="dotted text"
+edge A -> B head=arrow tail=none line=normal len=1 label="quoted"
+edge A -> B head=none tail=none line=normal len=1 label="open"
+edge A -> C head=arrow tail=none line=normal len=1
+edge A -> D head=arrow tail=none line=normal len=1
+edge B -> C head=arrow tail=none line=normal len=1
+edge B -> D head=arrow tail=none line=normal len=1
+edge A -> B head=arrow tail=none line=normal len=1
+edge B -> C head=arrow tail=none line=normal len=1
+edge C -> A head=arrow tail=none line=normal len=1
+edge C -> C head=arrow tail=none line=normal len=1
+edge orange -> xylophone head=arrow tail=none line=normal len=1

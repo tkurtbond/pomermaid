@@ -1,0 +1,18 @@
+flowchart TB
+  subgraph one
+    a1 --> a2
+  end
+  subgraph two [Second]
+    direction LR
+    b1 --> b2
+    subgraph inner ["Inner one"]
+      c1
+    end
+  end
+  subgraph Title With Spaces
+    d1
+  end
+  subgraph "Quoted"
+    a1 --> d2
+  end
+  c1 --> a1

@@ -1,0 +1,34 @@
+direction LR
+node a shape=rect label="rect"
+node b shape=round label="round"
+node c shape=stadium label="stadium"
+node d shape=subroutine label="subroutine"
+node e shape=cylinder label="cylinder"
+node f shape=circle label="circle"
+node g shape=asymmetric label="asymmetric"
+node h shape=diamond label="diamond"
+node i shape=hexagon label="hexagon"
+node j shape=lean-right label="lean right"
+node k shape=lean-left label="lean left"
+node l shape=trapezoid label="trapezoid"
+node m shape=inv-trapezoid label="inverted"
+node n shape=double-circle label="double"
+node o shape=rect label="o"
+node p shape=rect label="quoted [text] here"
+node q shape=rect label="padded"
+node r shape=rect label=md:"**markdown**"/"two lines"
+node s shape=rect label="a"/"b"/"c"/"d"
+node t shape=rect label="\"x\" & # <y> é A"
+node u-v.w shape=rect label="dashes and dots"
+edge a -> b head=arrow tail=none line=normal len=1
+edge b -> c head=arrow tail=none line=normal len=1
+edge c -> d head=arrow tail=none line=normal len=1
+edge e -> f head=arrow tail=none line=normal len=1
+edge f -> g head=arrow tail=none line=normal len=1
+edge g -> h head=arrow tail=none line=normal len=1
+edge i -> j head=arrow tail=none line=normal len=1
+edge j -> k head=arrow tail=none line=normal len=1
+edge k -> l head=arrow tail=none line=normal len=1
+edge m -> n head=arrow tail=none line=normal len=1
+edge n -> o head=arrow tail=none line=normal len=1
+edge u-v.w -> a head=arrow tail=none line=normal len=1

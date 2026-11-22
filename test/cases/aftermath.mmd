@@ -1,0 +1,12 @@
+graph TD
+    Driver[ag_bota.adb] -->|Invokes| Generator[Aftermath_Generator - Process_Table]
+    Generator -->|Recurses| Interpreter[Process_Table_Internal]
+    Interpreter -->|Rolls| Dice[Roll_Specific_Die]
+    Interpreter -->|Validates| Mask[Exclusion_Mask Check]
+    Interpreter -->|Matches Bounds| Row[Table_Row]
+    Row -->|Iterates| Actions[Row Actions]
+    Actions -->|Executes| ActKind{Action_Kind}
+    ActKind -->|Add_Calculated| Context[Adventure_Context]
+    ActKind -->|Roll_Subtable| Interpreter
+    ActKind -->|Roll_And_Multiply| Interpreter
+    ActKind -->|Chance_Check| Interpreter

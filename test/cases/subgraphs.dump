@@ -1,0 +1,17 @@
+direction TB
+node a1 shape=rect label="a1" cluster=one
+node a2 shape=rect label="a2" cluster=one
+node b1 shape=rect label="b1" cluster=two
+node b2 shape=rect label="b2" cluster=two
+node c1 shape=rect label="c1" cluster=inner
+node d1 shape=rect label="d1" cluster=subGraph0
+node d2 shape=rect label="d2" cluster=subGraph1
+edge a1 -> a2 head=arrow tail=none line=normal len=1
+edge b1 -> b2 head=arrow tail=none line=normal len=1
+edge a1 -> d2 head=arrow tail=none line=normal len=1
+edge c1 -> a1 head=arrow tail=none line=normal len=1
+cluster one title="one" parent=-
+cluster inner title="Inner one" parent=two
+cluster two title="Second" parent=- direction=LR
+cluster subGraph0 title="Title With Spaces" parent=-
+cluster subGraph1 title="Quoted" parent=-

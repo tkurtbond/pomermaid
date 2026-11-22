@@ -1,0 +1,21 @@
+direction TB
+node Gems shape=rect label="Gems"/"(Room 10 - Banishment Key)" class=upper cluster=UPPER_LEVEL
+node Sue shape=rect label="SUE the T. rex"/"(Room 3 - Hazard)" class=upper cluster=UPPER_LEVEL
+node Plants shape=rect label="Plants of the World"/"(Room 7 - Labyrinth Shortcut)" class=upper cluster=UPPER_LEVEL
+node SFH shape=rect label="Stanley Field Hall"/"(Máximo / Survivors)" class=main cluster=MAIN_LEVEL
+node Egypt shape=rect label="Egypt"/"(Room 8 - The Rift)" class=main cluster=MAIN_LEVEL
+node Americas shape=rect label="Ancient Americas"/"(Room 2 - Totem Traps)" class=main cluster=MAIN_LEVEL
+node Theatre shape=rect label="Simpson Theatre"/"(Room I - Trapped Kids)" class=ground cluster=GROUND_LEVEL
+node Underground shape=rect label="Underground"/"(Room 2 - Kaiju Bugs)" class=ground cluster=GROUND_LEVEL
+edge Gems -> Sue head=arrow tail=arrow line=normal len=1
+edge SFH -> Egypt head=arrow tail=arrow line=normal len=1
+edge Theatre -> Underground head=arrow tail=arrow line=normal len=1
+edge Gems -> SFH head=arrow tail=arrow line=normal len=1
+edge SFH -> Theatre head=arrow tail=arrow line=normal len=1
+edge Plants -> Americas head=arrow tail=arrow line=normal len=1
+cluster UPPER_LEVEL title="UPPER LEVEL" parent=-
+cluster MAIN_LEVEL title="MAIN LEVEL" parent=-
+cluster GROUND_LEVEL title="GROUND LEVEL" parent=-
+classDef upper props=fill:"#f9f",stroke:"#333",stroke-width:"2px"
+classDef main props=fill:"#bbf",stroke:"#333",stroke-width:"2px"
+classDef ground props=fill:"#fbf",stroke:"#333",stroke-width:"2px"

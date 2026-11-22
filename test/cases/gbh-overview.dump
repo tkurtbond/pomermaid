@@ -1,0 +1,16 @@
+direction TB
+node A shape=rect label="Act I: The Drop & The Lockdown"
+node B shape=rect label="Act II: Explore & Rescue"
+node B1 shape=rect label="Upper Level: Hall of Gems - Find Banishment Key"
+node B2 shape=rect label="Main Level: Stanley Field Hall - Protect Survivors"
+node B3 shape=rect label="Ground Level: Simpson Theatre - Rescue Kids"
+node C shape=rect label="Act III: Confrontation & Banishment"
+node D shape=rect label="Mastaba Tomb of Unis-Ankh: Seal Void Sovereign & Arrest Drake"
+edge A -> B head=arrow tail=none line=normal len=1
+edge B -> B1 head=arrow tail=none line=normal len=1
+edge B -> B2 head=arrow tail=none line=normal len=1
+edge B -> B3 head=arrow tail=none line=normal len=1
+edge B1 -> C head=arrow tail=none line=normal len=1
+edge B2 -> C head=arrow tail=none line=normal len=1
+edge B3 -> C head=arrow tail=none line=normal len=1
+edge C -> D head=arrow tail=none line=normal len=1

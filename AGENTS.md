@@ -33,7 +33,8 @@ one silently: ask, then record the decision, dated, under
 
 ## Status
 
-As of 2026-11-22: Phase 1 (the skeleton) is done. See PLAN.md's
+As of 2026-11-22: Phases 1 (the skeleton) and 2 (the flowchart
+reader, `PmLex`, `PmFlow`, `PmDump`) are done. See PLAN.md's
 State.
 
 ## Reference material

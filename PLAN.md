@@ -34,7 +34,8 @@ reference material). Together they use:
   `class A,B name;`;
 - `%%` comments;
 - `<br>` and `<br/>` in labels, and non-ASCII text (`Máximo`);
-- cycles, including an edge from a node to itself.
+- cycles, and parallel edges: three labelled edges from one node to
+  the same other node (aftermath's `ActKind` to `Interpreter`).
 
 The first target is these features, drawn well, in all three writers
 (Phases 1 to 11). The rest of Mermaid's flowchart syntax and then every
@@ -192,7 +193,7 @@ is in place.
 `svg-ms`, or `out` for no `-t`). The program reads its input and stops
 with "no diagram reader yet" (64).
 
-### Phase 2: the flowchart reader
+### Phase 2: the flowchart reader [done]
 
 **Change:** `PmLex` and `PmFlow`: the features of "What the user's
 diagrams use"; the graph model; the default class and Mermaid's
@@ -203,7 +204,16 @@ default colours (nodes #ececff with #9370db, clusters #ffffde with
 files read and dumped; errors reported with line and column for bad
 input.
 
-**Done:** no.
+**Done:** 2026-11-22. `PmLex`, `PmFlow` and `PmDump`. The reader
+takes more than the user's diagrams use: every bracket shape, every
+edge form (normal, thick, dotted, invisible; arrow, circle and cross
+ends at either end; longer links; text as `|...|` or `-- ... -->`),
+`&` groups, chains, nested subgraphs with `direction`, `style`,
+`linkStyle`, `:::class`, entities, markdown strings and front matter;
+drawing the shapes and ends the user's diagrams do not use waits for
+Phase 10. The colours of the default class are the writers'
+(Phase 5). The tests are case tests of `-t dump` rather than unit
+tests.
 
 ### Phase 3: text metrics
 
@@ -425,3 +435,12 @@ No code yet; nothing committed.
 2026-11-22, Phase 1: `make` and `make test` pass under `-O2` and `-OC`:
 `PmIOTest` and 4 case tests (`--help`, `--version`, an unknown `-t`
 (22), two input files (6)).
+
+2026-11-22, Phase 2: `make test` passes under `-O2` and `-OC`:
+`PmIOTest` and 21 case tests. The three diagrams of the user's files
+(copied as `test/cases/gbh-overview.mmd`, `gbh-map.mmd` and
+`aftermath.mmd`), and `shapes`, `edges`, `subgraphs`, `styles` and
+`frontmatter`, are dumped; their expected `.dump` files are
+pomermaid's own output, checked by hand against Mermaid's grammar
+(`flow.jison`) and `flowDb.ts` (no Mermaid was run). Nine error cases
+give status 64 and `NAME:LINE:COL` messages.

@@ -1,0 +1,7 @@
+direction TB
+node A shape=rect label="A" class=hot,cold
+node B shape=rect label="B" class=cold style=fill:"#bbf",stroke:"#f66",stroke-dasharray:"5 5",color:"rgb(1,2,3)"
+edge A -> B head=arrow tail=none line=normal len=1 style=stroke:"#ff3",stroke-width:"4px"
+classDef hot props=fill:"#f96",stroke:"#333",stroke-width:"4px"
+classDef cold props=fill:"#f96",stroke:"#333",stroke-width:"4px"
+classDef default props=fill:"#fff"

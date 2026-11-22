@@ -1,0 +1,29 @@
+graph TD
+    %% Define styles for clarity
+    classDef upper fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef main fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef ground fill:#fbf,stroke:#333,stroke-width:2px;
+
+    subgraph UPPER_LEVEL ["UPPER LEVEL"]
+        Gems["Gems <br>(Room 10 - Banishment Key)"] <--> Sue["SUE the T. rex <br>(Room 3 - Hazard)"]
+        Plants["Plants of the World <br>(Room 7 - Labyrinth Shortcut)"]
+    end
+
+    subgraph MAIN_LEVEL ["MAIN LEVEL"]
+        SFH["Stanley Field Hall <br>(Máximo / Survivors)"] <--> Egypt["Egypt <br>(Room 8 - The Rift)"]
+        Americas["Ancient Americas <br>(Room 2 - Totem Traps)"]
+    end
+
+    subgraph GROUND_LEVEL ["GROUND LEVEL"]
+        Theatre["Simpson Theatre <br>(Room I - Trapped Kids)"] <--> Underground["Underground <br>(Room 2 - Kaiju Bugs)"]
+    end
+
+    %% Vertical Level Connections
+    Gems <--> SFH
+    SFH <--> Theatre
+    Plants <--> Americas
+
+    %% Apply Styles
+    class Gems,Sue,Plants upper;
+    class SFH,Egypt,Americas main;
+    class Theatre,Underground ground;
