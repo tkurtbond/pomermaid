@@ -435,7 +435,7 @@ BEGIN
     n := n.next
   END;
   W(".PE"); PmIO.WriteLn;
-  W(".ps \n[pm*ps]z"); PmIO.WriteLn;
+  W(".ps \n[pm*ps]u"); PmIO.WriteLn;
   W(".vs \n[pm*vs]u"); PmIO.WriteLn
 END Write;
 

@@ -52,5 +52,5 @@ box wid 1.685 ht 0.594 at (2.509, -5.921) shaded "pm-ffbbff" outlined "pm-333333
 box wid 1.531 ht 0.594 at (2.509, -6.949) shaded "pm-ffbbff" outlined "pm-333333" thickness 1.25
 "\f[TS]\m[pm-333333]Underground\m[]\f[]" "\f[TS]\m[pm-333333](Room 2 - Kaiju Bugs)\m[]\f[]"  at (2.509, -6.949)
 .PE
-.ps \n[pm*ps]z
+.ps \n[pm*ps]u
 .vs \n[pm*vs]u

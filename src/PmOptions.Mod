@@ -42,7 +42,7 @@ END Help;
 PROCEDURE ShowVersion(): BOOLEAN;
 BEGIN
   PmIO.WriteString("pomermaid "); PmIO.WriteString(Version); PmIO.WriteLn;
-  PmIO.WriteString("Mermaid diagrams in pic and MetaPost, in Oberon-2, built with poc."); PmIO.WriteLn;
+  PmIO.WriteString("Mermaid diagrams in pic, MetaPost and SVG, in Oberon-2, built with poc."); PmIO.WriteLn;
   done := TRUE;
   RETURN FALSE
 END ShowVersion;

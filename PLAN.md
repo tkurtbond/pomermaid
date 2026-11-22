@@ -398,7 +398,7 @@ subgraph's id. It differs from the plan in these ways:
   have no end.
 - An edge may cross a cluster's title, as in Mermaid.
 
-### Phase 8: SVG through groff
+### Phase 8: SVG through groff [done]
 
 **Change:** `PmSvg`, as "SVG" above: the groff page of the picture's
 size, the groff and `mutool` runs, `pdftocairo` as the fallback;
@@ -429,7 +429,7 @@ than 2 points (`PmPic.Widest`); links do not survive the converters,
 so Phase 10 writes them into the SVG. `tools/render` (`make render`)
 also writes each case as SVG and checks it with `xmllint`.
 
-### Phase 9: documentation and installation
+### Phase 9: documentation and installation [done]
 
 **Change:** `docs/user/pomermaid.md`: usage; what is supported; how to
 use the output from ms, mom, ConTeXt and HTML, and from pandoc and
@@ -439,7 +439,21 @@ differently from Mermaid. A man page if the user wants one.
 **Check:** `make install` into a scratch prefix; the examples in the
 documentation run.
 
-**Done:** no.
+**Done:** 2026-11-22. `docs/user/pomermaid.md` (what it needs,
+building, the options, the exit statuses, what it reads and what it
+does not yet, and its use from ms, mom, ConTeXt, HTML, pandoc and
+podoc, and how it finds fonts), `docs/user/differences.md`, and
+`docs/examples/pomermaid.lua`, a pandoc Lua filter that makes each
+`mermaid` block pic for ms, MetaPost for ConTeXt and SVG for HTML.
+`make install` installs the two documents and the filter in
+`$(DOCDIR)`. Found and fixed while checking the examples: the pic
+block restored the document's size with `.ps \n[pm*ps]z`, which
+groff reads as a thousand times the size; with two diagrams and no
+paragraph macro between them, the second was set at 10,000 points.
+It is now `u`. Also found: a pic file read with `.so` needs groff's
+`-s` (soelim) as well as `-p`, and podoc runs ConTeXt in a temporary
+directory, so a diagram `\input` there needs an absolute path; both
+are in the documentation. The man page is an open question.
 
 ### Phase 10: the rest of the flowchart syntax
 
@@ -514,7 +528,9 @@ Mermaid's documentation and record the Mermaid version it follows.
 These are the user's to decide. Each decision is recorded, dated,
 under "Decisions".
 
-None at present.
+11. **A man page** (Phase 9): should pomermaid have one,
+    `pomermaid.1`, written by hand in groff's `man` macros (or `mdoc`)
+    and installed by `make install`, beside `docs/user/pomermaid.md`?
 
 ## Decisions
 
@@ -661,3 +677,24 @@ of glyphs and lines, antialiased differently); `gbh-map` with mutool
 and with pdftocairo was looked at. A missing groff, mutool or
 pdftocairo gave 47, a failing groff or mutool 43, and no temporary
 directory was left behind. Links: see Phase 10.
+
+2026-11-22, Phase 9: `make test` passes under `-O2` and `-OC`:
+`PmIOTest`, `PmMetricsTest`, `PmLayoutTest`, `PmSvgTest` and 59 case
+tests (the `.pic` files and `version.out` regenerated for the `.ps`
+fix and the new version text). `make render` drew every case with
+groff 1.25.0 (`-wall`, no warning), ConTeXt LMTX and mutool. The
+documentation's examples were run: a diagram in ms (`groff -ms -p`,
+and with `.so` and `-s`), in mom (`pdfmom -p`, and `-s -p` with
+`.so`), in ConTeXt (inline, `\input`, `\startlinealignment[middle]`,
+`\startplacefigure`, and `--mp-macros=input` with the installed
+`pomermaid.mp` beside the document), and as SVG in an HTML page
+(drawn by headless Chromium); the Lua filter with pandoc 3.14, to ms
+(`groff -k -ms -p`, and `--pdf-engine=pdfroff --pdf-engine-opt=-p`
+with the system's groff 1.23.0), to ConTeXt (`--pdf-engine=context`)
+and to HTML, with two diagrams, `width` and `size` attributes,
+non-ASCII text and a code block of another class left as it was;
+podoc with raw `ms` and `context` blocks (`--pdf-engine=pdfroff` with
+`-s` and `-p`; ConTeXt with an absolute path). Each PDF and the page
+were looked at. `make install` and `make uninstall` with a scratch
+`PREFIX`, and with `DESTDIR`, install and remove the program, the
+macros and the documentation.

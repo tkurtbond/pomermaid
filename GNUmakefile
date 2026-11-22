@@ -103,12 +103,14 @@ install: $(BUILD)/$(MODEL)/pomermaid
 	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(DATADIR) $(DESTDIR)$(DOCDIR)
 	install -m 755 $(BUILD)/$(MODEL)/pomermaid $(DESTDIR)$(BINDIR)/pomermaid
 	install -m 644 mp/pomermaid.mp $(DESTDIR)$(DATADIR)
-	install -m 644 LICENSE $(DESTDIR)$(DOCDIR)
+	install -m 644 LICENSE docs/user/pomermaid.md docs/user/differences.md \
+	  docs/examples/pomermaid.lua $(DESTDIR)$(DOCDIR)
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/pomermaid
 	rm -f $(DESTDIR)$(DATADIR)/pomermaid.mp
-	rm -f $(DESTDIR)$(DOCDIR)/LICENSE
+	rm -f $(DESTDIR)$(DOCDIR)/LICENSE $(DESTDIR)$(DOCDIR)/pomermaid.md \
+	  $(DESTDIR)$(DOCDIR)/differences.md $(DESTDIR)$(DOCDIR)/pomermaid.lua
 	-rmdir $(DESTDIR)$(DATADIR) $(DESTDIR)$(DOCDIR)
 
 clean:

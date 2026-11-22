@@ -41,8 +41,11 @@ font files, `PmMetrics`), 4 (layout: `PmGeom`, `PmLayout`,
 `PmMp`, `-t mp`, with the macros `mp/pomermaid.mp`, made into
 `PmMpMacros` by `tools/mp2mod`; styles shared in `PmStyle`), 7
 (subgraphs: clusters in `PmLayout` and `pomermaid.mp`, boxes in both
-writers) and 8 (SVG through groff and mutool or pdftocairo: `PmSvg`,
-`PmRun`, `-t svg` and `-t svg-ms`) are done. See PLAN.md's State.
+writers), 8 (SVG through groff and mutool or pdftocairo: `PmSvg`,
+`PmRun`, `-t svg` and `-t svg-ms`) and 9 (the user documentation,
+`docs/user/pomermaid.md` and `docs/user/differences.md`, and the
+pandoc filter `docs/examples/pomermaid.lua`) are done. See PLAN.md's
+State.
 
 ## Reference material
 

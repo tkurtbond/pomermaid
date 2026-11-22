@@ -26,5 +26,5 @@ box wid 0.351 ht 0.427 at (0.175, -0.214) shaded "pm-ff9966" outlined "pm-333333
 box wid 0.351 ht 0.427 at (0.175, -1.075) shaded "pm-bbbbff" outlined "pm-ff6666" thickness 2.5 dashed 0.043
 "\f[TS]\m[pm-010203]B\m[]\f[]"  at (0.175, -1.075)
 .PE
-.ps \n[pm*ps]z
+.ps \n[pm*ps]u
 .vs \n[pm*vs]u
