@@ -1,0 +1,29 @@
+# A made-up font for PmMetricsTest, in groff_font(5)'s form: the old
+# form of charset lines (no "--") and groff 1.25's (with "-- XXXX").
+name TT
+spacewidth 250
+ligatures fi fl 0
+
+kernpairs
+A V -100
+V A -80
+f i 999
+f f -20
+A u0020 -50
+'e x -10
+
+charset
+---	600	0	1
+space	250	0	32	space
+A	700,600	2	65	A
+V	700,600	2	86	V
+f	300,600	2	102	f
+i	250,600	0	105	i
+l	250,600	2	108	l
+x	500,400	0	120	x
+-	330,250	0	45	hyphen
+hy	"
+'e	450,650	2	233	eacute
+u0107	460,650	2	263	cacute
+fi	550,600	2	174	fi	--	FB01
+Eu	700,600	2	128	Euro	--	20AC

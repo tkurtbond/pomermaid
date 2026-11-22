@@ -1,0 +1,25 @@
+ok   - load TT
+ok   - no font XX
+ok   - A at 10
+ok   - A at 1
+ok   - A at 10.5
+ok   - space
+ok   - kern AV
+ok   - kern VAV
+ok   - ligature fi
+ok   - no ligature ff
+ok   - f, kern f f, then fi
+ok   - fl: no glyph, so f and l
+ok   - hyphen and hy
+ok   - e acute by name, kerned
+ok   - u0107
+ok   - Euro from --
+ok   - unknown: half an em
+ok   - no kern across a space
+ok   - no kern before a space
+ok   - points
+ok   - rect, Mermaid's padding: width
+ok   - rect: height
+ok   - diamond: width
+ok   - diamond: height
+ok   - circle: diameter

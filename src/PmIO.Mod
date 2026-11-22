@@ -19,6 +19,7 @@ CONST
   ProgramError* = 43; (* groff or mutool failed *)
   ProgramNotFound* = 47; (* groff or mutool is not installed *)
   ParseError* = 64;   (* the diagram cannot be read *)
+  FontNotFound* = 97; (* --font names no font groff has (pandoc's data file not found) *)
 
   BufSize = 8192;
   ReadChunk = 65536;

@@ -1,0 +1,58 @@
+#!/bin/sh
+# checkwidths [FONT [SIZE]]
+#
+# Compares the widths PmMetrics gives lines of text with the widths
+# groff's \w gives them, in FONT (TR by default) at SIZE points (10),
+# through the groff in PATH and its devpdf fonts. Needs groff; make
+# test does not run it. Prints "ok   - " or "FAIL - " for each line.
+
+font=${1:-TR}
+size=${2:-10}
+POC=${POC:-poc}
+POCLIBDIR=${POCLIBDIR:-$HOME/.local/lib/poc}
+tmp=${TMPDIR:-/tmp}/checkwidths.$$
+mkdir -p "$tmp" || exit 2
+trap 'rm -rf "$tmp"' EXIT INT TERM
+
+"$POC" -OC -library-path "$POCLIBDIR" -import-path src -output-dir "$tmp" \
+  -o "$tmp/WidthCheck" tools/WidthCheck.Mod || exit 2
+
+cat > "$tmp/lines" <<'LINES'
+Act I: The Drop & The Lockdown
+Mastaba Tomb of Unis-Ankh: Seal Void Sovereign & Arrest Drake
+(Máximo / Survivors)
+AVATAR WAVE Type To. Yo, LT.
+office affluent efficient flight
+Ángel Éclair Ïle Øre Ñandú über straße
+Café Crème Brûlée — “quoted” ‘single’ – dash
+SUE the T. rex
+Aftermath_Generator - Process_Table
+A  B   C
+0123456789 +-*/=<>[]{}()
+LINES
+
+{ echo "$font $size"; cat "$tmp/lines"; } | "$tmp/WidthCheck" > "$tmp/ours" || exit 2
+
+# one \w per line, written to standard error by .tm
+{
+  echo ".ft $font"
+  echo ".ps $size"
+  while IFS= read -r line; do
+    printf '.nr w \\w\a%s\a\n.tm \\nw\n' "$line"
+  done < "$tmp/lines"
+} | groff -Tpdf -k -z 2> "$tmp/groff" || exit 2
+
+failed=0
+n=0
+while IFS= read -r line; do
+  n=$((n + 1))
+  ours=$(sed -n "${n}p" "$tmp/ours")
+  theirs=$(sed -n "${n}p" "$tmp/groff")
+  if [ "$ours" = "$theirs" ]; then
+    echo "ok   - $line ($ours)"
+  else
+    echo "FAIL - $line: pomermaid $ours, groff $theirs"
+    failed=$((failed + 1))
+  fi
+done < "$tmp/lines"
+[ $failed -eq 0 ]

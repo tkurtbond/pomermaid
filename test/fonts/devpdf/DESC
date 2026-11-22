@@ -1,0 +1,8 @@
+# A made-up device for PmMetricsTest: not a real font's numbers.
+res 72000
+hor 1
+vert 1
+sizescale 1000
+unitwidth 1000
+sizes 1000-10000000 0
+fonts 1 TT

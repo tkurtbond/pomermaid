@@ -215,7 +215,7 @@ Phase 10. The colours of the default class are the writers'
 (Phase 5). The tests are case tests of `-t dump` rather than unit
 tests.
 
-### Phase 3: text metrics
+### Phase 3: text metrics [done]
 
 **Change:** `PmMetrics`: read groff's `DESC` and font files; the width
 of a UTF-8 string in a font at a size, with groff's glyph names for
@@ -226,7 +226,24 @@ node sizes by shape, with Mermaid's padding. `--font` and `--size`
 **Check:** widths compared with groff's own, by `\w'...'` in a groff
 run, for ASCII and accented text.
 
-**Done:** no.
+**Done:** `PmMetrics` reads `DESC` (`res`, `unitwidth`, `sizescale`)
+and a font's `spacewidth`, `ligatures`, `kernpairs` and `charset`,
+in `devpdf/`, then `devps/`, of each directory of its path:
+`--font-path`, or else `GROFF_FONT_PATH`, the `site-font` and
+`current/font` of the groff in `PATH`, then `/usr/local`, `/usr/pkg`
+and `/usr`. A glyph's code point comes from groff 1.25's `-- XXXX`
+column, a one-character name, `uXXXX`, or a table of groff's names
+written from `groff_char(7)` (groff's own `glyphuni` table is GPL and
+was not copied). Words are set as groff sets them (`merge_glyph_node`):
+a character makes a ligature with the glyph before it or is kerned
+against it, so "ffi" in Times is f, the f–f kern and fi; nothing is
+kerned against a space (fonts have `. u0020` pairs that groff
+ignores); an unknown character counts half an em. `LabelSize` and
+`ShapeSize` (Mermaid's shapes and padding) size the nodes. `--font`
+(TR), `--size` (10) and `--font-path` are read and the font loaded
+for `-t pic` and `-t mp`; a missing font ends pomermaid with 97.
+`PmMetricsTest` checks a made-up font, `test/fonts`;
+`tools/checkwidths` and `make check-groff` compare widths with groff.
 
 ### Phase 4: layout
 
@@ -444,3 +461,12 @@ No code yet; nothing committed.
 pomermaid's own output, checked by hand against Mermaid's grammar
 (`flow.jison`) and `flowDb.ts` (no Mermaid was run). Nine error cases
 give status 64 and `NAME:LINE:COL` messages.
+
+2026-11-22, Phase 3: `make test` passes under `-O2` and `-OC`:
+`PmIOTest`, `PmMetricsTest` (25 checks against the made-up font
+`test/fonts/devpdf/TT`) and 23 case tests (new: `--size 10pt`, 6, and
+a missing font, 97). `make check-groff` passes: 11 lines (ASCII,
+Latin-1 accents, ligatures, kerns, typographic quotes and dashes,
+runs of spaces) give groff's `\w` width, to the unit, in TR 10, TI 9,
+HB 12 and CR 10.5, with groff 1.25.0 and with the system's 1.23.0
+(old charset lines); also in HR 7, TB 11 and HI 8 with 1.25.0.

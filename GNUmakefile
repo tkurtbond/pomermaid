@@ -35,7 +35,7 @@ SRCS := $(wildcard src/*.Mod)
 TESTS := $(patsubst test/%.Mod,%,$(wildcard test/*Test.Mod))
 CASES := $(wildcard test/cases/*)
 
-.PHONY: all test test-o2 test-oc install uninstall clean FORCE
+.PHONY: all test test-o2 test-oc check-groff install uninstall clean FORCE
 .SECONDEXPANSION:
 
 all: $(MODELS:%=$(BUILD)/%/pomermaid)
@@ -75,6 +75,12 @@ $(BUILD)/%.passed: $(SRCS) test/$$(notdir $$*).Mod test/$$(notdir $$*).expected 
 $(BUILD)/%/cases.passed: $(BUILD)/%/pomermaid $(CASES) tools/runcases
 	tools/runcases $(BUILD)/$*/pomermaid $(BUILD)/$*/cases
 	touch $@
+
+# PmMetrics' widths against groff's \w, in a few fonts and sizes.
+# Needs groff, so make test does not run it.
+check-groff:
+	set -e; for f in "TR 10" "TI 9" "HB 12" "CR 10.5"; do \
+	  POC=$(POC) POCLIBDIR=$(POCLIBDIR) tools/checkwidths $$f; done
 
 install: $(BUILD)/$(MODEL)/pomermaid
 	install -d $(DESTDIR)$(BINDIR) $(DESTDIR)$(DOCDIR)

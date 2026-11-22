@@ -33,8 +33,9 @@ one silently: ask, then record the decision, dated, under
 
 ## Status
 
-As of 2026-11-22: Phases 1 (the skeleton) and 2 (the flowchart
-reader, `PmLex`, `PmFlow`, `PmDump`) are done. See PLAN.md's
+As of 2026-11-22: Phases 1 (the skeleton), 2 (the flowchart
+reader, `PmLex`, `PmFlow`, `PmDump`) and 3 (text metrics from groff's
+font files, `PmMetrics`) are done. See PLAN.md's
 State.
 
 ## Reference material
@@ -89,8 +90,6 @@ AGENTS.md describes.
 
 ## Building and testing
 
-(To be set up in Phase 1, after podoc's pattern.)
-
 - `make` builds `pomermaid` under `-O2` and `-OC` in `build/O2` and
   `build/OC`.
 - `make test` runs the unit tests (`test/<Name>Test.Mod`, printing
@@ -99,6 +98,8 @@ AGENTS.md describes.
   `<name>.pic`, `<name>.mp` and, for SVG, the groff document
   `<name>.svg.ms` beside it), under both models. It
   must not need groff, ConTeXt or Mermaid's tools.
+- `make check-groff` (where groff is installed) compares the widths
+  `PmMetrics` gives with groff's `\w`, through `tools/checkwidths`.
 - `make render` (where groff and ConTeXt are installed) wraps the case
   tests' output in small ms and ConTeXt documents and makes PDFs, for
   looking at.
@@ -108,7 +109,8 @@ AGENTS.md describes.
 Errors the user can cause end pomermaid through `PmIO.Fail`, with
 podoc's status for the same kind of error: 1 input or output, 6 option
 error, 22 unknown output format, 43 a program (groff, mutool) failed,
-47 a program not found, 64 the diagram cannot be read. ArgParser ends
+47 a program not found, 64 the diagram cannot be read, 97 no such
+font. ArgParser ends
 with 2 on a bad option.
 
 ## Conventions

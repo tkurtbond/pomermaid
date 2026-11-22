@@ -3,7 +3,13 @@ pomermaid [OPTIONS] [FILE]
   -t <arg>, --to <arg>
       The output format: pic, mp, or dump (the diagram read, for tests).
   -o <arg>, --output <arg>
-      Write to FILE rather than standard output.
+      Write to this file rather than standard output.
+  --font <arg>
+      Set labels in this groff font (TR by default).
+  --size <arg>
+      Set labels at this size, in points (10 by default).
+  --font-path <arg>
+      Look for groff's fonts in these directories, separated by colons.
   -v, --version
       Show pomermaid's version.
   -h, --help
