@@ -344,10 +344,32 @@ BEGIN
   Text(l.nodeLabel[n.index], x, y, st.text)
 END DrawNode;
 
+(* Cluster c's box, its title at its top *)
+PROCEDURE DrawCluster(l: FL.Layout; c: INTEGER; VAR st: Style);
+  VAR lc: L.Cluster;
+BEGIN
+  lc := l.g.cluster[c];
+  IF lc.w > 0 THEN
+    W("box wid "); In(lc.w); W(" ht "); In(lc.h); At(lc.x, lc.y); Paint(st, TRUE); PmIO.WriteLn;
+    Text(l.clusterLabel[c], lc.titleX, lc.titleY, st.text)
+  END
+END DrawCluster;
+
 (* Writes l's flowchart in pic, its labels in the groff font font *)
 PROCEDURE Write*(l: FL.Layout; font: ARRAY OF CHAR);
   VAR
-    g: F.Graph; n: F.Node; e: F.Edge; ns, es: Styles; back, k: INTEGER;
+    g: F.Graph; n: F.Node; e: F.Edge; ns, es, cs: Styles; back, k: INTEGER;
+    cn: POINTER TO ARRAY OF F.Node;
+
+  PROCEDURE DrawClusters(c: INTEGER);  (* c, then those it holds *)
+    VAR d: INTEGER;
+  BEGIN
+    DrawCluster(l, c, cs[c]);
+    FOR d := 0 TO l.g.nClusters - 1 DO
+      IF l.g.cluster[d].parent = c THEN DrawClusters(d) END
+    END
+  END DrawClusters;
+
 BEGIN
   g := l.graph; COPY(font, fontName);
   px := l.size / 16; S.Reset(px);
@@ -356,6 +378,14 @@ BEGIN
   WHILE n # NIL DO S.NodeStyle(g, n, ns[n.index]); n := n.next END;
   e := g.edges;
   WHILE e # NIL DO S.EdgeStyle(e, es[e.index]); e := e.next END;
+  NEW(cs, g.nClusters + 1); NEW(cn, g.nClusters + 1);
+  FOR k := 0 TO g.nClusters - 1 DO cn[k] := NIL END;
+  n := g.nodes;
+  WHILE n # NIL DO
+    IF l.stands[n.index] >= 0 THEN cn[l.stands[n.index]] := n END;
+    n := n.next
+  END;
+  FOR k := 0 TO g.nClusters - 1 DO S.ClusterStyle(g, cn[k], cs[k]) END;
   back := S.Colour(S.LabelBack);
   FOR k := 0 TO S.nColours - 1 DO
     W(".defcolor pm-"); Hex(S.Rgb(k), 6); W(" rgb #"); Hex(S.Rgb(k), 6); PmIO.WriteLn
@@ -367,12 +397,19 @@ BEGIN
   W(".PS"); PmIO.WriteLn;
   W("maxpswid = 1000; maxpsht = 1000"); PmIO.WriteLn;
   W("arrowht = "); In(8 * px); W("; arrowwid = "); In(8 * px); PmIO.WriteLn;
+  (* the clusters, each before those it holds *)
+  FOR k := 0 TO g.nClusters - 1 DO
+    IF l.g.cluster[k].parent < 0 THEN DrawClusters(k) END
+  END;
   e := g.edges;
   WHILE e # NIL DO DrawEdge(e, l.g.edge[e.index], es[e.index]); e := e.next END;
   e := g.edges;
   WHILE e # NIL DO DrawLabel(l, e, l.g.edge[e.index], es[e.index], back); e := e.next END;
   n := g.nodes;
-  WHILE n # NIL DO DrawNode(l, n, ns[n.index]); n := n.next END;
+  WHILE n # NIL DO
+    IF l.g.node[n.index].kind # L.Hidden THEN DrawNode(l, n, ns[n.index]) END;
+    n := n.next
+  END;
   W(".PE"); PmIO.WriteLn;
   W(".ps \n[pm*ps]z"); PmIO.WriteLn;
   W(".vs \n[pm*vs]u"); PmIO.WriteLn

@@ -1,15 +1,18 @@
-layout direction TB width=381.93 height=276.75
-node Gems rank=0 order=0 x=111.45 y=27.38 w=134.45 h=42.75
-node Sue rank=2 order=0 x=45.83 y=107.38 w=91.65 h=42.75
-node Plants rank=0 order=1 x=324.4 y=27.38 w=106.45 h=54.75
-node SFH rank=2 order=1 x=177.08 y=107.38 w=108.35 h=42.75
-node Egypt rank=4 order=0 x=105.95 y=181.38 w=100.65 h=42.75
-node Americas rank=2 order=2 x=324.4 y=107.38 w=115.05 h=42.75
-node Theatre rank=4 order=1 x=248.2 y=181.38 w=121.35 h=42.75
-node Underground rank=6 order=0 x=248.2 y=255.38 w=110.25 h=42.75
-edge Gems -> Sue points=(78.83,48.75) (78.83,54.75) (78.83,54.75) (45.83,70.38) (45.83,86)
-edge SFH -> Egypt points=(135.99,128.75) (105.95,144.38) (105.95,160)
-edge Theatre -> Underground points=(248.2,202.75) (248.2,218.38) (248.2,234)
-edge Gems -> SFH points=(144.07,48.75) (144.07,54.75) (144.07,54.75) (177.08,70.38) (177.08,86)
-edge SFH -> Theatre points=(218.16,128.75) (248.2,144.38) (248.2,160)
-edge Plants -> Americas points=(324.4,54.75) (324.4,70.38) (324.4,86)
+layout direction TB width=369.7 height=531.06
+node Gems rank=0 order=1 x=110.69 y=53.44 w=134.45 h=42.75
+node Sue rank=2 order=1 x=76.84 y=133.44 w=91.65 h=42.75
+node Plants rank=0 order=2 x=291.86 y=53.44 w=106.45 h=54.75
+node SFH rank=4 order=1 x=144.54 y=242.88 w=108.35 h=42.75
+node Egypt rank=6 order=1 x=108.44 y=316.88 w=100.65 h=42.75
+node Americas rank=4 order=2 x=291.86 y=242.88 w=115.05 h=42.75
+node Theatre rank=8 order=1 x=180.64 y=426.31 w=121.35 h=42.75
+node Underground rank=10 order=1 x=180.64 y=500.31 w=110.25 h=42.75
+edge Gems -> Sue points=(93.86,74.81) (93.86,80.81) (93.86,80.81) (76.84,96.44) (76.84,112.06)
+edge SFH -> Egypt points=(123.68,264.25) (108.44,279.88) (108.44,295.5)
+edge Theatre -> Underground points=(180.64,447.69) (180.64,463.31) (180.64,478.94)
+edge Gems -> SFH points=(127.51,74.81) (127.51,80.81) (127.51,80.81) (144.54,96.44) (144.54,133.44) (144.54,179.81) (144.54,221.5)
+edge SFH -> Theatre points=(165.39,264.25) (180.64,279.88) (180.64,316.88) (180.64,363.25) (180.64,404.94)
+edge Plants -> Americas points=(291.86,80.81) (291.86,96.44) (291.86,133.44) (291.86,179.81) (291.86,221.5)
+cluster UPPER_LEVEL x=182.7 y=82.09 w=365.4 h=164.19 title=(182.7,10.69)
+cluster MAIN_LEVEL x=202.79 y=271.53 w=333.83 h=152.19 title=(202.79,206.13)
+cluster GROUND_LEVEL x=180.64 y=454.97 w=161.98 h=152.19 title=(180.64,389.56)

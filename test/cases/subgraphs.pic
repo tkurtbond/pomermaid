@@ -1,0 +1,46 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-ffffde rgb #ffffde
+.defcolor pm-aaaa33 rgb #aaaa33
+.defcolor pm-e8e8e8 rgb #e8e8e8
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box wid 1.364 ht 1.78 at (1.392, -3.597) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-333333]one\m[]\f[]"  at (1.392, -2.855)
+box wid 2.095 ht 2.273 at (1.047, -1.136) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-333333]Second\m[]\f[]"  at (1.047, -0.148)
+box wid 0.852 ht 0.919 at (1.539, -0.822) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-333333]Inner one\m[]\f[]"  at (1.539, -0.51)
+box wid 1.401 ht 0.919 at (3.229, -0.822) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-333333]Title With Spaces\m[]\f[]"  at (3.229, -0.51)
+box wid 0.961 ht 0.919 at (1.692, -5.381) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-333333]Quoted\m[]\f[]"  at (1.692, -5.069)
+spline -> from (1.317, -3.496) to (1.19, -3.713) to (1.19, -3.93) outlined "pm-333333" thickness 1.25
+spline -> from (0.48, -1.151) to (0.48, -1.498) to (0.48, -1.715) outlined "pm-333333" thickness 1.25
+spline -> from (1.566, -3.496) to (1.692, -3.713) to (1.692, -4.143) to (1.692, -4.704) \
+  to (1.692, -5.283) outlined "pm-333333" thickness 1.25
+spline -> from (1.502, -1.151) to (1.441, -1.498) to (1.441, -1.929) to (1.441, -2.49) \
+  to (1.441, -3.069) outlined "pm-333333" thickness 1.25
+box wid 0.397 ht 0.427 at (1.441, -3.282) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]a1\m[]\f[]"  at (1.441, -3.282)
+box wid 0.397 ht 0.427 at (1.19, -4.143) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]a2\m[]\f[]"  at (1.19, -4.143)
+box wid 0.397 ht 0.427 at (0.48, -0.938) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]b1\m[]\f[]"  at (0.48, -0.938)
+box wid 0.397 ht 0.427 at (0.48, -1.929) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]b2\m[]\f[]"  at (0.48, -1.929)
+box wid 0.397 ht 0.427 at (1.539, -0.938) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]c1\m[]\f[]"  at (1.539, -0.938)
+box wid 0.397 ht 0.427 at (3.229, -0.938) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]d1\m[]\f[]"  at (3.229, -0.938)
+box wid 0.397 ht 0.427 at (1.692, -5.497) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]d2\m[]\f[]"  at (1.692, -5.497)
+.PE
+.ps \n[pm*ps]z
+.vs \n[pm*vs]u

@@ -276,6 +276,43 @@ BEGIN
   Check("diamond: a side", R(x) * 10000 + R(y), R(20 / 3) * 10000 + R(20 / 3))
 END Geometry;
 
+(* Whether cluster c is cluster d or holds it *)
+PROCEDURE Holds(g: L.Graph; c, d: INTEGER): BOOLEAN;
+BEGIN
+  WHILE (d # c) & (d >= 0) DO d := g.cluster[d].parent END;
+  RETURN d = c
+END Holds;
+
+(* The faults of g's clusters: a node held by a cluster outside its box,
+   a node not held by it overlapping the box, a cluster's box not inside
+   its parent's *)
+PROCEDURE ClusterFaults(g: L.Graph): INTEGER;
+  VAR i, c, n: INTEGER; a: L.Node; k, p: L.Cluster;
+BEGIN
+  n := 0;
+  FOR c := 0 TO g.nClusters - 1 DO
+    k := g.cluster[c];
+    IF k.minRank >= 0 THEN
+      FOR i := 0 TO g.nReal - 1 DO
+        a := g.node[i];
+        IF a.kind # L.Hidden THEN
+          IF (a.cluster >= 0) & Holds(g, c, a.cluster) THEN
+            IF (ABS(a.x - k.x) > (k.w - a.w) / 2 + 0.01)
+               OR (ABS(a.y - k.y) > (k.h - a.h) / 2 + 0.01) THEN INC(n) END
+          ELSIF Overlap(a.x, a.y, a.w, a.h, k.x, k.y, k.w, k.h) THEN INC(n)
+          END
+        END
+      END;
+      IF k.parent >= 0 THEN
+        p := g.cluster[k.parent];
+        IF (ABS(k.x - p.x) > (p.w - k.w) / 2 + 0.01)
+           OR (ABS(k.y - p.y) > (p.h - k.h) / 2 + 0.01) THEN INC(n) END
+      END
+    END
+  END;
+  RETURN n
+END ClusterFaults;
+
 (* The user's diagram name, laid out in each direction *)
 PROCEDURE Diagram(name: ARRAY OF CHAR);
   VAR
@@ -297,7 +334,17 @@ BEGIN
     END;
     COPY(msg, msg2);
     Append(msg, ": no overlaps"); Check(msg, o, 0);
-    Append(msg2, ": no crossings"); Check(msg2, c, 0)
+    Append(msg2, ": no crossings"); Check(msg2, c, 0);
+    IF l.g.nClusters > 0 THEN
+      COPY(name, msg);
+      CASE d OF
+        F.TB: Append(msg, " TB") | F.BT: Append(msg, " BT")
+      | F.LR: Append(msg, " LR") | F.RL: Append(msg, " RL")
+      END;
+      COPY(msg, msg2);
+      Append(msg, ": clusters hold their nodes"); Check(msg, ClusterFaults(l.g), 0);
+      Append(msg2, ": ranks bounded"); Check(msg2, B(l.g.nRanks <= 4 * l.g.nReal), 1)
+    END
   END
 END Diagram;
 
@@ -308,5 +355,6 @@ BEGIN
   M.SetPath("../../../test/fonts");
   Check("load TS", B(M.Load("TS", font)), 1);
   Diagram("gbh-overview"); Diagram("gbh-map"); Diagram("aftermath");
-  Diagram("edges"); Diagram("shapes")
+  Diagram("edges"); Diagram("shapes"); Diagram("subgraphs");
+  Diagram("subgraph-edges")
 END PmLayoutTest.

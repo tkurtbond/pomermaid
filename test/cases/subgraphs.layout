@@ -1,0 +1,17 @@
+layout direction TB width=282.94 height=420.5
+node a1 rank=4 order=1 x=103.76 y=236.31 w=28.55 h=30.75
+node a2 rank=6 order=1 x=85.69 y=298.31 w=28.55 h=30.75
+node b1 rank=0 order=1 x=34.59 y=67.5 w=28.55 h=30.75
+node b2 rank=2 order=1 x=34.59 y=138.88 w=28.55 h=30.75
+node c1 rank=0 order=3 x=110.79 y=67.5 w=28.55 h=30.75
+node d1 rank=0 order=7 x=232.51 y=67.5 w=28.55 h=30.75
+node d2 rank=8 order=1 x=121.84 y=395.75 w=28.55 h=30.75
+edge a1 -> a2 points=(94.8,251.69) (85.69,267.31) (85.69,282.94)
+edge b1 -> b2 points=(34.59,82.88) (34.59,107.88) (34.59,123.5)
+edge a1 -> d2 points=(112.73,251.69) (121.84,267.31) (121.84,298.31) (121.84,338.69) (121.84,380.38)
+edge c1 -> a1 points=(108.11,82.88) (103.76,107.88) (103.76,138.88) (103.76,179.25) (103.76,220.94)
+cluster one x=100.19 y=258.97 w=98.19 h=128.19 title=(100.19,205.56)
+cluster inner x=110.79 y=59.16 w=61.35 h=66.19 title=(110.79,36.75)
+cluster two x=75.42 y=81.81 w=150.84 h=163.63 title=(75.42,10.69)
+cluster subGraph0 x=232.51 y=59.16 w=100.85 h=66.19 title=(232.51,36.75)
+cluster subGraph1 x=121.84 y=387.41 w=69.17 h=66.19 title=(121.84,365)

@@ -170,7 +170,7 @@ END Pt;
    and size, then each edge's points and its label's centre, in
    points, rounded to 2 decimals *)
 PROCEDURE WriteLayout*(l: FL.Layout);
-  VAR n: F.Node; e: F.Edge; ln: L.Node; le: L.Edge; i: INTEGER;
+  VAR n: F.Node; e: F.Edge; c: F.Cluster; ln: L.Node; le: L.Edge; lc: L.Cluster; i: INTEGER;
 BEGIN
   PmIO.WriteString("layout direction "); Dir(l.graph.dir);
   Num("width", l.g.width); Num("height", l.g.height); PmIO.WriteLn;
@@ -178,6 +178,7 @@ BEGIN
   WHILE n # NIL DO
     ln := l.g.node[n.index];
     PmIO.WriteString("node "); PmIO.WriteString(n.id^);
+    IF ln.kind = L.Hidden THEN PmIO.WriteString(" hidden") END;
     PmIO.WriteString(" rank="); PmIO.WriteInt(ln.rank);
     PmIO.WriteString(" order="); PmIO.WriteInt(ln.order);
     Num("x", ln.x); Num("y", ln.y); Num("w", ln.w); Num("h", ln.h);
@@ -198,6 +199,19 @@ BEGIN
     IF le.hasLabel THEN PmIO.WriteString(" label="); Pt(le.labelX, le.labelY) END;
     PmIO.WriteLn;
     e := e.next
+  END;
+  c := l.graph.clusters;
+  WHILE c # NIL DO
+    lc := l.g.cluster[c.index];
+    PmIO.WriteString("cluster "); PmIO.WriteString(c.id^);
+    IF lc.w > 0 THEN
+      Num("x", lc.x); Num("y", lc.y); Num("w", lc.w); Num("h", lc.h);
+      PmIO.WriteString(" title="); Pt(lc.titleX, lc.titleY)
+    ELSE
+      PmIO.WriteString(" empty")
+    END;
+    PmIO.WriteLn;
+    c := c.next
   END
 END WriteLayout;
 

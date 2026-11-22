@@ -1,6 +1,6 @@
 MODULE PmStyle;
-(* PmStyle: the colours, line widths and dashes of a flowchart's nodes
-   and edges, for the writers. They are Mermaid's default theme's, with
+(* PmStyle: the colours, line widths and dashes of a flowchart's nodes,
+   edges and subgraphs, for the writers. They are Mermaid's default theme's, with
    lengths in Mermaid's pixels scaled to the labels' size (16 pixels to
    the size), changed by classDef "default", the node's classes and its
    style statements, in that order, and by linkStyle for edges.
@@ -17,6 +17,7 @@ CONST
   NodeFill = 0ECECFFH; NodeLine = 09370DBH; TextColour = 0333333H;
   EdgeLine = 0333333H;
   LabelBack* = 0E8E8E8H;  (* behind an edge's label *)
+  ClusterFill = 0FFFFDEH; ClusterLine = 0AAAA33H;
 
 TYPE
   Style* = RECORD
@@ -234,6 +235,21 @@ BEGIN
   WHILE c # NIL DO ApplyClass(g, st, c.name^); c := c.next END;
   Apply(st, n.style)
 END NodeStyle;
+
+(* st, a subgraph's style: Mermaid's default theme's, then the classes
+   and style statements of n, the node with the subgraph's id, if not
+   NIL *)
+PROCEDURE ClusterStyle*(g: F.Graph; n: F.Node; VAR st: Style);
+  VAR c: F.Name;
+BEGIN
+  st.fill := Colour(ClusterFill); st.line := Colour(ClusterLine); st.text := Colour(TextColour);
+  st.width := px; st.dash := 0;
+  IF n # NIL THEN
+    c := n.classes;
+    WHILE c # NIL DO ApplyClass(g, st, c.name^); c := c.next END;
+    Apply(st, n.style)
+  END
+END ClusterStyle;
 
 (* st, edge e's style: Mermaid's default theme for its kind of line,
    then its linkStyle *)

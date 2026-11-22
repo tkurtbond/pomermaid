@@ -39,8 +39,9 @@ font files, `PmMetrics`), 4 (layout: `PmGeom`, `PmLayout`,
 `PmFlowLayout`, written by `-t layout`), 5 (the pic writer,
 `PmPic`, `-t pic`; `make render`) and 6 (the MetaPost writer,
 `PmMp`, `-t mp`, with the macros `mp/pomermaid.mp`, made into
-`PmMpMacros` by `tools/mp2mod`; styles shared in `PmStyle`) are done. See PLAN.md's
-State.
+`PmMpMacros` by `tools/mp2mod`; styles shared in `PmStyle`) and 7
+(subgraphs: clusters in `PmLayout` and `pomermaid.mp`, boxes in both
+writers) are done. See PLAN.md's State.
 
 ## Reference material
 

@@ -357,7 +357,7 @@ plan in these ways:
 - `make render` draws each case with ConTeXt too, at a 12 point and an
   8 point body font, in `build/render/cases-context.pdf`.
 
-### Phase 7: subgraphs
+### Phase 7: subgraphs [done]
 
 **Change:** clusters in `PmLayout` and `pomermaid.mp`: the nodes of a
 subgraph kept together, in rank and in order; nested subgraphs; edges
@@ -367,7 +367,30 @@ to and from a subgraph's id; the cluster box and title in all writers;
 **Check:** the Galactic-Bounty-Hunters diagrams, whose subgraphs are
 the floors of a building; case tests; PDFs from pic and MetaPost.
 
-**Done:** no.
+**Done:** `PmLayout` has clusters, as dagre has them: each subgraph is a
+cluster; its nodes are kept on consecutive ranks below its title
+(`Stack`, which lowers a cluster below another it has an edge from),
+and together in each rank between two border nodes, so that ordering
+never puts another node between them. The ranks' heights make room for
+each cluster's title and padding, nested clusters adding theirs; along
+the ranks, `Repair` keeps the borders apart and the box at least as
+wide as its title. `PmFlowLayout` makes a node with a subgraph's id,
+where the subgraph holds nodes, stand for it, as Mermaid does: the
+node is hidden, an edge to it is laid out to the subgraph's first node,
+and its route is cut where it meets the subgraph's box. `PmPic` and
+`pomermaid.mp` draw each box, parents first, with its title at the
+top (at the left in LR and RL), styled by `classDef` and `class` on the
+subgraph's id. It differs from the plan in these ways:
+- `direction` inside a subgraph is read but not laid out yet: Mermaid
+  honours it only for a subgraph no edge crosses, laying that subgraph
+  out on its own. It moves to Phase 10.
+- A subgraph that holds no node has no box (Mermaid draws an empty
+  one).
+- Clusters that edges join both ways, directly or through a cycle, are
+  not stacked: their nodes are ranked by the edges alone, and the
+  boxes may stand side by side or overlap in rank. Stacking them would
+  have no end.
+- An edge may cross a cluster's title, as in Mermaid.
 
 ### Phase 8: SVG through groff
 
@@ -407,6 +430,7 @@ documentation run.
 `(((double circle)))`, and the `@{ shape: ... }` form with its named
 shapes), the other edges (`---`, `-.->`, `==>`, `--o`, `--x`, `~~~`,
 longer arrows for longer edges, `-- text -->` labels, `&`), `style`,
+`direction` inside a subgraph (moved from Phase 7),
 `linkStyle`, `:::class`, `%%{init: ...}%%` as far as it sets
 direction, curves and colours; markdown strings in labels as far as
 each writer can set them; `click` and `href`, kept as links in SVG if
@@ -579,3 +603,21 @@ error; each page was looked at: the labels fit their boxes at both
 sizes, nothing overlaps, and the shapes, heads, markers, dashes,
 self-loops and styles are drawn as with `-t pic`. Two diagrams in one
 document, with the macros inline, also work.
+
+2026-11-22, Phase 7: `make test` passes under `-O2` and `-OC`:
+`PmIOTest`, `PmMetricsTest`, `PmLayoutTest` (new: `subgraphs` and
+`subgraph-edges` in each direction: no overlaps or crossings, every
+node inside each cluster that holds it and no other node overlapping
+the box, each box inside its parent's, and no more ranks than four
+per node) and 55 case tests (new: `-t layout`, `-t pic` and `-t mp`
+for `subgraphs`, `subgraph-edges` (LR, with edges to and from
+subgraphs and clusters on a cycle), `subgraph-edges-tb` and
+`subgraphs-bt`; the `gbh-map` layout, pic and mp regenerated, now with
+its three floors as boxes; every `.mp` regenerated for `pm_begin`'s
+and `pm_edge`'s new arguments). The `-O2` and `-OC` outputs are the
+same. `tools/render` drew `subgraphs`, `subgraphs-bt`,
+`subgraph-edges`, `subgraph-edges-tb` and `gbh-map` with groff 1.25.0
+and with ConTeXt LMTX; each page was looked at: the boxes hold their
+nodes, nested boxes nest, titles sit inside their boxes, edges to a
+subgraph end at its box, and the ConTeXt drawings match groff's. Not
+compared with Mermaid's own drawings.

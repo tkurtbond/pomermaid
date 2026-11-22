@@ -1,0 +1,20 @@
+layout direction LR width=245.45 height=205.41
+node c1 rank=0 order=4 x=23.65 y=163.47 w=28.55 h=30.75
+node a2 rank=2 order=1 x=83.45 y=50.28 w=28.55 h=30.75
+node a1 rank=0 order=1 x=23.65 y=50.28 w=28.55 h=30.75
+node b1 rank=4 order=1 x=162 y=50.28 w=28.55 h=30.75
+node b2 rank=6 order=1 x=221.8 y=44.03 w=28.55 h=30.75
+node c2 rank=6 order=4 x=221.8 y=169.72 w=28.55 h=30.75
+node one hidden rank=0 order=0 x=0 y=117.34 w=0 h=0
+node two hidden rank=0 order=0 x=0 y=117.34 w=0 h=0
+node three hidden rank=0 order=0 x=0 y=117.34 w=0 h=0
+edge c1 -> a2 points=(37.93,154.83) (53.55,145.38) (69.18,65.66)
+edge a1 -> a2 points=(37.93,50.28) (53.55,50.28) (69.18,50.28)
+edge b1 -> b2 points=(176.28,47.3) (191.9,44.03) (207.53,44.03)
+edge c1 -> c2 points=(37.93,166.77) (53.55,170.38) (83.45,169.72) (122.73,169.72) (162,169.72) (191.9,169.72) (207.53,169.72)
+edge one -> two points=(107.1,50.28) (122.73,50.28) (138.35,50.28)
+edge three -> two points=(133.07,119.31) (142.18,85.97)
+edge two -> c2 points=(196.44,85.97) (207.53,154.34)
+cluster one x=53.55 y=46.11 w=107.1 h=79.72 title=(53.55,16.94)
+cluster two x=191.9 y=42.98 w=107.1 h=85.97 title=(191.9,10.69)
+cluster three x=122.73 y=162.36 w=245.45 h=86.09 title=(122.73,130)

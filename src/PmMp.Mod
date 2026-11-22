@@ -7,7 +7,9 @@ MODULE PmMp;
    calls of the macros (see mp/pomermaid.mp): each node of the layout,
    dummies too, with its rank, its place in its rank, where the estimate
    put it along the rank, its shape and label; each edge with its nodes
-   and dummies; the styles, as PmStyle's. The macros set the labels in
+   and dummies; each subgraph, a cluster of the layout, with its ranks
+   and its title, its borders as nodes of the layout; the styles, as
+   PmStyle's. The macros set the labels in
    the document's font and do the rest, so the drawing fits the
    document's labels, not the estimate's.
 
@@ -81,7 +83,8 @@ END Style;
 PROCEDURE Write*(l: FL.Layout; maxW: REAL; input: BOOLEAN);
   VAR
     g: F.Graph; lg: L.Graph; n: F.Node; e: F.Edge; ln: L.Node; le: L.Edge;
-    v, k, j: INTEGER; rgb: LONGINT; nst, est: POINTER TO ARRAY OF S.Style;
+    v, k, j: INTEGER; rgb: LONGINT; nst, est, cst: POINTER TO ARRAY OF S.Style;
+    cn: POINTER TO ARRAY OF F.Node; lc: L.Cluster;
 BEGIN
   g := l.graph; lg := l.g;
   S.Reset(l.size / 16);
@@ -90,17 +93,31 @@ BEGIN
   WHILE n # NIL DO S.NodeStyle(g, n, nst[n.index]); n := n.next END;
   e := g.edges;
   WHILE e # NIL DO S.EdgeStyle(e, est[e.index]); e := e.next END;
+  NEW(cst, g.nClusters + 1); NEW(cn, g.nClusters + 1);
+  FOR k := 0 TO g.nClusters - 1 DO cn[k] := NIL END;
+  n := g.nodes;
+  WHILE n # NIL DO
+    IF l.stands[n.index] >= 0 THEN cn[l.stands[n.index]] := n END;
+    n := n.next
+  END;
+  FOR k := 0 TO g.nClusters - 1 DO S.ClusterStyle(g, cn[k], cst[k]) END;
   W("\startMPcode"); PmIO.WriteLn;
   IF input THEN W("input pomermaid ;"); PmIO.WriteLn ELSE PmMpMacros.Write END;
   W("pm_begin("); I(lg.dir); C; R(l.size); C; R(maxW); C; I(lg.nNodes); C;
-  I(lg.nEdges); C; I(lg.nRanks); W(");"); PmIO.WriteLn;
+  I(lg.nEdges); C; I(lg.nRanks); C; I(lg.nClusters); W(");"); PmIO.WriteLn;
   FOR k := 0 TO S.nColours - 1 DO
     rgb := S.Rgb(k);
     W("pm_colour("); I(k); C; PmIO.WriteReal(rgb DIV 10000H / 255, 4); C;
     PmIO.WriteReal(rgb DIV 100H MOD 100H / 255, 4); C;
     PmIO.WriteReal(rgb MOD 100H / 255, 4); W(");"); PmIO.WriteLn
   END;
-  (* the nodes, then the dummies *)
+  FOR k := 0 TO lg.nClusters - 1 DO
+    lc := lg.cluster[k];
+    W("pm_cluster("); I(k); C; I(lc.parent); C; I(lc.minRank); C; I(lc.maxRank); C;
+    Label(l.clusterLabel[k]); W(");"); PmIO.WriteLn;
+    W("pm_cstyle("); I(k); C; Style(cst[k], TRUE); W(");"); PmIO.WriteLn
+  END;
+  (* the nodes, then the dummies and borders *)
   n := g.nodes;
   FOR v := 0 TO lg.nNodes - 1 DO
     ln := lg.node[v];
@@ -110,6 +127,8 @@ BEGIN
       WHILE n.index # v DO n := n.next END;
       I(n.shape); C; I(ln.edge); C; Label(l.nodeLabel[v]); W(");"); PmIO.WriteLn;
       W("pm_style("); I(v); C; Style(nst[v], TRUE); W(");")
+    ELSIF (ln.kind = L.LeftBorder) OR (ln.kind = L.RightBorder) THEN
+      W("0, "); I(ln.cluster); W(', "");')
     ELSE
       W("0, "); I(ln.edge); W(', "");')
     END;
@@ -118,7 +137,7 @@ BEGIN
   e := g.edges;
   WHILE e # NIL DO
     j := e.index; le := lg.edge[j];
-    W("pm_edge("); I(j); C; I(le.from); C; I(le.to); C;
+    W("pm_edge("); I(j); C; I(le.from); C; I(le.to); C; I(le.fromC); C; I(le.toC); C;
     IF le.reversed THEN W("1") ELSE W("0") END; C;
     I(le.labelNode); C; I(e.head); C; I(e.tail); C;
     IF e.line = F.Invisible THEN W("0") ELSE W("1") END; C;
