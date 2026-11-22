@@ -1,0 +1,56 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p547.06p,373.7p
+.pl 547.06p
+.po 2p
+.ll 369.7p
+.sp 2p
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-ff99ff rgb #ff99ff
+.defcolor pm-bbbbff rgb #bbbbff
+.defcolor pm-ffbbff rgb #ffbbff
+.defcolor pm-ffffde rgb #ffffde
+.defcolor pm-aaaa33 rgb #aaaa33
+.defcolor pm-e8e8e8 rgb #e8e8e8
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box wid 5.075 ht 2.28 at (2.537, -1.14) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-333333]UPPER LEVEL\m[]\f[]"  at (2.537, -0.148)
+box wid 4.636 ht 2.114 at (2.816, -3.771) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-333333]MAIN LEVEL\m[]\f[]"  at (2.816, -2.863)
+box wid 2.25 ht 2.114 at (2.509, -6.319) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-333333]GROUND LEVEL\m[]\f[]"  at (2.509, -5.411)
+spline <-> from (1.304, -1.039) to (1.304, -1.122) to (1.304, -1.122) to (1.067, -1.339) \
+  to (1.067, -1.556) outlined "pm-333333" thickness 1.25
+spline <-> from (1.718, -3.67) to (1.506, -3.887) to (1.506, -4.104) outlined "pm-333333" thickness 1.25
+spline <-> from (2.509, -6.218) to (2.509, -6.435) to (2.509, -6.652) outlined "pm-333333" thickness 1.25
+spline <-> from (1.771, -1.039) to (1.771, -1.122) to (1.771, -1.122) to (2.007, -1.339) \
+  to (2.007, -1.853) to (2.007, -2.497) to (2.007, -3.076) outlined "pm-333333" thickness 1.25
+spline <-> from (2.297, -3.67) to (2.509, -3.887) to (2.509, -4.401) to (2.509, -5.045) \
+  to (2.509, -5.624) outlined "pm-333333" thickness 1.25
+spline <-> from (4.054, -1.122) to (4.054, -1.339) to (4.054, -1.853) to (4.054, -2.497) \
+  to (4.054, -3.076) outlined "pm-333333" thickness 1.25
+box wid 1.867 ht 0.594 at (1.537, -0.742) shaded "pm-ff99ff" outlined "pm-333333" thickness 1.25
+"\f[TS]\m[pm-333333]Gems\m[]\f[]" "\f[TS]\m[pm-333333](Room 10 - Banishment Key)\m[]\f[]"  at (1.537, -0.742)
+box wid 1.273 ht 0.594 at (1.067, -1.853) shaded "pm-ff99ff" outlined "pm-333333" thickness 1.25
+"\f[TS]\m[pm-333333]SUE the T. rex\m[]\f[]" "\f[TS]\m[pm-333333](Room 3 - Hazard)\m[]\f[]"  at (1.067, -1.853)
+box wid 1.478 ht 0.76 at (4.054, -0.742) shaded "pm-ff99ff" outlined "pm-333333" thickness 1.25
+"\f[TS]\m[pm-333333]Plants of the World\m[]\f[]" "\f[TS]\m[pm-333333](Room 7 - Labyrinth\m[]\f[]" "\f[TS]\m[pm-333333]Shortcut)\m[]\f[]"  at (4.054, -0.742)
+box wid 1.505 ht 0.594 at (2.007, -3.373) shaded "pm-bbbbff" outlined "pm-333333" thickness 1.25
+"\f[TS]\m[pm-333333]Stanley Field Hall\m[]\f[]" "\f[TS]\m[pm-333333](M\[u00E1]ximo / Survivors)\m[]\f[]"  at (2.007, -3.373)
+box wid 1.398 ht 0.594 at (1.506, -4.401) shaded "pm-bbbbff" outlined "pm-333333" thickness 1.25
+"\f[TS]\m[pm-333333]Egypt\m[]\f[]" "\f[TS]\m[pm-333333](Room 8 - The Rift)\m[]\f[]"  at (1.506, -4.401)
+box wid 1.598 ht 0.594 at (4.054, -3.373) shaded "pm-bbbbff" outlined "pm-333333" thickness 1.25
+"\f[TS]\m[pm-333333]Ancient Americas\m[]\f[]" "\f[TS]\m[pm-333333](Room 2 - Totem Traps)\m[]\f[]"  at (4.054, -3.373)
+box wid 1.685 ht 0.594 at (2.509, -5.921) shaded "pm-ffbbff" outlined "pm-333333" thickness 1.25
+"\f[TS]\m[pm-333333]Simpson Theatre\m[]\f[]" "\f[TS]\m[pm-333333](Room I - Trapped Kids)\m[]\f[]"  at (2.509, -5.921)
+box wid 1.531 ht 0.594 at (2.509, -6.949) shaded "pm-ffbbff" outlined "pm-333333" thickness 1.25
+"\f[TS]\m[pm-333333]Underground\m[]\f[]" "\f[TS]\m[pm-333333](Room 2 - Kaiju Bugs)\m[]\f[]"  at (2.509, -6.949)
+.PE
+.ps \n[pm*ps]z
+.vs \n[pm*vs]u

@@ -1,0 +1,30 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p110.75p,31.25p
+.pl 110.75p
+.po 3p
+.ll 25.25p
+.sp 3p
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-ff9966 rgb #ff9966
+.defcolor pm-bbbbff rgb #bbbbff
+.defcolor pm-ff6666 rgb #ff6666
+.defcolor pm-010203 rgb #010203
+.defcolor pm-ffff33 rgb #ffff33
+.defcolor pm-e8e8e8 rgb #e8e8e8
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+spline -> from (0.175, -0.427) to (0.175, -0.644) to (0.175, -0.861) outlined "pm-ffff33" thickness 2.5
+box wid 0.351 ht 0.427 at (0.175, -0.214) shaded "pm-ff9966" outlined "pm-333333" thickness 2.5
+"\f[TS]\m[pm-333333]A\m[]\f[]"  at (0.175, -0.214)
+box wid 0.351 ht 0.427 at (0.175, -1.075) shaded "pm-bbbbff" outlined "pm-ff6666" thickness 2.5 dashed 0.043
+"\f[TS]\m[pm-010203]B\m[]\f[]"  at (0.175, -1.075)
+.PE
+.ps \n[pm*ps]z
+.vs \n[pm*vs]u

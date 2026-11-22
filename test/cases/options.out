@@ -1,7 +1,7 @@
 pomermaid [OPTIONS] [FILE]
 
   -t <arg>, --to <arg>
-      The output format: pic, mp, dump (the diagram read) or layout (its layout), the last two for tests.
+      The output format: pic, mp, svg, svg-ms (the groff document svg is made from), dump (the diagram read) or layout (its layout), the last two for tests.
   -o <arg>, --output <arg>
       Write to this file rather than standard output.
   --font <arg>
@@ -14,6 +14,10 @@ pomermaid [OPTIONS] [FILE]
       Look for groff's fonts in these directories, separated by colons.
   --mp-macros <arg>
       For mp: copy pomermaid.mp's macros into the drawing (inline, the default) or input it (input).
+  --svg-text <arg>
+      For svg: keep labels as text (text, the default) or draw their glyphs as outlines (outline); pdftocairo always draws outlines.
+  --svg-engine <arg>
+      For svg: turn groff's PDF into SVG with mutool or pdftocairo (by default mutool if it is found, else pdftocairo).
   -v, --version
       Show pomermaid's version.
   -h, --help

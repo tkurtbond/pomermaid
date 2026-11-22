@@ -8,7 +8,8 @@
 # the case tests, test/cases/, with each pomermaid (tools/runcases).
 # None of it needs groff, ConTeXt or Mermaid's tools. `make render`
 # draws the cases with groff, in build/render/cases.pdf, and with
-# ConTeXt, if it is found, in build/render/cases-context.pdf.
+# ConTeXt, if it is found, in build/render/cases-context.pdf, and as
+# SVG, in build/render/svg/, if mutool or pdftocairo is found.
 # `make install` installs the pomermaid built under $(MODEL), -OC by
 # default, in $(BINDIR), the MetaPost macros, pomermaid.mp, in
 # $(DATADIR), and its documentation in $(DOCDIR), under

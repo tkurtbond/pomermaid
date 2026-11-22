@@ -6,7 +6,9 @@
 # Times (not the cases' test font), one to a page, in OUTDIR/cases.pdf,
 # for looking at; and, if ConTeXt's context is found, with POMERMAID -t
 # mp, each in a 12 point and an 8 point body font, in
-# OUTDIR/cases-context.pdf. Needs groff; make test does not run it.
+# OUTDIR/cases-context.pdf; and, if mutool or pdftocairo is found, with
+# POMERMAID -t svg, OUTDIR/svg/<name>.svg, each checked with xmllint
+# where it is found. Needs groff; make test does not run it.
 
 if [ $# -lt 2 ]; then
   echo "usage: render POMERMAID OUTDIR [CASEDIR]" >&2
@@ -30,6 +32,20 @@ for mmd in "$casedir"/*.mmd; do
 done
 groff -ms -p -Tpdf -wall "$ms" > "$outdir/cases.pdf" || exit 1
 echo "$outdir/cases.pdf"
+
+if command -v mutool > /dev/null 2>&1 || command -v pdftocairo > /dev/null 2>&1; then
+  mkdir -p "$outdir/svg" || exit 2
+  for mmd in "$casedir"/*.mmd; do
+    name=${mmd%.mmd}
+    [ -f "$name.layout" ] || [ -f "$name.pic" ] || [ -f "$name.mp" ] || continue
+    svg=$outdir/svg/$(basename "$name").svg
+    "$prog" -t svg -o "$svg" "$mmd" || exit 1
+    if command -v xmllint > /dev/null 2>&1; then
+      xmllint --noout "$svg" || exit 1
+    fi
+  done
+  echo "$outdir/svg"
+fi
 
 command -v context > /dev/null 2>&1 || exit 0
 tex=$outdir/cases-context.tex

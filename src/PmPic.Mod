@@ -355,23 +355,12 @@ BEGIN
   END
 END DrawCluster;
 
-(* Writes l's flowchart in pic, its labels in the groff font font *)
-PROCEDURE Write*(l: FL.Layout; font: ARRAY OF CHAR);
-  VAR
-    g: F.Graph; n: F.Node; e: F.Edge; ns, es, cs: Styles; back, k: INTEGER;
-    cn: POINTER TO ARRAY OF F.Node;
-
-  PROCEDURE DrawClusters(c: INTEGER);  (* c, then those it holds *)
-    VAR d: INTEGER;
-  BEGIN
-    DrawCluster(l, c, cs[c]);
-    FOR d := 0 TO l.g.nClusters - 1 DO
-      IF l.g.cluster[d].parent = c THEN DrawClusters(d) END
-    END
-  END DrawClusters;
-
+(* The styles of l's nodes, edges and clusters, by index; the colour
+   table reset first *)
+PROCEDURE MakeStyles(l: FL.Layout; VAR ns, es, cs: Styles);
+  VAR g: F.Graph; n: F.Node; e: F.Edge; k: INTEGER; cn: POINTER TO ARRAY OF F.Node;
 BEGIN
-  g := l.graph; COPY(font, fontName);
+  g := l.graph;
   px := l.size / 16; S.Reset(px);
   NEW(ns, g.nNodes + 1); NEW(es, g.nEdges + 1);
   n := g.nodes;
@@ -385,7 +374,42 @@ BEGIN
     IF l.stands[n.index] >= 0 THEN cn[l.stands[n.index]] := n END;
     n := n.next
   END;
-  FOR k := 0 TO g.nClusters - 1 DO S.ClusterStyle(g, cn[k], cs[k]) END;
+  FOR k := 0 TO g.nClusters - 1 DO S.ClusterStyle(g, cn[k], cs[k]) END
+END MakeStyles;
+
+(* The width of the widest line Write draws for l, in points *)
+PROCEDURE Widest*(l: FL.Layout): REAL;
+  VAR ns, es, cs: Styles; g: F.Graph; n: F.Node; e: F.Edge; k: INTEGER; w: REAL;
+BEGIN
+  MakeStyles(l, ns, es, cs); g := l.graph; w := 0;
+  n := g.nodes;
+  WHILE n # NIL DO
+    IF (l.g.node[n.index].kind # L.Hidden) & (ns[n.index].width > w) THEN w := ns[n.index].width END;
+    n := n.next
+  END;
+  e := g.edges;
+  WHILE e # NIL DO IF es[e.index].width > w THEN w := es[e.index].width END; e := e.next END;
+  FOR k := 0 TO g.nClusters - 1 DO IF cs[k].width > w THEN w := cs[k].width END END;
+  RETURN w
+END Widest;
+
+(* Writes l's flowchart in pic, its labels in the groff font font *)
+PROCEDURE Write*(l: FL.Layout; font: ARRAY OF CHAR);
+  VAR
+    g: F.Graph; n: F.Node; e: F.Edge; ns, es, cs: Styles; back, k: INTEGER;
+
+  PROCEDURE DrawClusters(c: INTEGER);  (* c, then those it holds *)
+    VAR d: INTEGER;
+  BEGIN
+    DrawCluster(l, c, cs[c]);
+    FOR d := 0 TO l.g.nClusters - 1 DO
+      IF l.g.cluster[d].parent = c THEN DrawClusters(d) END
+    END
+  END DrawClusters;
+
+BEGIN
+  g := l.graph; COPY(font, fontName);
+  MakeStyles(l, ns, es, cs);
   back := S.Colour(S.LabelBack);
   FOR k := 0 TO S.nColours - 1 DO
     W(".defcolor pm-"); Hex(S.Rgb(k), 6); W(" rgb #"); Hex(S.Rgb(k), 6); PmIO.WriteLn

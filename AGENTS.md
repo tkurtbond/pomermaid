@@ -37,11 +37,12 @@ As of 2026-11-22: Phases 1 (the skeleton), 2 (the flowchart
 reader, `PmLex`, `PmFlow`, `PmDump`), 3 (text metrics from groff's
 font files, `PmMetrics`), 4 (layout: `PmGeom`, `PmLayout`,
 `PmFlowLayout`, written by `-t layout`), 5 (the pic writer,
-`PmPic`, `-t pic`; `make render`) and 6 (the MetaPost writer,
+`PmPic`, `-t pic`; `make render`), 6 (the MetaPost writer,
 `PmMp`, `-t mp`, with the macros `mp/pomermaid.mp`, made into
-`PmMpMacros` by `tools/mp2mod`; styles shared in `PmStyle`) and 7
+`PmMpMacros` by `tools/mp2mod`; styles shared in `PmStyle`), 7
 (subgraphs: clusters in `PmLayout` and `pomermaid.mp`, boxes in both
-writers) are done. See PLAN.md's State.
+writers) and 8 (SVG through groff and mutool or pdftocairo: `PmSvg`,
+`PmRun`, `-t svg` and `-t svg-ms`) are done. See PLAN.md's State.
 
 ## Reference material
 

@@ -143,8 +143,12 @@ measured by groff itself:
 
 1. `PmPic` writes the picture; pomermaid knows its size.
 2. pomermaid wraps it in a groff document whose page is the picture's
-   size, with no margins (`-P-p`, `.pl`, `.po`, `.ll`), so no cropping
-   tool is needed.
+   size and a small margin for the lines' widths (`-P-p`, `.pl`, `.po`,
+   `.ll`). pic draws a picture one line space (`.vs`) below where it
+   starts, and groff cannot move above the top of a page, so the page
+   is one line space taller; pomermaid cuts that band from the SVG's
+   root element (its `height` and `viewBox`), so no cropping tool is
+   needed.
 3. It runs `groff -k -p -Tpdf` on it, as podoc runs its PDF engines
    (`Platform.System`, a temporary directory under `TMPDIR`).
 4. It turns the one-page PDF into SVG with `mutool draw -F svg -O
@@ -164,8 +168,10 @@ failed an assertion as it exited on a PDF cropped by `pdfcrop`; the
 uncropped PDF was fine. The SVG names the PDF's fonts
 (`Nimbus Roman`); a browser without them uses another font at the same
 glyph positions, which can look uneven: hence `--svg-text=outline`.
-Links (`click`, `href`) are not expected to survive the PDF; to be
-checked in Phase 8.
+Links (`click`, `href`) do not survive: checked in Phase 8, a link
+made by groff's `.pdfhref` is in the PDF, but neither `mutool draw`
+(1.28.2) nor `pdftocairo` writes it into the SVG. pomermaid must write
+them into the SVG itself (Phase 10).
 
 ConTeXt and MetaPost could make SVG the same way
 (`\startMPpage[offset=2pt]` makes a page the drawing's size; tried on
@@ -408,7 +414,20 @@ or `pdftocairo` are installed, each SVG is valid XML (`xmllint`),
 `rsvg-convert` draws it the same as the PDF, and the page has no
 margin to crop; links checked.
 
-**Done:** no.
+**Done:** 2026-11-22. `PmRun` (running programs and the temporary
+directory, after podoc's `PdRun`) and `PmSvg`: `-t svg-ms` writes the
+groff document, `-t svg` runs `groff -p -Tpdf` and `mutool draw -F svg
+-O text=text` (`text=path` for `--svg-text=outline`) or `pdftocairo
+-svg` in a temporary directory under `TMPDIR`, removed afterwards,
+even when a run fails. `--svg-engine=mutool|pdftocairo`; by default
+mutool if it is found, else pdftocairo. `--font-path` is passed to
+groff as `-F`. A missing program ends pomermaid with 47, a failed run
+with 43. Differences from the plan: the page is one line space taller
+than the drawing, a band `PmSvg.Crop` cuts from the SVG's root element
+(see "SVG"); the margin is 2 points, or more where a line is wider
+than 2 points (`PmPic.Widest`); links do not survive the converters,
+so Phase 10 writes them into the SVG. `tools/render` (`make render`)
+also writes each case as SVG and checks it with `xmllint`.
 
 ### Phase 9: documentation and installation
 
@@ -433,8 +452,10 @@ longer arrows for longer edges, `-- text -->` labels, `&`), `style`,
 `direction` inside a subgraph (moved from Phase 7),
 `linkStyle`, `:::class`, `%%{init: ...}%%` as far as it sets
 direction, curves and colours; markdown strings in labels as far as
-each writer can set them; `click` and `href`, kept as links in SVG if
-Phase 8 finds a way, and ignored elsewhere.
+each writer can set them; `click` and `href`, as links in SVG, which
+pomermaid writes into the SVG as `<a>` elements over the nodes, since
+the PDF's links do not survive the converters (Phase 8), and ignored
+elsewhere.
 
 **Check:** case tests for each; Mermaid's own flowchart examples read
 without errors and drawn.
@@ -621,3 +642,22 @@ and with ConTeXt LMTX; each page was looked at: the boxes hold their
 nodes, nested boxes nest, titles sit inside their boxes, edges to a
 subgraph end at its box, and the ConTeXt drawings match groff's. Not
 compared with Mermaid's own drawings.
+
+2026-11-22, Phase 8: `make test` passes under `-O2` and `-OC`:
+`PmIOTest`, `PmMetricsTest`, `PmLayoutTest`, `PmSvgTest` (new: `Crop`
+on mutool's and pdftocairo's root elements, attributes in either
+order, and three it must refuse) and 59 case tests (new: `-t svg-ms`
+for `gbh-map` and `styles`, bad `--svg-text` and `--svg-engine`, 6;
+`badformat` now uses `-t png`). With groff 1.25.0, mutool 1.28.2 and
+pdftocairo: every drawn case made SVG with both engines under `-O2`
+(the `-O2` and `-OC` SVGs of `gbh-map` are the same), each valid XML
+(`xmllint`) and drawn by `rsvg-convert`; measured at 4x, the ink of
+each mutool SVG of `make render` is 1.5 to 2 points from every edge of
+the page (`styles`, with 2.5 point lines, had 0.75 point before the
+margin grew for wide lines); `gbh-map`, `shapes`, `edges`
+and `styles`, drawn by `rsvg-convert` at 4x, line up with groff's PDF
+drawn by `pdftoppm` (no offset; the pixels that differ are the edges
+of glyphs and lines, antialiased differently); `gbh-map` with mutool
+and with pdftocairo was looked at. A missing groff, mutool or
+pdftocairo gave 47, a failing groff or mutool 43, and no temporary
+directory was left behind. Links: see Phase 10.
