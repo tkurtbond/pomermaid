@@ -173,7 +173,7 @@ groff is quick, so SVG goes through pic.
 
 ## Phases
 
-### Phase 1: the skeleton
+### Phase 1: the skeleton [done]
 
 **Change:** a `GNUmakefile` after podoc's: build under `-O2` and `-OC`
 in `build/O2` and `build/OC`, `make test` running unit tests and case
@@ -186,7 +186,11 @@ is in place.
 **Check:** `make` and `make test` under both models; `pomermaid
 --help`.
 
-**Done:** no.
+**Done:** 2026-11-22. `PmIO` (after podoc's `PdIO`, with `WriteInt` and
+`WriteReal`), `PmOptions`, `pomermaid`, the GNUmakefile and
+`tools/runcases` (cases `<name>.mmd`, outputs `dump`, `pic`, `mp`,
+`svg-ms`, or `out` for no `-t`). The program reads its input and stops
+with "no diagram reader yet" (64).
 
 ### Phase 2: the flowchart reader
 
@@ -417,3 +421,7 @@ Galactic-Bounty-Hunters diagrams, rendered with `groff -k -ms -p -Tpdf`
 on 2026-11-22). The user decided the first nine questions, then SVG
 through groff (Decisions 1 to 10).
 No code yet; nothing committed.
+
+2026-11-22, Phase 1: `make` and `make test` pass under `-O2` and `-OC`:
+`PmIOTest` and 4 case tests (`--help`, `--version`, an unknown `-t`
+(22), two input files (6)).

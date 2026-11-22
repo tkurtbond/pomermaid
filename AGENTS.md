@@ -33,8 +33,8 @@ one silently: ask, then record the decision, dated, under
 
 ## Status
 
-As of 2026-11-22: planned, with the user's decisions recorded. No code
-yet. See PLAN.md.
+As of 2026-11-22: Phase 1 (the skeleton) is done. See PLAN.md's
+State.
 
 ## Reference material
 
@@ -101,6 +101,14 @@ AGENTS.md describes.
 - `make render` (where groff and ConTeXt are installed) wraps the case
   tests' output in small ms and ConTeXt documents and makes PDFs, for
   looking at.
+
+## Exit statuses
+
+Errors the user can cause end pomermaid through `PmIO.Fail`, with
+podoc's status for the same kind of error: 1 input or output, 6 option
+error, 22 unknown output format, 43 a program (groff, mutool) failed,
+47 a program not found, 64 the diagram cannot be read. ArgParser ends
+with 2 on a bad option.
 
 ## Conventions
 

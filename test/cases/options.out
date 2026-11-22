@@ -1,0 +1,10 @@
+pomermaid [OPTIONS] [FILE]
+
+  -t <arg>, --to <arg>
+      The output format: pic or mp.
+  -o <arg>, --output <arg>
+      Write to FILE rather than standard output.
+  -v, --version
+      Show pomermaid's version.
+  -h, --help
+      Show this help.
