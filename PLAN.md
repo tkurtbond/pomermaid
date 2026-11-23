@@ -568,6 +568,39 @@ In steps:
   in pic and MetaPost.
 - **12.4:** Mermaid's own examples; the documentation.
 
+### Phase 13: class diagrams [done]
+
+**Change:** `classDiagram` (and `classDiagram-v2`), read by a new
+module, `PmClass`, into the flowchart model, with the layout and the
+three writers shared.
+
+**Check:** case tests for each construct; Mermaid's own class
+examples read without errors and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/classDiagram.md`,
+`diagrams/class/parser/classDiagram.jison`, `classDb.ts`,
+`classTypes.ts`, `shapeUtil.ts`, the shape `classBox.ts`, and the
+markers of `rendering-elements/markers.js` and `edgeMarker.ts`. In
+steps:
+
+- **13.1, the model:** a graph kind `Class`; the shape `class` (a box
+  of title, members and methods, with an annotation above the title,
+  two dividers) and `interface` (a lollipop's label with no box);
+  class members as label lines with their classifier (`*` italic,
+  `$` underlined); the edge ends extension, composition, aggregation,
+  dependency and lollipop; cardinality labels at an edge's two ends.
+- **13.2, the reader:** classes, `class X["label"]`, `class X {
+  members }`, `X : member`, generics (`~T~`), annotations (`<<ann>>
+  X` and in the body), relations with both ends, the solid and
+  dotted lines, labels and cardinalities, lollipop interfaces,
+  `namespace` (nested and dotted), `note` and `note for`,
+  `direction`, `classDef`, `cssClass`, `:::`, `style`, `click`,
+  `link`, `callback`, comments and `accTitle`/`accDescr`.
+- **13.3, drawing:** class boxes, the relation markers drawn as
+  Mermaid draws them, the cardinalities beside the ends, notes,
+  namespaces as clusters, in pic and MetaPost.
+- **13.4:** Mermaid's own examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -961,3 +994,33 @@ points out of `classes.pic`, `edges.pic` and `state-nested.pic`. With
 that, `gmake` and `gmake test` (106 case tests under both models)
 pass on FreeBSD 15.1 (alerik, rackhir), NetBSD 11.0 (artos, yishana)
 and OpenBSD 7.9 (jherek, cymoril), from clean copies, 2026-11-22.
+
+2026-11-22, Phase 13: class diagrams. `PmClass` reads `classDiagram`
+and `classDiagram-v2` into `PmFlow`'s model, following Mermaid
+12.3.0's `classDiagram.jison`, `classDb.ts`, `classTypes.ts` and
+`shapeUtil.ts`: classes made on first use, labels, members in braces
+or one at a time, generics, annotations, classifiers (`$` underlined,
+`*` italic) and return types, relations with every end and both line
+types, labels and cardinalities, lollipop interfaces, notes,
+namespaces (nested, dotted, labelled, and
+`hierarchicalNamespaces: false`), `classDef`, `:::`, `cssClass`,
+`style`, `click`, `link` and `callback`. The model has the shapes
+`class` and `interface`, the ends extension, composition,
+aggregation, dependency and lollipop, an edge's two cardinalities and
+an underlined line. `PmFlowLayout.ClassSize` sizes a class box as
+`classBox.ts` does and `Cardinality` places the cardinalities as
+`edgeMarker.ts`; `PmPic` and `pomermaid.mp` draw the boxes, the
+markers of `markers.js` (each edge shortened as Mermaid shortens it)
+and the cardinalities. `pomermaid.mp`'s `pm_sub` and `pm_collapsed`
+are now 60 and 61, which changed those numbers in ten expected `.mp`
+files and nothing else. `make test` passes under `-O2` and `-OC`:
+123 case tests, with the new `class-basic` (dump, layout, pic, mp),
+`class-namespaces` and `class-members` (dump, pic, mp),
+`class-relations` (dump, pic) and five error cases. All 33 examples
+of Mermaid's `docs/syntax/classDiagram.md` read with no error or
+warning and were looked at in SVG; `class-basic` and
+`class-namespaces` were looked at in ConTeXt's MetaPost output, and
+`make render` ran ConTeXt on every case without an error. `gmake`
+and `gmake test` (123 case tests under both models) pass on FreeBSD
+15.1 (alerik, rackhir), NetBSD 11.0 (artos, yishana) and OpenBSD 7.9
+(jherek, cymoril), from clean copies, 2026-11-22.

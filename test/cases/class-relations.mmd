@@ -1,0 +1,22 @@
+classDiagram
+direction LR
+%% every relation, both ways, solid and dotted
+classA <|-- classB
+classC *-- classD
+classE o-- classF
+classG <-- classH
+classI -- classJ
+classK <.. classL
+classM <|.. classN
+classO .. classP
+P1 --|> Q1
+P2 --* Q2
+P3 --o Q3
+P4 --> Q4
+P5 ..> Q5
+P6 ..|> Q6
+R1 <|--|> S1 : two ways
+R2 *--o S2
+R3 "0..1" --> "1..*" S3 : cardinal
+I1 --() L1
+I1 ()-- L2 : none

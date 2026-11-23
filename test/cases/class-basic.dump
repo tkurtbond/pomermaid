@@ -1,0 +1,23 @@
+direction TB
+title text="Animal example"
+node Animal shape=class label="Animal"=111111 members="+int age"/"+String gender" methods="+isMammal()"/"+mate()"
+node Duck shape=class label="Duck"=1111 members="+String beakColor" methods="+swim()"/"+quack()"
+node Fish shape=class label="Fish"=1111 members="-int sizeInFeet" methods="-canEat()"
+node Zebra shape=class label="Zebra"=11111 members="+bool is_wild" methods="+run()"
+node Square shape=class label="Square<Shape>"=1111111111111 members="int id"/"List<int> position" methods="setPoints(List<int> points)"/"getPoints() : List<int>"/"someAbstractMethod()"=22222222222222222222/"someStaticMethod() : int"_
+node classA shape=class label="classA"=111111
+node classB shape=class label="classB"=111111
+node classC shape=class label="classC"=111111
+node classD shape=class label="classD"=111111
+node foo shape=class label="foo"=111
+node Shape shape=class label="Shape"=11111 annotation="«interface»"
+node note0 shape=rect label=md:"From Duck till Zebra"
+node note1 shape=rect label=md:"can fly"/"can swim"/"can dive"/"can help in debugging"
+node interface0 shape=interface label="bar"
+edge note1 -> Duck head=none tail=none line=normal len=1
+edge Animal -> Duck head=none tail=extension line=normal len=1
+edge Animal -> Fish head=none tail=extension line=normal len=1
+edge Animal -> Zebra head=none tail=extension line=normal len=1
+edge classA -> classB head=none tail=composition line=normal len=1 label=md:"contains" start="1" end="many"
+edge classC -> classD head=none tail=aggregation line=normal len=1 label=md:"aggregation"
+edge interface0 -> foo head=none tail=lollipop line=normal len=1

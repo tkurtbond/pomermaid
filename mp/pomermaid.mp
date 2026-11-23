@@ -86,10 +86,12 @@ pm_hcylinder := 35; pm_lincylinder := 36; pm_curvtrap := 37; pm_divrect := 38;
 pm_triangle := 39; pm_winpane := 40; pm_fcircle := 41; pm_notchpent := 42;
 pm_fliptriangle := 43; pm_slrect := 44; pm_docs := 45; pm_strect := 46; pm_bowrect := 47;
 pm_crosscircle := 48; pm_tagdoc := 49; pm_tagrect := 50; pm_flag := 51; pm_lindoc := 52;
-pm_choice := 53; pm_statebox := 54; pm_statedesc := 55;
+pm_choice := 53; pm_statebox := 54; pm_statedesc := 55; pm_classbox := 56; pm_interface := 57;
 % an isolated subgraph, laid out by itself (pm_sub), and a collapsed one
-pm_sub := 56; pm_collapsed := 57;
+pm_sub := 60; pm_collapsed := 61;
 pm_endnone := 0; pm_endarrow := 1; pm_endcircle := 2; pm_endcross := 3;
+pm_endextension := 4; pm_endcomposition := 5; pm_endaggregation := 6; pm_enddependency := 7;
+pm_endlollipop := 8;
 
 % the pixels between ranks are 2pm_ranksep, Mermaid's ranksep, for the
 % layout begun; one of an isolated subgraph sets it after pm_begin
@@ -121,6 +123,18 @@ def pm_cinner(expr c, i) = pm_cin[c] := i; enddef;
 % the lines of node v's label, for a state with descriptions
 numeric pm_nl[];
 def pm_lines(expr v, n) = pm_nl[v] := n; enddef;
+
+% class box v's annotation, members and methods, "" for none; its
+% label is its title. Its parts are laid out as PmFlowLayout.ClassSize
+% does: pm_kpad, P; the centres of the annotation, title, members and
+% methods, and the two dividers, down from its top.
+string pm_kann[], pm_kmem[], pm_kmet[]; picture pm_kpa[], pm_kpm[], pm_kpd[];
+numeric pm_kpad[], pm_kannY[], pm_ktitleY[], pm_kda[], pm_kmemY[], pm_kdb[], pm_kmetY[];
+def pm_class(expr v, a, m, d) = pm_kann[v] := a; pm_kmem[v] := m; pm_kmet[v] := d; enddef;
+
+% edge j's cardinalities, "" for none
+string pm_ecs[], pm_ece[];
+def pm_cardinality(expr j, s, e) = pm_ecs[j] := s; pm_ece[j] := e; enddef;
 
 def pm_colour(expr c, r, g, b) =
   pm_c[c] := (r, g, b);
@@ -154,6 +168,38 @@ enddef;
 % a label set by ConTeXt: its lines centred, one below another
 vardef pm_textext(expr s) =
   textext("\framed[frame=off,offset=0pt,align=middle]{" & s & "}")
+enddef;
+% one with its lines flush left
+vardef pm_textextl(expr s) =
+  textext("\framed[frame=off,offset=0pt,align=flushleft]{" & s & "}")
+enddef;
+vardef pm_picw(expr p) = xpart urcorner p - xpart llcorner p enddef;
+vardef pm_pich(expr p) = ypart urcorner p - ypart llcorner p enddef;
+
+% class box v's size and parts, as PmFlowLayout.ClassSize
+def pm_classsize(expr v) =
+  begingroup save p, aw, ah, tw, th, mw, mh, dw, dh, w, h;
+  p := 12pm_px; pm_kpad[v] := p;
+  aw := 0; ah := 0; mw := 0; mh := 0; dw := 0; dh := 0;
+  tw := pm_tw[v]; th := pm_th[v];
+  if pm_kann[v] <> "": pm_kpa[v] := pm_textext(pm_kann[v]); aw := pm_picw(pm_kpa[v]); ah := pm_pich(pm_kpa[v]); fi
+  if pm_kmem[v] <> "": pm_kpm[v] := pm_textextl(pm_kmem[v]); mw := pm_picw(pm_kpm[v]); mh := pm_pich(pm_kpm[v]); fi
+  if pm_kmet[v] <> "": pm_kpd[v] := pm_textextl(pm_kmet[v]); dw := pm_picw(pm_kpd[v]); dh := pm_pich(pm_kpd[v]); fi
+  pm_kannY[v] := p + ah / 2; pm_ktitleY[v] := p + ah + th / 2;
+  pm_kda[v] := p + ah + th + p;
+  pm_kmemY[v] := pm_kda[v] + p + mh / 2;
+  if pm_kmem[v] <> "": pm_kdb[v] := pm_kda[v] + 2p + mh;
+  elseif pm_kmet[v] <> "": pm_kdb[v] := pm_kda[v] + 2.5p;
+  else: pm_kdb[v] := pm_kda[v] + 1.5p;
+  fi
+  pm_kmetY[v] := pm_kdb[v] + p + dh / 2;
+  if pm_kmet[v] <> "": h := pm_kdb[v] + 2p + dh;
+  elseif pm_kmem[v] <> "": h := pm_kdb[v] + 2p;
+  else: h := pm_kdb[v] + 1.5p;
+  fi
+  w := max(aw, tw, mw, dw) + 2p;
+  pm_w[v] := w; pm_h[v] := h;
+  endgroup
 enddef;
 
 % Sizes
@@ -237,7 +283,7 @@ def pm_sizes =
       pm_pic[v] := pm_textext(pm_lab[v]);
       pm_tw[v] := xpart urcorner pm_pic[v] - xpart llcorner pm_pic[v];
       pm_th[v] := ypart urcorner pm_pic[v] - ypart llcorner pm_pic[v];
-      pm_shapesize(v);
+      if pm_shape[v] = pm_classbox: pm_classsize(v); else: pm_shapesize(v); fi
     elseif (if (pm_kind[v] = 2) or (pm_kind[v] = 3): pm_elabel[pm_ofedge[v]] else: "" fi) <> "":
       pm_pic[v] := pm_textext(pm_elabel[pm_ofedge[v]]);
       pm_tw[v] := xpart urcorner pm_pic[v] - xpart llcorner pm_pic[v];
@@ -862,7 +908,7 @@ vardef pm_outline(expr v) =
   elseif sh = pm_asymmetric:
     (xl, top) -- (xl + w, top) -- (xl + w, bot) -- (xl, bot) -- (xl + h / 2, cy) -- cycle
   elseif (sh = pm_circle) or (sh = pm_doublecircle): fullcircle scaled w shifted (cx, cy)
-  elseif sh >= pm_sub: (xl, top) -- (xl + w, top) -- (xl + w, bot) -- (xl, bot) -- cycle
+  elseif sh >= pm_classbox: (xl, top) -- (xl + w, top) -- (xl + w, bot) -- (xl, bot) -- cycle
   elseif sh >= pm_datastore: pm_shapedraw(v); pm_so
   else: (xl, top) -- (xl + w, top) -- (xl + w, bot) -- (xl, bot) -- cycle
   fi
@@ -870,7 +916,7 @@ enddef;
 
 % whether node v's outline is not its box
 vardef pm_clipped(expr v) =
-  (pm_shape[v] >= pm_circle) and (pm_shape[v] < pm_sub)
+  (pm_shape[v] >= pm_circle) and (pm_shape[v] < pm_classbox)
 enddef;
 
 % the first point, from a, where the line a--b meets the path o, as
@@ -1020,10 +1066,29 @@ vardef pm_cut(expr p, l) =
   if arclength p > l: subpath (0, arctime (arclength p - l) of p) of p else: p fi
 enddef;
 
-% a circle or a cross at the end of p
+% how far a class diagram's marker of kind shortens an edge
+vardef pm_offset(expr kind) =
+  if (kind >= pm_endextension) and (kind <= pm_endaggregation): 17.25pm_px
+  elseif kind = pm_enddependency: 6pm_px
+  elseif kind = pm_endlollipop: 13.5pm_px
+  else: 0 fi
+enddef;
+
+% a circle or a cross at the end of p; or a class diagram's marker, as
+% PmPic.ClassMarker
 def pm_marker(expr kind, p, w, c) =
-  begingroup save u, e, r; pair u, e;
-  e := point infinity of p; u := pm_enddir(p);
+  begingroup save u, v, e, r, q; pair u, v, e; path q;
+  e := point infinity of p; u := pm_enddir(p); v := u rotated 90;
+  if kind >= pm_endextension:
+    if kind = pm_endextension: q := e -- (e - 17pm_px * u + 6pm_px * v) -- (e - 17pm_px * u - 6pm_px * v) -- cycle;
+    elseif kind = pm_enddependency:
+      q := e -- (e - 9pm_px * u + 6pm_px * v) -- (e - 4pm_px * u) -- (e - 9pm_px * u - 6pm_px * v) -- cycle;
+    elseif kind = pm_endlollipop: q := fullcircle scaled 12pm_px shifted (e - 7.5pm_px * u);
+    else: q := e -- (e - 9pm_px * u + 6pm_px * v) -- (e - 17pm_px * u) -- (e - 9pm_px * u - 6pm_px * v) -- cycle;
+    fi
+    if (kind = pm_endcomposition) or (kind = pm_enddependency): fill q withcolor c; fi
+    draw q withpen pencircle scaled w withcolor c;
+  fi
   r := 5.5pm_px; e := e - r * u;
   if kind = pm_endcircle:
     fill fullcircle scaled 2r shifted e withcolor c;
@@ -1165,6 +1230,8 @@ def pm_drawedge(expr j) =
     q := p;
     if pm_ehead[j] = pm_endarrow: q := pm_cut(q, l); fi
     if pm_etail[j] = pm_endarrow: q := reverse pm_cut(reverse q, l); fi
+    if pm_offset(pm_ehead[j]) > 0: q := pm_cut(q, pm_offset(pm_ehead[j])); fi
+    if pm_offset(pm_etail[j]) > 0: q := reverse pm_cut(reverse q, pm_offset(pm_etail[j])); fi
     if d > 0:
       draw q withpen pencircle scaled w withcolor c dashed dashpattern(on d off d);
     else:
@@ -1175,6 +1242,38 @@ def pm_drawedge(expr j) =
     pm_marker(pm_ehead[j], p, w, c);
     pm_marker(pm_etail[j], reverse p, w, c);
     endgroup;
+  fi
+enddef;
+
+% where a cardinality is centred: (25 + m) pixels along p from its
+% start, m 10 if that end has a marker, a point c; then (10 + m / 2)
+% pixels to the side of the middle of p's start and c, as
+% PmFlowLayout.Cardinality
+vardef pm_terminal(expr p, m) =
+  save s, c, a, d; pair s, c;
+  s := point 0 of p;
+  c := point (arctime ((25 + m) * pm_px) of p) of p;
+  d := (10 + m / 2) * pm_px;
+  a := angle (s - c);
+  (s + c) / 2 + d * (-sind a, cosd a)
+enddef;
+def pm_drawcardinal(expr j) =
+  if known pm_ecs[j]:
+    if (pm_evis[j] = 1) and (pm_np[j] >= 2):
+      begingroup save p, q, z; path p; picture q; pair z;
+      p := pm_path(j);
+      if pm_ecs[j] <> "":
+        q := pm_textext(pm_ecs[j]) scaled (11 / 16);
+        z := pm_terminal(p, if pm_etail[j] > 0: 10 else: 0 fi);
+        draw q shifted (z - center q) withcolor pm_col(pm_etext[j]);
+      fi
+      if pm_ece[j] <> "":
+        q := pm_textext(pm_ece[j]) scaled (11 / 16);
+        z := pm_terminal(reverse p, if pm_ehead[j] > 0: 10 else: 0 fi);
+        draw q shifted (z - center q) withcolor pm_col(pm_etext[j]);
+      fi
+      endgroup;
+    fi
   fi
 enddef;
 
@@ -1224,7 +1323,7 @@ def pm_drawnode(expr v) =
   begingroup save c, w, h, sh, ry, r, d, o, z; pair c, z; path o;
   c := pm_up((pm_x[v], pm_y[v])); w := pm_w[v]; h := pm_h[v]; sh := pm_shape[v];
   z := c;
-  if sh = pm_rect: pm_paint(unitsquare shifted (-1/2, -1/2) xscaled w yscaled h shifted c, v, true);
+  if (sh = pm_rect) or (sh = pm_interface): pm_paint(unitsquare shifted (-1/2, -1/2) xscaled w yscaled h shifted c, v, true);
   elseif sh = pm_round: pm_paint(pm_rbox(c, w, h, 5pm_px), v, true);
   elseif sh = pm_stadium: pm_paint(pm_rbox(c, w, h, h / 2), v, true);
   elseif sh = pm_subroutine:
@@ -1261,6 +1360,24 @@ def pm_drawnode(expr v) =
       fill fullcircle scaled 5pm_px shifted (c + (10 * k * pm_px, d - 10pm_px))
         withcolor pm_col(pm_line[v]);
     endfor
+  elseif sh = pm_classbox:
+    o := unitsquare shifted (-1/2, -1/2) xscaled w yscaled h shifted c;
+    pm_paint(o, v, true);
+    d := ypart c + h / 2;
+    pm_paint((xpart c - w / 2, d - pm_kda[v]) -- (xpart c + w / 2, d - pm_kda[v]), v, false);
+    pm_paint((xpart c - w / 2, d - pm_kdb[v]) -- (xpart c + w / 2, d - pm_kdb[v]), v, false);
+    if pm_kann[v] <> "":
+      draw pm_kpa[v] shifted ((xpart c, d - pm_kannY[v]) - center pm_kpa[v]) withcolor pm_col(pm_text[v]);
+    fi
+    z := (xpart c, d - pm_ktitleY[v]);
+    if pm_kmem[v] <> "":
+      draw pm_kpm[v] shifted ((xpart c - w / 2 + pm_kpad[v], d - pm_kmemY[v])
+        - (xpart llcorner pm_kpm[v], ypart center pm_kpm[v])) withcolor pm_col(pm_text[v]);
+    fi
+    if pm_kmet[v] <> "":
+      draw pm_kpd[v] shifted ((xpart c - w / 2 + pm_kpad[v], d - pm_kmetY[v])
+        - (xpart llcorner pm_kpd[v], ypart center pm_kpd[v])) withcolor pm_col(pm_text[v]);
+    fi
   elseif sh >= pm_datastore:
     pm_shapedraw(v);
     for k = 0 upto pm_sn - 1: pm_drawpart(pm_sp[k] yscaled -1, pm_sk[k], v); endfor
@@ -1268,7 +1385,8 @@ def pm_drawnode(expr v) =
   else:
     pm_paint(pm_outline(v) yscaled -1, v, true);
   fi
-  if (pm_lab[v] <> "") and ((sh < pm_datastore) or (sh = pm_collapsed) or pm_slab):
+  if (pm_lab[v] <> "") and ((sh < pm_datastore) or (sh = pm_collapsed) or (sh = pm_classbox)
+      or (sh = pm_interface) or pm_slab):
     draw pm_pic[v] shifted (z - center pm_pic[v]) withcolor pm_col(pm_text[v]);
   fi
   endgroup
@@ -1345,7 +1463,7 @@ def pm_drawing =
   image(
     pm_drawclusters(-1);
     for j = 0 upto pm_ne - 1: pm_drawedge(j); endfor
-    for j = 0 upto pm_ne - 1: pm_drawlabel(j); endfor
+    for j = 0 upto pm_ne - 1: pm_drawlabel(j); pm_drawcardinal(j); endfor
     for v = 0 upto pm_nn - 1: if pm_kind[v] = 0: pm_drawnode(v); fi endfor
   )
 enddef;

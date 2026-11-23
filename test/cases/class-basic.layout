@@ -1,0 +1,22 @@
+layout direction TB width=426.76 height=136.77
+node Animal rank=0 order=2 x=166.17 y=42.42 w=37.51 h=49.35
+node Duck rank=2 order=0 x=26.47 y=114.92 w=45.07 h=43.71
+node Fish rank=2 order=1 x=141.26 y=114.92 w=40.56 h=38.07
+node Zebra rank=2 order=2 x=193.03 y=114.92 w=33.6 h=38.07
+node Square rank=0 order=1 x=100.18 y=42.42 w=65.1 h=60.63
+node classA rank=0 order=3 x=235.21 y=42.42 w=21.39 h=23.26
+node classB rank=2 order=3 x=235.21 y=114.92 w=21.39 h=23.26
+node classC rank=0 order=6 x=385.8 y=42.42 w=21.39 h=23.26
+node classD rank=2 order=4 x=385.8 y=114.92 w=21.39 h=23.26
+node foo rank=2 order=5 x=418.97 y=114.92 w=13.82 h=23.26
+node Shape rank=0 order=4 x=276.62 y=42.42 w=32.05 h=28.91
+node note0 rank=0 order=5 x=333.88 y=42.42 w=53.09 h=14.45
+node note1 rank=0 order=0 x=26.47 y=42.42 w=52.95 h=31.37
+node interface0 rank=0 order=7 x=418.97 y=42.42 w=15.58 h=14.45
+edge note1 -> Duck points=(26.47,58.1) (26.47,72.73) (26.47,72.73) (26.47,82.9) (26.47,93.06)
+edge Animal -> Duck points=(147.42,67.09) (147.42,72.73) (147.42,72.73) (96.32,82.9) (49.01,93.06)
+edge Animal -> Fish points=(150.98,67.09) (150.98,72.73) (150.98,72.73) (141.26,82.9) (141.26,93.06) (141.26,93.06) (141.26,95.88)
+edge Animal -> Zebra points=(182.54,67.09) (182.54,72.73) (182.54,72.73) (193.03,82.9) (193.03,93.06) (193.03,93.06) (193.03,95.88)
+edge classA -> classB points=(235.21,54.05) (235.21,72.73) (235.21,72.73) (235.21,82.9) (235.21,93.06) (235.21,93.06) (235.21,103.28) label=(235.21,82.9)
+edge classC -> classD points=(385.8,54.05) (385.8,72.73) (385.8,72.73) (385.8,82.9) (385.8,93.06) (385.8,93.06) (385.8,103.28) label=(385.8,82.9)
+edge interface0 -> foo points=(418.97,49.64) (418.97,72.73) (418.97,72.73) (418.97,82.9) (418.97,93.06) (418.97,93.06) (418.97,103.28)

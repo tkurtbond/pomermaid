@@ -1,0 +1,20 @@
+classDiagram-v2
+class BankAccount~T~ {
+  <<abstract>>
+  +String owner
+  +BigDecimal balance$
+  -List~List~int~~ history
+  +deposit(amount) bool
+  +withdraw(amount)* int
+  #audit()$
+  ~internal() Map~K, V~
+}
+class `Odd name` ["A label"]
+BankAccount : +String bank
+BankAccount : +close() void
+class Empty {
+}
+<<service>> Empty
+class Square:::styleClass
+classDef styleClass fill:#ffd,stroke:#a80
+note for BankAccount "accounts"

@@ -97,6 +97,23 @@ differences:
   default for state diagrams since 12.0.0, are not drawn: see "Styles
   and colours".
 
+## Class diagrams
+
+- **Layout.** A class diagram is laid out as a flowchart is: a
+  namespace is a subgraph and a note a node.
+- **Sizes.** A class box's parts are spaced as Mermaid spaces them,
+  but its lines are the document's line spacing, not Mermaid's 24
+  pixels.
+- **Note lines** are dashed, 2 pixels on and 2 off; Mermaid's are
+  dotted.
+- **The lollipop's circle** is drawn hollow, in the line colour.
+- **Names** are a class's letters, digits and `_`, `-`, `.` and
+  generics, or anything in backquotes; Mermaid takes some other
+  characters into a name. Its quirks with keywords at the start of a
+  name, such as a class `classA` read as `class A`, are not copied.
+- **Comments.** `%%` starts a comment anywhere on a line. Mermaid
+  takes one only at the start of a line.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,
@@ -110,6 +127,8 @@ differences:
 - **State diagrams:** `hide empty description` and `scale` are read
   and ignored, and so are floating notes, `note "text" as id`, which
   Mermaid does not draw either.
+- **Class diagrams:** `callback` and `click ... call`, which call
+  functions, are read and ignored; their tooltips are kept.
 - **Shapes Mermaid does not document,** such as `note` and the `bpmn-`
   shapes, are drawn as the nearest documented shape, with a warning.
 

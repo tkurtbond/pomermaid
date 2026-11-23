@@ -2,7 +2,7 @@ MODULE pomermaid;
 (* pomermaid: Mermaid diagrams drawn in pic, for groff, and MetaPost,
    for ConTeXt, and SVG made from the pic through groff. The command line is PmOptions'. See PLAN.md. *)
 
-IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
+IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
 
 VAR
   text: PmIO.Text;
@@ -22,8 +22,9 @@ BEGIN
     PmIO.ReadFile(O.input, text, len);
     sc := L.Open(text, len, O.input);
     IF PmState.IsState(sc) THEN PmState.Read(sc, g)
+    ELSIF PmClass.IsClass(sc) THEN PmClass.Read(sc, g)
     ELSIF PmFlow.IsFlowchart(sc) THEN PmFlow.Read(sc, g)
-    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph and stateDiagram")
+    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram and classDiagram")
     END;
     IF O.to # "dump" THEN
       IF O.fontPath # "" THEN M.SetPath(O.fontPath) END;

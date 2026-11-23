@@ -32,10 +32,14 @@ It reads flowcharts,
 .Ql flowchart
 and
 .Ql graph ,
-and state diagrams,
+state diagrams,
 .Ql stateDiagram-v2
 and
-.Ql stateDiagram .
+.Ql stateDiagram ,
+and class diagrams,
+.Ql classDiagram
+and
+.Ql classDiagram-v2 .
 .Pp
 The labels are set in the document's own fonts.
 For pic and SVG they are measured with groff's font description files;
@@ -257,6 +261,6 @@ draws differently from Mermaid.
 .Sh AUTHORS
 .An T. Kurt Bond
 .Sh BUGS
-Only flowcharts and state diagrams are read.
+Only flowcharts, state diagrams and class diagrams are read.
 Links and tooltips are drawn only in SVG.
 Mermaid's named themes, icons, images and animations are not drawn.

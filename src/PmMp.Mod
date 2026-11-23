@@ -25,7 +25,7 @@ IMPORT PmIO, F := PmFlow, L := PmLayout, FL := PmFlowLayout, Lx := PmLex,
   S := PmStyle, PmMpMacros;
 
 CONST
-  Sub = 56; Collapsed = 57; (* pomermaid.mp's pm_sub and pm_collapsed *)
+  Sub = 60; Collapsed = 61; (* pomermaid.mp's pm_sub and pm_collapsed *)
 
 TYPE
   Styles = POINTER TO ARRAY OF S.Style;
@@ -61,6 +61,7 @@ BEGIN
     line := lab.lines;
     WHILE line # NIL DO
       i := 0; end := Lx.Length(line.text^); st := 0;
+      IF line.underline THEN W("\underbar{") END;
       WHILE i < end DO
         ch := line.text[i];
         IF (line.style # NIL) & (line.style[i] # st) THEN
@@ -79,6 +80,7 @@ BEGIN
         INC(i)
       END;
       IF st # 0 THEN W("}") END;
+      IF line.underline THEN W("}") END;
       line := line.next;
       IF line # NIL THEN W("\\") END
     END
@@ -129,6 +131,9 @@ BEGIN
         W("pm_style("); I(v); C; Style(nst[i], TRUE); W(");");
         IF nodes[i].shape = F.StateDesc THEN
           PmIO.WriteLn; W("pm_lines("); I(v); C; I(l.nodeLabel[i].n); W(");")
+        ELSIF nodes[i].shape = F.ClassBox THEN
+          PmIO.WriteLn; W("pm_class("); I(v); C; Label(nodes[i].annotation); C;
+          Label(nodes[i].members); C; Label(nodes[i].methods); W(");")
         END
       ELSIF l.isolated[-1 - i] THEN
         I(Sub); C; I(ln.edge); W(', "");'); PmIO.WriteLn;
@@ -159,6 +164,10 @@ BEGIN
       I(le.chain[i])
     END;
     W(");"); PmIO.WriteLn;
+    IF (e.startLabel # NIL) OR (e.endLabel # NIL) THEN
+      W("pm_cardinality("); I(k); C; Label(e.startLabel); C; Label(e.endLabel); W(");");
+      PmIO.WriteLn
+    END;
     IF e.curve # F.Basis THEN
       W("pm_curve("); I(k); C; I(e.curve); W(");"); PmIO.WriteLn
     END

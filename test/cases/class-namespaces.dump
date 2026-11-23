@@ -1,0 +1,10 @@
+direction LR
+node Triangle shape=class label="Triangle"=11111111 class=styleClass cluster=BaseShapes
+node Rectangle shape=class label="Rectangle"=111111111 members="double width"/"double height" class=styleClass cluster=BaseShapes
+node X shape=class label="X"=1 class=clickable style=fill:"#f9f" link="https://example.com" target="_blank" tooltip="tip" cluster=a.b
+node note0 shape=rect label=md:"in b" cluster=a.b
+edge Triangle -> Rectangle head=dependency tail=none line=normal len=1
+edge X -> Triangle head=extension tail=none line=dotted len=1 label=md:"impl"
+cluster a.b title="Bee" parent=a
+cluster BaseShapes title="BaseShapes" parent=-
+cluster a title="a" parent=-

@@ -137,10 +137,10 @@ BEGIN
   END
 END Runs;
 
-(* The lines of lab, centred at (x, y), in colour c *)
 (* The text of lab, in colour c, at (x, y), at size points, or the
-   current size for 0 *)
-PROCEDURE SizedText(lab: F.Label; x, y: REAL; c: INTEGER; size: REAL);
+   current size for 0; each line centred there, or starting there if
+   left *)
+PROCEDURE Lines(lab: F.Label; x, y: REAL; c: INTEGER; size: REAL; left: BOOLEAN);
   VAR line: F.Line;
 BEGIN
   IF (lab = NIL) OR (lab.n = 0) THEN RETURN END;
@@ -154,10 +154,15 @@ BEGIN
     IF c # NoColour THEN W("\m[]") END;
     IF line.style = NIL THEN W("\f[]") END;
     IF size > 0 THEN W("\s[0]") END;
-    W('" ');
+    IF left THEN W('" ljust ') ELSE W('" ') END;
     line := line.next
   END;
   At(x, y); PmIO.WriteLn
+END Lines;
+
+PROCEDURE SizedText(lab: F.Label; x, y: REAL; c: INTEGER; size: REAL);
+BEGIN
+  Lines(lab, x, y, c, size, FALSE)
 END SizedText;
 
 PROCEDURE Text(lab: F.Label; x, y: REAL; c: INTEGER);
@@ -198,6 +203,46 @@ BEGIN
     W(" outlined "); ColourName(st.line); W(" thickness "); PmIO.WriteReal(st.width, 3); PmIO.WriteLn
   END
 END Marker;
+
+(* How far Mermaid's class diagrams shorten an edge for a marker of
+   kind, in pixels *)
+PROCEDURE Offset(kind: INTEGER): REAL;
+BEGIN
+  IF (kind = F.Extension) OR (kind = F.Composition) OR (kind = F.Aggregation) THEN RETURN 17.25
+  ELSIF kind = F.Dependency THEN RETURN 6
+  ELSIF kind = F.Lollipop THEN RETURN 13.5
+  END;
+  RETURN 0
+END Offset;
+
+(* p[0 .. n-1] reversed, in a new array *)
+PROCEDURE Reversed(p: G.Points; n: INTEGER): G.Points;
+  VAR r: G.Points; k: INTEGER;
+BEGIN
+  r := G.NewPoints(n);
+  FOR k := 0 TO n - 1 DO r[k] := p[n - 1 - k] END;
+  RETURN r
+END Reversed;
+
+(* The polyline p[0 .. n-1] without the last d of its length, in a new
+   array; as it is, if it is not longer than d *)
+PROCEDURE Cut(VAR p: G.Points; VAR n: INTEGER; d: REAL);
+  VAR q: G.Points; k: INTEGER; len, dx, dy: REAL;
+BEGIN
+  q := G.NewPoints(n);
+  FOR k := 0 TO n - 1 DO q[k] := p[k] END;
+  k := n;
+  WHILE (k >= 2) & (d > 0) DO
+    dx := q[k - 2].x - q[k - 1].x; dy := q[k - 2].y - q[k - 1].y;
+    len := Math.sqrt(dx * dx + dy * dy);
+    IF len > d THEN
+      G.Set(q[k - 1], q[k - 1].x + dx * d / len, q[k - 1].y + dy * d / len); d := 0
+    ELSIF k > 2 THEN DEC(k); d := d - len
+    ELSE k := n; d := 0; q := p  (* too short *)
+    END
+  END;
+  p := q; n := k
+END Cut;
 
 (* The points p[0 .. n-1] as "from P to P ...", four to a line *)
 PROCEDURE Path(VAR p: ARRAY OF G.Point; n: INTEGER);
@@ -251,6 +296,35 @@ PROCEDURE Stroke(VAR st: Style);
 BEGIN
   W(" outlined "); ColourName(st.line); W(" thickness "); PmIO.WriteReal(st.width, 3)
 END Stroke;
+
+(* A class diagram's marker at an edge's end p[n-1], as Mermaid's
+   markers: a hollow triangle, a filled or a hollow diamond, a filled
+   arrowhead, or a circle *)
+PROCEDURE ClassMarker(kind: INTEGER; VAR p: ARRAY OF G.Point; n: INTEGER; VAR st: Style);
+  VAR ux, uy, vx, vy, ex, ey: REAL; q: ARRAY 4 OF G.Point; k: INTEGER; s: Style;
+
+  PROCEDURE Q(i: INTEGER; along, side: REAL);  (* q[i]: along back, side across *)
+  BEGIN
+    G.Set(q[i], ex - ux * along * px + vx * side * px, ey - uy * along * px + vy * side * px)
+  END Q;
+
+BEGIN
+  IF (kind < F.Extension) OR (kind > F.Lollipop) OR (st.line = NoColour) THEN RETURN END;
+  EndDirection(p, n, ux, uy); vx := -uy; vy := ux;
+  ex := p[n - 1].x; ey := p[n - 1].y;
+  s := st; s.dash := 0; s.fill := NoColour;
+  IF (kind = F.Composition) OR (kind = F.Dependency) THEN s.fill := st.line END;
+  k := 4;
+  CASE kind OF
+    F.Extension: Q(0, 0, 0); Q(1, 17, 6); Q(2, 17, -6); k := 3
+  | F.Composition, F.Aggregation: Q(0, 0, 0); Q(1, 9, 6); Q(2, 17, 0); Q(3, 9, -6)
+  | F.Dependency: Q(0, 0, 0); Q(1, 9, 6); Q(2, 4, 0); Q(3, 9, -6)
+  | F.Lollipop:
+      W("circle rad "); In(6 * px); Q(0, 7.5, 0); At(q[0].x, q[0].y);
+      Stroke(s); PmIO.WriteLn; k := 0
+  END;
+  IF k > 0 THEN Polygon(q, k, s) END
+END ClassMarker;
 
 (* The polyline s[0 .. ns-1] dashed: dashes of st.dash points with gaps
    as long, each a line of its own. groff dashes each piece of a line
@@ -310,7 +384,7 @@ BEGIN
 END Head;
 
 PROCEDURE DrawEdge(e: F.Edge; le: L.Edge; VAR st: Style);
-  VAR b, s, r: G.Points; nb, ns, k, t, n: INTEGER; p: G.Points;
+  VAR b, s, r, op: G.Points; nb, ns, k, t, n, on: INTEGER; p: G.Points;
 BEGIN
   IF (e.line = F.Invisible) OR (st.line = NoColour) THEN RETURN END;
   p := le.points; n := le.nPoints;
@@ -319,6 +393,12 @@ BEGIN
     (* another curve, as the line through its corners or its samples *)
     Cv.Make(e.curve, p^, n, b, nb);
     Cv.Sample(Cv.Straight(e.curve, n), b^, nb, Samples, p, n)
+  END;
+  (* a class diagram's markers are at the ends, the line shortened *)
+  op := p; on := n;
+  IF Offset(e.head) > 0 THEN Cut(p, n, Offset(e.head) * px) END;
+  IF Offset(e.tail) > 0 THEN
+    p := Reversed(p, n); Cut(p, n, Offset(e.tail) * px); p := Reversed(p, n)
   END;
   IF st.dash > 0 THEN
     (* the curve, sampled, then dashed *)
@@ -348,12 +428,11 @@ BEGIN
     END;
     Path(p^, n); Stroke(st); PmIO.WriteLn
   END;
-  Marker(e.head, p^, n, st);
+  Marker(e.head, op^, on, st); ClassMarker(e.head, op^, on, st);
   IF e.tail # F.None THEN
     (* the start, as the end of the points reversed *)
-    s := G.NewPoints(n);
-    FOR k := 0 TO n - 1 DO s[k] := p[n - 1 - k] END;
-    Marker(e.tail, s^, n, st)
+    s := Reversed(op, on);
+    Marker(e.tail, s^, on, st); ClassMarker(e.tail, s^, on, st)
   END
 END DrawEdge;
 
@@ -367,6 +446,58 @@ BEGIN
   END;
   Text(l.edgeLabel[e.index], le.labelX, le.labelY, st.text)
 END DrawLabel;
+
+(* Edge e's cardinalities, by its ends, as Mermaid's edge terminal
+   labels, smaller than the labels *)
+PROCEDURE DrawCardinalities(l: FL.Layout; e: F.Edge; VAR st: Style);
+  VAR x, y: REAL;
+BEGIN
+  IF e.startLabel # NIL THEN
+    FL.Cardinality(l, e, TRUE, x, y); SizedText(e.startLabel, x, y, st.text, l.size * 11 / 16)
+  END;
+  IF e.endLabel # NIL THEN
+    FL.Cardinality(l, e, FALSE, x, y); SizedText(e.endLabel, x, y, st.text, l.size * 11 / 16)
+  END
+END DrawCardinalities;
+
+(* The lines of lab, starting at x, centred on y, each underlined if
+   it is so, in colour c *)
+PROCEDURE LeftText(l: FL.Layout; lab: F.Label; x, y: REAL; c: INTEGER; VAR st: Style);
+  VAR line: F.Line; ly, w: REAL; s: Style;
+BEGIN
+  IF lab = NIL THEN RETURN END;
+  Lines(lab, x, y, c, 0, TRUE);
+  line := lab.lines; ly := y - (lab.n - 1) * l.vs / 2;
+  s := st; s.dash := 0; s.width := 1 * px;
+  IF c # NoColour THEN s.line := c END;
+  WHILE line # NIL DO
+    IF line.underline & (s.line # NoColour) THEN
+      w := M.LineWidth(labelFont, line, 0, Lx.Length(line.text^), l.size);
+      W("line from "); Pt(x, ly + l.size * 0.3); W(" to "); Pt(x + w, ly + l.size * 0.3);
+      Stroke(s); PmIO.WriteLn
+    END;
+    ly := ly + l.vs; line := line.next
+  END
+END LeftText;
+
+(* Class box n, at (x, y), w by h: its annotation and title centred,
+   its members and methods below them, each part below a divider *)
+PROCEDURE DrawClass(l: FL.Layout; n: F.Node; x, y, w, h: REAL; VAR st: Style);
+  VAR top, xl: REAL; pt: FL.ClassPart;
+BEGIN
+  pt := l.parts[n.index]; top := y - h / 2; xl := x - w / 2;
+  W("box wid "); In(w); W(" ht "); In(h); At(x, y); Paint(st, TRUE); PmIO.WriteLn;
+  IF st.line # NoColour THEN
+    W("line from "); Pt(xl, top + pt.d1); W(" to "); Pt(xl + w, top + pt.d1);
+    Paint(st, FALSE); PmIO.WriteLn;
+    W("line from "); Pt(xl, top + pt.d2); W(" to "); Pt(xl + w, top + pt.d2);
+    Paint(st, FALSE); PmIO.WriteLn
+  END;
+  IF n.annotation # NIL THEN Text(n.annotation, x, top + pt.annY, st.text) END;
+  Text(l.nodeLabel[n.index], x, top + pt.titleY, st.text);
+  LeftText(l, n.members, xl + pt.pad, top + pt.memY, st.text, st);
+  LeftText(l, n.methods, xl + pt.pad, top + pt.metY, st.text, st)
+END DrawClass;
 
 (* A part of a drawing of PmShapes's, in st *)
 PROCEDURE DrawPart(VAR pt: Shp.Part; VAR st: Style);
@@ -391,8 +522,9 @@ PROCEDURE DrawNode(l: FL.Layout; n: F.Node; VAR st: Style);
     dr: Shp.Drawing;
 BEGIN
   ln := l.g.node[n.index]; x := ln.x; y := ln.y; w := ln.w; h := ln.h;
+  IF n.shape = F.ClassBox THEN DrawClass(l, n, x, y, w, h, st); RETURN END;
   CASE n.shape OF
-    F.Rect, F.Round, F.Stadium, F.Subroutine:
+    F.Rect, F.Round, F.Stadium, F.Subroutine, F.Interface:
       W("box wid "); In(w); W(" ht "); In(h); At(x, y);
       IF n.shape = F.Round THEN W(" rad "); In(5 * px)
       ELSIF n.shape = F.Stadium THEN W(" rad "); In(h / 2)
@@ -574,7 +706,10 @@ BEGIN
   e := g.edges;
   WHILE e # NIL DO DrawEdge(e, l.g.edge[e.index], es[e.index]); e := e.next END;
   e := g.edges;
-  WHILE e # NIL DO DrawLabel(l, e, l.g.edge[e.index], es[e.index], back); e := e.next END;
+  WHILE e # NIL DO
+    DrawLabel(l, e, l.g.edge[e.index], es[e.index], back); DrawCardinalities(l, e, es[e.index]);
+    e := e.next
+  END;
   n := g.nodes;
   WHILE n # NIL DO
     IF l.g.node[n.index].kind # L.Hidden THEN DrawNode(l, n, ns[n.index]) END;

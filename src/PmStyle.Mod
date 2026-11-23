@@ -322,7 +322,8 @@ END ApplyClass;
 (* st, node n's style: Mermaid's default theme, then classDef default,
    n's classes and its style statements. In a state diagram, start and
    end markers and forks are in the line colour, and notes (Rect) in
-   the notes' colours *)
+   the notes' colours; in a class diagram, notes too, and an interface
+   (a lollipop's) has no box *)
 PROCEDURE NodeStyle*(g: F.Graph; n: F.Node; VAR st: Style);
   VAR c: F.Name;
 BEGIN
@@ -335,6 +336,12 @@ BEGIN
       st.line := ThemeColour(edgeLine); st.width := 2 * px
     ELSIF n.shape = F.Rect THEN
       st.fill := ThemeColour(noteFill); st.line := ThemeColour(noteLine); st.text := ThemeColour(noteText)
+    END
+  ELSIF g.kind = F.Class THEN
+    IF n.shape = F.Rect THEN
+      st.fill := ThemeColour(noteFill); st.line := ThemeColour(noteLine); st.text := ThemeColour(noteText)
+    ELSIF n.shape = F.Interface THEN
+      st.fill := NoColour; st.line := NoColour
     END
   END;
   ApplyClass(g, st, "default");
@@ -372,8 +379,8 @@ BEGIN
   END
 END ClusterStyle;
 
-(* st, edge e's style: Mermaid's default theme for its kind of line,
-   then its class statements', then its linkStyle *)
+(* st, edge e's style: Mermaid's default theme for its kind of line
+   and diagram, then its class statements', then its linkStyle *)
 PROCEDURE EdgeStyle*(g: F.Graph; e: F.Edge; VAR st: Style);
   VAR c: F.Name;
 BEGIN
@@ -383,6 +390,12 @@ BEGIN
     (* transitions are 1 pixel wide; a note's edge is dashed *)
     st.width := px;
     IF e.line = F.Dotted THEN st.dash := 5 * px END
+  ELSIF g.kind = F.Class THEN
+    (* relations are 1 pixel wide; a note's edge is dotted *)
+    st.width := px;
+    IF e.from.shape = F.Rect THEN st.dash := 2 * px
+    ELSIF e.line = F.Dotted THEN st.dash := 3 * px
+    END
   ELSIF e.line = F.Thick THEN st.width := 3.5 * px
   ELSIF e.line = F.Dotted THEN st.dash := 3 * px
   END;

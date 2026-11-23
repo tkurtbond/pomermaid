@@ -1,0 +1,8 @@
+direction TB
+node BankAccount shape=class label="BankAccount<T>"=11111111111111 annotation="«abstract»" members="+String owner"/"+BigDecimal balance"_/"-List<List<int>> history"/"+String bank" methods="+deposit(amount) : bool"/"+withdraw(amount) : int"=22222222222222222222222/"#audit()"_/"~internal() : Map<K, V>"/"+close() : void"
+node Odd name shape=class label="A label"=1111111
+node Empty shape=class label="Empty"=11111 annotation="«service»"
+node Square shape=class label="Square"=111111 class=styleClass
+node note0 shape=rect label=md:"accounts"
+edge note0 -> BankAccount head=none tail=none line=normal len=1
+classDef styleClass props=fill:"#ffd",stroke:"#a80"

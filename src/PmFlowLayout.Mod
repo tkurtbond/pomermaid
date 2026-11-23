@@ -39,6 +39,14 @@ CONST
 TYPE
   Flags* = POINTER TO ARRAY OF BOOLEAN;
 
+  (* A class box's parts, as offsets down from its top, in points: the
+     centres of its annotation, title, members and methods, and its two
+     dividers; and P, its padding *)
+  ClassPart* = RECORD
+    annY-, titleY-, d1-, memY-, d2-, metY-, pad-: REAL
+  END;
+  ClassParts* = POINTER TO ARRAY OF ClassPart;
+
   (* A layout of one scope: the whole flowchart, or an isolated
      subgraph *)
   Scope* = POINTER TO ScopeDesc;
@@ -70,6 +78,7 @@ TYPE
                               cluster i of g is the subgraph of index i *)
     stands-: L.Ints; (* for each node, the cluster it
                               stands for, or -1 *)
+    parts-: ClassParts;    (* each node's, if it is a class box *)
     size-, vs-: REAL;      (* the labels' size and line spacing *)
     title-: F.Label;       (* the diagram's title, or NIL *)
     titleSize-, titleW-, titleH-: REAL; (* its size, and its width and height *)
@@ -148,7 +157,7 @@ PROCEDURE Wrap(font: M.Font; lab: F.Label; size, maxW: REAL): F.Label;
   PROCEDURE Add(VAR s: ARRAY OF CHAR; from, to: LONGINT);
     VAR nl: F.Line; k: LONGINT;
   BEGIN
-    NEW(nl); nl.text := Lx.Sub(s, from, to - from); nl.style := NIL; nl.next := NIL;
+    NEW(nl); nl.text := Lx.Sub(s, from, to - from); nl.style := NIL; nl.underline := line.underline; nl.next := NIL;
     IF line.style # NIL THEN
       NEW(nl.style, to - from + 1);
       FOR k := from TO to - 1 DO nl.style[k - from] := line.style[k] END;
@@ -270,6 +279,79 @@ BEGIN
   END
 END Ends;
 
+(* The size w by h of class box n, its labels set in font at size
+   points with line spacing vs, and its parts, as Mermaid's classBox
+   lays them out: P, 12 pixels, above the annotation and title, and
+   below them to the first divider; the members, then the methods,
+   each P below their divider, P above the next; an empty compartment
+   1.5 P (2.5 P for the members', or 2 P for the methods', when the
+   other is not empty). Lines are vs apart, not Mermaid's 24 pixels. *)
+PROCEDURE ClassSize(font: M.Font; n: F.Node; size, vs: REAL; VAR part: ClassPart;
+  VAR w, h: REAL);
+  VAR p, aw, ah, tw, th, mw, mh, dw, dh: REAL;
+BEGIN
+  p := 12 * size / MermaidSize; part.pad := p;
+  aw := 0; ah := 0; mw := 0; mh := 0; dw := 0; dh := 0;
+  IF n.annotation # NIL THEN M.LabelSize(font, n.annotation, size, vs, aw, ah) END;
+  M.LabelSize(font, n.label, size, vs, tw, th);
+  IF n.members # NIL THEN M.LabelSize(font, n.members, size, vs, mw, mh) END;
+  IF n.methods # NIL THEN M.LabelSize(font, n.methods, size, vs, dw, dh) END;
+  part.annY := p + ah / 2; part.titleY := p + ah + th / 2;
+  part.d1 := p + ah + th + p;
+  part.memY := part.d1 + p + mh / 2;
+  IF n.members # NIL THEN part.d2 := part.d1 + 2 * p + mh
+  ELSIF n.methods # NIL THEN part.d2 := part.d1 + 2.5 * p
+  ELSE part.d2 := part.d1 + 1.5 * p
+  END;
+  part.metY := part.d2 + p + dh / 2;
+  IF n.methods # NIL THEN h := part.d2 + 2 * p + dh
+  ELSIF n.members # NIL THEN h := part.d2 + 2 * p
+  ELSE h := part.d2 + 1.5 * p
+  END;
+  w := aw;
+  IF tw > w THEN w := tw END;
+  IF mw > w THEN w := mw END;
+  IF dw > w THEN w := dw END;
+  w := w + 2 * p
+END ClassSize;
+
+(* Where edge e's cardinality at its start (at its end, if ~start) is
+   centred, (x, y), as Mermaid's calcTerminalLabelPosition puts it: 25
+   pixels along the edge's points from that end, and 10 more if the
+   end has a marker, a point c; then 10 pixels, and half the marker's
+   10, to the side of the middle of the end and c *)
+PROCEDURE Cardinality*(l: Layout; e: F.Edge; start: BOOLEAN; VAR x, y: REAL);
+  VAR le: L.Edge; i, n: INTEGER; m, left, sx, sy, ax, ay, bx, by, cx, cy, d, a, scale: REAL;
+
+  PROCEDURE P(i: INTEGER; VAR px, py: REAL);  (* the i-th point from the end *)
+  BEGIN
+    IF ~start THEN i := n - 1 - i END;
+    px := le.points[i].x; py := le.points[i].y
+  END P;
+
+BEGIN
+  le := l.g.edge[e.index]; n := le.nPoints; x := 0; y := 0;
+  IF n = 0 THEN RETURN END;
+  scale := l.size / MermaidSize;
+  m := 0;
+  IF start & (e.tail # F.None) OR ~start & (e.head # F.None) THEN m := 10 END;
+  P(0, sx, sy); cx := sx; cy := sy; left := (25 + m) * scale; i := 1;
+  WHILE (i < n) & (left > 0) DO
+    P(i - 1, ax, ay); P(i, bx, by);
+    d := Math.sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay));
+    IF d >= left THEN
+      cx := ax + (bx - ax) * left / d; cy := ay + (by - ay) * left / d; left := 0
+    ELSE
+      cx := bx; cy := by; left := left - d
+    END;
+    INC(i)
+  END;
+  d := (10 + m / 2) * scale;
+  a := Math.arctan2(sy - cy, sx - cx);
+  x := Math.sin(a) * d + (sx + cx) / 2;
+  y := -Math.cos(a) * d + (sy + cy) / 2
+END Cardinality;
+
 PROCEDURE Dir(d: INTEGER): INTEGER;
 BEGIN
   CASE d OF
@@ -389,14 +471,18 @@ BEGIN
   END;
   NEW(l.textW, nN + 1); NEW(l.textH, nN + 1);
   shape := Ints(nN); nodeCl := Ints(nN); NEW(nw, nN + 1); NEW(nh, nN + 1); NEW(nodes, nN + 1);
-  NEW(l.nodeLabel, nN + 1); NEW(l.edgeLabel, nE + 1);
+  NEW(l.nodeLabel, nN + 1); NEW(l.edgeLabel, nE + 1); NEW(l.parts, nN + 1);
   n := graph.nodes;
   WHILE n # NIL DO
     nodes[n.index] := n;
-    l.nodeLabel[n.index] := Wrap(font, n.label, size, WrapWidth * scale);
+    IF n.shape = F.ClassBox THEN l.nodeLabel[n.index] := n.label
+    ELSE l.nodeLabel[n.index] := Wrap(font, n.label, size, WrapWidth * scale)
+    END;
     M.LabelSize(font, l.nodeLabel[n.index], size, l.vs, tw, th);
     l.textW[n.index] := tw; l.textH[n.index] := th; shape[n.index] := n.shape;
-    IF Shp.Has(n.shape) THEN Shp.Size(n.shape, graph.dir, tw, th, size, w, h)
+    IF n.shape = F.ClassBox THEN ClassSize(font, n, size, l.vs, l.parts[n.index], w, h)
+    ELSIF n.shape = F.Interface THEN M.ShapeSize(F.Rect, tw, th, size, w, h)
+    ELSIF Shp.Has(n.shape) THEN Shp.Size(n.shape, graph.dir, tw, th, size, w, h)
     ELSE M.ShapeSize(n.shape, tw, th, size, w, h)
     END;
     nw[n.index] := w; nh[n.index] := h;

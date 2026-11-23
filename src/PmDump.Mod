@@ -33,6 +33,7 @@ BEGIN
         PmIO.WriteChar("="); i := 0;
         WHILE l.text[i] # 0X DO PmIO.WriteChar(CHR(ORD("0") + l.style[i])); INC(i) END
       END;
+      IF l.underline THEN PmIO.WriteChar("_") END;
       IF l.next # NIL THEN PmIO.WriteChar("/") END;
       l := l.next
     END
@@ -121,6 +122,8 @@ BEGIN
   | F.Choice: PmIO.WriteString("choice")
   | F.StateBox: PmIO.WriteString("state")
   | F.StateDesc: PmIO.WriteString("state-desc")
+  | F.ClassBox: PmIO.WriteString("class")
+  | F.Interface: PmIO.WriteString("interface")
   ELSE PmIO.WriteString("?")
   END
 END Shape;
@@ -168,6 +171,11 @@ BEGIN
   | F.Arrow: PmIO.WriteString("arrow")
   | F.CircleEnd: PmIO.WriteString("circle")
   | F.Cross: PmIO.WriteString("cross")
+  | F.Extension: PmIO.WriteString("extension")
+  | F.Composition: PmIO.WriteString("composition")
+  | F.Aggregation: PmIO.WriteString("aggregation")
+  | F.Dependency: PmIO.WriteString("dependency")
+  | F.Lollipop: PmIO.WriteString("lollipop")
   END
 END End;
 
@@ -204,6 +212,8 @@ BEGIN
     PmIO.WriteString("node "); PmIO.WriteString(n.id^);
     PmIO.WriteString(" shape="); Shape(n.shape);
     Label("label", n.label);
+    Label("annotation", n.annotation); Label("members", n.members);
+    Label("methods", n.methods);
     Names("class", n.classes);
     Props("style", n.style);
     Field("link", n.link); Field("target", n.linkTarget); Field("tooltip", n.tooltip);
@@ -225,6 +235,7 @@ BEGIN
     PmIO.WriteString(" line="); LineKind(e.line);
     PmIO.WriteString(" len="); PmIO.WriteInt(e.length);
     Label("label", e.label);
+    Label("start", e.startLabel); Label("end", e.endLabel);
     Props("style", e.style);
     Names("class", e.classes);
     IF e.curve # g.curve THEN PmIO.WriteString(" curve="); Curve(e.curve) END;

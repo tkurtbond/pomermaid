@@ -11,8 +11,9 @@ It needs no browser and no JavaScript. The labels are set in the
 document's own fonts: groff's font files measure them for pic and SVG,
 and ConTeXt measures them itself for MetaPost.
 
-It reads flowcharts (`flowchart` and `graph`) and state diagrams
-(`stateDiagram-v2` and `stateDiagram`). Mermaid's other diagram types
+It reads flowcharts (`flowchart` and `graph`), state diagrams
+(`stateDiagram-v2` and `stateDiagram`) and class diagrams
+(`classDiagram` and `classDiagram-v2`). Mermaid's other diagram types
 are planned, one after another.
 
 ## What it needs
@@ -238,7 +239,47 @@ them, and lays them out and draws them as it does flowcharts:
 
 Read and ignored: `hide empty description`, `scale`, `accTitle`,
 `accDescr`, and floating notes, `note "text" as id`, which Mermaid
-does not draw. Mermaid's other diagram types are not read yet.
+does not draw.
+
+### Class diagrams
+
+pomermaid reads Mermaid's class diagrams, as Mermaid 12.3.0 reads
+them, and lays them out as it does flowcharts:
+
+- **The first line:** `classDiagram` or `classDiagram-v2`. A diagram
+  is drawn top to bottom unless a `direction TB`, `BT`, `LR` or `RL`
+  says otherwise. Front matter and directives are read as for a
+  flowchart.
+- **Classes:** `class Name`, with a label, `class Name["A label"]`,
+  members in braces, `class Name { ... }`, or one at a time,
+  `Name : +int age`. A class is made, too, by its first use in a
+  relation or a note. Names may be in backquotes, and generics are
+  written with tildes, `Square~Shape~`, drawn `Square<Shape>`.
+- **Members:** a member with parentheses is a method, drawn below the
+  attributes. `$` at the end underlines a static member, `*` sets an
+  abstract one in italics, and a method's return type, after the
+  closing parenthesis, is drawn after a colon.
+- **Annotations:** `<<interface>> Name`, or `<<interface>>` inside the
+  braces, drawn above the class's name in guillemets.
+- **Relations:** `A <|-- B`, with `<|`, `*`, `o`, `<` and `()` (a
+  lollipop interface) at either end, or both, and `--` or `..` for a
+  solid or dotted line; cardinalities in quotation marks, `A "1" --> "*"
+  B`, and a label, `A --> B : text`.
+- **Notes:** `note "text"`, alone, or `note for Name "text"`, joined
+  to its class by a dotted line; `<br>` breaks a line.
+- **Namespaces:** `namespace Name { ... }`, with a label,
+  `namespace Name["A label"]`, nested, or written with dots,
+  `namespace A.B`, drawn as boxes; with
+  `config.class.hierarchicalNamespaces: false`, only the namespaces
+  written are drawn.
+- **Styles:** `classDef`, `class Name:::class`, `cssClass "A,B" class`,
+  and `style`. `click Name href "url" "tooltip"` and `link Name "url"`
+  make links in SVG.
+- **Comments:** `%%` comments.
+
+Read and ignored: `accTitle`, `accDescr`, and `callback` and `click
+... call`, which call functions; a tooltip is kept.
+Mermaid's other diagram types are not read yet.
 
 ## Using the output
 

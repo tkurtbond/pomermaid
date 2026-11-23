@@ -47,10 +47,13 @@ CONST
   (* a state diagram's (PmState): a choice, a state, and a state with
      descriptions, its name the label's first line *)
   Choice* = 53; StateBox* = 54; StateDesc* = 55;
-  NShapes* = 56;
+  (* a class diagram's (PmClass): a class's box, its title, members and
+     methods, and a lollipop's interface, its label alone *)
+  ClassBox* = 56; Interface* = 57;
+  NShapes* = 58;
 
   (* the kinds of diagram *)
-  Flowchart* = 0; State* = 1;
+  Flowchart* = 0; State* = 1; Class* = 2;
 
   (* the kinds of cluster: a flowchart's subgraph, a composite state,
      a composite state's concurrent region *)
@@ -63,6 +66,9 @@ CONST
 
   (* edge ends *)
   None* = 0; Arrow* = 1; CircleEnd* = 2; Cross* = 3;
+  (* a class diagram's relations' ends *)
+  Extension* = 4; Composition* = 5; Aggregation* = 6; Dependency* = 7;
+  Lollipop* = 8;
 
   (* edge lines *)
   Normal* = 0; Thick* = 1; Dotted* = 2; Invisible* = 3;
@@ -77,6 +83,7 @@ TYPE
     text*: Str;
     style*: Styles;  (* each byte's style, Bold, Italic or both; NIL if
                         every byte is Roman *)
+    underline*: BOOLEAN; (* a class's static member, underlined *)
     next*: Line
   END;
 
@@ -123,6 +130,7 @@ TYPE
     icon*, img*, form*, pos*: Str; (* from "@{ ... }", or NIL; not drawn *)
     assetW*, assetH*: REAL; (* "@{ w: , h: }", or 0 *)
     constraint*: BOOLEAN; (* "@{ constraint: on }" *)
+    annotation*, members*, methods*: Label; (* a ClassBox's, or NIL *)
     cluster*: Cluster;  (* the innermost subgraph holding it, or NIL *)
     index*: INTEGER;    (* from 0, in order of first mention *)
     next*: Node
@@ -155,6 +163,8 @@ TYPE
     id*: Str;           (* the id written before its link, or NIL *)
     from*, to*: Node;
     label*: Label;      (* NIL for none *)
+    startLabel*, endLabel*: Label; (* a relation's cardinalities, at from
+                           and at to, or NIL *)
     head*, tail*: INTEGER; (* the ends at to and at from *)
     line*: INTEGER;
     length*: INTEGER;   (* 1, or more for a longer arrow *)
@@ -296,7 +306,7 @@ BEGIN
   start := 0; end := bufLen;
   WHILE (start < end) & L.IsBlank(buf[start]) DO INC(start) END;
   WHILE (end > start) & L.IsBlank(buf[end - 1]) DO DEC(end) END;
-  NEW(l); l.text := L.Sub(buf^, start, end - start); l.style := NIL; l.next := NIL;
+  NEW(l); l.text := L.Sub(buf^, start, end - start); l.style := NIL; l.underline := FALSE; l.next := NIL;
   IF lab.lines = NIL THEN lab.lines := l
   ELSE p := lab.lines; WHILE p.next # NIL DO p := p.next END; p.next := l
   END;
@@ -325,7 +335,7 @@ BEGIN
   first := NIL; last := NIL; lab.n := 0; start := 0;
   FOR i := 0 TO n DO
     IF (i = n) OR (t[i] = 0AX) THEN
-      NEW(nl); nl.text := L.Sub(t^, start, i - start); nl.style := NIL; nl.next := NIL;
+      NEW(nl); nl.text := L.Sub(t^, start, i - start); nl.style := NIL; nl.underline := FALSE; nl.next := NIL;
       any := FALSE;
       FOR k := start TO i - 1 DO IF st[k] # Em.Roman THEN any := TRUE END END;
       IF any THEN
@@ -468,6 +478,7 @@ BEGIN
     n.style := NIL; n.link := NIL; n.linkTarget := NIL; n.tooltip := NIL;
     n.icon := NIL; n.img := NIL; n.form := NIL; n.pos := NIL;
     n.assetW := 0; n.assetH := 0; n.constraint := FALSE;
+    n.annotation := NIL; n.members := NIL; n.methods := NIL;
     n.cluster := NIL; n.index := g.nNodes; n.next := NIL;
     INC(g.nNodes);
     IF g.nodes = NIL THEN g.nodes := n ELSE g.lastNode.next := n END;
@@ -537,6 +548,7 @@ PROCEDURE AddEdge(from, to: Node; VAR a: ArrowDesc; id: Str);
   VAR e: Edge;
 BEGIN
   NEW(e); e.from := from; e.to := to; e.label := a.label;
+  e.startLabel := NIL; e.endLabel := NIL;
   e.head := a.head; e.tail := a.tail; e.line := a.line; e.length := a.length;
   IF e.length > 10 THEN e.length := 10 END;
   e.id := NIL;
