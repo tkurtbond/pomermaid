@@ -1,18 +1,18 @@
-MODULE PmGitMp;
-(* PmGitMp: a laid out git graph, PmGitLayout's, written in MetaPost,
-   for ConTeXt: a \startMPcode block that draws it as PmGitPic does, in
+MODULE PmDrawMp;
+(* PmDrawMp: a drawing, PmDraw's, written in MetaPost, for ConTeXt:
+   a \startMPcode block that draws it as PmDrawPic does, in
    the same order and colours: circles, boxes, rounded as the layout's,
    polygons and lines, with butt caps, as SVG's; the curves, the
    arrows, as their Béziers, with round caps; ConTeXt's text,
    textext's pictures, each centred at its middle and turned. The
-   places are PmGitLayout's, in points; the drawing's bounds are the
+   places are PmDraw's, in points; the drawing's bounds are the
    layout's, widened for any text ConTeXt sets wider than pomermaid
    measured it (decision 18). Text is written as PmMp writes it. *)
 
-IMPORT PmIO, F := PmFlow, HL := PmGitLayout, PmMp;
+IMPORT PmIO, F := PmFlow, D := PmDraw, PmMp;
 
 VAR
-  l: HL.Layout;
+  l: D.Drawing;
 
 PROCEDURE W(s: ARRAY OF CHAR);
 BEGIN
@@ -52,12 +52,12 @@ BEGIN
 END Picture;
 
 (* The closed path of the item it, a circle, a box or a polygon *)
-PROCEDURE Shape(it: HL.Item);
+PROCEDURE Shape(it: D.Item);
   VAR k: INTEGER;
 BEGIN
-  IF it.kind = HL.Circle THEN
+  IF it.kind = D.Circle THEN
     W("fullcircle scaled "); Pt(2 * it.r); W(" shifted "); At(it.x, it.y)
-  ELSIF it.kind = HL.Rect THEN
+  ELSIF it.kind = D.Rect THEN
     W("pmhbox("); Pt(it.x); W(", "); Pt(it.y); W(", "); Pt(it.w); W(", "); Pt(it.h);
     W(", "); Pt(it.r); W(")")
   ELSE
@@ -69,7 +69,7 @@ BEGIN
   END
 END Shape;
 
-PROCEDURE Filled(it: HL.Item);
+PROCEDURE Filled(it: D.Item);
 BEGIN
   IF it.fill >= 0 THEN W("fill "); Shape(it); W(" withcolor "); Col(it.fill); W(";"); Ln END;
   IF (it.line >= 0) & (it.width > 0) THEN
@@ -78,13 +78,13 @@ BEGIN
   END
 END Filled;
 
-PROCEDURE Stroked(it: HL.Item);
+PROCEDURE Stroked(it: D.Item);
   VAR k: INTEGER;
 BEGIN
   IF (it.line < 0) OR (it.width <= 0) OR (it.n < 2) THEN RETURN END;
-  IF it.kind = HL.Curve THEN W("begingroup interim linecap := rounded; ") END;
+  IF it.kind = D.Curve THEN W("begingroup interim linecap := rounded; ") END;
   W("draw "); At(it.p[0].x, it.p[0].y);
-  IF it.kind = HL.Line THEN W(" -- "); At(it.p[1].x, it.p[1].y)
+  IF it.kind = D.Line THEN W(" -- "); At(it.p[1].x, it.p[1].y)
   ELSE
     k := 0;
     WHILE k + 3 < it.n DO
@@ -96,13 +96,13 @@ BEGIN
   W(" withcolor "); Col(it.line); W(" withpen pencircle scaled "); Pt(it.width);
   IF it.dash > 0 THEN W(" dashed dashpattern(on "); Pt(it.dash); W(" off "); Pt(it.dash); W(")") END;
   W(";");
-  IF it.kind = HL.Curve THEN W(" endgroup;") END;
+  IF it.kind = D.Curve THEN W(" endgroup;") END;
   Ln
 END Stroked;
 
-(* Writes lay's git graph as a \startMPcode block *)
-PROCEDURE Write*(lay: HL.Layout);
-  VAR it: HL.Item;
+(* Writes the drawing lay as a \startMPcode block *)
+PROCEDURE Write*(lay: D.Drawing);
+  VAR it: D.Item;
 BEGIN
   l := lay;
   W("\startMPcode"); Ln;
@@ -128,8 +128,8 @@ BEGIN
   W("begingroup interim linecap := butt;"); Ln;
   it := l.items;
   WHILE it # NIL DO
-    IF (it.kind = HL.Circle) OR (it.kind = HL.Rect) OR (it.kind = HL.Poly) THEN Filled(it)
-    ELSIF (it.kind = HL.Line) OR (it.kind = HL.Curve) THEN Stroked(it)
+    IF (it.kind = D.Circle) OR (it.kind = D.Rect) OR (it.kind = D.Poly) THEN Filled(it)
+    ELSIF (it.kind = D.Line) OR (it.kind = D.Curve) THEN Stroked(it)
     ELSIF (it.lab # NIL) & (it.lab.n > 0) THEN
       W("pmxtext("); Picture(it.lab, it.size); W(", "); At(it.x, it.y); W(", ");
       PmIO.WriteReal(it.angle, 3); W(", "); Col(it.line); W(");"); Ln
@@ -142,4 +142,4 @@ BEGIN
   W("\stopMPcode"); Ln
 END Write;
 
-END PmGitMp.
+END PmDrawMp.

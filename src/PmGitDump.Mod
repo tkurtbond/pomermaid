@@ -2,9 +2,9 @@ MODULE PmGitDump;
 (* PmGitDump: a git graph's model, PmGit's, written as text, one line
    for the title, each configuration value, the diagram's options, each
    branch in its order and each commit in Mermaid's order, for the
-   tests (-t dump); and its layout, PmGitLayout's (-t layout) *)
+   tests (-t dump); its layout is written by PmDrawDump *)
 
-IMPORT PmIO, Y := PmYaml, H := PmGit, X := PmXy, D := PmDump, HL := PmGitLayout, P := PmPic;
+IMPORT PmIO, Y := PmYaml, H := PmGit, X := PmXy, D := PmDump;
 
 PROCEDURE Num(name: ARRAY OF CHAR; x: LONGREAL);
   VAR s: ARRAY 64 OF CHAR;
@@ -73,57 +73,5 @@ BEGIN
     c := c.next
   END
 END Write;
-
-PROCEDURE Real(name: ARRAY OF CHAR; x: REAL);
-BEGIN
-  PmIO.WriteChar(" "); PmIO.WriteString(name); PmIO.WriteChar("="); PmIO.WriteReal(x, 2)
-END Real;
-
-PROCEDURE Pt(name: ARRAY OF CHAR; x, y: REAL);
-BEGIN
-  PmIO.WriteChar(" ");
-  IF name # "" THEN PmIO.WriteString(name); PmIO.WriteChar("=") END;
-  PmIO.WriteChar("(");
-  PmIO.WriteReal(x, 2); PmIO.WriteChar(","); PmIO.WriteReal(y, 2); PmIO.WriteChar(")")
-END Pt;
-
-PROCEDURE Colour(name: ARRAY OF CHAR; c: LONGINT);
-BEGIN
-  PmIO.WriteChar(" "); PmIO.WriteString(name); PmIO.WriteChar("=");
-  IF c < 0 THEN PmIO.WriteString("none") ELSE PmIO.WriteChar("#"); P.Hex(c, 6) END
-END Colour;
-
-(* Writes the layout l (-t layout): its size and each item, in drawing
-   order, in points, rounded to 2 decimals *)
-PROCEDURE WriteLayout*(l: HL.Layout);
-  VAR it: HL.Item; k: INTEGER;
-BEGIN
-  PmIO.WriteString("layout"); Real("width", l.width); Real("height", l.height); PmIO.WriteLn;
-  it := l.items;
-  WHILE it # NIL DO
-    IF it.kind = HL.Circle THEN
-      PmIO.WriteString("circle"); Pt("at", it.x, it.y); Real("r", it.r)
-    ELSIF it.kind = HL.Rect THEN
-      PmIO.WriteString("rect"); Pt("at", it.x, it.y); Real("w", it.w); Real("h", it.h);
-      IF it.r # 0 THEN Real("r", it.r) END
-    ELSIF it.kind = HL.Text THEN
-      PmIO.WriteString("text"); Pt("at", it.x, it.y); Real("size", it.size); Real("w", it.w);
-      IF it.angle # 0 THEN Real("angle", it.angle) END
-    ELSE
-      IF it.kind = HL.Poly THEN PmIO.WriteString("poly")
-      ELSIF it.kind = HL.Line THEN PmIO.WriteString("line")
-      ELSE PmIO.WriteString("curve")
-      END;
-      FOR k := 0 TO it.n - 1 DO Pt("", it.p[k].x, it.p[k].y) END;
-      IF it.dash # 0 THEN Real("dash", it.dash) END
-    END;
-    IF it.kind # HL.Text THEN Colour("fill", it.fill) END;
-    Colour("line", it.line);
-    IF it.width # 0 THEN Real("width", it.width) END;
-    IF it.kind = HL.Text THEN D.Label("text", it.lab) END;
-    PmIO.WriteLn;
-    it := it.next
-  END
-END WriteLayout;
 
 END PmGitDump.

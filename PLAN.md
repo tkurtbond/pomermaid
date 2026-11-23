@@ -1918,3 +1918,11 @@ and looked at. Mermaid itself was not run, so the layout is checked
 against its source, not its output. On 2026-11-23, `make test`
 passes, 549 of 549 under both models, on FreeBSD (alerik, rackhir),
 NetBSD (artos, yishana) and OpenBSD (jherek, cymoril).
+
+On 2026-11-23, after Phase 25, the git graph's drawing items (circles,
+boxes, polygons, lines, Bézier paths and text) moved to a shared
+module, `PmDraw`, which later diagrams extend (`PmGitLayout`'s layout
+is a `PmDraw.Drawing`); `PmGitPic` and `PmGitMp` became `PmDrawPic`
+and `PmDrawMp`, and the layout dump `PmDrawDump`. The output is
+unchanged: `make test` passes, 549 of 549 under both models, on
+Fedora and on the six BSD hosts.

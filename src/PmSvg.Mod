@@ -24,7 +24,7 @@ IMPORT PmIO, F := PmFlow, FL := PmFlowLayout, L := PmLayout, PmPic, R := PmRun,
   TL := PmTimelineLayout, PmTimelinePic, GL := PmGanttLayout, PmGanttPic,
   PL := PmPieLayout, PmPiePic, QL := PmQuadrantLayout, PmQuadrantPic,
   XL := PmXyLayout, PmXyPic, RL := PmRadarLayout, PmRadarPic,
-  KL := PmSankeyLayout, PmSankeyPic, HL := PmGitLayout, PmGitPic;
+  KL := PmSankeyLayout, PmSankeyPic, HL := PmGitLayout, PmDrawPic;
 
 CONST
   MinMargin = 2; (* points round the drawing, at least, for lines' widths *)
@@ -142,8 +142,8 @@ END WriteSankeyDocument;
 (* Writes the git graph l as WriteDocument does a flowchart *)
 PROCEDURE WriteGitDocument*(l: HL.Layout; font: ARRAY OF CHAR);
 BEGIN
-  Header(l.vs, PmGitPic.Widest(l), l.width, l.height);
-  PmGitPic.Write(l, font)
+  Header(l.vs, PmDrawPic.Widest(l), l.width, l.height);
+  PmDrawPic.Write(l, font)
 END WriteGitDocument;
 
 (* Crop *)

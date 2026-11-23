@@ -30,12 +30,12 @@ MODULE PmGitLayout;
    The bounds are every item's, without the lines' widths, a turned
    text's its turned box's, widened by diagramPadding on each side;
    everything is moved for them to start at (0, 0). Each place and
-   size is rounded once, as it is made, to a 1/8192 point (Snap). *)
+   size is rounded once, as it is made, to a 1/8192 point (PmDraw's
+   Snap). *)
 
-IMPORT MathL, M := PmMetrics, F := PmFlow, G := PmGeom, S := PmStyle, H := PmGit;
+IMPORT MathL, M := PmMetrics, F := PmFlow, S := PmStyle, H := PmGit, D := PmDraw;
 
 CONST
-  MermaidSize* = 16;
   BranchSize = 16;
   TitleSize = 18;
   Offset = 10;          (* LAYOUT_OFFSET *)
@@ -43,60 +43,25 @@ CONST
   PX = 4; PY = 2;
   DefaultPos = 30;
   Mid = 0.35D0;         (* a text's middle above its baseline, in sizes *)
-  Kappa = 0.5522847498D0;
-  MaxPath = 32;
   Black = 0; White = 0FFFFFFH;
-  (* items *)
-  Circle* = 0; Rect* = 1; Poly* = 2; Line* = 3; Curve* = 4; Text* = 5;
 
 TYPE
-  (* A circle: centre (x, y), radius r;
-     a rectangle: (x, y) its top left corner, w by h, its corners
-     rounded to r;
-     a polygon: p[0 .. n-1];
-     a line: from p[0] to p[1], dashed dash on and off, if dash > 0;
-     a curve: Béziers, p[0], then 3 points each, its control points
-     and its end, n points in all, with round caps;
-     a text: lab, size points, its middle (x, y), w by h, turned
-     angle degrees, clockwise, in colour line.
-     Each is filled with fill and outlined with line width wide; -1 is
-     neither *)
-  Item* = POINTER TO ItemDesc;
-  ItemDesc* = RECORD
-    kind-: INTEGER;
-    x-, y-, w-, h-, r-: REAL;
-    p-: G.Points; n-: INTEGER;
-    fill-, line-: LONGINT;
-    width-, dash-: REAL;
-    lab-: F.Label;
-    size-, angle-: REAL;
-    next-: Item
-  END;
-
   Layout* = POINTER TO LayoutDesc;
-  LayoutDesc* = RECORD
-    d-: H.Diagram;
-    font-: M.Font;
-    size-, vs-, px-: REAL;      (* the drawing's size, line spacing, a pixel *)
-    width-, height-: REAL;
-    items-: Item                (* in drawing order *)
+  LayoutDesc* = RECORD (D.DrawingDesc)
+    d-: H.Diagram
   END;
 
   Reals = POINTER TO ARRAY OF LONGREAL;
 
 VAR
   l: Layout;
-  last: Item;
   d: H.Diagram;
   t: S.GitTheme;
   px: LONGREAL;
-  minX, minY, maxX, maxY: LONGREAL;
   bpos: Reals;                  (* by branch index *)
   cx, cy, cpos, cpwo: Reals;    (* by place in d.bySeq *)
   maxPos: LONGREAL;
   lanes: Reals; nLanes: LONGINT;
-  (* the path being made, in pixels *)
-  qx, qy: ARRAY MaxPath OF LONGREAL; nq: INTEGER;
 
 PROCEDURE Max(a, b: LONGREAL): LONGREAL;
 BEGIN
@@ -110,89 +75,43 @@ BEGIN
   RETURN b
 END Min;
 
-(* x rounded to a 1/8192 point *)
-PROCEDURE Snap(x: LONGREAL): REAL;
-BEGIN
-  IF ABS(x) < 2048 THEN RETURN SHORT(ENTIER(x * 8192 + 0.5D0) / 8192.0D0) END;
-  RETURN SHORT(x)
-END Snap;
-
 (* x pixels in points *)
 PROCEDURE P(x: LONGREAL): REAL;
 BEGIN
-  RETURN Snap(x * px)
+  RETURN D.P(l, x)
 END P;
 
 (* Items *)
 
-PROCEDURE Add(it: Item);
-BEGIN
-  it.next := NIL;
-  IF last = NIL THEN l.items := it ELSE last.next := it END;
-  last := it
-END Add;
-
-PROCEDURE NewItem(kind: INTEGER; fill, line: LONGINT; width: LONGREAL): Item;
-  VAR it: Item;
-BEGIN
-  NEW(it); it.kind := kind; it.p := NIL; it.n := 0;
-  it.fill := fill; it.line := line;
-  IF line < 0 THEN it.width := 0 ELSE it.width := P(width) END;
-  it.dash := 0; it.lab := NIL; it.size := 0; it.angle := 0;
-  it.x := 0; it.y := 0; it.w := 0; it.h := 0; it.r := 0;
-  Add(it);
-  RETURN it
-END NewItem;
-
 PROCEDURE AddCircle(x, y, r: LONGREAL; fill, line: LONGINT; width: LONGREAL);
-  VAR it: Item;
 BEGIN
-  it := NewItem(Circle, fill, line, width);
-  it.x := P(x); it.y := P(y); it.r := P(r)
+  D.AddCircle(l, x, y, r, fill, line, width)
 END AddCircle;
 
 PROCEDURE AddRect(x, y, w, h, r: LONGREAL; fill, line: LONGINT; width: LONGREAL);
-  VAR it: Item;
 BEGIN
-  it := NewItem(Rect, fill, line, width);
-  it.x := P(x); it.y := P(y); it.w := P(w); it.h := P(h); it.r := P(r)
+  D.AddRect(l, x, y, w, h, r, fill, line, width)
 END AddRect;
 
 PROCEDURE AddLine(x0, y0, x1, y1: LONGREAL; line: LONGINT; width, dash: LONGREAL);
-  VAR it: Item;
 BEGIN
-  it := NewItem(Line, -1, line, width);
-  it.p := G.NewPoints(2); it.n := 2;
-  G.Set(it.p[0], P(x0), P(y0)); G.Set(it.p[1], P(x1), P(y1));
-  it.dash := P(dash)
+  D.AddLine(l, x0, y0, x1, y1, line, width, dash)
 END AddLine;
 
 PROCEDURE AddPoly(VAR x, y: ARRAY OF LONGREAL; n: INTEGER; fill, line: LONGINT;
   width: LONGREAL);
-  VAR it: Item; k: INTEGER;
 BEGIN
-  it := NewItem(Poly, fill, line, width);
-  it.p := G.NewPoints(n); it.n := n;
-  FOR k := 0 TO n - 1 DO G.Set(it.p[k], P(x[k]), P(y[k])) END
+  D.AddPoly(l, x, y, n, fill, line, width)
 END AddPoly;
 
-(* lab's width and height, in pixels, at size pixels *)
 PROCEDURE Measure(lab: F.Label; size: LONGREAL; VAR w, h: LONGREAL);
-  VAR rw, rh: REAL;
 BEGIN
-  M.LabelSize(l.font, lab, SHORT(size * px), SHORT(size * px * 1.2D0), rw, rh);
-  w := rw / px; h := rh / px
+  D.Measure(l, lab, size, w, h)
 END Measure;
 
-(* lab, size pixels, w by h, its middle (x, y), turned angle degrees *)
 PROCEDURE AddText(lab: F.Label; x, y, size, angle: LONGREAL; colour: LONGINT);
-  VAR it: Item;
 BEGIN
-  IF lab.n = 0 THEN RETURN END;
-  it := NewItem(Text, -1, colour, 0);
-  it.lab := lab; it.size := SHORT(size * px); it.angle := SHORT(angle);
-  M.LabelSize(l.font, lab, it.size, it.size * 1.2, it.w, it.h);
-  it.x := P(x); it.y := P(y)
+  D.AddText(l, lab, x, y, size, angle, colour)
 END AddText;
 
 (* (x, y) turned a degrees, clockwise, about (ox, oy) *)
@@ -208,38 +127,22 @@ END Turn;
 
 PROCEDURE MoveTo(x, y: LONGREAL);
 BEGIN
-  qx[0] := x; qy[0] := y; nq := 1
+  D.MoveTo(x, y)
 END MoveTo;
-
-PROCEDURE Put(x, y: LONGREAL);
-BEGIN
-  qx[nq] := x; qy[nq] := y; INC(nq)
-END Put;
 
 PROCEDURE LineTo(x, y: LONGREAL);
 BEGIN
-  Put(qx[nq - 1], qy[nq - 1]); Put(x, y); Put(x, y)
+  D.LineTo(x, y)
 END LineTo;
 
-(* The quarter circle to (x, y), clockwise if sweep, as SVG's arc with
-   sweep-flag sweep *)
 PROCEDURE ArcTo(sweep: BOOLEAN; x, y: LONGREAL);
-  VAR ax, ay, ox, oy: LONGREAL;
 BEGIN
-  ax := qx[nq - 1]; ay := qy[nq - 1];
-  (* the centre: (ax, y) turns clockwise when (y - ay) (x - ax) > 0 *)
-  IF ((y - ay) * (x - ax) > 0) = sweep THEN ox := ax; oy := y ELSE ox := x; oy := ay END;
-  Put(ax + Kappa * (x - ox), ay + Kappa * (y - oy));
-  Put(x + Kappa * (ax - ox), y + Kappa * (ay - oy));
-  Put(x, y)
+  D.ArcTo(sweep, x, y)
 END ArcTo;
 
 PROCEDURE AddPath(colour: LONGINT);
-  VAR it: Item; k: INTEGER;
 BEGIN
-  it := NewItem(Curve, -1, colour, 8);
-  it.p := G.NewPoints(nq); it.n := nq;
-  FOR k := 0 TO nq - 1 DO G.Set(it.p[k], P(qx[k]), P(qy[k])) END
+  D.AddPath(l, colour, 8)
 END AddPath;
 
 (* Places *)
@@ -373,7 +276,6 @@ END PushLane;
 
 PROCEDURE DrawBranches;
   VAR k: INTEGER; b: H.Branch; lab: F.Label; w, h, y, r, tp: LONGREAL; i: INTEGER;
-    it: Item;
 BEGIN
   IF d.rotateCommitLabel THEN r := 30 ELSE r := 0 END;
   FOR k := 0 TO d.nBranches - 1 DO
@@ -638,58 +540,12 @@ BEGIN
   END
 END DrawCommits;
 
-(* Bounds *)
-
-PROCEDURE Bound(x0, y0, x1, y1: LONGREAL);
-BEGIN
-  IF x0 < minX THEN minX := x0 END;
-  IF y0 < minY THEN minY := y0 END;
-  IF x1 > maxX THEN maxX := x1 END;
-  IF y1 > maxY THEN maxY := y1 END
-END Bound;
-
-PROCEDURE BoundItem(it: Item);
-  VAR k: INTEGER; c, s, u, v: LONGREAL;
-BEGIN
-  IF it.kind = Circle THEN Bound(it.x - it.r, it.y - it.r, it.x + it.r, it.y + it.r)
-  ELSIF it.kind = Rect THEN Bound(it.x, it.y, it.x + it.w, it.y + it.h)
-  ELSIF it.kind = Text THEN
-    c := MathL.cos(it.angle * MathL.pi / 180); s := MathL.sin(it.angle * MathL.pi / 180);
-    FOR k := 0 TO 3 DO
-      IF k MOD 2 = 0 THEN u := -it.w / 2 ELSE u := it.w / 2 END;
-      IF k < 2 THEN v := -it.h / 2 ELSE v := it.h / 2 END;
-      Bound(it.x + u * c - v * s, it.y + u * s + v * c, it.x + u * c - v * s, it.y + u * s + v * c)
-    END
-  ELSE
-    FOR k := 0 TO it.n - 1 DO Bound(it.p[k].x, it.p[k].y, it.p[k].x, it.p[k].y) END
-  END
-END BoundItem;
-
-PROCEDURE BoundAll;
-  VAR it: Item;
-BEGIN
-  it := l.items;
-  IF it # NIL THEN
-    minX := MAX(REAL); minY := MAX(REAL); maxX := -MAX(REAL); maxY := -MAX(REAL)
-  ELSE minX := 0; minY := 0; maxX := 0; maxY := 0
-  END;
-  WHILE it # NIL DO BoundItem(it); it := it.next END
-END BoundAll;
-
-PROCEDURE Move(it: Item; dx, dy: LONGREAL);
-  VAR k: INTEGER;
-BEGIN
-  FOR k := 0 TO it.n - 1 DO G.Set(it.p[k], Snap(it.p[k].x + dx), Snap(it.p[k].y + dy)) END;
-  it.x := Snap(it.x + dx); it.y := Snap(it.y + dy)
-END Move;
-
 (* Lays d out, its text set in font, the drawing at size points, into lay *)
 PROCEDURE Make*(dg: H.Diagram; font: M.Font; size: REAL; VAR lay: Layout);
-  VAR it: Item; pad, ddx, ddy: LONGREAL;
 BEGIN
   d := dg;
-  NEW(l); lay := l; l.d := d; l.font := font; l.size := size; l.vs := size * 1.2;
-  px := size / MermaidSize; l.px := SHORT(px); l.items := NIL; last := NIL;
+  NEW(l); lay := l; l.d := d; D.Init(l, d.g, font, size);
+  px := size / D.MermaidSize;
   S.Reset(d.g, l.px);
   S.GitColours(t);
   NEW(lanes, 8); nLanes := 0;
@@ -699,16 +555,11 @@ BEGIN
   DrawArrows;
   DrawCommits;
   IF (d.g.title # NIL) & (d.g.title.n > 0) THEN
-    BoundAll;
-    AddText(d.g.title, (minX + maxX) / 2 / px, -d.titleTopMargin - Mid * TitleSize, TitleSize, 0,
+    D.Bounds(l);
+    AddText(d.g.title, (D.minX + D.maxX) / 2 / px, -d.titleTopMargin - Mid * TitleSize, TitleSize, 0,
       t.text)
   END;
-  BoundAll;
-  pad := d.diagramPadding * px;
-  ddx := pad - minX; ddy := pad - minY;
-  l.width := Snap(maxX - minX + 2 * pad); l.height := Snap(maxY - minY + 2 * pad);
-  it := l.items;
-  WHILE it # NIL DO Move(it, ddx, ddy); it := it.next END;
+  D.Finish(l, d.diagramPadding);
   d := NIL; bpos := NIL; cx := NIL; cy := NIL; cpos := NIL; cpwo := NIL; lanes := NIL
 END Make;
 

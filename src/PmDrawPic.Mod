@@ -1,13 +1,13 @@
-MODULE PmGitPic;
-(* PmGitPic: a laid out git graph, PmGitLayout's, written in pic, for
-   groff, with PmPic's helpers: its items in their order; each circle a
-   circle, each rectangle a box, rounded as the layout's, each polygon
-   PmPic's, each line a line, dashed or not; each curve, an arrow, a
-   line through its Béziers, each sampled, with a filled circle at each
-   end for its round caps, which pic has not; each text centred at its
-   middle, or, turned, along its turned middle line. *)
+MODULE PmDrawPic;
+(* PmDrawPic: a drawing, PmDraw's, written in pic, for groff, with
+   PmPic's helpers: its items in their order; each circle a circle,
+   each rectangle a box, rounded as the drawing's, each polygon
+   PmPic's, each line a line, dashed or not; each curve a line through
+   its Béziers, each sampled, with a filled circle at each end for its
+   round caps, which pic has not; each text centred at its middle, or,
+   turned, along its turned middle line. *)
 
-IMPORT PmIO, Math, S := PmStyle, P := PmPic, G := PmGeom, HL := PmGitLayout;
+IMPORT PmIO, Math, S := PmStyle, P := PmPic, G := PmGeom, D := PmDraw;
 
 CONST
   NoColour = S.NoColour;
@@ -21,18 +21,18 @@ BEGIN
 END C;
 
 (* The width of the widest line Write draws for lay, in points *)
-PROCEDURE Widest*(lay: HL.Layout): REAL;
-  VAR it: HL.Item; w: REAL;
+PROCEDURE Widest*(lay: D.Drawing): REAL;
+  VAR it: D.Item; w: REAL;
 BEGIN
   w := 0; it := lay.items;
   WHILE it # NIL DO
-    IF (it.line >= 0) & (it.kind # HL.Text) & (it.width > w) THEN w := it.width END;
+    IF (it.line >= 0) & (it.kind # D.Text) & (it.width > w) THEN w := it.width END;
     it := it.next
   END;
   RETURN w
 END Widest;
 
-PROCEDURE Style(it: HL.Item; VAR st: S.Style);
+PROCEDURE Style(it: D.Item; VAR st: S.Style);
 BEGIN
   st.fill := C(it.fill); st.line := C(it.line); st.text := NoColour; st.inner := NoColour;
   st.width := it.width; st.dash := it.dash
@@ -51,13 +51,13 @@ END Path;
 
 (* Whether the Bézier p[k] .. p[k+3] is straight: its control points
    its ends *)
-PROCEDURE Straight(it: HL.Item; k: INTEGER): BOOLEAN;
+PROCEDURE Straight(it: D.Item; k: INTEGER): BOOLEAN;
 BEGIN
   RETURN (it.p[k + 1].x = it.p[k].x) & (it.p[k + 1].y = it.p[k].y)
     & (it.p[k + 2].x = it.p[k + 3].x) & (it.p[k + 2].y = it.p[k + 3].y)
 END Straight;
 
-PROCEDURE Curve(it: HL.Item);
+PROCEDURE Curve(it: D.Item);
   VAR q: G.Points; n, k, j: INTEGER; st, cap: S.Style; r: REAL;
 BEGIN
   q := G.NewPoints((it.n DIV 3) * Samples + 1);
@@ -79,7 +79,7 @@ BEGIN
   P.W("circle rad "); P.In(r); P.At(q[n - 1].x, q[n - 1].y); P.Paint(cap, TRUE); PmIO.WriteLn
 END Curve;
 
-PROCEDURE Text(it: HL.Item);
+PROCEDURE Text(it: D.Item);
   VAR a, dx, dy: REAL;
 BEGIN
   IF it.angle = 0 THEN P.Anchored(it.lab, it.x, it.y, C(it.line), it.size, P.Centre)
@@ -89,12 +89,12 @@ BEGIN
   END
 END Text;
 
-(* Writes lay's git graph in pic, its labels in the groff font font *)
-PROCEDURE Write*(lay: HL.Layout; font: ARRAY OF CHAR);
-  VAR it: HL.Item; c: INTEGER; st: S.Style;
+(* Writes the drawing lay in pic, its labels in the groff font font *)
+PROCEDURE Write*(lay: D.Drawing; font: ARRAY OF CHAR);
+  VAR it: D.Item; c: INTEGER; st: S.Style;
 BEGIN
   P.Setup(font, lay.font, lay.px);
-  S.Reset(lay.d.g, lay.px);
+  S.Reset(lay.g, lay.px);
   (* the colours, all known before P.Begin defines them *)
   it := lay.items;
   WHILE it # NIL DO c := C(it.fill); c := C(it.line); it := it.next END;
@@ -104,10 +104,10 @@ BEGIN
   P.At(lay.width / 2, lay.height / 2); PmIO.WriteLn;
   it := lay.items;
   WHILE it # NIL DO
-    IF it.kind = HL.Circle THEN
+    IF it.kind = D.Circle THEN
       Style(it, st);
       P.W("circle rad "); P.In(it.r); P.At(it.x, it.y); P.Paint(st, TRUE); PmIO.WriteLn
-    ELSIF it.kind = HL.Rect THEN
+    ELSIF it.kind = D.Rect THEN
       Style(it, st);
       (* an unstroked rounded box: thickness 0's corner arcs come out of
          mutool as SVG arcs of the default width, scaled with them *)
@@ -117,10 +117,10 @@ BEGIN
       P.W("box wid "); P.In(it.w); P.W(" ht "); P.In(it.h);
       IF it.r > 0 THEN P.W(" rad "); P.In(it.r) END;
       P.At(it.x + it.w / 2, it.y + it.h / 2); P.Paint(st, TRUE); PmIO.WriteLn
-    ELSIF it.kind = HL.Poly THEN Style(it, st); P.Polygon(it.p^, it.n, st)
-    ELSIF it.kind = HL.Line THEN
+    ELSIF it.kind = D.Poly THEN Style(it, st); P.Polygon(it.p^, it.n, st)
+    ELSIF it.kind = D.Line THEN
       Style(it, st); P.W("line"); Path(it.p^, 2); P.Paint(st, FALSE); PmIO.WriteLn
-    ELSIF it.kind = HL.Curve THEN Curve(it)
+    ELSIF it.kind = D.Curve THEN Curve(it)
     ELSE Text(it)
     END;
     it := it.next
@@ -128,4 +128,4 @@ BEGIN
   P.End
 END Write;
 
-END PmGitPic.
+END PmDrawPic.

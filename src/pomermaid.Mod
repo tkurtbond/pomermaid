@@ -2,7 +2,7 @@ MODULE pomermaid;
 (* pomermaid: Mermaid diagrams drawn in pic, for groff, and MetaPost,
    for ConTeXt, and SVG made from the pic through groff. The command line is PmOptions'. See PLAN.md. *)
 
-IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmGantt, PmGanttDump, GL := PmGanttLayout, PmGanttPic, PmGanttMp, PmPie, PmPieDump, PL := PmPieLayout, PmPiePic, PmPieMp, PmQuadrant, PmQuadrantDump, QL := PmQuadrantLayout, PmQuadrantPic, PmQuadrantMp, PmXy, PmXyDump, XL := PmXyLayout, PmXyPic, PmXyMp, PmRadar, PmRadarDump, RL := PmRadarLayout, PmRadarPic, PmRadarMp, PmSankey, PmSankeyDump, KL := PmSankeyLayout, PmSankeyPic, PmSankeyMp, PmGit, PmGitDump, HL := PmGitLayout, PmGitPic, PmGitMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
+IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmGantt, PmGanttDump, GL := PmGanttLayout, PmGanttPic, PmGanttMp, PmPie, PmPieDump, PL := PmPieLayout, PmPiePic, PmPieMp, PmQuadrant, PmQuadrantDump, QL := PmQuadrantLayout, PmQuadrantPic, PmQuadrantMp, PmXy, PmXyDump, XL := PmXyLayout, PmXyPic, PmXyMp, PmRadar, PmRadarDump, RL := PmRadarLayout, PmRadarPic, PmRadarMp, PmSankey, PmSankeyDump, KL := PmSankeyLayout, PmSankeyPic, PmSankeyMp, PmGit, PmGitDump, HL := PmGitLayout, PmDrawDump, PmDrawPic, PmDrawMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
 
 VAR
   text: PmIO.Text;
@@ -71,10 +71,10 @@ BEGIN
     ELSIF git # NIL THEN
       PmIO.OpenOutput(O.output);
       IF O.to = "dump" THEN PmGitDump.Write(git)
-      ELSIF O.to = "layout" THEN HL.Fit(git, font, O.size, O.width, hlay); PmGitDump.WriteLayout(hlay)
-      ELSIF O.to = "pic" THEN HL.Fit(git, font, O.size, O.width, hlay); PmGitPic.Write(hlay, O.font)
+      ELSIF O.to = "layout" THEN HL.Fit(git, font, O.size, O.width, hlay); PmDrawDump.WriteLayout(hlay)
+      ELSIF O.to = "pic" THEN HL.Fit(git, font, O.size, O.width, hlay); PmDrawPic.Write(hlay, O.font)
       ELSIF O.to = "svg-ms" THEN HL.Fit(git, font, O.size, O.width, hlay); PmSvg.WriteGitDocument(hlay, O.font)
-      ELSIF O.to = "mp" THEN HL.Fit(git, font, O.size, O.width, hlay); PmGitMp.Write(hlay)
+      ELSIF O.to = "mp" THEN HL.Fit(git, font, O.size, O.width, hlay); PmDrawMp.Write(hlay)
       ELSE PmIO.Fail("", "no writer for this format yet", PmIO.UnknownWriter)
       END
     ELSIF (sankey # NIL) & (O.to = "svg") THEN
