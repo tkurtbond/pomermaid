@@ -4,3 +4,15 @@
 (not cropped)
 (not cropped)
 (not cropped)
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" height="88" viewBox="0 12 100 88"><g/><g class="pm-links">
+<a href="https://x.org/?a=1&amp;b=2" xlink:href="https://x.org/?a=1&amp;b=2" target="_blank"><title>Go &lt;there&gt;</title><rect x="2" y="21.2" width="40.4" height="49.2" fill="#ffffff" fill-opacity="0"/></a>
+<a href="about:blank" xlink:href="about:blank"><rect x="92.4" y="21.2" width="40.4" height="49.2" fill="#ffffff" fill-opacity="0"/></a>
+<g><title>Tip</title><rect x="182.8" y="21.2" width="40.4" height="49.2" fill="#ffffff" fill-opacity="0"/></g>
+<a href="a/b:c.html" xlink:href="a/b:c.html" target="_self"><rect x="273.2" y="21.2" width="40.4" height="49.2" fill="#ffffff" fill-opacity="0"/></a>
+</g>
+</svg>
+<svg height="88" viewBox="0 12 100 88"><g/> <g class="pm-links">
+<a href="data-page.html"><rect x="2" y="21.2" width="40.4" height="49.2" fill="#ffffff" fill-opacity="0"/></a>
+<a href="about:blank"><rect x="92.4" y="21.2" width="40.4" height="49.2" fill="#ffffff" fill-opacity="0"/></a>
+</g>
+</svg> 

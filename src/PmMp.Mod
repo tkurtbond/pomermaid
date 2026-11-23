@@ -24,6 +24,14 @@ MODULE PmMp;
 IMPORT PmIO, F := PmFlow, L := PmLayout, FL := PmFlowLayout, Lx := PmLex,
   S := PmStyle, PmMpMacros;
 
+CONST
+  Sub = 53; Collapsed = 54; (* pomermaid.mp's pm_sub and pm_collapsed *)
+
+TYPE
+  Styles = POINTER TO ARRAY OF S.Style;
+  Edges = POINTER TO ARRAY OF F.Edge;
+  Nodes = POINTER TO ARRAY OF F.Node;
+
 PROCEDURE W(s: ARRAY OF CHAR);
 BEGIN
   PmIO.WriteString(s)
@@ -46,15 +54,22 @@ END C;
 
 (* lab as a MetaPost string of ConTeXt text: "" for none *)
 PROCEDURE Label(lab: F.Label);
-  VAR line: F.Line; i, end: LONGINT; ch: CHAR;
+  VAR line: F.Line; i, end: LONGINT; ch: CHAR; st: INTEGER;
 BEGIN
   W('"');
   IF lab # NIL THEN
     line := lab.lines;
     WHILE line # NIL DO
-      i := 0; end := Lx.Length(line.text^);
+      i := 0; end := Lx.Length(line.text^); st := 0;
       WHILE i < end DO
         ch := line.text[i];
+        IF (line.style # NIL) & (line.style[i] # st) THEN
+          IF st # 0 THEN W("}") END;
+          st := line.style[i];
+          IF st = F.Bold THEN W("{\bf ") ELSIF st = F.Italic THEN W("{\it ")
+          ELSIF st # 0 THEN W("{\bi ")
+          END
+        END;
         CASE ch OF
           '"', "#", "$", "%", "&", "\", "^", "_", "{", "}", "~":
             W("{\char"); I(ORD(ch)); W("}")
@@ -63,6 +78,7 @@ BEGIN
         END;
         INC(i)
       END;
+      IF st # 0 THEN W("}") END;
       line := line.next;
       IF line # NIL THEN W("\\") END
     END
@@ -77,56 +93,45 @@ BEGIN
   I(st.line); C; I(st.text); C; R(st.width); C; R(st.dash)
 END Style;
 
-(* Writes l's flowchart as a \startMPcode block; wider than maxW points
-   (0 for no limit), it is scaled down to maxW. With input, the macros
-   are input, not copied. *)
-PROCEDURE Write*(l: FL.Layout; maxW: REAL; input: BOOLEAN);
-  VAR
-    g: F.Graph; lg: L.Graph; n: F.Node; e: F.Edge; ln: L.Node; le: L.Edge;
-    v, k, j: INTEGER; rgb: LONGINT; nst, est, cst: POINTER TO ARRAY OF S.Style;
-    cn: POINTER TO ARRAY OF F.Node; lc: L.Cluster;
+(* Writes the layout of scope sc as calls of the macros, from pm_begin
+   to pm_end, or, for an isolated subgraph's, pm_endsub *)
+PROCEDURE Block(l: FL.Layout; sc: FL.Scope; maxW: REAL; VAR nst, est, cst: Styles;
+  nodes: Nodes; edges: Edges);
+  VAR lg: L.Graph; e: F.Edge; ln: L.Node; le: L.Edge; v, k, j, i: INTEGER;
+    lc: L.Cluster;
 BEGIN
-  g := l.graph; lg := l.g;
-  S.Reset(l.size / 16);
-  NEW(nst, g.nNodes + 1); NEW(est, g.nEdges + 1);
-  n := g.nodes;
-  WHILE n # NIL DO S.NodeStyle(g, n, nst[n.index]); n := n.next END;
-  e := g.edges;
-  WHILE e # NIL DO S.EdgeStyle(e, est[e.index]); e := e.next END;
-  NEW(cst, g.nClusters + 1); NEW(cn, g.nClusters + 1);
-  FOR k := 0 TO g.nClusters - 1 DO cn[k] := NIL END;
-  n := g.nodes;
-  WHILE n # NIL DO
-    IF l.stands[n.index] >= 0 THEN cn[l.stands[n.index]] := n END;
-    n := n.next
-  END;
-  FOR k := 0 TO g.nClusters - 1 DO S.ClusterStyle(g, cn[k], cst[k]) END;
-  W("\startMPcode"); PmIO.WriteLn;
-  IF input THEN W("input pomermaid ;"); PmIO.WriteLn ELSE PmMpMacros.Write END;
+  lg := sc.g;
+  IF sc.cluster >= 0 THEN maxW := 0 END;
   W("pm_begin("); I(lg.dir); C; R(l.size); C; R(maxW); C; I(lg.nNodes); C;
   I(lg.nEdges); C; I(lg.nRanks); C; I(lg.nClusters); W(");"); PmIO.WriteLn;
-  FOR k := 0 TO S.nColours - 1 DO
-    rgb := S.Rgb(k);
-    W("pm_colour("); I(k); C; PmIO.WriteReal(rgb DIV 10000H / 255, 4); C;
-    PmIO.WriteReal(rgb DIV 100H MOD 100H / 255, 4); C;
-    PmIO.WriteReal(rgb MOD 100H / 255, 4); W(");"); PmIO.WriteLn
+  IF sc.cluster >= 0 THEN
+    W("pm_ranksep := "); R(lg.ranksep * FL.MermaidSize / l.size / 2); W(";"); PmIO.WriteLn
   END;
   FOR k := 0 TO lg.nClusters - 1 DO
-    lc := lg.cluster[k];
+    lc := lg.cluster[k]; i := sc.clus[k];
     W("pm_cluster("); I(k); C; I(lc.parent); C; I(lc.minRank); C; I(lc.maxRank); C;
-    Label(l.clusterLabel[k]); W(");"); PmIO.WriteLn;
-    W("pm_cstyle("); I(k); C; Style(cst[k], TRUE); W(");"); PmIO.WriteLn
+    Label(l.clusterLabel[i]); W(");"); PmIO.WriteLn;
+    W("pm_cstyle("); I(k); C; Style(cst[i], TRUE); W(");"); PmIO.WriteLn
   END;
   (* the nodes, then the dummies and borders *)
-  n := g.nodes;
   FOR v := 0 TO lg.nNodes - 1 DO
     ln := lg.node[v];
     W("pm_node("); I(v); C; I(ln.kind); C; I(ln.rank); C; I(ln.order); C;
     IF (lg.dir = L.LR) OR (lg.dir = L.RL) THEN R(ln.y) ELSE R(ln.x) END; C;
     IF ln.kind = L.Real THEN
-      WHILE n.index # v DO n := n.next END;
-      I(n.shape); C; I(ln.edge); C; Label(l.nodeLabel[v]); W(");"); PmIO.WriteLn;
-      W("pm_style("); I(v); C; Style(nst[v], TRUE); W(");")
+      i := sc.node[v];
+      IF i >= 0 THEN
+        I(nodes[i].shape); C; I(ln.edge); C; Label(l.nodeLabel[i]); W(");");
+        PmIO.WriteLn;
+        W("pm_style("); I(v); C; Style(nst[i], TRUE); W(");")
+      ELSIF l.isolated[-1 - i] THEN
+        I(Sub); C; I(ln.edge); W(', "");'); PmIO.WriteLn;
+        W("pm_subnode("); I(v); C; I(-1 - i); W(");")
+      ELSE
+        I(Collapsed); C; I(ln.edge); C; Label(l.clusterLabel[-1 - i]); W(");");
+        PmIO.WriteLn;
+        W("pm_style("); I(v); C; Style(cst[-1 - i], TRUE); W(");")
+      END
     ELSIF (ln.kind = L.LeftBorder) OR (ln.kind = L.RightBorder) THEN
       W("0, "); I(ln.cluster); W(', "");')
     ELSE
@@ -134,24 +139,80 @@ BEGIN
     END;
     PmIO.WriteLn
   END;
-  e := g.edges;
-  WHILE e # NIL DO
-    j := e.index; le := lg.edge[j];
-    W("pm_edge("); I(j); C; I(le.from); C; I(le.to); C; I(le.fromC); C; I(le.toC); C;
+  FOR k := 0 TO lg.nEdges - 1 DO
+    j := sc.edge[k]; e := edges[j]; le := lg.edge[k];
+    W("pm_edge("); I(k); C; I(le.from); C; I(le.to); C; I(le.fromC); C; I(le.toC); C;
     IF le.reversed THEN W("1") ELSE W("0") END; C;
     I(le.labelNode); C; I(e.head); C; I(e.tail); C;
     IF e.line = F.Invisible THEN W("0") ELSE W("1") END; C;
     Style(est[j], FALSE); C;
     IF le.hasLabel THEN Label(l.edgeLabel[j]) ELSE W('""') END;
     W(")(");
-    FOR k := 0 TO le.nChain - 1 DO
-      IF k > 0 THEN C END;
-      I(le.chain[k])
+    FOR i := 0 TO le.nChain - 1 DO
+      IF i > 0 THEN C END;
+      I(le.chain[i])
     END;
     W(");"); PmIO.WriteLn;
-    e := e.next
+    IF e.curve # F.Basis THEN
+      W("pm_curve("); I(k); C; I(e.curve); W(");"); PmIO.WriteLn
+    END
   END;
-  W("pm_end;"); PmIO.WriteLn;
+  IF sc.cluster >= 0 THEN
+    W("pm_endsub("); I(sc.cluster); W(");"); PmIO.WriteLn
+  ELSE
+    IF (l.title # NIL) & (l.title.n > 0) THEN
+      W("pm_title := "); Label(l.title); W("; pm_titlec := "); I(S.TitleColour()); W(";");
+      PmIO.WriteLn
+    END;
+    W("pm_end;"); PmIO.WriteLn
+  END
+END Block;
+
+(* Writes l's flowchart as a \startMPcode block; wider than maxW points
+   (0 for no limit), it is scaled down to maxW. With input, the macros
+   are input, not copied. Each isolated subgraph's layout comes first,
+   the inner first, each kept as a picture for a node of the next. *)
+PROCEDURE Write*(l: FL.Layout; maxW: REAL; input: BOOLEAN);
+  VAR
+    g: F.Graph; n: F.Node; e: F.Edge; k: INTEGER; rgb: LONGINT;
+    nst, est, cst: Styles; nodes: Nodes; edges: Edges; cn: POINTER TO ARRAY OF F.Node; sc: FL.Scope;
+BEGIN
+  g := l.graph;
+  S.Reset(g, l.size / 16);
+  NEW(nst, g.nNodes + 1); NEW(est, g.nEdges + 1); NEW(edges, g.nEdges + 1);
+  NEW(nodes, g.nNodes + 1);
+  n := g.nodes;
+  WHILE n # NIL DO S.NodeStyle(g, n, nst[n.index]); nodes[n.index] := n; n := n.next END;
+  e := g.edges;
+  WHILE e # NIL DO S.EdgeStyle(g, e, est[e.index]); edges[e.index] := e; e := e.next END;
+  NEW(cst, g.nClusters + 1); NEW(cn, g.nClusters + 1);
+  FOR k := 0 TO g.nClusters - 1 DO cn[k] := NIL END;
+  n := g.nodes;
+  WHILE n # NIL DO
+    IF l.stands[n.index] >= 0 THEN cn[l.stands[n.index]] := n END;
+    n := n.next
+  END;
+  FOR k := 0 TO g.nClusters - 1 DO S.ClusterStyle(g, k, cn[k], cst[k]) END;
+  W("\startMPcode"); PmIO.WriteLn;
+  IF input THEN W("input pomermaid ;"); PmIO.WriteLn ELSE PmMpMacros.Write END;
+  FOR k := 0 TO S.nColours - 1 DO
+    rgb := S.Rgb(k);
+    W("pm_colour("); I(k); C; PmIO.WriteReal(rgb DIV 10000H / 255, 4); C;
+    PmIO.WriteReal(rgb DIV 100H MOD 100H / 255, 4); C;
+    PmIO.WriteReal(rgb MOD 100H / 255, 4); W(");"); PmIO.WriteLn
+  END;
+  IF ~S.DefaultLabelBackground() THEN
+    rgb := S.LabelBackgroundRgb();
+    IF rgb < 0 THEN W("pm_labelbox := false;")
+    ELSE
+      W("pm_labelback := ("); PmIO.WriteReal(rgb DIV 10000H / 255, 4); C;
+      PmIO.WriteReal(rgb DIV 100H MOD 100H / 255, 4); C;
+      PmIO.WriteReal(rgb MOD 100H / 255, 4); W(");")
+    END;
+    PmIO.WriteLn
+  END;
+  sc := l.scopes;
+  WHILE sc # NIL DO Block(l, sc, maxW, nst, est, cst, nodes, edges); sc := sc.next END;
   W("\stopMPcode"); PmIO.WriteLn
 END Write;
 

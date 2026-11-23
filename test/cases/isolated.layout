@@ -1,0 +1,33 @@
+layout direction LR width=428.73 height=139.51
+node start rank=0 order=0 x=13.47 y=69.75 w=26.93 h=19.37
+node S hidden rank=0 order=0 x=0 y=71.39 w=0 h=0
+node a rank=0 order=1 x=66.84 y=26.11 w=14.84 h=19.37
+node b rank=2 order=1 x=66.84 y=75.01 w=14.84 h=19.37
+node c rank=4 order=1 x=66.84 y=123.91 w=14.84 h=19.37
+node T hidden rank=0 order=0 x=0 y=71.39 w=0 h=0
+node x rank=0 order=1 x=164.43 y=72.38 w=14.84 h=19.37
+node y rank=2 order=1 x=120.06 y=72.38 w=14.84 h=19.37
+node p rank=6 order=1 x=210.77 y=69.75 w=14.84 h=19.37
+node q rank=8 order=1 x=245.29 y=69.75 w=14.84 h=19.37
+node m1 rank=0 order=1 x=336.22 y=35.13 w=17.99 h=19.37
+node m2 rank=2 order=1 x=300.09 y=99.46 w=17.99 h=19.37
+node k1 rank=0 order=1 x=343.67 y=102.09 w=17.99 h=19.37
+node k2 rank=2 order=1 x=401.03 y=102.09 w=17.99 h=19.37
+node M hidden rank=0 order=0 x=0 y=71.39 w=0 h=0
+node N hidden rank=0 order=0 x=0 y=71.39 w=0 h=0
+edge start -> S points=(26.93,69.75) (36.78,69.75) (46.62,69.75)
+edge a -> b points=(66.84,35.79) (66.84,50.56) (66.84,65.32)
+edge b -> c points=(66.84,84.7) (66.84,99.46) (66.84,114.23)
+edge S -> T points=(87.05,69.75) (96.89,69.75) (106.74,69.75)
+edge x -> y points=(157.01,72.38) (142.25,72.38) (127.48,72.38)
+edge p -> q points=(218.18,69.75) (228.03,69.75) (237.87,69.75)
+edge T -> p points=(177.75,69.75) (187.6,69.75) (203.35,69.75)
+edge m1 -> m2 points=(327.23,44.82) (300.09,59.58) (300.09,74.35) (300.09,74.35) (300.09,89.78)
+edge k1 -> k2 points=(352.67,102.09) (372.35,102.09) (392.04,102.09)
+edge m1 -> M points=(345.22,44.82) (372.35,59.58) (372.35,74.35)
+edge q -> N points=(252.71,69.75) (268.46,69.75) (278.3,69.75)
+cluster S isolated x=66.84 y=69.75 w=40.43 h=139.51 title=(66.84,6.73)
+cluster T isolated x=142.25 y=69.75 w=71.02 h=50.22 title=(142.25,51.37)
+cluster U x=228.03 y=67.12 w=61.17 h=50.22 title=(228.03,48.75)
+cluster M isolated x=372.35 y=99.46 w=87.16 h=50.22 title=(372.35,81.08)
+cluster N isolated x=353.52 y=69.75 w=150.43 h=121.45 title=(353.52,15.76)

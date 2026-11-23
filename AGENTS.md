@@ -45,8 +45,12 @@ writers), 8 (SVG through groff and mutool or pdftocairo: `PmSvg`,
 `PmRun`, `-t svg` and `-t svg-ms`) and 9 (the user documentation,
 `docs/user/pomermaid.md`, `docs/user/differences.md` and the man page
 `docs/user/pomermaid.1`, and the
-pandoc filter `docs/examples/pomermaid.lua`) are done. See PLAN.md's
-State.
+pandoc filter `docs/examples/pomermaid.lua`) and 10 (the rest of
+Mermaid's flowchart syntax: `@{ ... }` metadata, the named shapes in
+`PmShapes`, curves in `PmCurves`, `themeVariables` and the title,
+bold and italic in `PmEmphasis`, links in the SVG, collapsed
+subgraphs, and isolated subgraphs laid out alone with their own
+`direction`) are done. See PLAN.md's State.
 
 ## Reference material
 

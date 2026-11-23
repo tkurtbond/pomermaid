@@ -78,13 +78,32 @@ pm_rect := 0; pm_round := 1; pm_stadium := 2; pm_subroutine := 3;
 pm_cylinder := 4; pm_circle := 5; pm_asymmetric := 6; pm_diamond := 7;
 pm_hexagon := 8; pm_leanright := 9; pm_leanleft := 10; pm_trapezoid := 11;
 pm_invtrapezoid := 12; pm_doublecircle := 13;
+pm_datastore := 14; pm_folder := 15; pm_bucket := 16; pm_console := 17; pm_browser := 18;
+pm_person := 19; pm_bang := 20; pm_cloud := 21; pm_textshape := 22; pm_notchrect := 23;
+pm_linrect := 24; pm_smcircle := 25; pm_frcircle := 26; pm_fork := 27; pm_hourglass := 28;
+pm_brace := 29; pm_bracer := 30; pm_braces := 31; pm_bolt := 32; pm_doc := 33; pm_delay := 34;
+pm_hcylinder := 35; pm_lincylinder := 36; pm_curvtrap := 37; pm_divrect := 38;
+pm_triangle := 39; pm_winpane := 40; pm_fcircle := 41; pm_notchpent := 42;
+pm_fliptriangle := 43; pm_slrect := 44; pm_docs := 45; pm_strect := 46; pm_bowrect := 47;
+pm_crosscircle := 48; pm_tagdoc := 49; pm_tagrect := 50; pm_flag := 51; pm_lindoc := 52;
+% an isolated subgraph, laid out by itself (pm_sub), and a collapsed one
+pm_sub := 53; pm_collapsed := 54;
 pm_endnone := 0; pm_endarrow := 1; pm_endcircle := 2; pm_endcross := 3;
+
+% the pixels between ranks are 2pm_ranksep, Mermaid's ranksep, for the
+% layout begun; one of an isolated subgraph sets it after pm_begin
+numeric pm_ranksep, pm_subof[]; picture pm_subpic[];
 
 def pm_begin(expr d, s, mw, nn, ne, nr, nc) =
   pm_dir := d; pm_size := s; pm_maxw := mw; pm_nn := nn; pm_ne := ne; pm_nr := nr;
-  pm_nc := nc;
+  pm_nc := nc; pm_ranksep := 25;
   for r = 0 upto nr - 1: pm_len[r] := 0; endfor
+  for j = 0 upto ne - 1: pm_ecurve[j] := 0; endfor
 enddef;
+
+% node v is the drawing of isolated subgraph k, made by an earlier
+% layout ended by pm_endsub(k)
+def pm_subnode(expr v, k) = pm_subof[v] := k; enddef;
 
 def pm_cluster(expr c, p, mn, mx, lab) =
   pm_cparent[c] := p; pm_cmin[c] := mn; pm_cmax[c] := mx; pm_ctitle[c] := lab;
@@ -147,15 +166,64 @@ def pm_shapesize(expr v) =
   elseif (sh = pm_asymmetric) or (sh = pm_hexagon): w := w + h / 2;
   elseif sh = pm_diamond: w := w + h; h := w;
   elseif (sh >= pm_leanright) and (sh <= pm_invtrapezoid): w := w + 2h / 3;
+  elseif sh = pm_collapsed: w := max(tw + 16pm_px, 80pm_px); h := th + 44pm_px;
+  elseif sh >= pm_datastore: pm_xsize;
   fi
   pm_w[v] := w; pm_h[v] := h;
+  endgroup
+enddef;
+
+vardef pm_clamp(expr a, lo, hi) = max(lo, min(a, hi)) enddef;
+
+% the size of a node of one of PmShapes's shapes, as PmShapes.Size,
+% from pm_shapesize's tw, th, sh, p, w and h
+def pm_xsize =
+  begingroup save q, r, t, u; u := pm_px;
+  if sh = pm_datastore: w := tw + 4p;
+  elseif sh = pm_folder: q := 12u; w := max(tw + 2q, 90u); h := th + 2q + pm_clamp(0.16w, 8u, 14u);
+  elseif sh = pm_bucket: q := 12u; w := max(tw + 2q, 80u); h := th + 2q + pm_clamp(0.08w, 5u, 12u);
+  elseif sh = pm_console: q := 12u; w := max(tw + 2q, 90u); h := th + 2q + 20u;
+  elseif sh = pm_browser: q := 12u; w := max(tw + 2q, 90u); h := th + 2q + 18u;
+  elseif sh = pm_person:
+    q := 20u; w := max(tw + 2q, 100u); r := pm_clamp(0.23w, 16u, 56u) / 2; h := 1.6r + th + 2q;
+  elseif (sh = pm_bang) or (sh = pm_cloud): w := (tw + p) * 1.77; h := (th + p) * 1.77;
+  elseif sh = pm_textshape: w := tw + p; h := th + p;
+  elseif sh = pm_notchrect: w := tw + p + 12u; h := th + p;
+  elseif (sh = pm_linrect) or (sh = pm_lindoc): w := w + 16u;
+  elseif (sh = pm_smcircle) or (sh = pm_frcircle) or (sh = pm_fcircle): w := 14u; h := w;
+  elseif sh = pm_fork: if pm_dir >= 2: w := 10u; h := 70u; else: w := 70u; h := 10u; fi
+  elseif sh = pm_hourglass: w := 30u; h := w;
+  elseif (sh >= pm_brace) and (sh <= pm_braces):
+    h := th + p; r := max(5u, 0.1h);
+    if sh = pm_braces: w := tw + p + 4r; else: w := tw + p + 2r; fi
+  elseif sh = pm_bolt: w := 35u; h := 70u;
+  elseif (sh = pm_doc) or (sh = pm_tagdoc): h := h + h / 8;
+  elseif sh = pm_delay: w := w + h / 2;
+  elseif sh = pm_hcylinder: w := w + 3 * (h / 2 / (2.5 + h / 50));
+  elseif sh = pm_lincylinder: h := h + w / (2.5 + w / 50);
+  elseif sh = pm_curvtrap: w := w + h;
+  elseif sh = pm_divrect: h := 1.2h;
+  elseif (sh = pm_triangle) or (sh = pm_fliptriangle):
+    t := th + p; w := tw + p + 1.155t; h := max(0.866w, 2t);
+  elseif sh = pm_winpane: w := w + 5u; h := h + 5u;
+  elseif sh = pm_slrect: h := 1.5h;
+  elseif sh = pm_docs: w := w + 10u; h := h + h / 8 + 10u;
+  elseif sh = pm_strect: w := w + 10u; h := h + 10u;
+  elseif sh = pm_bowrect: w := w + 2 * (h / 2 / (2.5 + h / 50));
+  elseif sh = pm_crosscircle: w := 60u; h := w;
+  elseif sh = pm_flag: h := h + h / 4;
+  fi
   endgroup
 enddef;
 
 def pm_sizes =
   for v = 0 upto pm_nn - 1:
     pm_tw[v] := 0; pm_th[v] := 0;
-    if pm_kind[v] = 0:
+    if (pm_kind[v] = 0) and (pm_shape[v] = pm_sub):
+      pm_pic[v] := pm_subpic[pm_subof[v]];
+      pm_w[v] := xpart urcorner pm_pic[v] - xpart llcorner pm_pic[v];
+      pm_h[v] := ypart urcorner pm_pic[v] - ypart llcorner pm_pic[v];
+    elseif pm_kind[v] = 0:
       pm_pic[v] := pm_textext(pm_lab[v]);
       pm_tw[v] := xpart urcorner pm_pic[v] - xpart llcorner pm_pic[v];
       pm_th[v] := ypart urcorner pm_pic[v] - ypart llcorner pm_pic[v];
@@ -233,7 +301,7 @@ def pm_positiony =
     for r = 0 upto pm_nr - 1:
       y := y + above[r]; pm_ranky[r] := y; m := pm_rankh[r];
       for i = 0 upto pm_len[r] - 1: pm_y[pm_layer[r][i]] := y + m / 2; endfor
-      y := y + m + below[r] + 25pm_px;
+      y := y + m + below[r] + pm_ranksep * pm_px;
     endfor
     again := false;
     for c = 0 upto pm_nc - 1:
@@ -487,6 +555,273 @@ pair pm_xy;
 
 % Outlines, y down
 
+% PmShapes's shapes, drawn as PmShapes.Draw: pm_shapedraw(v) makes
+% node v's parts pm_sp[0 .. pm_sn-1], of kinds pm_sk[] (0 the body, 1 a
+% line, 2 a solid, 3 a fill), its outline pm_so, whether its label is
+% drawn, pm_slab, and its centre (pm_slx, pm_sly); y down. Arcs and
+% waves are polygons of as many points as PmShapes's.
+path pm_cur, pm_so, pm_sp[]; numeric pm_sk[], pm_sn, pm_ck, pm_cn, pm_ox, pm_oy;
+numeric pm_slx, pm_sly; boolean pm_slab; pm_slab := true;
+
+def pm_B(expr k) = pm_ck := k; pm_cn := 0; enddef;
+
+% the point (a, b) from the node's centre added to the part
+def pm_P(expr a, b) =
+  if pm_cn = 0: pm_cur := (pm_ox + a, pm_oy + b);
+  else: pm_cur := pm_cur -- (pm_ox + a, pm_oy + b);
+  fi
+  pm_cn := pm_cn + 1;
+enddef;
+
+def pm_E =
+  pm_sp[pm_sn] := if pm_ck = 1: pm_cur else: pm_cur -- cycle fi;
+  pm_sk[pm_sn] := pm_ck; pm_sn := pm_sn + 1;
+enddef;
+def pm_O = pm_so := pm_cur -- cycle; enddef;
+def pm_EO = pm_O; pm_E; enddef;
+
+% an arc of the ellipse centred at (cx, cy), radii rx and ry, from
+% angle a to angle b in degrees, 0 to the right and 90 down
+def pm_arc(expr cx, cy, rx, ry, a, b) =
+  begingroup save n_, t_; n_ := floor(abs(b - a) / 90 * 12) + 1;
+  for k = 0 upto n_:
+    t_ := a + (b - a) * k / n_; pm_P(cx + rx * cosd t_, cy + ry * sind t_);
+  endfor
+  endgroup
+enddef;
+
+def pm_box(expr xa, ya, xb, yb) = pm_P(xa, ya); pm_P(xb, ya); pm_P(xb, yb); pm_P(xa, yb); enddef;
+
+def pm_rarcs(expr xa, ya, xb, yb, r) =
+  pm_arc(xb - r, ya + r, r, r, 270, 360); pm_arc(xb - r, yb - r, r, r, 0, 90);
+  pm_arc(xa + r, yb - r, r, r, 90, 180); pm_arc(xa + r, ya + r, r, r, 180, 270);
+enddef;
+
+% the y of a wave of amplitude a about mid, of n cycles across a w wide
+% node, at xx
+vardef pm_wavey(expr xx, w, mid, a, n) = mid + a * sind(360 * n * ((xx + w / 2) / w)) enddef;
+
+% that wave from xa to xb, shifted by (dx, dy)
+def pm_wave(expr dx, dy, xa, xb, w, mid, a, n) =
+  for k = 0 upto 32:
+    pm_P(dx + xa + (xb - xa) * k / 32, dy + pm_wavey(xa + (xb - xa) * k / 32, w, mid, a, n));
+  endfor
+enddef;
+
+% a document w by h centred at (cx, cy), its bottom a wave
+def pm_document(expr cx, cy, w, h) =
+  pm_P(cx - w / 2, cy - h / 2); pm_P(cx + w / 2, cy - h / 2);
+  pm_wave(cx, cy, w / 2, -w / 2, w, h / 2 - h / 9, h / 9, 0.8);
+enddef;
+
+% a curly brace, open to the right, its point at xa, from ya to yb
+def pm_bracepath(expr xa, ya, yb, r) =
+  pm_B(1);
+  pm_arc(xa + 2r, ya + r, r, r, 270, 180); pm_arc(xa, -r, r, r, 0, 90);
+  pm_arc(xa, r, r, r, 270, 360); pm_arc(xa + 2r, yb - r, r, r, 180, 90);
+enddef;
+
+def pm_shapedraw(expr v) =
+  begingroup save sh, w, h, th, p, u, xl, yt, xr, ybo, q, r, rx, ry, t, a, b, hz, ybd, o;
+  sh := pm_shape[v]; w := pm_w[v]; h := pm_h[v]; th := pm_th[v];
+  p := pm_em * 15 / 16; u := pm_px;
+  pm_ox := pm_x[v]; pm_oy := pm_y[v];
+  xl := -w / 2; yt := -h / 2; xr := w / 2; ybo := h / 2;
+  pm_sn := 0; pm_slab := true; pm_slx := pm_ox; pm_sly := pm_oy;
+  if sh = pm_datastore:
+    pm_B(3); pm_box(xl, yt, xr, ybo); pm_EO;
+    pm_B(1); pm_P(xl, yt); pm_P(xr, yt); pm_E;
+    pm_B(1); pm_P(xl, ybo); pm_P(xr, ybo); pm_E;
+  elseif sh = pm_folder:
+    t := pm_clamp(0.16w, 8u, 14u); a := max(0.38w, 28u);
+    pm_B(0); pm_P(xl, yt); pm_P(xl + a, yt); pm_P(xl + a + t, yt + t); pm_P(xr, yt + t);
+    pm_P(xr, ybo); pm_P(xl, ybo); pm_EO;
+    pm_sly := pm_oy + t / 2;
+  elseif sh = pm_bucket:
+    ry := pm_clamp(0.08w, 5u, 12u);
+    pm_B(0); pm_arc(0, yt + ry, w / 2, ry, 180, 360); pm_P(0.36w, ybo); pm_P(-0.36w, ybo); pm_EO;
+    pm_B(1); pm_arc(0, yt + ry, w / 2, ry, 0, 180); pm_E;
+    pm_sly := pm_oy + ry / 2;
+  elseif sh = pm_console:
+    pm_B(0); pm_rarcs(xl, yt, xr, ybo, 12u); pm_EO;
+    pm_B(1); pm_P(xl + 12u, yt + 8u); pm_P(xl + 17u, yt + 12u); pm_P(xl + 12u, yt + 16u); pm_E;
+    pm_B(1); pm_P(xl + 19u, yt + 16u); pm_P(xl + 26u, yt + 16u); pm_E;
+    pm_sly := pm_oy + 10u;
+  elseif sh = pm_browser:
+    pm_B(0); pm_rarcs(xl, yt, xr, ybo, 12u); pm_EO;
+    pm_B(1); pm_P(xl, yt + 18u); pm_P(xr, yt + 18u); pm_E;
+    for k = 0 upto 2:
+      pm_B(2); pm_arc(xl + (12 + 8 * k) * u, yt + 9u, 2.5u, 2.5u, 0, 360); pm_E;
+    endfor
+    pm_B(1); pm_box(xl + 38u, yt + 4u, xr - 12u, yt + 14u); pm_P(xl + 38u, yt + 4u); pm_E;
+    pm_sly := pm_oy + 9u;
+  elseif sh = pm_person:
+    r := pm_clamp(0.23w, 16u, 56u) / 2; ybd := yt + 1.6r; q := min(0.2w, w / 2 - 0.8r);
+    pm_B(0); pm_arc(xr - q, ybd + q, q, q, 270, 360); pm_P(xr, ybo); pm_P(xl, ybo);
+    pm_arc(xl + q, ybd + q, q, q, 180, 270); pm_arc(0, yt + r, r, r, 143.1301, 396.8699);
+    pm_EO;
+    pm_sly := pm_oy + 0.8r;
+  elseif sh = pm_bang:
+    pm_B(0);
+    for k = 0 upto 31:
+      t := k * 360 / 32 - 90; a := if odd k: 0.82 else: 1 fi;
+      pm_P(a * w / 2 * cosd t, a * h / 2 * sind t);
+    endfor
+    pm_EO;
+  elseif sh = pm_cloud:
+    pm_B(0); b := 0.1 * min(w, h);
+    for k = 0 upto 9:
+      t := k * 36 - 90; a := t + 36;
+      xl := 0.4w * cosd t; yt := 0.4h * sind t; xr := 0.4w * cosd a; ybo := 0.4h * sind a;
+      rx := ybo - yt; ry := xl - xr; q := rx ++ ry; o := min(0.35q, b);
+      rx := rx / q * o; ry := ry / q * o;
+      for m = 0 upto 7:
+        t := sind(22.5 * m);
+        pm_P(xl + (xr - xl) * m / 8 + rx * t, yt + (ybo - yt) * m / 8 + ry * t);
+      endfor
+    endfor
+    pm_EO;
+  elseif sh = pm_textshape: pm_B(0); pm_box(xl, yt, xr, ybo); pm_O;
+  elseif sh = pm_notchrect:
+    pm_B(0); pm_P(xl + 12u, yt); pm_P(xr, yt); pm_P(xr, ybo); pm_P(xl, ybo); pm_P(xl, yt + 12u);
+    pm_EO;
+  elseif sh = pm_linrect:
+    pm_B(0); pm_box(xl, yt, xr, ybo); pm_EO;
+    pm_B(1); pm_P(xl + 8u, yt); pm_P(xl + 8u, ybo); pm_E;
+    pm_slx := pm_ox + 4u;
+  elseif (sh = pm_smcircle) or (sh = pm_fcircle):
+    pm_B(2); pm_arc(0, 0, w / 2, w / 2, 0, 360); pm_EO; pm_slab := false;
+  elseif sh = pm_frcircle:
+    pm_B(0); pm_arc(0, 0, w / 2, w / 2, 0, 360); pm_EO;
+    pm_B(2); pm_arc(0, 0, 2.5u, 2.5u, 0, 360); pm_E; pm_slab := false;
+  elseif sh = pm_fork: pm_B(2); pm_box(xl, yt, xr, ybo); pm_EO; pm_slab := false;
+  elseif sh = pm_hourglass:
+    pm_B(0); pm_P(xl, yt); pm_P(xr, yt); pm_P(xl, ybo); pm_P(xr, ybo); pm_EO; pm_slab := false;
+  elseif (sh >= pm_brace) and (sh <= pm_braces):
+    pm_B(0); pm_box(xl, yt, xr, ybo); pm_O;
+    r := max(5u, 0.1h);
+    if sh <> pm_bracer: pm_bracepath(xl, yt, ybo, r); pm_E; fi
+    if sh <> pm_brace:
+      pm_bracepath(xl, yt, ybo, r);
+      pm_cur := pm_cur reflectedabout((pm_ox, 0), (pm_ox, 1)); pm_E;
+    fi
+    if sh = pm_brace: pm_slx := pm_ox + r; elseif sh = pm_bracer: pm_slx := pm_ox - r; fi
+  elseif sh = pm_bolt:
+    a := w / 35; b := h / 70;
+    pm_B(0); pm_P(17.5a, -35b); pm_P(-17.5a, 3.5b); pm_P(3.5a, 3.5b);
+    pm_P(-17.5a, 35b); pm_P(17.5a, -3.5b); pm_P(-3.5a, -3.5b); pm_EO;
+    pm_slab := false;
+  elseif (sh = pm_doc) or (sh = pm_tagdoc):
+    pm_B(0); pm_document(0, 0, w, h); pm_EO;
+    hz := h * 8 / 9; a := h / 9;
+    if sh = pm_tagdoc:
+      t := 0.2hz;
+      pm_B(1); pm_P(xr - t, pm_wavey(xr - t, w, ybo - a, a, 0.8));
+      pm_P(xr, pm_wavey(xr, w, ybo - a, a, 0.8) - t); pm_E;
+    fi
+    pm_sly := pm_oy - a / 2;
+  elseif sh = pm_delay:
+    pm_B(0); pm_P(xl, yt); pm_arc(xr - h / 2, 0, h / 2, h / 2, 270, 450); pm_P(xl, ybo); pm_EO;
+    pm_slx := pm_ox - h / 4;
+  elseif sh = pm_hcylinder:
+    rx := h / 2 / (2.5 + h / 50);
+    pm_B(0); pm_arc(xr - rx, 0, rx, h / 2, 270, 450); pm_arc(xl + rx, 0, rx, h / 2, 90, 270);
+    pm_EO;
+    pm_B(1); pm_arc(xr - rx, 0, rx, h / 2, 90, 270); pm_E;
+    pm_slx := pm_ox - rx;
+  elseif sh = pm_lincylinder:
+    ry := w / 2 / (2.5 + w / 50);
+    pm_B(0); pm_arc(0, yt + ry, w / 2, ry, 180, 360); pm_arc(0, ybo - ry, w / 2, ry, 0, 180);
+    pm_EO;
+    pm_B(1); pm_arc(0, yt + ry, w / 2, ry, 0, 180); pm_E;
+    pm_B(1); pm_arc(0, yt + ry + 0.1h, w / 2, ry, 0, 180); pm_E;
+    pm_sly := pm_oy + ry;
+  elseif sh = pm_curvtrap:
+    pm_B(0); pm_P(xl, 0); pm_P(xl + h / 2, yt); pm_arc(xr - h / 2, 0, h / 2, h / 2, 270, 450);
+    pm_P(xl + h / 2, ybo); pm_EO;
+  elseif sh = pm_divrect:
+    hz := h / 1.2;
+    pm_B(0); pm_box(xl, yt, xr, ybo); pm_EO;
+    pm_B(1); pm_P(xl, yt + 0.2hz); pm_P(xr, yt + 0.2hz); pm_E;
+    pm_sly := pm_oy + 0.1hz;
+  elseif sh = pm_triangle:
+    pm_B(0); pm_P(0, yt); pm_P(xr, ybo); pm_P(xl, ybo); pm_EO;
+    pm_sly := pm_oy + ybo - (th + p) / 2;
+  elseif sh = pm_fliptriangle:
+    pm_B(0); pm_P(xl, yt); pm_P(xr, yt); pm_P(0, ybo); pm_EO;
+    pm_sly := pm_oy + yt + (th + p) / 2;
+  elseif sh = pm_winpane:
+    pm_B(0); pm_box(xl, yt, xr, ybo); pm_EO;
+    pm_B(1); pm_P(xl + 5u, yt); pm_P(xl + 5u, ybo); pm_E;
+    pm_B(1); pm_P(xl, yt + 5u); pm_P(xr, yt + 5u); pm_E;
+    pm_slx := pm_ox + 2.5u; pm_sly := pm_oy + 2.5u;
+  elseif sh = pm_notchpent:
+    pm_B(0); pm_P(-0.4w, yt); pm_P(0.4w, yt); pm_P(xr, -0.3h); pm_P(xr, ybo); pm_P(xl, ybo);
+    pm_P(xl, -0.3h); pm_EO;
+  elseif sh = pm_slrect:
+    hz := h / 1.5;
+    pm_B(0); pm_P(xl, yt + hz / 2); pm_P(xr, yt); pm_P(xr, ybo); pm_P(xl, ybo); pm_EO;
+    pm_sly := pm_oy + hz / 4;
+  elseif sh = pm_docs:
+    o := 5u;
+    for k = 1 step -1 until -1:
+      pm_B(0); pm_document(k * o, -k * o, w - 2o, h - 2o); pm_E;
+    endfor
+    pm_B(0); pm_box(xl, yt, xr, ybo); pm_O;
+    pm_slx := pm_ox - o; pm_sly := pm_oy + o - (h - 2o) / 18;
+  elseif sh = pm_strect:
+    o := 5u;
+    for k = 1 step -1 until -1:
+      pm_B(0); pm_box(xl + o + k * o, yt + o - k * o, xr - o + k * o, ybo - o - k * o); pm_E;
+    endfor
+    pm_B(0);
+    pm_P(xl + 2o, yt); pm_P(xr, yt); pm_P(xr, ybo - 2o); pm_P(xr - o, ybo - 2o);
+    pm_P(xr - o, ybo - o); pm_P(xr - 2o, ybo - o); pm_P(xr - 2o, ybo); pm_P(xl, ybo);
+    pm_P(xl, yt + 2o); pm_P(xl + o, yt + 2o); pm_P(xl + o, yt + o); pm_P(xl + 2o, yt + o);
+    pm_O;
+    pm_slx := pm_ox - o; pm_sly := pm_oy + o;
+  elseif sh = pm_bowrect:
+    rx := h / 2 / (2.5 + h / 50);
+    pm_B(0); pm_arc(xr, 0, rx, h / 2, 270, 90); pm_arc(xl + rx, 0, rx, h / 2, 90, 270); pm_EO;
+  elseif sh = pm_crosscircle:
+    r := w / 2; a := r * 0.7071;
+    pm_B(0); pm_arc(0, 0, r, r, 0, 360); pm_EO;
+    pm_B(1); pm_P(-a, -a); pm_P(a, a); pm_E;
+    pm_B(1); pm_P(-a, a); pm_P(a, -a); pm_E;
+    pm_slab := false;
+  elseif sh = pm_tagrect:
+    t := 0.2h;
+    pm_B(0); pm_box(xl, yt, xr, ybo); pm_EO;
+    pm_B(1); pm_P(xr - t, ybo); pm_P(xr, ybo - t); pm_E;
+  elseif sh = pm_flag:
+    a := h / 10;
+    pm_B(0); pm_wave(0, 0, xl, xr, w, yt + a, a, 1); pm_wave(0, 0, xr, xl, w, ybo - a, a, 1);
+    pm_EO;
+  elseif sh = pm_lindoc:
+    a := h / 9;
+    pm_B(0); pm_document(0, 0, w, h); pm_EO;
+    pm_B(1); pm_P(xl + 8u, yt); pm_P(xl + 8u, pm_wavey(xl + 8u, w, ybo - a, a, 0.8)); pm_E;
+    pm_slx := pm_ox + 4u; pm_sly := pm_oy - a / 2;
+  else: pm_B(0); pm_box(xl, yt, xr, ybo); pm_EO;
+  fi
+  endgroup
+enddef;
+
+% part o of node v, of kind k, in its style
+def pm_drawpart(expr o, k, v) =
+  if k = 0: pm_paint(o, v, true);
+  elseif k = 1: pm_paint(o, v, false);
+  elseif k = 2:
+    begingroup save c, w; w := pm_lw[v] * pm_em / pm_size;
+    c := if pm_line[v] >= 0: pm_line[v] else: pm_fill[v] fi;
+    if c >= 0:
+      fill o withcolor pm_c[c]; draw o withpen pencircle scaled w withcolor pm_c[c];
+    fi
+    endgroup;
+  elseif pm_fill[v] >= 0: fill o withcolor pm_c[pm_fill[v]];
+  fi
+enddef;
+
 % the outline of node v, of shape sh, w by h, centred at c, as a closed
 % path, y down: the polygon of PmFlowLayout.Outline, a circle, or its
 % box
@@ -509,13 +844,15 @@ vardef pm_outline(expr v) =
   elseif sh = pm_asymmetric:
     (xl, top) -- (xl + w, top) -- (xl + w, bot) -- (xl, bot) -- (xl + h / 2, cy) -- cycle
   elseif (sh = pm_circle) or (sh = pm_doublecircle): fullcircle scaled w shifted (cx, cy)
+  elseif sh >= pm_sub: (xl, top) -- (xl + w, top) -- (xl + w, bot) -- (xl, bot) -- cycle
+  elseif sh >= pm_datastore: pm_shapedraw(v); pm_so
   else: (xl, top) -- (xl + w, top) -- (xl + w, bot) -- (xl, bot) -- cycle
   fi
 enddef;
 
 % whether node v's outline is not its box
 vardef pm_clipped(expr v) =
-  pm_shape[v] >= pm_circle
+  (pm_shape[v] >= pm_circle) and (pm_shape[v] < pm_sub)
 enddef;
 
 % the first point, from a, where the line a--b meets the path o, as
@@ -645,9 +982,16 @@ enddef;
 vardef pm_col(expr c) = if c >= 0: pm_c[c] else: black fi enddef;
 
 % a filled arrowhead at the end of p, l long
+% The direction at the end of p, as a unit vector; where the last
+% control point is the end (catmullRom's), from just before it
+vardef pm_enddir(expr p) =
+  save d; pair d; d := direction infinity of p;
+  if abs(d) < 1/1000: d := point infinity of p - point (length p - 1/64) of p; fi
+  if abs(d) < 1/1000000: (1, 0) else: unitvector(d) fi
+enddef;
 def pm_head(expr p, l, c) =
   begingroup save u, e; pair u, e;
-  e := point infinity of p; u := unitvector(direction infinity of p);
+  e := point infinity of p; u := pm_enddir(p);
   fill (e -- (e - l * u + (l / 2) * (u rotated 90)) -- (e - l * u - (l / 2) * (u rotated 90)) -- cycle)
     withcolor c;
   endgroup
@@ -661,7 +1005,7 @@ enddef;
 % a circle or a cross at the end of p
 def pm_marker(expr kind, p, w, c) =
   begingroup save u, e, r; pair u, e;
-  e := point infinity of p; u := unitvector(direction infinity of p);
+  e := point infinity of p; u := pm_enddir(p);
   r := 5.5pm_px; e := e - r * u;
   if kind = pm_endcircle:
     fill fullcircle scaled 2r shifted e withcolor c;
@@ -673,10 +1017,132 @@ def pm_marker(expr kind, p, w, c) =
   endgroup
 enddef;
 
+% An edge's curve, other than basis, d3's as PmCurves draws it:
+% 1 linear, 2 step, 3 stepBefore, 4 stepAfter, 5 cardinal, 6 catmullRom,
+% 7 natural, 8 monotoneX, 9 monotoneY, 10 bumpX, 11 bumpY. The curve is
+% built as Bézier pieces in pm_b[0 .. pm_nb-1], the start and then two
+% control points and an end for each.
+numeric pm_ecurve[], pm_nb; pair pm_b[];
+def pm_curve(expr j, c) = pm_ecurve[j] := c; enddef;
+def pm_badd(expr z) = pm_b[pm_nb] := z; pm_nb := pm_nb + 1; enddef;
+def pm_bto(expr a, b, z) = pm_badd(a); pm_badd(b); pm_badd(z); enddef;
+def pm_bline(expr z) =
+  begingroup save s; pair s; s := pm_b[pm_nb - 1];
+    if z <> s: pm_bto((2s + z) / 3, (s + 2z) / 3, z); fi
+  endgroup
+enddef;
+% monotoneX's slopes, on the points q[] (x and y swapped for monotoneY)
+vardef pm_sign(expr v) = if v < 0: -1 elseif v > 0: 1 else: 0 fi enddef;
+vardef pm_steffen(suffix q)(expr i) =
+  save h, k, d, e, s, t, u; numeric h, k, d, e, s, t, u;
+  h := xpart q[i] - xpart q[i - 1]; k := xpart q[i + 1] - xpart q[i];
+  d := ypart q[i] - ypart q[i - 1]; e := ypart q[i + 1] - ypart q[i];
+  if (h = 0) and (k = 0): 0
+  elseif h = 0: if d = 0: 0 else: (pm_sign(d) + pm_sign(e / k)) * abs(e / k) fi
+  elseif k = 0: if e = 0: 0 else: (pm_sign(d / h) + pm_sign(e)) * abs(d / h) fi
+  elseif h + k = 0: 0
+  else:
+    s := d / h; t := e / k; u := (s * k + t * h) / (h + k);
+    (pm_sign(s) + pm_sign(t)) * min(abs(s), abs(t), 0.5abs(u))
+  fi
+enddef;
+vardef pm_curved(expr j) =
+  save n, c, z, q, a, b, r, s, t, l, m, p, sw, x, u, v;
+  pair z[], q[], a[], b[], u, v; numeric n, c, r, s, t[], l[], m, x; path p;
+  boolean sw;
+  n := pm_np[j]; c := pm_ecurve[j];
+  for i = 0 upto n - 1: z[i] := pm_up(pm_p[j][i]); endfor
+  pm_nb := 0; pm_badd(z0);
+  if (c = 1) or ((n = 2) and (c < 10)):
+    for k = 1 upto n - 1: pm_bline(z[k]); endfor
+  elseif c <= 4:
+    s := if c = 2: 0.5 elseif c = 3: 0 else: 1 fi;
+    for k = 1 upto n - 1:
+      if s = 0: pm_bline((xpart z[k - 1], ypart z[k]));
+      elseif s = 1: pm_bline((xpart z[k], ypart z[k - 1]));
+      else:
+        x := (1 - s) * xpart z[k - 1] + s * xpart z[k];
+        pm_bline((x, ypart z[k - 1])); pm_bline((x, ypart z[k]));
+      fi
+      pm_bline(z[k]);
+    endfor
+  elseif c <= 6:
+    z[-1] := z0; z[n] := z[n - 1];
+    for k = 0 upto n - 2:
+      if c = 5:
+        pm_bto(z[k] + (z[k + 1] - z[k - 1]) / 6, z[k + 1] - (z[k + 2] - z[k]) / 6, z[k + 1]);
+      else:
+        l0 := abs(z[k] - z[k - 1]); l1 := abs(z[k + 1] - z[k]);
+        l2 := abs(z[k + 2] - z[k + 1]);
+        u := z[k]; v := z[k + 1];
+        if sqrt(l0) > 1/1000000:
+          m := 2l0 + 3sqrt(l0) * sqrt(l1) + l1;
+          u := (z[k] * m - z[k - 1] * l1 + z[k + 1] * l0) / (3sqrt(l0) * (sqrt(l0) + sqrt(l1)));
+        fi
+        if sqrt(l2) > 1/1000000:
+          m := 2l2 + 3sqrt(l2) * sqrt(l1) + l1;
+          v := (z[k + 1] * m + z[k] * l2 - z[k + 2] * l1) / (3sqrt(l2) * (sqrt(l2) + sqrt(l1)));
+        fi
+        pm_bto(u, v, z[k + 1]);
+      fi
+    endfor
+  elseif c = 7:
+    % d3's controlPoints, x and y together, as pairs
+    m := n - 1;
+    q0 := (0, 2); a0 := z0 + 2z1;
+    for i = 1 upto m - 2: q[i] := (1, 4); a[i] := 4z[i] + 2z[i + 1]; endfor
+    q[m - 1] := (2, 7); a[m - 1] := 8z[m - 1] + z[m];
+    for i = 1 upto m - 1:
+      r := xpart q[i] / ypart q[i - 1];
+      q[i] := (xpart q[i], ypart q[i] - r); a[i] := a[i] - r * a[i - 1];
+    endfor
+    a[m - 1] := a[m - 1] / ypart q[m - 1];
+    for i = m - 2 downto 0: a[i] := (a[i] - a[i + 1]) / ypart q[i]; endfor
+    b[m - 1] := (z[m] + a[m - 1]) / 2;
+    for i = 0 upto m - 2: b[i] := 2z[i + 1] - a[i + 1]; endfor
+    for i = 0 upto m - 1: pm_bto(a[i], b[i], z[i + 1]); endfor
+  elseif c <= 9:
+    sw := (c = 9);
+    for i = 0 upto n - 1: q[i] := if sw: (ypart z[i], xpart z[i]) else: z[i] fi; endfor
+    for i = 1 upto n - 2: t[i] := pm_steffen(q)(i); endfor
+    x := xpart q1 - xpart q0;
+    t0 := if x = 0: t1 else: (3(ypart q1 - ypart q0) / x - t1) / 2 fi;
+    x := xpart q[n - 1] - xpart q[n - 2];
+    t[n - 1] := if x = 0: t[n - 2]
+      else: (3(ypart q[n - 1] - ypart q[n - 2]) / x - t[n - 2]) / 2 fi;
+    for i = 0 upto n - 2:
+      x := (xpart q[i + 1] - xpart q[i]) / 3;
+      u := q[i] + (x, x * t[i]); v := q[i + 1] - (x, x * t[i + 1]);
+      if sw: u := (ypart u, xpart u); v := (ypart v, xpart v); fi
+      pm_bto(u, v, z[i + 1]);
+    endfor
+  else:
+    for k = 1 upto n - 1:
+      if c = 10:
+        x := (xpart z[k - 1] + xpart z[k]) / 2;
+        pm_bto((x, ypart z[k - 1]), (x, ypart z[k]), z[k]);
+      else:
+        x := (ypart z[k - 1] + ypart z[k]) / 2;
+        pm_bto((xpart z[k - 1], x), (xpart z[k], x), z[k]);
+      fi
+    endfor
+  fi
+  if pm_nb < 4: pm_bto(z0, z0, z0); fi
+  p := pm_b0 .. controls pm_b1 and pm_b2 .. pm_b3;
+  for k = 6 step 3 until pm_nb - 1:
+    p := p .. controls pm_b[k - 2] and pm_b[k - 1] .. pm_b[k];
+  endfor
+  p
+enddef;
+vardef pm_path(expr j) =
+  if not known pm_ecurve[j]: pm_basis(j)
+  elseif (pm_ecurve[j] < 1) or (pm_ecurve[j] > 11): pm_basis(j)
+  else: pm_curved(j) fi
+enddef;
 def pm_drawedge(expr j) =
   if (pm_evis[j] = 1) and (pm_eline[j] >= 0) and (pm_np[j] >= 2):
     begingroup save p, q, l, w, c, d; path p, q; color c;
-    p := pm_basis(j); l := 8pm_px; w := pm_ewd[j] * pm_em / pm_size;
+    p := pm_path(j); l := 8pm_px; w := pm_ewd[j] * pm_em / pm_size;
     d := pm_edash[j] * pm_em / pm_size; c := pm_c[pm_eline[j]];
     q := p;
     if pm_ehead[j] = pm_endarrow: q := pm_cut(q, l); fi
@@ -698,14 +1164,19 @@ def pm_drawlabel(expr j) =
   if (pm_elab[j] >= 0) and (pm_elabel[j] <> ""):
     begingroup save z; pair z;
     z := pm_up((pm_elx[j], pm_ely[j]));
-    fill unitsquare shifted (-1/2, -1/2) xscaled pm_elw[j] yscaled pm_elh[j] shifted z
-      withcolor pm_labelback;
+    if pm_labelbox:
+      fill unitsquare shifted (-1/2, -1/2) xscaled pm_elw[j] yscaled pm_elh[j] shifted z
+        withcolor pm_labelback;
+    fi
     draw pm_pic[pm_elab[j]] shifted (z - center pm_pic[pm_elab[j]])
       withcolor pm_col(pm_etext[j]);
     endgroup;
   fi
 enddef;
 color pm_labelback; pm_labelback := (232, 232, 232) / 255;
+boolean pm_labelbox; pm_labelbox := true;
+% the diagram's title, and its colour's number, -1 for none
+string pm_title; pm_title := ""; numeric pm_titlec; pm_titlec := -1;
 
 % outline o filled and drawn in node v's style
 def pm_paint(expr o, v, filled) =
@@ -756,10 +1227,30 @@ def pm_drawnode(expr v) =
   elseif (sh = pm_circle) or (sh = pm_doublecircle):
     pm_paint(fullcircle scaled w shifted c, v, true);
     if sh = pm_doublecircle: pm_paint(fullcircle scaled (w - 2pm_em * 5 / 16) shifted c, v, true); fi
+  elseif sh = pm_sub:
+    draw pm_pic[v] shifted (c - center pm_pic[v]);
+  elseif sh = pm_collapsed:
+    % Mermaid's collapsedGroup: its title, a dashed line, three dots
+    pm_paint(pm_rbox(c, w, h, 8pm_px), v, true);
+    z := c + (0, 14pm_px);
+    d := h / 2 - 16pm_px - pm_th[v];
+    if pm_line[v] >= 0:
+      draw (c + (-w / 2 + 8pm_px, d)) -- (c + (w / 2 - 8pm_px, d))
+        withpen pencircle scaled (pm_lw[v] * pm_em / pm_size)
+        withcolor pm_c[pm_line[v]] dashed dashpattern(on 3pm_px off 3pm_px);
+    fi
+    for k = -1 upto 1:
+      fill fullcircle scaled 5pm_px shifted (c + (10 * k * pm_px, d - 10pm_px))
+        withcolor pm_col(pm_line[v]);
+    endfor
+  elseif sh >= pm_datastore:
+    pm_shapedraw(v);
+    for k = 0 upto pm_sn - 1: pm_drawpart(pm_sp[k] yscaled -1, pm_sk[k], v); endfor
+    z := pm_up((pm_slx, pm_sly));
   else:
     pm_paint(pm_outline(v) yscaled -1, v, true);
   fi
-  if pm_lab[v] <> "":
+  if (pm_lab[v] <> "") and ((sh < pm_datastore) or (sh = pm_collapsed) or pm_slab):
     draw pm_pic[v] shifted (z - center pm_pic[v]) withcolor pm_col(pm_text[v]);
   fi
   endgroup
@@ -783,8 +1274,27 @@ def pm_drawclusters(expr p) =
   endfor
 enddef;
 
-def pm_end =
+% the title, 18 pixels to the labels' 16, centred above p, its
+% baseline Mermaid's titleTopMargin, 25 pixels, above p's top
+def pm_drawtitle(suffix p) =
+  begingroup save t; picture t;
+  t := textext(pm_title) scaled (18/16);
+  t := t shifted ((xpart llcorner p + xpart urcorner p) / 2
+    - (xpart llcorner t + xpart urcorner t) / 2, ypart urcorner p + 25pm_px);
+  p := image(draw p; draw t withcolor pm_col(pm_titlec));
+  endgroup
+enddef;
+
+% the layout begun, drawn: as pm_end, but kept as isolated subgraph
+% k's drawing, not drawn, not scaled, with no title
+def pm_endsub(expr k) =
   begingroup save p; picture p;
+  pm_layout;
+  pm_subpic[k] := pm_drawing;
+  endgroup
+enddef;
+
+def pm_layout =
   pm_em := xpart urcorner textext("\hbox to 1em{}") - xpart llcorner textext("\hbox to 1em{}");
   pm_px := pm_em / 16;
   pm_sizes;
@@ -796,12 +1306,22 @@ def pm_end =
   pm_routes;
   pm_turnall;
   pm_clipall;
-  p := image(
+enddef;
+
+def pm_drawing =
+  image(
     pm_drawclusters(-1);
     for j = 0 upto pm_ne - 1: pm_drawedge(j); endfor
     for j = 0 upto pm_ne - 1: pm_drawlabel(j); endfor
     for v = 0 upto pm_nn - 1: if pm_kind[v] = 0: pm_drawnode(v); fi endfor
-  );
+  )
+enddef;
+
+def pm_end =
+  begingroup save p; picture p;
+  pm_layout;
+  p := pm_drawing;
+  if pm_title <> "": pm_drawtitle(p); fi
   if (pm_maxw > 0) and (xpart urcorner p - xpart llcorner p > pm_maxw):
     p := p scaled (pm_maxw / (xpart urcorner p - xpart llcorner p));
   fi

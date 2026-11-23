@@ -1,9 +1,9 @@
 \startMPcode
 input pomermaid ;
-pm_begin(2, 10, 432, 33, 12, 9, 0);
 pm_colour(0, 0.9255, 0.9255, 1);
 pm_colour(1, 0.5765, 0.4392, 0.8588);
 pm_colour(2, 0.2, 0.2, 0.2);
+pm_begin(2, 10, 432, 33, 12, 9, 0);
 pm_node(0, 0, 2, 3, 623.25, 0, -1, "rect");
 pm_style(0, 0, 1, 2, 0.625, 0);
 pm_node(1, 0, 4, 3, 623.25, 1, -1, "round");
@@ -38,7 +38,7 @@ pm_node(15, 0, 0, 3, 265.25, 0, -1, "quoted [text] here");
 pm_style(15, 0, 1, 2, 0.625, 0);
 pm_node(16, 0, 0, 4, 327.25, 0, -1, "padded");
 pm_style(16, 0, 1, 2, 0.625, 0);
-pm_node(17, 0, 0, 5, 395.25, 0, -1, "**markdown**\\two lines");
+pm_node(17, 0, 0, 5, 395.25, 0, -1, "{\bf markdown}\\two lines");
 pm_style(17, 0, 1, 2, 0.625, 0);
 pm_node(18, 0, 0, 6, 481.25, 0, -1, "a\\b\\c\\d");
 pm_style(18, 0, 1, 2, 0.625, 0);

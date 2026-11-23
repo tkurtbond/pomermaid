@@ -1,0 +1,32 @@
+---
+title: "Metadata, ids and links"
+config:
+  flowchart:
+    curve: linear
+---
+%%{init: {"flowchart": {"curve": "monotoneX"}, "theme": "forest"}}%%
+flowchart LR
+  A@{ shape: cyl, label: "Data base" } e1@--> B@{ shape: doc }
+  B -.-> C:::warm@{ shape: manual-input }
+  C e2@==> D@{ shape: hourglass }
+  E@{
+    shape: rounded
+    label: "Two
+        lines"
+  }
+  F@{ icon: "fa:user", form: square, pos: t, w: 60, h: 40.5, constraint: on }
+  G@{ img: "https://example.com/a.png", label: "Image" }
+  e1@{ curve: stepBefore }
+  e2@{ animate: true }
+  A & B --> C & D
+  subgraph S [Outer]
+    X --> Y
+  end
+  S@{ view: collapsed }
+  class A,e1,S,nobody hot
+  linkStyle 2 interpolate natural stroke:#f00
+  click A "https://example.com/a" "Go to A" _blank
+  click B href "https://example.com/b"
+  click C,D call show("x") "Callback"
+  click E e_handler
+  H@{ shape: choice }

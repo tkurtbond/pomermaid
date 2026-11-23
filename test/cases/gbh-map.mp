@@ -1,6 +1,5 @@
 \startMPcode
 input pomermaid ;
-pm_begin(0, 10, 432, 38, 6, 11, 3);
 pm_colour(0, 0.9255, 0.9255, 1);
 pm_colour(1, 0.5765, 0.4392, 0.8588);
 pm_colour(2, 0.2, 0.2, 0.2);
@@ -9,6 +8,7 @@ pm_colour(4, 0.7333, 0.7333, 1);
 pm_colour(5, 1, 0.7333, 1);
 pm_colour(6, 1, 1, 0.8706);
 pm_colour(7, 0.6667, 0.6667, 0.2);
+pm_begin(0, 10, 432, 38, 6, 11, 3);
 pm_cluster(0, -1, 0, 2, "UPPER LEVEL");
 pm_cstyle(0, 6, 7, 2, 0.625, 0);
 pm_cluster(1, -1, 4, 6, "MAIN LEVEL");

@@ -79,6 +79,7 @@ TYPE
     labelX-, labelY-: REAL; (* the centre of its label *)
     fromC-, toC-: INTEGER; (* the clusters it joins, for an edge to a
                               cluster; -1 for none *)
+    hidden-: BOOLEAN;      (* not drawn: set by HideEdge *)
     u, v: INTEGER          (* from and to, turned around if reversed *)
   END;
 
@@ -232,7 +233,7 @@ BEGIN
   e.labelW := labelW; e.labelH := labelH; e.hasLabel := hasLabel;
   e.reversed := FALSE; e.chain := NIL; e.nChain := 0; e.labelNode := -1;
   e.points := NIL; e.nPoints := 0; e.labelX := 0; e.labelY := 0;
-  e.fromC := -1; e.toC := -1;
+  e.fromC := -1; e.toC := -1; e.hidden := FALSE;
   e.u := from; e.v := to;
   g.edge[g.nEdges] := e; INC(g.nEdges);
   RETURN g.nEdges - 1
@@ -291,6 +292,64 @@ PROCEDURE SetPoints*(e: Edge; p: G.Points; n: INTEGER);
 BEGIN
   e.points := p; e.nPoints := n
 END SetPoints;
+
+(* Placing a layout's parts in another graph, not laid out itself,
+   that holds the parts of several *)
+
+(* Node v takes src's place, size, rank, order and kind, moved by
+   (dx, dy) *)
+PROCEDURE Place*(g: Graph; v: INTEGER; src: Node; dx, dy: REAL);
+  VAR n: Node;
+BEGIN
+  n := g.node[v];
+  n.x := src.x + dx; n.y := src.y + dy; n.w := src.w; n.h := src.h;
+  n.rank := src.rank; n.order := src.order; n.kind := src.kind
+END Place;
+
+(* Cluster c takes src's box, title and ranks, moved by (dx, dy) *)
+PROCEDURE PlaceCluster*(g: Graph; c: INTEGER; src: Cluster; dx, dy: REAL);
+  VAR cl: Cluster;
+BEGIN
+  cl := g.cluster[c];
+  cl.x := src.x + dx; cl.y := src.y + dy; cl.w := src.w; cl.h := src.h;
+  cl.titleX := src.titleX + dx; cl.titleY := src.titleY + dy;
+  cl.minRank := src.minRank; cl.maxRank := src.maxRank
+END PlaceCluster;
+
+(* Cluster c's box is w by h, centred at (x, y), its title centred at
+   (tx, ty) *)
+PROCEDURE SetBox*(g: Graph; c: INTEGER; x, y, w, h, tx, ty: REAL);
+  VAR cl: Cluster;
+BEGIN
+  cl := g.cluster[c];
+  cl.x := x; cl.y := y; cl.w := w; cl.h := h; cl.titleX := tx; cl.titleY := ty;
+  cl.minRank := 0; cl.maxRank := 0
+END SetBox;
+
+(* Edge j takes src's route, label and turn, moved by (dx, dy) *)
+PROCEDURE PlaceEdge*(g: Graph; j: INTEGER; src: Edge; dx, dy: REAL);
+  VAR e: Edge; k: INTEGER;
+BEGIN
+  e := g.edge[j];
+  e.nPoints := src.nPoints; e.points := G.NewPoints(src.nPoints + 1);
+  FOR k := 0 TO src.nPoints - 1 DO G.Set(e.points[k], src.points[k].x + dx, src.points[k].y + dy) END;
+  e.hasLabel := src.hasLabel; e.labelW := src.labelW; e.labelH := src.labelH;
+  e.labelX := src.labelX + dx; e.labelY := src.labelY + dy;
+  e.reversed := src.reversed; e.fromC := src.fromC; e.toC := src.toC
+END PlaceEdge;
+
+(* Edge j is not drawn: it has no route and no label *)
+PROCEDURE HideEdge*(g: Graph; j: INTEGER);
+  VAR e: Edge;
+BEGIN
+  e := g.edge[j]; e.hidden := TRUE; e.nPoints := 0; e.hasLabel := FALSE
+END HideEdge;
+
+(* The drawing's size is w by h *)
+PROCEDURE SetSize*(g: Graph; w, h: REAL);
+BEGIN
+  g.width := w; g.height := h
+END SetSize;
 
 (* Clusters *)
 
@@ -1786,6 +1845,30 @@ BEGIN
   Routes(g);
   Finish(g)
 END Geometry;
+
+(* Makes room, after Layout, for a box w wide and h high above g's
+   drawing, centred on it: the drawing moves down by h, and right if
+   w is wider than it, and its size grows to take the box in *)
+PROCEDURE Reserve*(g: Graph; w, h: REAL);
+  VAR i, j: INTEGER; dx: REAL; n: Node; cl: Cluster; e: Edge;
+BEGIN
+  dx := 0;
+  IF w > g.width THEN dx := (w - g.width) / 2; g.width := w END;
+  FOR i := 0 TO g.nNodes - 1 DO n := g.node[i]; n.x := n.x + dx; n.y := n.y + h END;
+  FOR i := 0 TO g.nClusters - 1 DO
+    cl := g.cluster[i];
+    cl.x := cl.x + dx; cl.y := cl.y + h;
+    cl.titleX := cl.titleX + dx; cl.titleY := cl.titleY + h
+  END;
+  FOR i := 0 TO g.nEdges - 1 DO
+    e := g.edge[i];
+    FOR j := 0 TO e.nPoints - 1 DO
+      e.points[j].x := e.points[j].x + dx; e.points[j].y := e.points[j].y + h
+    END;
+    e.labelX := e.labelX + dx; e.labelY := e.labelY + h
+  END;
+  g.height := g.height + h
+END Reserve;
 
 (* Lays g out: Topology, then Geometry *)
 PROCEDURE Layout*(g: Graph);

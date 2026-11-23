@@ -69,7 +69,10 @@ TYPE
     glyphs: Glyphs; nGlyphs: LONGINT;
     kerns: Kerns; nKerns: LONGINT;
     ligatures: SET;            (* of Ff, Fi, Fl, Ffi, Ffl *)
-    names: NameCode            (* while reading *)
+    names: NameCode;           (* while reading *)
+    styled-: ARRAY 4 OF Font   (* the font for each style, F.Bold,
+                                  F.Italic and both: itself for Roman
+                                  and for a style it has no font for *)
   END;
 
   (* A reader of the lines of a file, split into words *)
@@ -555,9 +558,32 @@ BEGIN
     rk := rk.next
   END;
   f.names := NIL;
+  FOR k := 0 TO 3 DO f.styled[k] := f END;
   font := f;
   RETURN TRUE
 END Load;
+
+(* Loads f's bold, italic and bold italic fonts, as groff names them:
+   a name that ends in R, I, B or BI is its family's, and the family's
+   fonts end in B, I and BI. A font of another name, or a style whose
+   font is not on the path, is set in f itself. *)
+PROCEDURE LoadStyles*(f: Font);
+  VAR family, name: ARRAY 64 OF CHAR; n, k: INTEGER; g: Font;
+BEGIN
+  COPY(f.name, family); n := SHORT(L.Length(family));
+  IF (n >= 3) & (family[n - 2] = "B") & (family[n - 1] = "I") THEN family[n - 2] := 0X
+  ELSIF (n >= 2) & ((family[n - 1] = "R") OR (family[n - 1] = "I") OR (family[n - 1] = "B")) THEN
+    family[n - 1] := 0X
+  ELSE RETURN
+  END;
+  FOR k := 1 TO 3 DO
+    COPY(family, name);
+    CASE k OF 1: Append(name, "B") | 2: Append(name, "I") | 3: Append(name, "BI") END;
+    IF name = f.name THEN f.styled[k] := f
+    ELSIF Load(name, g) THEN f.styled[k] := g
+    END
+  END
+END LoadStyles;
 
 (* Measuring *)
 
@@ -630,6 +656,22 @@ BEGIN
   RETURN Units(f, s, start, end, size) * 72.0 / f.res
 END Width;
 
+(* The width of line's text[start .. end-1] in f at size, in points,
+   each run of one style in its font *)
+PROCEDURE LineWidth*(f: Font; line: F.Line; start, end: LONGINT; size: REAL): REAL;
+  VAR w: REAL; j: LONGINT;
+BEGIN
+  IF line.style = NIL THEN RETURN Width(f, line.text^, start, end, size) END;
+  w := 0;
+  WHILE start < end DO
+    j := start;
+    WHILE (j < end) & (line.style[j] = line.style[start]) DO INC(j) END;
+    w := w + Width(f.styled[line.style[start]], line.text^, start, j, size);
+    start := j
+  END;
+  RETURN w
+END LineWidth;
+
 (* The width of the widest line of lab, and the height of its lines,
    in points, set at size with vs points from line to line *)
 PROCEDURE LabelSize*(f: Font; lab: F.Label; size, vs: REAL; VAR w, h: REAL);
@@ -639,7 +681,7 @@ BEGIN
   IF lab = NIL THEN RETURN END;
   l := lab.lines;
   WHILE l # NIL DO
-    x := Width(f, l.text^, 0, L.Length(l.text^), size);
+    x := LineWidth(f, l, 0, L.Length(l.text^), size);
     IF x > w THEN w := x END;
     l := l.next
   END;
@@ -669,6 +711,7 @@ BEGIN
   | F.Diamond: w := w + h; h := w
   | F.Hexagon: w := w + h / 2
   | F.LeanRight, F.LeanLeft, F.Trapezoid, F.InvTrapezoid: w := w + 2 * h / 3
+  ELSE
   END
 END ShapeSize;
 

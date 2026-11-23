@@ -22,7 +22,7 @@ TYPE
     t*: PmIO.Text;    (* the text; t[len] is 0X *)
     len*: LONGINT;
     pos*: LONGINT;    (* where the scanner is *)
-    name: ARRAY 256 OF CHAR (* the input, for messages *)
+    name-: ARRAY 256 OF CHAR (* the input, for messages *)
   END;
 
 (* Strings *)
@@ -161,14 +161,31 @@ BEGIN
   WHILE (s.pos < s.len) & (s.t[s.pos] # LF) DO INC(s.pos) END
 END SkipLine;
 
-(* Skips blanks, line ends, ";" and "%%" comments: what is between
-   statements *)
+(* If the position is at a directive, "%%{ ... }%%", returns where it
+   ends, after its "}%%", or else -1 *)
+PROCEDURE (s: Scanner) DirectiveEnd*(): LONGINT;
+  VAR p: LONGINT;
+BEGIN
+  IF ~s.LookingAt("%%{") THEN RETURN -1 END;
+  p := s.pos + 3;
+  WHILE p + 2 < s.len DO
+    IF (s.t[p] = "}") & (s.t[p + 1] = "%") & (s.t[p + 2] = "%") THEN RETURN p + 3 END;
+    INC(p)
+  END;
+  RETURN -1
+END DirectiveEnd;
+
+(* Skips blanks, line ends, ";", "%%" comments and "%%{ ... }%%"
+   directives: what is between statements *)
 PROCEDURE (s: Scanner) SkipSpace*;
+  VAR e: LONGINT;
 BEGIN
   LOOP
     s.SkipBlanks;
     IF (s.Ch() = LF) OR (s.Ch() = ";") THEN INC(s.pos)
-    ELSIF s.LookingAt("%%") THEN s.SkipLine
+    ELSIF s.LookingAt("%%") THEN
+      e := s.DirectiveEnd();
+      IF e >= 0 THEN s.pos := e ELSE s.SkipLine END
     ELSE EXIT
     END
   END

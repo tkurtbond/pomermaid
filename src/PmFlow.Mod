@@ -22,9 +22,11 @@ MODULE PmFlow;
    "&gt;", "&quot;", "&nbsp;", "&#N;", and Mermaid's own "#quot;" and
    "#N;", and "<br>" (in any of its forms) breaks a line. *)
 
-IMPORT PmIO, L := PmLex;
+IMPORT PmIO, L := PmLex, Y := PmYaml, Em := PmEmphasis;
 
 CONST
+  Roman* = Em.Roman; Bold* = Em.Bold; Italic* = Em.Italic; (* label styles *)
+
   (* directions *)
   TB* = 0; BT* = 1; LR* = 2; RL* = 3; NoDir* = -1;
 
@@ -33,6 +35,21 @@ CONST
   Circle* = 5; Asymmetric* = 6; Diamond* = 7; Hexagon* = 8;
   LeanRight* = 9; LeanLeft* = 10; Trapezoid* = 11; InvTrapezoid* = 12;
   DoubleCircle* = 13;
+  (* the shapes that have only a name, "@{ shape: name }" *)
+  DataStore* = 14; Folder* = 15; Bucket* = 16; Console* = 17; Browser* = 18;
+  Person* = 19; Bang* = 20; Cloud* = 21; TextShape* = 22; NotchRect* = 23;
+  LinRect* = 24; SmCircle* = 25; FrCircle* = 26; Fork* = 27; Hourglass* = 28;
+  Brace* = 29; BraceR* = 30; Braces* = 31; Bolt* = 32; Doc* = 33; Delay* = 34;
+  HCylinder* = 35; LinCylinder* = 36; CurvTrap* = 37; DivRect* = 38;
+  Triangle* = 39; WinPane* = 40; FCircle* = 41; NotchPent* = 42;
+  FlipTriangle* = 43; SlRect* = 44; Docs* = 45; StRect* = 46; BowRect* = 47;
+  CrossCircle* = 48; TagDoc* = 49; TagRect* = 50; Flag* = 51; LinDoc* = 52;
+  NShapes* = 53;
+
+  (* edge curves, d3's: an edge's curve, or the diagram's *)
+  Basis* = 0; Linear* = 1; Step* = 2; StepBefore* = 3; StepAfter* = 4;
+  Cardinal* = 5; CatmullRom* = 6; Natural* = 7; MonotoneX* = 8;
+  MonotoneY* = 9; BumpX* = 10; BumpY* = 11; DefaultCurve* = -1;
 
   (* edge ends *)
   None* = 0; Arrow* = 1; CircleEnd* = 2; Cross* = 3;
@@ -42,11 +59,14 @@ CONST
 
 TYPE
   Str* = L.Str;
+  Styles* = Em.Styles;
 
   (* A line of a label *)
   Line* = POINTER TO LineDesc;
   LineDesc* = RECORD
     text*: Str;
+    style*: Styles;  (* each byte's style, Bold, Italic or both; NIL if
+                        every byte is Roman *)
     next*: Line
   END;
 
@@ -88,6 +108,11 @@ TYPE
     shape*: INTEGER;
     classes*: Name;     (* class and ::: names, in order *)
     style*: Prop;       (* style statements' properties, in order *)
+    link*, linkTarget*: Str; (* click's or href's URL and target, or NIL *)
+    tooltip*: Str;      (* click's tooltip, or NIL *)
+    icon*, img*, form*, pos*: Str; (* from "@{ ... }", or NIL; not drawn *)
+    assetW*, assetH*: REAL; (* "@{ w: , h: }", or 0 *)
+    constraint*: BOOLEAN; (* "@{ constraint: on }" *)
     cluster*: Cluster;  (* the innermost subgraph holding it, or NIL *)
     index*: INTEGER;    (* from 0, in order of first mention *)
     next*: Node
@@ -104,6 +129,8 @@ TYPE
     title*: Label;
     parent*: Cluster;
     dir*: INTEGER;      (* its direction statement, or NoDir *)
+    classes*: Name;     (* class statements' names *)
+    collapsed*: BOOLEAN; (* "@{ view: collapsed }" *)
     mentioned: NodeList; (* the nodes its statements mention *)
     lastMentioned: NodeList;
     index*: INTEGER;    (* from 0, in order of their "end" *)
@@ -112,12 +139,15 @@ TYPE
 
   Edge* = POINTER TO EdgeDesc;
   EdgeDesc* = RECORD
+    id*: Str;           (* the id written before its link, or NIL *)
     from*, to*: Node;
     label*: Label;      (* NIL for none *)
     head*, tail*: INTEGER; (* the ends at to and at from *)
     line*: INTEGER;
     length*: INTEGER;   (* 1, or more for a longer arrow *)
     style*: Prop;       (* from linkStyle *)
+    classes*: Name;     (* class statements' names, by its id *)
+    curve*: INTEGER;    (* Basis ...: its own, or else the diagram's *)
     index*: INTEGER;    (* from 0, in order *)
     next*: Edge
   END;
@@ -129,13 +159,18 @@ TYPE
     edges*: Edge; nEdges*: INTEGER;
     clusters*: Cluster; nClusters*: INTEGER; (* in order of their "end" *)
     classDefs*: ClassDef;
+    title*: Label;      (* front matter's title, or NIL *)
+    curve*: INTEGER;    (* the edges' curve, Basis ... *)
+    config*: Y.Pair;    (* front matter's config and the init directives'
+                           settings, as "config.flowchart.curve" *)
     lastNode: Node; lastEdge: Edge; lastCluster: Cluster; lastClassDef: ClassDef
   END;
 
   (* What an arrow says *)
   ArrowDesc = RECORD
     head, tail, line, length: INTEGER;
-    label: Label
+    label: Label;
+    id: Str             (* the link's id, or NIL *)
   END;
 
 VAR
@@ -144,6 +179,7 @@ VAR
   current: Cluster;      (* the subgraph being read, or NIL *)
   autoIds: INTEGER;      (* subgraphs given an id *)
   defaultLinkStyle: Prop;
+  defaultCurve: INTEGER;  (* linkStyle default interpolate *)
   buf: L.Str;            (* text being decoded *)
   bufLen: LONGINT;
 
@@ -246,13 +282,49 @@ BEGIN
   start := 0; end := bufLen;
   WHILE (start < end) & L.IsBlank(buf[start]) DO INC(start) END;
   WHILE (end > start) & L.IsBlank(buf[end - 1]) DO DEC(end) END;
-  NEW(l); l.text := L.Sub(buf^, start, end - start); l.next := NIL;
+  NEW(l); l.text := L.Sub(buf^, start, end - start); l.style := NIL; l.next := NIL;
   IF lab.lines = NIL THEN lab.lines := l
   ELSE p := lab.lines; WHILE p.next # NIL DO p := p.next END; p.next := l
   END;
   INC(lab.n);
   bufLen := 0
 END AddLine;
+
+(* A markdown string's bold and italic: lab's lines, joined by line
+   feeds, read by PmEmphasis and split again; a line that has a style
+   but Roman keeps it in its style *)
+PROCEDURE Emphasize(lab: Label);
+  VAR l, first, last, nl: Line; len, i, k, n, start: LONGINT; s, t: Em.Text;
+    st: Styles; styled, any: BOOLEAN;
+BEGIN
+  len := 0; l := lab.lines;
+  WHILE l # NIL DO INC(len, L.Length(l.text^) + 1); l := l.next END;
+  IF len = 0 THEN RETURN END;
+  NEW(s, len + 1); k := 0; l := lab.lines;
+  WHILE l # NIL DO
+    i := 0; WHILE l.text[i] # 0X DO s[k] := l.text[i]; INC(k); INC(i) END;
+    l := l.next;
+    IF l # NIL THEN s[k] := 0AX; INC(k) END
+  END;
+  s[k] := 0X;
+  Em.Parse(s^, k, t, st, n, styled);
+  first := NIL; last := NIL; lab.n := 0; start := 0;
+  FOR i := 0 TO n DO
+    IF (i = n) OR (t[i] = 0AX) THEN
+      NEW(nl); nl.text := L.Sub(t^, start, i - start); nl.style := NIL; nl.next := NIL;
+      any := FALSE;
+      FOR k := start TO i - 1 DO IF st[k] # Em.Roman THEN any := TRUE END END;
+      IF any THEN
+        NEW(nl.style, i - start + 1);
+        FOR k := start TO i - 1 DO nl.style[k - start] := st[k] END;
+        nl.style[i - start] := Em.Roman
+      END;
+      IF last = NIL THEN first := nl ELSE last.next := nl END;
+      last := nl; INC(lab.n); start := i + 1
+    END
+  END;
+  lab.lines := first
+END Emphasize;
 
 (* The label of t[start .. end-1], decoded; quoted says it was in
    quotation marks, where "`...`" makes a markdown string *)
@@ -277,6 +349,7 @@ BEGIN
     END
   END;
   AddLine(lab);
+  IF lab.markdown THEN Emphasize(lab) END;
   RETURN lab
 END MakeLabel;
 
@@ -363,7 +436,10 @@ BEGIN
   WHILE (n # NIL) & ~L.Equal(n.id, id) DO n := n.next END;
   IF n = NIL THEN
     NEW(n); n.id := id; n.label := NIL; n.shape := Rect; n.classes := NIL;
-    n.style := NIL; n.cluster := NIL; n.index := g.nNodes; n.next := NIL;
+    n.style := NIL; n.link := NIL; n.linkTarget := NIL; n.tooltip := NIL;
+    n.icon := NIL; n.img := NIL; n.form := NIL; n.pos := NIL;
+    n.assetW := 0; n.assetH := 0; n.constraint := FALSE;
+    n.cluster := NIL; n.index := g.nNodes; n.next := NIL;
     INC(g.nNodes);
     IF g.nodes = NIL THEN g.nodes := n ELSE g.lastNode.next := n END;
     g.lastNode := n
@@ -386,21 +462,58 @@ BEGIN
   END
 END Mention;
 
-PROCEDURE AddClass(n: Node; name: Str);
+PROCEDURE AddName(VAR list: Name; name: Str);
   VAR c, p: Name;
 BEGIN
   NEW(c); c.name := name; c.next := NIL;
-  IF n.classes = NIL THEN n.classes := c
-  ELSE p := n.classes; WHILE p.next # NIL DO p := p.next END; p.next := c
+  IF list = NIL THEN list := c
+  ELSE p := list; WHILE p.next # NIL DO p := p.next END; p.next := c
   END
+END AddName;
+
+PROCEDURE AddClass(n: Node; name: Str);
+BEGIN AddName(n.classes, name)
 END AddClass;
 
-PROCEDURE AddEdge(from, to: Node; VAR a: ArrowDesc);
+(* The node id, or NIL *)
+PROCEDURE FindNode(id: ARRAY OF CHAR): Node;
+  VAR n: Node;
+BEGIN
+  n := g.nodes;
+  WHILE (n # NIL) & ~L.Is(n.id, id) DO n := n.next END;
+  RETURN n
+END FindNode;
+
+(* The edge whose id is id, or NIL *)
+PROCEDURE FindEdge(id: ARRAY OF CHAR): Edge;
+  VAR e: Edge;
+BEGIN
+  e := g.edges;
+  WHILE (e # NIL) & ((e.id = NIL) OR ~L.Is(e.id, id)) DO e := e.next END;
+  RETURN e
+END FindEdge;
+
+(* The subgraph id, ended already, or NIL *)
+PROCEDURE FindCluster(id: ARRAY OF CHAR): Cluster;
+  VAR c: Cluster;
+BEGIN
+  c := g.clusters;
+  WHILE (c # NIL) & ~L.Is(c.id, id) DO c := c.next END;
+  RETURN c
+END FindCluster;
+
+(* The edge from from to to; id is its id, or NIL. An id already taken
+   is not given, as in Mermaid. *)
+PROCEDURE AddEdge(from, to: Node; VAR a: ArrowDesc; id: Str);
   VAR e: Edge;
 BEGIN
   NEW(e); e.from := from; e.to := to; e.label := a.label;
   e.head := a.head; e.tail := a.tail; e.line := a.line; e.length := a.length;
-  e.style := NIL; e.index := g.nEdges; e.next := NIL;
+  IF e.length > 10 THEN e.length := 10 END;
+  e.id := NIL;
+  IF (id # NIL) & (FindEdge(id^) = NIL) THEN e.id := id END;
+  e.style := NIL; e.classes := NIL; e.curve := DefaultCurve;
+  e.index := g.nEdges; e.next := NIL;
   INC(g.nEdges);
   IF g.edges = NIL THEN g.edges := e ELSE g.lastEdge.next := e END;
   g.lastEdge := e
@@ -424,6 +537,286 @@ BEGIN
   RETURN L.Sub(sc.t^, start, sc.pos - start)
 END Id;
 
+(* Messages *)
+
+(* Appends s to msg *)
+PROCEDURE Cat(VAR msg: ARRAY OF CHAR; s: ARRAY OF CHAR);
+  VAR i, k: LONGINT;
+BEGIN
+  k := L.Length(msg); i := 0;
+  WHILE (i < LEN(s)) & (s[i] # 0X) & (k < LEN(msg) - 1) DO msg[k] := s[i]; INC(k); INC(i) END;
+  msg[k] := 0X
+END Cat;
+
+PROCEDURE CatNum(VAR msg: ARRAY OF CHAR; n: LONGINT);
+  VAR d: ARRAY 24 OF CHAR; r: ARRAY 24 OF CHAR; k, i: INTEGER;
+BEGIN
+  k := 0;
+  REPEAT d[k] := CHR(ORD("0") + n MOD 10); n := n DIV 10; INC(k) UNTIL n = 0;
+  i := 0; WHILE k > 0 DO DEC(k); r[i] := d[k]; INC(i) END; r[i] := 0X;
+  Cat(msg, r)
+END CatNum;
+
+(* A warning about the text at p: "name:line:col: msg" *)
+PROCEDURE WarnAt(p: LONGINT; a, b, c: ARRAY OF CHAR);
+  VAR msg: ARRAY 512 OF CHAR; line, col: LONGINT;
+BEGIN
+  sc.Where(p, line, col);
+  msg := ""; Cat(msg, sc.name); Cat(msg, ":"); CatNum(msg, line); Cat(msg, ":");
+  CatNum(msg, col); Cat(msg, ": "); Cat(msg, a); Cat(msg, b); Cat(msg, c);
+  PmIO.Warn(msg)
+END WarnAt;
+
+(* An error at p, "abc" *)
+PROCEDURE ErrorAt3(p: LONGINT; a, b, c: ARRAY OF CHAR);
+  VAR msg: ARRAY 512 OF CHAR;
+BEGIN
+  msg := ""; Cat(msg, a); Cat(msg, b); Cat(msg, c);
+  sc.ErrorAt(p, msg)
+END ErrorAt3;
+
+(* Shape names *)
+
+(* The shape named name, as Mermaid's shapes.ts names them, or -1.
+   undocumented is set for the names Mermaid does not document, drawn
+   as the nearest shape pomermaid has. *)
+PROCEDURE ShapeNamed(name: ARRAY OF CHAR; VAR undocumented: BOOLEAN): INTEGER;
+  VAR i: INTEGER;
+
+  PROCEDURE In(names: ARRAY OF CHAR): BOOLEAN;
+    VAR k, j: LONGINT;
+  BEGIN
+    k := 0;
+    WHILE names[k] # 0X DO
+      j := 0;
+      WHILE (names[k + j] # 0X) & (names[k + j] # " ") & (names[k + j] = name[j]) DO INC(j) END;
+      IF ((names[k + j] = 0X) OR (names[k + j] = " ")) & (name[j] = 0X) THEN RETURN TRUE END;
+      WHILE (names[k] # 0X) & (names[k] # " ") DO INC(k) END;
+      IF names[k] = " " THEN INC(k) END
+    END;
+    RETURN FALSE
+  END In;
+
+BEGIN
+  undocumented := In("note state bpmn-activity bpmn-data-store bpmn-start bpmn-intermediate bpmn-boundary bpmn-end choice bpmn-gateway icon anchor bpmn-annotation bpmn-data");
+  IF In("rect proc process rectangle note icon") THEN i := Rect
+  ELSIF In("rounded event state bpmn-activity") THEN i := Round
+  ELSIF In("stadium terminal pill") THEN i := Stadium
+  ELSIF In("fr-rect subprocess subproc framed-rectangle subroutine") THEN i := Subroutine
+  ELSIF In("cyl db database cylinder bpmn-data-store") THEN i := Cylinder
+  ELSIF In("circle circ bpmn-start bpmn-intermediate bpmn-boundary bpmn-end") THEN i := Circle
+  ELSIF In("odd") THEN i := Asymmetric
+  ELSIF In("diam decision diamond question choice bpmn-gateway") THEN i := Diamond
+  ELSIF In("hex hexagon prepare") THEN i := Hexagon
+  ELSIF In("lean-r lean-right in-out") THEN i := LeanRight
+  ELSIF In("lean-l lean-left out-in") THEN i := LeanLeft
+  ELSIF In("trap-b priority trapezoid-bottom trapezoid") THEN i := Trapezoid
+  ELSIF In("trap-t manual trapezoid-top inv-trapezoid") THEN i := InvTrapezoid
+  ELSIF In("dbl-circ double-circle doublecircle") THEN i := DoubleCircle
+  ELSIF In("datastore data-store") THEN i := DataStore
+  ELSIF In("folder directory") THEN i := Folder
+  ELSIF In("bucket") THEN i := Bucket
+  ELSIF In("console") THEN i := Console
+  ELSIF In("browser") THEN i := Browser
+  ELSIF In("person") THEN i := Person
+  ELSIF In("bang") THEN i := Bang
+  ELSIF In("cloud") THEN i := Cloud
+  ELSIF In("text") THEN i := TextShape
+  ELSIF In("notch-rect card notched-rectangle") THEN i := NotchRect
+  ELSIF In("lin-rect lined-rectangle lined-process lin-proc shaded-process") THEN i := LinRect
+  ELSIF In("sm-circ start small-circle") THEN i := SmCircle
+  ELSIF In("fr-circ stop framed-circle") THEN i := FrCircle
+  ELSIF In("fork join") THEN i := Fork
+  ELSIF In("hourglass collate") THEN i := Hourglass
+  ELSIF In("brace comment brace-l bpmn-annotation") THEN i := Brace
+  ELSIF In("brace-r") THEN i := BraceR
+  ELSIF In("braces") THEN i := Braces
+  ELSIF In("bolt com-link lightning-bolt") THEN i := Bolt
+  ELSIF In("doc document bpmn-data") THEN i := Doc
+  ELSIF In("delay half-rounded-rectangle") THEN i := Delay
+  ELSIF In("h-cyl das horizontal-cylinder") THEN i := HCylinder
+  ELSIF In("lin-cyl disk lined-cylinder") THEN i := LinCylinder
+  ELSIF In("curv-trap curved-trapezoid display") THEN i := CurvTrap
+  ELSIF In("div-rect div-proc divided-rectangle divided-process") THEN i := DivRect
+  ELSIF In("tri extract triangle") THEN i := Triangle
+  ELSIF In("win-pane internal-storage window-pane") THEN i := WinPane
+  ELSIF In("f-circ junction filled-circle anchor") THEN i := FCircle
+  ELSIF In("notch-pent loop-limit notched-pentagon") THEN i := NotchPent
+  ELSIF In("flip-tri manual-file flipped-triangle") THEN i := FlipTriangle
+  ELSIF In("sl-rect manual-input sloped-rectangle") THEN i := SlRect
+  ELSIF In("docs documents st-doc stacked-document") THEN i := Docs
+  ELSIF In("st-rect procs processes stacked-rectangle") THEN i := StRect
+  ELSIF In("bow-rect stored-data bow-tie-rectangle") THEN i := BowRect
+  ELSIF In("cross-circ summary crossed-circle") THEN i := CrossCircle
+  ELSIF In("tag-doc tagged-document") THEN i := TagDoc
+  ELSIF In("tag-rect tagged-rectangle tag-proc tagged-process") THEN i := TagRect
+  ELSIF In("flag paper-tape") THEN i := Flag
+  ELSIF In("lin-doc lined-document") THEN i := LinDoc
+  ELSE i := -1
+  END;
+  RETURN i
+END ShapeNamed;
+
+(* The curve named name, d3's names as Mermaid takes them, or -1 *)
+PROCEDURE CurveNamed*(name: ARRAY OF CHAR): INTEGER;
+BEGIN
+  IF name = "basis" THEN RETURN Basis
+  ELSIF name = "linear" THEN RETURN Linear
+  ELSIF name = "step" THEN RETURN Step
+  ELSIF name = "stepBefore" THEN RETURN StepBefore
+  ELSIF name = "stepAfter" THEN RETURN StepAfter
+  ELSIF name = "cardinal" THEN RETURN Cardinal
+  ELSIF name = "catmullRom" THEN RETURN CatmullRom
+  ELSIF name = "natural" THEN RETURN Natural
+  ELSIF name = "monotoneX" THEN RETURN MonotoneX
+  ELSIF name = "monotoneY" THEN RETURN MonotoneY
+  ELSIF name = "bumpX" THEN RETURN BumpX
+  ELSIF name = "bumpY" THEN RETURN BumpY
+  END;
+  RETURN -1
+END CurveNamed;
+
+(* The curve named s, at p in the text; an unknown one is warned about
+   and is basis *)
+PROCEDURE Curve(s: Str; p: LONGINT): INTEGER;
+  VAR c: INTEGER;
+BEGIN
+  c := CurveNamed(s^);
+  IF c < 0 THEN WarnAt(p, "unknown curve ", s^, ", drawn as basis"); c := Basis END;
+  RETURN c
+END Curve;
+
+(* The number in s, as JavaScript's Number() reads a decimal, or 0 *)
+PROCEDURE Number(s: Str): REAL;
+  VAR i: LONGINT; x, f: REAL; neg, digits: BOOLEAN;
+BEGIN
+  i := 0; x := 0; neg := FALSE; digits := FALSE;
+  WHILE L.IsBlank(s[i]) DO INC(i) END;
+  IF (s[i] = "-") OR (s[i] = "+") THEN neg := s[i] = "-"; INC(i) END;
+  WHILE L.IsDigit(s[i]) DO x := x * 10 + (ORD(s[i]) - ORD("0")); INC(i); digits := TRUE END;
+  IF s[i] = "." THEN
+    INC(i); f := 0.1;
+    WHILE L.IsDigit(s[i]) DO x := x + f * (ORD(s[i]) - ORD("0")); f := f / 10; INC(i); digits := TRUE END
+  END;
+  WHILE L.IsBlank(s[i]) DO INC(i) END;
+  IF ~digits OR (s[i] # 0X) THEN RETURN 0 END;
+  IF neg THEN x := -x END;
+  RETURN x
+END Number;
+
+(* Metadata *)
+
+(* "@{ ... }" at the position: its text, to the first "}" outside
+   double quotes, read as Mermaid reads it: as a flow mapping when it
+   is on one line, or else as a block mapping *)
+PROCEDURE MetaData(): Y.Pair;
+  VAR start, end, p: LONGINT; nl, inStr: BOOLEAN; list: Y.Pair; ch: CHAR;
+BEGIN
+  INC(sc.pos, 2); start := sc.pos; nl := FALSE; inStr := FALSE;
+  LOOP
+    IF sc.AtEnd() THEN sc.ErrorAt(start - 2, "a @{ has no }") END;
+    ch := sc.Ch();
+    IF ch = 22X THEN inStr := ~inStr
+    ELSIF (ch = "}") & ~inStr THEN EXIT
+    ELSIF (ch = 0AX) & ~inStr THEN nl := TRUE
+    END;
+    INC(sc.pos)
+  END;
+  end := sc.pos; INC(sc.pos);
+  IF nl THEN Y.Block(sc, start, end, TRUE, "", list)
+  ELSE p := Y.Flow(sc, start, end, FALSE, TRUE, "", list)
+  END;
+  RETURN list
+END MetaData;
+
+(* Whether the value of q is one JavaScript takes as true: not "",
+   "false", "0" or "null" *)
+PROCEDURE Truthy(q: Y.Pair): BOOLEAN;
+BEGIN
+  RETURN (q # NIL) & (q.value[0] # 0X) & ~L.Is(q.value, "false") & ~L.Is(q.value, "0")
+    & ~L.Is(q.value, "null")
+END Truthy;
+
+(* Whether n's text is still its id, as when it was given none *)
+PROCEDURE TextIsId(n: Node): BOOLEAN;
+BEGIN
+  RETURN (n.label = NIL) OR (n.label.n = 1) & L.Equal(n.label.lines.text, n.id)
+END TextIsId;
+
+(* An empty label *)
+PROCEDURE EmptyLabel(): Label;
+  VAR lab: Label;
+BEGIN
+  NEW(lab); lab.lines := NIL; lab.n := 0; lab.markdown := FALSE;
+  bufLen := 0; AddLine(lab);
+  RETURN lab
+END EmptyLabel;
+
+(* The metadata list of the edge e *)
+PROCEDURE EdgeMeta(e: Edge; list: Y.Pair);
+  VAR q: Y.Pair;
+BEGIN
+  (* animate, animation and step are read and not drawn *)
+  q := Y.Find(list, "curve");
+  IF q # NIL THEN e.curve := Curve(q.value, q.pos) END
+END EdgeMeta;
+
+(* The metadata list of the node n, as flowDb's addVertex takes it *)
+PROCEDURE NodeMeta(n: Node; list: Y.Pair);
+  VAR q, label: Y.Pair; shape: INTEGER; i: LONGINT; undoc: BOOLEAN;
+BEGIN
+  q := Y.Find(list, "shape");
+  IF Truthy(q) THEN
+    i := 0;
+    WHILE (q.value[i] # 0X) & ~((q.value[i] >= "A") & (q.value[i] <= "Z")) & (q.value[i] # "_") DO INC(i) END;
+    IF q.value[i] # 0X THEN
+      ErrorAt3(q.pos, "no such shape: ", q.value^, "; shape names are lower case")
+    END;
+    shape := ShapeNamed(q.value^, undoc);
+    IF shape < 0 THEN ErrorAt3(q.pos, "no such shape: ", q.value^, "") END;
+    IF undoc THEN WarnAt(q.pos, "Mermaid does not document the shape ", q.value^, "; drawn as the nearest one") END;
+    n.shape := shape
+  END;
+  label := Y.Find(list, "label");
+  IF Truthy(label) THEN
+    n.label := MakeLabel(label.value^, 0, L.Length(label.value^), TRUE);
+    q := Y.Find(list, "labelType");
+    IF (q # NIL) & L.Is(q.value, "markdown") & ~n.label.markdown THEN
+      n.label.markdown := TRUE; Emphasize(n.label)
+    END
+  END;
+  q := Y.Find(list, "icon");
+  IF Truthy(q) THEN
+    n.icon := q.value;
+    IF ((label = NIL) OR (label.value[0] = 0X)) & TextIsId(n) THEN n.label := EmptyLabel() END
+  END;
+  q := Y.Find(list, "form"); IF Truthy(q) THEN n.form := q.value END;
+  q := Y.Find(list, "pos"); IF Truthy(q) THEN n.pos := q.value END;
+  q := Y.Find(list, "img");
+  IF Truthy(q) THEN
+    n.img := q.value;
+    IF ((label = NIL) OR (label.value[0] = 0X)) & TextIsId(n) THEN n.label := EmptyLabel() END
+  END;
+  q := Y.Find(list, "constraint"); IF Truthy(q) THEN n.constraint := L.Is(q.value, "on") END;
+  q := Y.Find(list, "w"); IF q # NIL THEN n.assetW := Number(q.value) END;
+  q := Y.Find(list, "h"); IF q # NIL THEN n.assetH := Number(q.value) END
+END NodeMeta;
+
+(* The metadata list for id: a subgraph's, an edge's or a node's, in
+   that order, as flowDb's addVertex looks for them *)
+PROCEDURE Meta(id: Str; list: Y.Pair);
+  VAR c: Cluster; e: Edge; q: Y.Pair;
+BEGIN
+  c := FindCluster(id^);
+  IF c # NIL THEN
+    q := Y.Find(list, "view");
+    IF q # NIL THEN c.collapsed := L.Is(q.value, "collapsed") END
+  ELSE
+    e := FindEdge(id^);
+    IF e # NIL THEN EdgeMeta(e, list) ELSE NodeMeta(GetNode(id), list) END
+  END
+END Meta;
+
 (* The shape after a node's id, and its text, if there is one *)
 PROCEDURE Shape(n: Node);
   VAR shape: INTEGER; close: ARRAY 4 OF CHAR; lab: Label; start: LONGINT;
@@ -441,7 +834,6 @@ BEGIN
   ELSIF sc.Accept("{{") THEN shape := Hexagon; close := "}}"
   ELSIF sc.Accept("{") THEN shape := Diamond; close := "}"
   ELSIF sc.Accept(">") THEN shape := Asymmetric; close := "]"
-  ELSIF sc.LookingAt("@{") THEN sc.Error("the @{ ... } form of a node is not supported yet"); shape := Rect
   ELSE RETURN
   END;
   IF (shape = LeanRight) OR (shape = LeanLeft) THEN
@@ -464,12 +856,17 @@ BEGIN
   n.shape := shape; n.label := lab
 END Shape;
 
-(* A node, with its shape and classes *)
+(* A node, with its shape, classes and metadata. "id@{ ... }" where
+   id is an edge's or an ended subgraph's sets their metadata and
+   gives NIL. *)
 PROCEDURE NodeRef(): Node;
-  VAR id, cls: Str; n: Node;
+  VAR id, cls: Str; n: Node; meta: Y.Pair;
 BEGIN
   id := Id();
   IF id = NIL THEN sc.Error("expected a node"); RETURN NIL END;
+  IF sc.LookingAt("@{") & ((FindEdge(id^) # NIL) OR (FindCluster(id^) # NIL)) THEN
+    Meta(id, MetaData()); RETURN NIL
+  END;
   n := GetNode(id);
   Shape(n);
   IF sc.Accept(":::") THEN
@@ -477,6 +874,7 @@ BEGIN
     IF cls = NIL THEN sc.Error("expected a class name") END;
     AddClass(n, cls)
   END;
+  IF sc.LookingAt("@{") THEN meta := MetaData(); NodeMeta(n, meta) END;
   Mention(n);
   RETURN n
 END NodeRef;
@@ -548,13 +946,33 @@ BEGIN
   RETURN FALSE
 END LinkBody;
 
+(* An edge's id before its link, "e1@-->": the characters up to the
+   last "@" not followed by "{" or a quotation mark, in a run of
+   characters other than blanks and "[](){}|, as Mermaid's LINK_ID *)
+PROCEDURE LinkId(VAR a: ArrowDesc);
+  VAR i, at: LONGINT; ch: CHAR;
+BEGIN
+  i := sc.pos; at := -1;
+  LOOP
+    IF i >= sc.len THEN EXIT END;
+    ch := sc.t[i];
+    IF L.IsBlank(ch) OR (ch = 0AX) OR (ch = 0DX) OR (ch = 22X) OR (ch = "[") OR (ch = "]")
+       OR (ch = "(") OR (ch = ")") OR (ch = "{") OR (ch = "}") OR (ch = "|") THEN EXIT
+    END;
+    IF (ch = "@") & (i > sc.pos) & (i + 1 < sc.len) & (sc.t[i + 1] # "{") & (sc.t[i + 1] # 22X) THEN at := i END;
+    INC(i)
+  END;
+  IF at > 0 THEN a.id := L.Sub(sc.t^, sc.pos, at - sc.pos); sc.pos := at + 1 END
+END LinkId;
+
 (* Reads a link with its text, if there is one there *)
 PROCEDURE Link(VAR a: ArrowDesc): BOOLEAN;
   VAR save, start, end: LONGINT; opens, dummy: BOOLEAN; line: INTEGER; ch: CHAR;
 BEGIN
   save := sc.pos;
   sc.SkipBlanks;
-  a.tail := None; a.head := None; a.label := NIL; a.length := 1;
+  a.tail := None; a.head := None; a.label := NIL; a.length := 1; a.id := NIL;
+  LinkId(a);
   ch := sc.Ch();
   IF (ch = "<") OR (ch = "x") OR (ch = "o") THEN
     IF (ch = "<") OR sc.LookingAt("x--") OR sc.LookingAt("o--") OR sc.LookingAt("x==")
@@ -602,7 +1020,14 @@ BEGIN
     l := left;
     WHILE l # NIL DO
       r := right;
-      WHILE r # NIL DO AddEdge(l.node, r.node, a); r := r.next END;
+      WHILE r # NIL DO
+        IF (l.node = NIL) OR (r.node = NIL) THEN sc.Error("an edge's or a subgraph's metadata cannot be joined by an edge") END;
+        (* the id goes to the edge from the last node to the first *)
+        IF (l.next = NIL) & (r = right) THEN AddEdge(l.node, r.node, a, a.id)
+        ELSE AddEdge(l.node, r.node, a, NIL)
+        END;
+        r := r.next
+      END;
       l := l.next
     END;
     left := right
@@ -637,6 +1062,7 @@ PROCEDURE Subgraph;
 BEGIN
   NEW(c); c.parent := current; c.dir := NoDir; c.mentioned := NIL; c.lastMentioned := NIL;
   c.id := NIL; c.title := NIL; c.next := NIL; c.index := -1;
+  c.classes := NIL; c.collapsed := FALSE;
   sc.SkipBlanks;
   IF sc.Ch() = 22X THEN
     c.title := Text("", "")
@@ -716,22 +1142,29 @@ BEGIN
   p := NIL
 END ClassDefStmt;
 
-(* "class a,b name" *)
+(* "class a,b name": the class is given to the nodes, edges (by their
+   ids) and subgraphs named that are there already; as in Mermaid's
+   setClass, nothing is made *)
 PROCEDURE ClassStmt;
-  VAR ids: ARRAY 64 OF Node; n, i: INTEGER; name, id: Str;
+  VAR ids, name: Str; i, start: LONGINT; id: Str; n: Node; e: Edge; c: Cluster;
 BEGIN
-  n := 0;
-  LOOP
-    sc.SkipBlanks;
-    id := Id();
-    IF id = NIL THEN sc.Error("expected a node id") END;
-    IF n < LEN(ids) THEN ids[n] := GetNode(id); INC(n) END;
-    sc.SkipBlanks;
-    IF ~sc.Accept(",") THEN EXIT END
-  END;
+  sc.SkipBlanks;
+  start := sc.pos;
+  WHILE ~sc.AtEnd() & ~L.IsBlank(sc.Ch()) & (sc.Ch() # 0AX) & (sc.Ch() # ";") DO INC(sc.pos) END;
+  ids := L.Sub(sc.t^, start, sc.pos - start);
+  IF ids[0] = 0X THEN sc.Error("expected a node id") END;
   name := sc.Rest();
   IF name[0] = 0X THEN sc.Error("expected a class name") END;
-  FOR i := 0 TO n - 1 DO AddClass(ids[i], name) END
+  i := 0;
+  WHILE ids[i] # 0X DO
+    start := i;
+    WHILE (ids[i] # 0X) & (ids[i] # ",") DO INC(i) END;
+    id := L.Sub(ids^, start, i - start);
+    n := FindNode(id^); IF n # NIL THEN AddClass(n, name) END;
+    e := FindEdge(id^); IF e # NIL THEN AddName(e.classes, name) END;
+    c := FindCluster(id^); IF c # NIL THEN AddName(c.classes, name) END;
+    IF ids[i] = "," THEN INC(i) END
+  END
 END ClassStmt;
 
 (* "style id props" *)
@@ -745,14 +1178,30 @@ BEGIN
   AppendProps(n.style, Props(sc.Rest()))
 END StyleStmt;
 
-(* "linkStyle 0,1 props" or "linkStyle default props" *)
+(* "linkStyle 0,1 props" or "linkStyle default props", with
+   "interpolate curve" before the props *)
 PROCEDURE LinkStyleStmt;
-  VAR nums: ARRAY 256 OF INTEGER; n, i, k: INTEGER; props: Str; e: Edge;
+  VAR nums: ARRAY 256 OF INTEGER; n, i, k, curve: INTEGER; props, name: Str; e: Edge;
+
+  PROCEDURE Interpolate;
+    VAR at: LONGINT;
+  BEGIN
+    sc.SkipBlanks;
+    IF sc.LookingAtWord("interpolate") THEN
+      INC(sc.pos, 11); sc.SkipBlanks; at := sc.pos;
+      name := sc.Word();
+      IF name = NIL THEN sc.Error("expected a curve's name") END;
+      curve := Curve(name, at)
+    END
+  END Interpolate;
+
 BEGIN
   sc.SkipBlanks;
-  n := 0;
+  n := 0; curve := DefaultCurve;
   IF sc.LookingAtWord("default") THEN
     INC(sc.pos, 7);
+    Interpolate;
+    IF curve # DefaultCurve THEN defaultCurve := curve END;
     AppendProps(defaultLinkStyle, Props(sc.Rest()))
   ELSE
     LOOP
@@ -766,15 +1215,80 @@ BEGIN
       IF n < LEN(nums) THEN nums[n] := k; INC(n) END;
       IF ~sc.Accept(",") THEN EXIT END
     END;
+    Interpolate;
     props := sc.Rest();
     FOR i := 0 TO n - 1 DO
       e := g.edges;
       WHILE (e # NIL) & (e.index # nums[i]) DO e := e.next END;
       IF e = NIL THEN sc.Error("linkStyle names an edge that is not there") END;
+      IF curve # DefaultCurve THEN e.curve := curve END;
       AppendProps(e.style, Props(props))
     END
   END
 END LinkStyleStmt;
+
+(* A string in double quotation marks at the position *)
+PROCEDURE Quoted(): Str;
+  VAR start: LONGINT;
+BEGIN
+  INC(sc.pos); start := sc.pos;
+  WHILE ~sc.AtEnd() & (sc.Ch() # 22X) & (sc.Ch() # 0AX) DO INC(sc.pos) END;
+  IF sc.Ch() # 22X THEN sc.ErrorAt(start - 1, "unterminated string") END;
+  INC(sc.pos);
+  RETURN L.Sub(sc.t^, start, sc.pos - 1 - start)
+END Quoted;
+
+(* "click ids ...": a link, "href "url"" or ""url"", with a tooltip
+   and a target, or a callback, "call f(args)" or "f", with a tooltip.
+   Callbacks are JavaScript, and are not kept; their tooltips are. *)
+PROCEDURE Click;
+  VAR ids, url, tip, target, id: Str; i, start: LONGINT; callback: BOOLEAN; n: Node;
+BEGIN
+  sc.SkipBlanks;
+  start := sc.pos;
+  WHILE ~sc.AtEnd() & ~L.IsBlank(sc.Ch()) & (sc.Ch() # 0AX) & (sc.Ch() # ";") DO INC(sc.pos) END;
+  ids := L.Sub(sc.t^, start, sc.pos - start);
+  IF ids[0] = 0X THEN sc.Error("expected a node id") END;
+  sc.SkipBlanks;
+  url := NIL; tip := NIL; target := NIL; callback := FALSE;
+  IF sc.LookingAtWord("call") THEN
+    INC(sc.pos, 4); sc.SkipBlanks;
+    IF sc.Word() = NIL THEN sc.Error("expected a function's name") END;
+    IF sc.Ch() = "(" THEN
+      WHILE ~sc.AtEnd() & (sc.Ch() # ")") & (sc.Ch() # 0AX) DO INC(sc.pos) END;
+      IF ~sc.Accept(")") THEN sc.Error("expected )") END
+    END;
+    callback := TRUE
+  ELSIF sc.LookingAtWord("href") THEN
+    INC(sc.pos, 4); sc.SkipBlanks;
+    IF sc.Ch() # 22X THEN sc.Error("expected a URL in quotation marks") END;
+    url := Quoted()
+  ELSIF sc.Ch() = 22X THEN url := Quoted()
+  ELSE
+    IF sc.Word() = NIL THEN sc.Error("expected a URL or a function's name") END;
+    callback := TRUE
+  END;
+  sc.SkipBlanks;
+  IF sc.Ch() = 22X THEN tip := Quoted(); sc.SkipBlanks END;
+  IF (url # NIL) & (sc.LookingAtWord("_self") OR sc.LookingAtWord("_blank")
+     OR sc.LookingAtWord("_parent") OR sc.LookingAtWord("_top")) THEN
+    target := sc.Word()
+  END;
+  IF ~sc.AtStatementEnd() THEN sc.Error("unexpected text") END;
+  i := 0;
+  WHILE ids[i] # 0X DO
+    start := i;
+    WHILE (ids[i] # 0X) & (ids[i] # ",") DO INC(i) END;
+    id := L.Sub(ids^, start, i - start);
+    n := FindNode(id^);
+    IF n # NIL THEN
+      IF url # NIL THEN n.link := url; n.linkTarget := target END;
+      IF tip # NIL THEN n.tooltip := tip END;
+      AddClass(n, L.New("clickable"))
+    END;
+    IF ids[i] = "," THEN INC(i) END
+  END
+END Click;
 
 (* "accTitle: text", "accDescr: text" and "accDescr { ... }" are for
    readers of the web page; they are skipped *)
@@ -797,7 +1311,7 @@ BEGIN
   ELSIF sc.LookingAtWord("class") THEN INC(sc.pos, 5); ClassStmt
   ELSIF sc.LookingAtWord("style") THEN INC(sc.pos, 5); StyleStmt
   ELSIF sc.LookingAtWord("linkStyle") THEN INC(sc.pos, 9); LinkStyleStmt
-  ELSIF sc.LookingAtWord("click") THEN sc.SkipLine
+  ELSIF sc.LookingAtWord("click") THEN INC(sc.pos, 5); Click
   ELSIF sc.LookingAtWord("accTitle") OR sc.LookingAtWord("accDescr") THEN Accessibility
   ELSIF sc.LookingAtWord("direction") THEN
     INC(sc.pos, 9);
@@ -807,21 +1321,82 @@ BEGIN
   END
 END Statement;
 
-(* Skips a front matter block, "---" lines around YAML, if the text
-   starts with one *)
-PROCEDURE FrontMatter;
+(* The pairs of list whose names start with "config." *)
+PROCEDURE ConfigPairs(list: Y.Pair): Y.Pair;
+  VAR first, last, q: Y.Pair;
+BEGIN
+  first := NIL; last := NIL;
+  WHILE list # NIL DO
+    q := list; list := list.next;
+    IF (q.name[0] = "c") & (q.name[1] = "o") & (q.name[2] = "n") & (q.name[3] = "f")
+       & (q.name[4] = "i") & (q.name[5] = "g") & (q.name[6] = ".") THEN
+      q.next := NIL;
+      IF first = NIL THEN first := q ELSE last.next := q END;
+      last := q
+    END
+  END;
+  RETURN first
+END ConfigPairs;
+
+(* A front matter block, "---" lines around YAML, if the text starts
+   with one. With read, its title and config go into g. *)
+PROCEDURE FrontMatter(read: BOOLEAN);
+  VAR start: LONGINT; list, q: Y.Pair;
 BEGIN
   sc.SkipBlanks;
   IF sc.LookingAt("---") THEN
-    sc.SkipLine;
+    sc.SkipLine; start := sc.pos;
     LOOP
       IF sc.AtEnd() THEN sc.Error("the front matter has no closing ---") END;
       INC(sc.pos);
-      IF sc.LookingAt("---") THEN sc.SkipLine; EXIT END;
+      IF sc.LookingAt("---") THEN EXIT END;
       sc.SkipLine
-    END
+    END;
+    IF read THEN
+      Y.Block(sc, start + 1, sc.pos, FALSE, "", list);
+      q := Y.Find(list, "title");
+      IF (q # NIL) & (q.value[0] # 0X) THEN g.title := PlainLabel(q.value) END;
+      Y.Append(g.config, ConfigPairs(list))
+    END;
+    sc.SkipLine
   END
 END FrontMatter;
+
+(* The "%%{init: ...}%%" directives, anywhere at the start of a line:
+   their settings go into g.config, renamed "config." *)
+PROCEDURE Directives;
+  VAR save, e, i, k, p: LONGINT; list, q: Y.Pair; name: Str;
+BEGIN
+  save := sc.pos; sc.pos := 0;
+  WHILE ~sc.AtEnd() DO
+    sc.SkipBlanks;
+    e := sc.DirectiveEnd();
+    IF e >= 0 THEN
+      i := sc.pos + 3;
+      WHILE (i < e) & (L.IsBlank(sc.t[i]) OR (sc.t[i] = 0AX)) DO INC(i) END;
+      IF (sc.t[i] = "i") & (sc.t[i + 1] = "n") & (sc.t[i + 2] = "i") & (sc.t[i + 3] = "t") THEN
+        p := Y.Flow(sc, sc.pos + 3, e - 3, FALSE, FALSE, "", list);
+        q := list;
+        WHILE q # NIL DO
+          (* "init.X" or "initialize.X" become "config.X" *)
+          k := 0; WHILE (q.name[k] # 0X) & (q.name[k] # ".") DO INC(k) END;
+          IF q.name[k] = "." THEN
+            NEW(name, L.Length(q.name^) - k + 7);
+            COPY("config", name^); i := 6;
+            WHILE q.name[k] # 0X DO name[i] := q.name[k]; INC(i); INC(k) END;
+            name[i] := 0X;
+            q.name := name
+          END;
+          q := q.next
+        END;
+        Y.Append(g.config, ConfigPairs(list))
+      END;
+      sc.pos := e
+    END;
+    sc.SkipLine; IF ~sc.AtEnd() THEN INC(sc.pos) END
+  END;
+  sc.pos := save
+END Directives;
 
 (* Whether the scanner's text, after front matter and comments, starts
    with "flowchart" or "graph" *)
@@ -829,7 +1404,7 @@ PROCEDURE IsFlowchart*(s: L.Scanner): BOOLEAN;
   VAR save: LONGINT; r: BOOLEAN;
 BEGIN
   sc := s; save := sc.pos;
-  FrontMatter; sc.SkipSpace;
+  FrontMatter(FALSE); sc.SkipSpace;
   r := sc.LookingAtWord("flowchart") OR sc.LookingAtWord("graph") OR sc.LookingAtWord("flowchart-elk")
     OR sc.LookingAt("flowchart-elk");
   sc.pos := save;
@@ -838,12 +1413,13 @@ END IsFlowchart;
 
 (* Reads the flowchart in s's text into g *)
 PROCEDURE Read*(s: L.Scanner; VAR graph: Graph);
-  VAR e: Edge; n: Node;
+  VAR e: Edge; n: Node; q: Y.Pair;
 BEGIN
-  sc := s; current := NIL; autoIds := 0; defaultLinkStyle := NIL;
+  sc := s; current := NIL; autoIds := 0; defaultLinkStyle := NIL; defaultCurve := DefaultCurve;
   NEW(g); g.dir := TB; g.nodes := NIL; g.nNodes := 0; g.edges := NIL; g.nEdges := 0;
   g.clusters := NIL; g.nClusters := 0; g.classDefs := NIL;
-  FrontMatter; sc.SkipSpace;
+  g.title := NIL; g.config := NIL; g.curve := Basis;
+  FrontMatter(TRUE); Directives; sc.SkipSpace;
   IF sc.Accept("flowchart-elk") OR sc.Accept("flowchart") OR sc.Accept("graph") THEN
     IF ~sc.AtStatementEnd() THEN g.dir := Direction() END;
     IF ~sc.AtStatementEnd() THEN sc.Error("unexpected text") END
@@ -859,6 +1435,17 @@ BEGIN
   WHILE n # NIL DO
     IF n.label = NIL THEN n.label := PlainLabel(n.id) END;
     n := n.next
+  END;
+  (* the curve: linkStyle default's, or else the configuration's *)
+  IF defaultCurve # DefaultCurve THEN g.curve := defaultCurve
+  ELSE
+    q := Y.Find(g.config, "config.flowchart.curve");
+    IF q # NIL THEN g.curve := Curve(q.value, q.pos) END
+  END;
+  e := g.edges;
+  WHILE e # NIL DO
+    IF e.curve = DefaultCurve THEN e.curve := g.curve END;
+    e := e.next
   END;
   IF defaultLinkStyle # NIL THEN
     e := g.edges;

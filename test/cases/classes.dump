@@ -1,0 +1,12 @@
+direction LR
+node A shape=rect label="A" cluster=S
+node B shape=rect label="B" cluster=S
+node C shape=rect label="C" cluster=T
+node D shape=rect label="D"
+edge A -> B id=e1 head=arrow tail=none line=normal len=1 class=dashed
+edge B -> C head=arrow tail=none line=normal len=1
+edge C -> D id=e2 head=arrow tail=none line=normal len=1 style=stroke:"#090" class=dashed
+cluster S title="Styled" parent=- class=warm
+cluster T title="Plain" parent=-
+classDef warm props=fill:"#fdd",stroke:"#c33",stroke-width:"3px",color:"#900"
+classDef dashed props=stroke:"#36c",stroke-dasharray:"5 5"

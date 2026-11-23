@@ -1,0 +1,33 @@
+.defcolor pm-ffe0b0 rgb #ffe0b0
+.defcolor pm-c06000 rgb #c06000
+.defcolor pm-102040 rgb #102040
+.defcolor pm-2050a0 rgb #2050a0
+.defcolor pm-f0f0ff rgb #f0f0ff
+.defcolor pm-6060c0 rgb #6060c0
+.defcolor pm-d0f0d0 rgb #d0f0d0
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box wid 2.265 ht 1.107 at (1.133, -0.911) shaded "pm-f0f0ff" outlined "pm-6060c0" thickness 0.625
+"\f[TS]\m[pm-102040]A subgraph\m[]\f[]"  at (1.133, -0.506)
+spline -> from (0.748, -0.969) to (1.099, -0.969) to (1.451, -0.969) outlined "pm-2050a0" thickness 1.25
+spline -> from (2.135, -0.969) to (2.482, -0.969) to (2.699, -0.969) outlined "pm-2050a0" thickness 1.25
+box wid 0.269 ht 0.167 at (1.099, -0.969) shaded "pm-d0f0d0" outlined "pm-d0f0d0" thickness 0
+"\f[TS]\m[pm-102040]yes\m[]\f[]"  at (1.099, -0.969)
+box wid 0.617 ht 0.427 at (0.439, -0.969) shaded "pm-ffe0b0" outlined "pm-c06000" thickness 0.625
+"\f[TS]\m[pm-102040]Start\m[]\f[]"  at (0.439, -0.969)
+box wid 0.684 ht 0.427 at (1.793, -0.969) rad 0.043 shaded "pm-ffe0b0" outlined "pm-c06000" thickness 0.625
+"\f[TS]\m[pm-102040]Middle\m[]\f[]"  at (1.793, -0.969)
+"\M[pm-ffe0b0]\v'-0.22m'\D'P 0.476i 0.476i -0.476i 0.477i -0.477i -0.477i'\M[]" ljust at (3.176, -0.493)
+line from (3.176, -0.493) to (3.652, -0.969) to (3.176, -1.446) to (2.699, -0.969) \
+  to (3.176, -0.493) outlined "pm-c06000" thickness 0.625
+"\f[TS]\m[pm-102040]End?\m[]\f[]"  at (3.176, -0.969)
+box invis wid 1.305 ht 0.188 at (1.826, -0.094)
+"\s[11.25]\f[TS]\m[pm-102040]A themed flowchart\m[]\f[]\s[0]"  at (1.826, -0.094)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

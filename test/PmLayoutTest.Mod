@@ -93,7 +93,8 @@ BEGIN
         INC(overlaps)
       END
     END;
-    G.Basis(e.points^, e.nPoints, b, nb);
+    (* a hidden edge, inside a collapsed subgraph, has no route *)
+    IF e.hidden THEN nb := 0 ELSE G.Basis(e.points^, e.nPoints, b, nb) END;
     hit := FALSE;
     FOR i := 0 TO g.nReal - 1 DO
       IF (i # e.from) & (i # e.to) THEN
@@ -356,5 +357,5 @@ BEGIN
   Check("load TS", B(M.Load("TS", font)), 1);
   Diagram("gbh-overview"); Diagram("gbh-map"); Diagram("aftermath");
   Diagram("edges"); Diagram("shapes"); Diagram("subgraphs");
-  Diagram("subgraph-edges")
+  Diagram("subgraph-edges"); Diagram("collapsed"); Diagram("isolated")
 END PmLayoutTest.

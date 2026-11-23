@@ -1,4 +1,6 @@
 direction LR
+title text="Front"
+config config.look="classic"
 node a shape=rect label="a"
 node b shape=rect label="b"
 edge a -> b head=arrow tail=none line=normal len=1

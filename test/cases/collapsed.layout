@@ -1,0 +1,26 @@
+layout direction TB width=102.83 height=455.69
+node A rank=0 order=0 x=51.41 y=15.38 w=25.25 h=30.75
+node B rank=2 order=0 x=51.41 y=77.38 w=25.25 h=30.75
+node C hidden rank=0 order=0 x=62.35 y=0 w=0 h=0
+node D hidden rank=0 order=0 x=62.35 y=0 w=0 h=0
+node E hidden rank=0 order=0 x=62.35 y=0 w=0 h=0
+node E2 hidden rank=0 order=0 x=62.35 y=0 w=0 h=0
+node F rank=6 order=0 x=51.41 y=210.13 w=25.25 h=30.75
+node P rank=8 order=1 x=51.41 y=298.19 w=25.25 h=30.75
+node Q rank=10 order=1 x=51.41 y=360.19 w=25.25 h=30.75
+node R hidden rank=0 order=0 x=62.35 y=0 w=0 h=0
+node R2 hidden rank=0 order=0 x=62.35 y=0 w=0 h=0
+edge A -> B points=(51.41,30.75) (51.41,46.38) (51.41,62)
+edge C -> D hidden points=
+edge E -> E2 hidden points=
+edge B -> C points=(51.41,92.75) (51.41,108.38) (51.41,124)
+edge E -> F points=(51.41,163.5) (51.41,179.13) (51.41,194.75)
+edge D -> E hidden points=
+edge P -> Q points=(51.41,313.56) (51.41,329.19) (51.41,344.81)
+edge R -> R2 hidden points=
+edge F -> P points=(51.41,225.5) (51.41,241.13) (51.41,282.81)
+edge Q -> R points=(51.41,375.56) (51.41,391.19) (51.41,406.81)
+cluster H empty
+cluster G collapsed x=51.41 y=143.75 w=50 h=39.5 title=(51.41,135)
+cluster J collapsed x=51.41 y=426.56 w=62.2 h=39.5 title=(51.41,417.81)
+cluster K x=51.41 y=356.22 w=102.83 h=198.94 title=(51.41,267.44)

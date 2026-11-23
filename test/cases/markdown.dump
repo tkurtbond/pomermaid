@@ -1,0 +1,10 @@
+direction LR
+node A shape=rect label=md:"Bold and italic and both"=111100000222222000003333
+node B shape=rect label=md:"snake_case_name and em *not*"=0000000000000000000022000000
+node C shape=rect label=md:"a long bold phrase that wraps over lines"=0011111111111111110000000000000000000000
+node D shape=rect label=md:"strong em **unclosed mixed end"=111111022000000000000222220000
+node E shape=rect label=md:"a b c and x y"=2232200000322
+edge A -> B head=arrow tail=none line=normal len=1
+edge B -> C head=arrow tail=none line=normal len=1 label=md:"edge label"=0000011111
+edge C -> D head=arrow tail=none line=normal len=1
+edge D -> E head=arrow tail=none line=normal len=1

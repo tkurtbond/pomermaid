@@ -3,12 +3,14 @@ MODULE PmStyle;
    edges and subgraphs, for the writers. They are Mermaid's default theme's, with
    lengths in Mermaid's pixels scaled to the labels' size (16 pixels to
    the size), changed by classDef "default", the node's classes and its
-   style statements, in that order, and by linkStyle for edges.
+   style statements, in that order, and by linkStyle for edges. The
+   theme's colours can be changed by themeVariables, the default
+   theme's that the flowchart's styles use.
 
    The colours a diagram uses are kept in a table, each once, in the
    order they are first used; a style refers to them by their index. *)
 
-IMPORT PmIO, F := PmFlow, Lx := PmLex;
+IMPORT PmIO, F := PmFlow, Lx := PmLex, Y := PmYaml;
 
 CONST
   MaxColours = 256;
@@ -16,8 +18,9 @@ CONST
   (* Mermaid's default theme *)
   NodeFill = 0ECECFFH; NodeLine = 09370DBH; TextColour = 0333333H;
   EdgeLine = 0333333H;
-  LabelBack* = 0E8E8E8H;  (* behind an edge's label *)
+  LabelBack = 0E8E8E8H;  (* behind an edge's label *)
   ClusterFill = 0FFFFDEH; ClusterLine = 0AAAA33H;
+  None = -1;  (* a theme's colour that is none *)
 
 TYPE
   Style* = RECORD
@@ -29,13 +32,10 @@ VAR
   colour: ARRAY MaxColours OF LONGINT;
   nColours-: INTEGER;   (* the colours in the table *)
   px: REAL;             (* a Mermaid pixel, in points *)
+  (* the theme's colours, as 0RRGGBBH, or None *)
+  nodeFill, nodeLine, nodeText, textColour, titleColour, edgeLine,
+  labelBack, clusterFill, clusterLine: LONGINT;
 
-(* Empties the colour table; lengths in pixels are taken as pixel
-   points each from now on *)
-PROCEDURE Reset*(pixel: REAL);
-BEGIN
-  nColours := 0; px := pixel
-END Reset;
 
 (* The colour of index c, as 0RRGGBBH *)
 PROCEDURE Rgb*(c: INTEGER): LONGINT;
@@ -212,6 +212,89 @@ BEGIN
   END
 END Apply;
 
+(* The colour of index rgb, or NoColour for None *)
+PROCEDURE ThemeColour(rgb: LONGINT): INTEGER;
+BEGIN
+  IF rgb = None THEN RETURN NoColour ELSE RETURN Colour(rgb) END
+END ThemeColour;
+
+(* The index of the colour behind edges' labels, or NoColour *)
+PROCEDURE LabelBackground*(): INTEGER;
+BEGIN
+  RETURN ThemeColour(labelBack)
+END LabelBackground;
+
+(* The colour behind edges' labels, as 0RRGGBBH, or -1 for none *)
+PROCEDURE LabelBackgroundRgb*(): LONGINT;
+BEGIN
+  RETURN labelBack
+END LabelBackgroundRgb;
+
+(* TRUE if the colour behind edges' labels is the default theme's *)
+PROCEDURE DefaultLabelBackground*(): BOOLEAN;
+BEGIN
+  RETURN labelBack = LabelBack
+END DefaultLabelBackground;
+
+(* The index of the diagram's title's colour, or NoColour *)
+PROCEDURE TitleColour*(): INTEGER;
+BEGIN
+  RETURN ThemeColour(textColour)
+END TitleColour;
+
+(* The theme's colours: Mermaid's default theme's, changed by g's
+   themeVariables, a variable the flowchart uses (mainBkg, nodeBorder,
+   ...) after those it is made from (border1, ...), as Mermaid does *)
+PROCEDURE Theme(g: F.Graph);
+  VAR set: BOOLEAN;
+
+  (* c, the themeVariable name's colour, if g sets it *)
+  PROCEDURE Var(name: ARRAY OF CHAR; VAR c: LONGINT): BOOLEAN;
+    VAR q: Y.Pair; key: ARRAY 64 OF CHAR; v: ARRAY 128 OF CHAR;
+      rgb: LONGINT; none: BOOLEAN; i, j: INTEGER;
+  BEGIN
+    IF g.config = NIL THEN RETURN FALSE END;
+    key := "config.themeVariables."; i := 0;
+    WHILE key[i] # 0X DO INC(i) END;
+    j := 0;
+    WHILE name[j] # 0X DO key[i] := name[j]; INC(i); INC(j) END;
+    key[i] := 0X;
+    q := Y.Find(g.config, key);
+    IF q = NIL THEN RETURN FALSE END;
+    Clean(q.value, v);
+    IF ParseColour(v, rgb, none) THEN
+      IF none THEN c := None ELSE c := rgb END;
+      RETURN TRUE
+    END;
+    PmIO.Message3("ignoring the colour ", v, ", which pomermaid does not know");
+    RETURN FALSE
+  END Var;
+
+BEGIN
+  nodeFill := NodeFill; nodeLine := NodeLine; textColour := TextColour;
+  edgeLine := EdgeLine; labelBack := LabelBack;
+  clusterFill := ClusterFill; clusterLine := ClusterLine;
+  set := Var("mainBkg", nodeFill);
+  IF ~Var("nodeBorder", nodeLine) THEN set := Var("border1", nodeLine) END;
+  set := Var("textColor", textColour);
+  nodeText := textColour; titleColour := textColour;
+  set := Var("nodeTextColor", nodeText);
+  set := Var("titleColor", titleColour);
+  set := Var("lineColor", edgeLine);
+  IF ~Var("edgeLabelBackground", labelBack) THEN set := Var("labelBackground", labelBack) END;
+  IF ~Var("clusterBkg", clusterFill) THEN set := Var("secondBkg", clusterFill) END;
+  IF ~Var("clusterBorder", clusterLine) THEN set := Var("border2", clusterLine) END
+END Theme;
+
+(* Empties the colour table, and sets the theme's colours from g's
+   themeVariables; lengths in pixels are taken as pixel points each
+   from now on *)
+PROCEDURE Reset*(g: F.Graph; pixel: REAL);
+BEGIN
+  nColours := 0; px := pixel;
+  Theme(g)
+END Reset;
+
 (* Applies the classDefs named name *)
 PROCEDURE ApplyClass(g: F.Graph; VAR st: Style; name: ARRAY OF CHAR);
   VAR c: F.ClassDef;
@@ -228,7 +311,7 @@ END ApplyClass;
 PROCEDURE NodeStyle*(g: F.Graph; n: F.Node; VAR st: Style);
   VAR c: F.Name;
 BEGIN
-  st.fill := Colour(NodeFill); st.line := Colour(NodeLine); st.text := Colour(TextColour);
+  st.fill := ThemeColour(nodeFill); st.line := ThemeColour(nodeLine); st.text := ThemeColour(nodeText);
   st.width := px; st.dash := 0;
   ApplyClass(g, st, "default");
   c := n.classes;
@@ -236,14 +319,19 @@ BEGIN
   Apply(st, n.style)
 END NodeStyle;
 
-(* st, a subgraph's style: Mermaid's default theme's, then the classes
-   and style statements of n, the node with the subgraph's id, if not
-   NIL *)
-PROCEDURE ClusterStyle*(g: F.Graph; n: F.Node; VAR st: Style);
-  VAR c: F.Name;
+(* st, subgraph k's style: Mermaid's default theme's, then its class
+   statements', as Mermaid's flowDb compiles them, then the classes and
+   style statements of n, the node with the subgraph's id, if not NIL *)
+PROCEDURE ClusterStyle*(g: F.Graph; k: INTEGER; n: F.Node; VAR st: Style);
+  VAR c: F.Name; cl: F.Cluster;
 BEGIN
-  st.fill := Colour(ClusterFill); st.line := Colour(ClusterLine); st.text := Colour(TextColour);
+  st.fill := ThemeColour(clusterFill); st.line := ThemeColour(clusterLine); st.text := ThemeColour(titleColour);
   st.width := px; st.dash := 0;
+  cl := g.clusters; WHILE (cl # NIL) & (cl.index # k) DO cl := cl.next END;
+  IF cl # NIL THEN
+    c := cl.classes;
+    WHILE c # NIL DO ApplyClass(g, st, c.name^); c := c.next END
+  END;
   IF n # NIL THEN
     c := n.classes;
     WHILE c # NIL DO ApplyClass(g, st, c.name^); c := c.next END;
@@ -252,17 +340,23 @@ BEGIN
 END ClusterStyle;
 
 (* st, edge e's style: Mermaid's default theme for its kind of line,
-   then its linkStyle *)
-PROCEDURE EdgeStyle*(e: F.Edge; VAR st: Style);
+   then its class statements', then its linkStyle *)
+PROCEDURE EdgeStyle*(g: F.Graph; e: F.Edge; VAR st: Style);
+  VAR c: F.Name;
 BEGIN
-  st.fill := NoColour; st.line := Colour(EdgeLine); st.text := Colour(TextColour);
+  st.fill := NoColour; st.line := ThemeColour(edgeLine); st.text := ThemeColour(nodeText);
   st.width := 2 * px; st.dash := 0;
   IF e.line = F.Thick THEN st.width := 3.5 * px
   ELSIF e.line = F.Dotted THEN st.dash := 3 * px
   END;
+  c := e.classes;
+  WHILE c # NIL DO ApplyClass(g, st, c.name^); c := c.next END;
   Apply(st, e.style)
 END EdgeStyle;
 
 BEGIN
-  nColours := 0; px := 1
+  nColours := 0; px := 1;
+  nodeFill := NodeFill; nodeLine := NodeLine; nodeText := TextColour;
+  textColour := TextColour; titleColour := TextColour; edgeLine := EdgeLine;
+  labelBack := LabelBack; clusterFill := ClusterFill; clusterLine := ClusterLine
 END PmStyle.

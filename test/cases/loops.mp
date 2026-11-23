@@ -1,9 +1,9 @@
 \startMPcode
 input pomermaid ;
-pm_begin(2, 10, 432, 12, 6, 5, 0);
 pm_colour(0, 0.9255, 0.9255, 1);
 pm_colour(1, 0.5765, 0.4392, 0.8588);
 pm_colour(2, 0.2, 0.2, 0.2);
+pm_begin(2, 10, 432, 12, 6, 5, 0);
 pm_node(0, 0, 0, 0, 79.629, 0, -1, "Start");
 pm_style(0, 0, 1, 2, 0.625, 0);
 pm_node(1, 0, 2, 0, 39.1, 7, -1, "Again?");

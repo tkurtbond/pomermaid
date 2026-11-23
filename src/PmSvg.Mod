@@ -12,9 +12,14 @@ MODULE PmSvg;
    one line space (.vs) below where it starts, and groff cannot move
    above the top of the page; so the page is one line space taller than
    the drawing and its margins, and the SVG's root element is given a
-   viewBox and a height without that band (Crop). *)
+   viewBox and a height without that band (Crop).
 
-IMPORT PmIO, FL := PmFlowLayout, PmPic, R := PmRun;
+   A node's click link or tooltip is written after the drawing, as
+   Mermaid's htmlLabels do not make it in a drawing made this way: an
+   <a> element, or a <g> for a tooltip alone, holding the tooltip as a
+   <title> and a rectangle over the node's bounds, filled but clear. *)
+
+IMPORT PmIO, F := PmFlow, FL := PmFlowLayout, L := PmLayout, PmPic, R := PmRun;
 
 CONST
   MinMargin = 2; (* points round the drawing, at least, for lines' widths *)
@@ -88,13 +93,125 @@ BEGIN
   WHILE (i < len) & ((t[i] = " ") OR (t[i] = ",")) DO INC(i) END
 END Spaces;
 
+(* Links *)
+
+(* Whether t[start .. end-1] holds s after a blank *)
+PROCEDURE Declares(t: PmIO.Text; start, end: LONGINT; s: ARRAY OF CHAR): BOOLEAN;
+  VAR i: LONGINT;
+BEGIN
+  FOR i := start + 1 TO end - 1 DO
+    IF (t[i - 1] <= " ") & At(t, end, i, s) THEN RETURN TRUE END
+  END;
+  RETURN FALSE
+END Declares;
+
+(* s, escaped for an attribute's value or text *)
+PROCEDURE Xml(s: F.Str);
+  VAR i: LONGINT;
+BEGIN
+  i := 0;
+  WHILE s[i] # 0X DO
+    CASE s[i] OF
+      "&": PmIO.WriteString("&amp;")
+    | "<": PmIO.WriteString("&lt;")
+    | ">": PmIO.WriteString("&gt;")
+    | 22X: PmIO.WriteString("&quot;")
+    ELSE
+      IF s[i] >= " " THEN PmIO.WriteChar(s[i]) END
+    END;
+    INC(i)
+  END
+END Xml;
+
+PROCEDURE Lower(c: CHAR): CHAR;
+BEGIN
+  IF (c >= "A") & (c <= "Z") THEN c := CHR(ORD(c) + 32) END;
+  RETURN c
+END Lower;
+
+(* Whether url is one Mermaid's sanitizeUrl (@braintree/sanitize-url)
+   makes about:blank: it has a scheme, and after any characters that
+   are not letters, digits or "_" it starts with javascript, data or
+   vbscript, in any case *)
+PROCEDURE Unsafe(url: F.Str): BOOLEAN;
+  VAR i, k: LONGINT; colon: BOOLEAN;
+
+  PROCEDURE Is(w: ARRAY OF CHAR): BOOLEAN;
+    VAR j: LONGINT;
+  BEGIN
+    j := 0;
+    WHILE (w[j] # 0X) & (Lower(url[i + j]) = w[j]) DO INC(j) END;
+    RETURN w[j] = 0X
+  END Is;
+
+BEGIN
+  colon := FALSE; k := 0;
+  WHILE url[k] # 0X DO IF url[k] = ":" THEN colon := TRUE END; INC(k) END;
+  IF ~colon OR (url[0] = ".") OR (url[0] = "/") THEN RETURN FALSE END;
+  i := 0;
+  WHILE (url[i] # 0X) & ~((Lower(url[i]) >= "a") & (Lower(url[i]) <= "z") OR
+      (url[i] >= "0") & (url[i] <= "9") OR (url[i] = "_")) DO INC(i) END;
+  RETURN Is("javascript") OR Is("data") OR Is("vbscript")
+END Unsafe;
+
+(* Writes the links and tooltips of l's nodes, in the page's points,
+   with xlink:href as well as href if xlink is declared *)
+PROCEDURE Links(l: FL.Layout; xlink: BOOLEAN);
+  VAR n: F.Node; ln: L.Node; first: BOOLEAN;
+
+  PROCEDURE Num(name: ARRAY OF CHAR; x: REAL);
+  BEGIN
+    PmIO.WriteChar(" "); PmIO.WriteString(name); PmIO.WriteString('="');
+    PmIO.WriteReal(x, 2); PmIO.WriteChar(22X)
+  END Num;
+
+  PROCEDURE Href(name: ARRAY OF CHAR; url: F.Str);
+  BEGIN
+    PmIO.WriteChar(" "); PmIO.WriteString(name); PmIO.WriteString('="');
+    IF Unsafe(url) THEN PmIO.WriteString("about:blank") ELSE Xml(url) END;
+    PmIO.WriteChar(22X)
+  END Href;
+
+BEGIN
+  PageSize(l); first := TRUE;
+  n := l.graph.nodes;
+  WHILE n # NIL DO
+    IF (n.link # NIL) OR (n.tooltip # NIL) THEN
+      IF first THEN PmIO.WriteString('<g class="pm-links">'); PmIO.WriteLn; first := FALSE END;
+      IF n.link # NIL THEN
+        PmIO.WriteString("<a");
+        Href("href", n.link);
+        IF xlink THEN Href("xlink:href", n.link) END;
+        IF n.linkTarget # NIL THEN
+          PmIO.WriteString(' target="'); Xml(n.linkTarget); PmIO.WriteChar(22X)
+        END;
+        PmIO.WriteChar(">")
+      ELSE PmIO.WriteString("<g>")
+      END;
+      IF n.tooltip # NIL THEN
+        PmIO.WriteString("<title>"); Xml(n.tooltip); PmIO.WriteString("</title>")
+      END;
+      ln := l.g.node[n.index];
+      PmIO.WriteString("<rect");
+      Num("x", margin + ln.x - ln.w / 2); Num("y", margin + vs + ln.y - ln.h / 2);
+      Num("width", ln.w); Num("height", ln.h);
+      PmIO.WriteString(' fill="#ffffff" fill-opacity="0"/>');
+      IF n.link # NIL THEN PmIO.WriteString("</a>") ELSE PmIO.WriteString("</g>") END;
+      PmIO.WriteLn
+    END;
+    n := n.next
+  END;
+  IF ~first THEN PmIO.WriteString("</g>"); PmIO.WriteLn END
+END Links;
+
 (* Writes the SVG t[0 .. len-1] with the band of top points cut from the
    top of its page: the root element's height and viewBox lose top, and
-   the viewBox starts top lower. The rest is written as it is. FALSE,
+   the viewBox starts top lower. The rest is written as it is, and the
+   links of the layout l, if it is not NIL, before the last </svg>. FALSE,
    and nothing written, if the root element has no height or viewBox
    that can be read. *)
-PROCEDURE Crop*(t: PmIO.Text; len: LONGINT; top: REAL): BOOLEAN;
-  VAR i, start, end, hAt, hEnd, vAt, vEnd, k: LONGINT; h: REAL;
+PROCEDURE Crop*(t: PmIO.Text; len: LONGINT; top: REAL; l: FL.Layout): BOOLEAN;
+  VAR i, start, end, hAt, hEnd, vAt, vEnd, k, close: LONGINT; h: REAL;
     vb: ARRAY 4 OF REAL; n: INTEGER; ok: BOOLEAN;
 BEGIN
   (* the root element, t[start .. end-1] *)
@@ -135,7 +252,14 @@ BEGIN
   IF vAt < hAt THEN
     PmIO.WriteChars(t^, vEnd, hAt - vEnd); PmIO.WriteReal(h - top, 2); k := hEnd
   END;
-  PmIO.WriteChars(t^, k, len - k);
+  close := len - 6;
+  WHILE (close > k) & ~At(t, len, close, "</svg>") DO DEC(close) END;
+  IF (l = NIL) OR (close <= k) THEN close := len END;
+  PmIO.WriteChars(t^, k, close - k);
+  IF close < len THEN
+    Links(l, Declares(t, start, end, "xmlns:xlink="));
+    PmIO.WriteChars(t^, close, len - close)
+  END;
   RETURN TRUE
 END Crop;
 
@@ -227,7 +351,7 @@ BEGIN
   IF ~PmIO.Exists(svg) THEN Fail("no SVG was made", PmIO.ProgramError) END;
   PmIO.ReadFile(svg, t, len);
   PmIO.OpenOutput(output);
-  IF ~Crop(t, len, vs) THEN Fail("the SVG made has no height or viewBox pomermaid can read", PmIO.ProgramError) END;
+  IF ~Crop(t, len, vs, l) THEN Fail("the SVG made has no height or viewBox pomermaid can read", PmIO.ProgramError) END;
   PmIO.CloseOutput;
   R.RemoveDir(dir)
 END Write;

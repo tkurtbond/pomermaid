@@ -143,3 +143,35 @@ ok   - subgraph-edges RL: no overlaps
 ok   - subgraph-edges RL: no crossings
 ok   - subgraph-edges RL: clusters hold their nodes
 ok   - subgraph-edges RL: ranks bounded
+ok   - collapsed TB: no overlaps
+ok   - collapsed TB: no crossings
+ok   - collapsed TB: clusters hold their nodes
+ok   - collapsed TB: ranks bounded
+ok   - collapsed BT: no overlaps
+ok   - collapsed BT: no crossings
+ok   - collapsed BT: clusters hold their nodes
+ok   - collapsed BT: ranks bounded
+ok   - collapsed LR: no overlaps
+ok   - collapsed LR: no crossings
+ok   - collapsed LR: clusters hold their nodes
+ok   - collapsed LR: ranks bounded
+ok   - collapsed RL: no overlaps
+ok   - collapsed RL: no crossings
+ok   - collapsed RL: clusters hold their nodes
+ok   - collapsed RL: ranks bounded
+ok   - isolated TB: no overlaps
+ok   - isolated TB: no crossings
+ok   - isolated TB: clusters hold their nodes
+ok   - isolated TB: ranks bounded
+ok   - isolated BT: no overlaps
+ok   - isolated BT: no crossings
+ok   - isolated BT: clusters hold their nodes
+ok   - isolated BT: ranks bounded
+ok   - isolated LR: no overlaps
+ok   - isolated LR: no crossings
+ok   - isolated LR: clusters hold their nodes
+ok   - isolated LR: ranks bounded
+ok   - isolated RL: no overlaps
+ok   - isolated RL: no crossings
+ok   - isolated RL: clusters hold their nodes
+ok   - isolated RL: ranks bounded

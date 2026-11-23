@@ -1,0 +1,72 @@
+direction TB
+node a shape=datastore label="Data store"
+node b shape=folder label="Folder"
+node c shape=bucket label="Bucket"
+node d shape=console label="Console"
+node e shape=browser label="Browser"
+node f shape=person label="Person"
+node g shape=bang label="Bang"
+node h shape=cloud label="Cloud"
+node i shape=text label="Text"
+node j shape=notch-rect label="Card"
+node k shape=lin-rect label="Lined rect"
+node l shape=sm-circ label="Start"
+node m shape=fr-circ label="Stop"
+node n shape=fork label="Fork"
+node o shape=hourglass label="Collate"
+node p shape=brace label="Comment"
+node q shape=brace-r label="Comment right"
+node r shape=braces label="Comments"
+node s shape=bolt label="Bolt"
+node t shape=doc label="Document"
+node u shape=delay label="Delay"
+node v shape=h-cyl label="Direct access"
+node w shape=lin-cyl label="Disk"
+node x shape=curv-trap label="Display"
+node y shape=div-rect label="Divided"
+node z shape=tri label="Extract"
+node a1 shape=win-pane label="Storage"
+node b1 shape=f-circ label="Junction"
+node c1 shape=notch-pent label="Loop limit"
+node d1 shape=flip-tri label="Merge"
+node e1 shape=sl-rect label="Manual input"
+node f1 shape=docs label="Documents"
+node g1 shape=st-rect label="Processes"
+node h1 shape=bow-rect label="Stored data"
+node i1 shape=cross-circ label="Summary"
+node j1 shape=tag-doc label="Tagged doc"
+node k1 shape=tag-rect label="Tagged process"
+node l1 shape=flag label="Paper tape"
+node m1 shape=lin-doc label="Lined doc"
+edge a -> b head=arrow tail=none line=normal len=1
+edge b -> c head=arrow tail=none line=normal len=1
+edge c -> d head=arrow tail=none line=normal len=1
+edge d -> e head=arrow tail=none line=normal len=1
+edge e -> f head=arrow tail=none line=normal len=1
+edge g -> h head=arrow tail=none line=normal len=1
+edge h -> i head=arrow tail=none line=normal len=1
+edge i -> j head=arrow tail=none line=normal len=1
+edge j -> k head=arrow tail=none line=normal len=1
+edge k -> l head=arrow tail=none line=normal len=1
+edge m -> n head=arrow tail=none line=normal len=1
+edge n -> o head=arrow tail=none line=normal len=1
+edge o -> p head=arrow tail=none line=normal len=1
+edge p -> q head=arrow tail=none line=normal len=1
+edge q -> r head=arrow tail=none line=normal len=1
+edge s -> t head=arrow tail=none line=normal len=1
+edge t -> u head=arrow tail=none line=normal len=1
+edge u -> v head=arrow tail=none line=normal len=1
+edge v -> w head=arrow tail=none line=normal len=1
+edge w -> x head=arrow tail=none line=normal len=1
+edge y -> z head=arrow tail=none line=normal len=1
+edge z -> a1 head=arrow tail=none line=normal len=1
+edge a1 -> b1 head=arrow tail=none line=normal len=1
+edge b1 -> c1 head=arrow tail=none line=normal len=1
+edge c1 -> d1 head=arrow tail=none line=normal len=1
+edge e1 -> f1 head=arrow tail=none line=normal len=1
+edge f1 -> g1 head=arrow tail=none line=normal len=1
+edge g1 -> h1 head=arrow tail=none line=normal len=1
+edge h1 -> i1 head=arrow tail=none line=normal len=1
+edge i1 -> j1 head=arrow tail=none line=normal len=1
+edge k1 -> l1 head=arrow tail=none line=normal len=1
+edge l1 -> m1 head=arrow tail=none line=normal len=1

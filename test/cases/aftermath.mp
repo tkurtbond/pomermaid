@@ -1,9 +1,9 @@
 \startMPcode
 input pomermaid ;
-pm_begin(0, 10, 432, 32, 11, 13, 0);
 pm_colour(0, 0.9255, 0.9255, 1);
 pm_colour(1, 0.5765, 0.4392, 0.8588);
 pm_colour(2, 0.2, 0.2, 0.2);
+pm_begin(0, 10, 432, 32, 11, 13, 0);
 pm_node(0, 0, 0, 0, 346.65, 0, -1, "ag{\char95}bota.adb");
 pm_style(0, 0, 1, 2, 0.625, 0);
 pm_node(1, 0, 2, 0, 346.65, 0, -1, "Aftermath{\char95}Generator -\\Process{\char95}Table");

@@ -1,0 +1,53 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-3366cc rgb #3366cc
+.defcolor pm-009900 rgb #009900
+.defcolor pm-ffffde rgb #ffffde
+.defcolor pm-aaaa33 rgb #aaaa33
+.defcolor pm-ffdddd rgb #ffdddd
+.defcolor pm-cc3333 rgb #cc3333
+.defcolor pm-990000 rgb #990000
+.defcolor pm-e8e8e8 rgb #e8e8e8
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box wid 1.396 ht 1.107 at (0.698, -0.554) shaded "pm-ffdddd" outlined "pm-cc3333" thickness 1.875
+"\f[TS]\m[pm-990000]Styled\m[]\f[]"  at (0.698, -0.148)
+box wid 0.617 ht 1.107 at (2.139, -0.554) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-333333]Plain\m[]\f[]"  at (2.139, -0.148)
+line from (0.481, -0.612) to (0.485, -0.612) to (0.49, -0.612) to (0.494, -0.612) \
+  to (0.499, -0.612) to (0.504, -0.612) to (0.508, -0.612) to (0.513, -0.612) \
+  to (0.517, -0.612) to (0.524, -0.612) outlined "pm-3366cc" thickness 1.25
+line from (0.568, -0.612) to (0.571, -0.612) to (0.594, -0.612) to (0.611, -0.612) outlined "pm-3366cc" thickness 1.25
+line from (0.655, -0.612) to (0.671, -0.612) to (0.698, -0.612) to (0.698, -0.612) outlined "pm-3366cc" thickness 1.25
+line from (0.741, -0.612) to (0.752, -0.612) to (0.777, -0.612) to (0.785, -0.612) outlined "pm-3366cc" thickness 1.25
+line from (0.828, -0.612) to (0.845, -0.612) to (0.864, -0.612) to (0.872, -0.612) outlined "pm-3366cc" thickness 1.25
+line -> from (0.906, -0.612) to (0.915, -0.612) outlined "pm-3366cc" thickness 1.25
+spline -> from (1.266, -0.612) to (1.613, -0.612) to (1.96, -0.612) outlined "pm-333333" thickness 1.25
+line from (2.311, -0.612) to (2.318, -0.612) to (2.325, -0.612) to (2.333, -0.612) \
+  to (2.34, -0.612) to (2.348, -0.612) to (2.354, -0.612) outlined "pm-009900" thickness 1.25
+line from (2.398, -0.612) to (2.424, -0.612) to (2.441, -0.612) outlined "pm-009900" thickness 1.25
+line from (2.484, -0.612) to (2.492, -0.612) to (2.528, -0.612) outlined "pm-009900" thickness 1.25
+line from (2.571, -0.612) to (2.605, -0.612) to (2.615, -0.612) outlined "pm-009900" thickness 1.25
+line from (2.658, -0.612) to (2.676, -0.612) to (2.701, -0.612) outlined "pm-009900" thickness 1.25
+line from (2.745, -0.612) to (2.765, -0.612) to (2.788, -0.612) outlined "pm-009900" thickness 1.25
+line from (2.832, -0.612) to (2.845, -0.612) to (2.85, -0.612) to (2.854, -0.612) \
+  to (2.859, -0.612) to (2.863, -0.612) to (2.868, -0.612) to (2.872, -0.612) \
+  to (2.875, -0.612) outlined "pm-009900" thickness 1.25
+line -> from (2.873, -0.612) to (2.881, -0.612) outlined "pm-009900" thickness 1.25
+box wid 0.351 ht 0.427 at (0.306, -0.612) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]A\m[]\f[]"  at (0.306, -0.612)
+box wid 0.351 ht 0.427 at (1.09, -0.612) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]B\m[]\f[]"  at (1.09, -0.612)
+box wid 0.351 ht 0.427 at (2.135, -0.612) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]C\m[]\f[]"  at (2.135, -0.612)
+box wid 0.351 ht 0.427 at (3.057, -0.612) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]D\m[]\f[]"  at (3.057, -0.612)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

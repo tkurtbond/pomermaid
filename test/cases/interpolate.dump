@@ -1,0 +1,7 @@
+direction TB
+curve stepAfter
+node A shape=rect label="A"
+node B shape=rect label="B"
+node C shape=rect label="C"
+edge A -> B head=arrow tail=none line=normal len=1
+edge B -> C head=arrow tail=none line=normal len=1 curve=basis

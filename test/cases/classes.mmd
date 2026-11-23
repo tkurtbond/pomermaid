@@ -1,0 +1,14 @@
+flowchart LR
+  subgraph S [Styled]
+    A e1@--> B
+  end
+  subgraph T [Plain]
+    C
+  end
+  B --> C
+  C e2@--> D
+  classDef warm fill:#fdd,stroke:#c33,stroke-width:3px,color:#900
+  classDef dashed stroke:#36c,stroke-dasharray:5 5
+  class S warm
+  class e1,e2 dashed
+  linkStyle 2 stroke:#090

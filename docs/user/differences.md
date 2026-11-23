@@ -18,8 +18,11 @@ comparisons are with Mermaid's source and documentation.
   width scaled to the text, is broken at spaces, as Mermaid breaks it.
   Its box is then as wide as its widest line. Mermaid's box is the
   full 200 pixels wide.
-- **Markdown strings** (``"`**bold**`"``) are drawn as plain text, with
-  their asterisks and underscores.
+- **Markdown strings** (``"`**bold**`"``) keep their bold and italic,
+  as in Mermaid. Their other markdown is drawn as written, as Mermaid
+  draws it in a flowchart's labels.
+- **Icons** (`fa:fa-car`) are drawn as their text. Mermaid draws Font
+  Awesome's glyph where the page loads that font.
 - **Width.** Mermaid scales a diagram to fit its container. With
   `-t pic` and `-t svg`, a diagram wider than `--width` is laid out
   again at a smaller text size, so that the text stays the size the
@@ -49,17 +52,20 @@ differences:
 ## Subgraphs
 
 - **An empty subgraph** has no box. Mermaid draws an empty one.
-- **`direction` inside a subgraph** is ignored for now: the subgraph
-  is laid out in the diagram's direction. Mermaid honours it for a
-  subgraph that no edge crosses.
+- **`direction` inside a subgraph** is honoured, as in Mermaid, only
+  for a subgraph that no edge crosses. Such a subgraph is laid out on
+  its own and placed as one node; its rank spacing is 25 pixels more
+  than its parent's, as Mermaid's is.
+- **A collapsed subgraph** (`@{ view: collapsed }`) is drawn as
+  Mermaid draws it, a box with its title, a dashed rule and three dots.
 - **Subgraphs joined both ways,** directly or through a cycle, are not
   stacked one below the other. Their nodes are ranked by the edges
   alone, so their boxes may stand side by side or overlap in rank.
 
 ## Styles and colours
 
-- **Themes.** Only Mermaid's default theme is drawn. `theme` and
-  `themeVariables`, in front matter or `%%{init: ...}%%`, are ignored.
+- **Themes.** Only Mermaid's default theme is drawn: `theme` is
+  ignored. The `themeVariables` that colour a flowchart are used.
 - **Colours.** pomermaid knows hex colours, `rgb()` and about 35 CSS
   names. Any other colour is ignored with a warning, and the default
   is used.
@@ -67,16 +73,18 @@ differences:
   lines along the curve. pic cannot dash a spline. They look as
   Mermaid's do.
 
-## What is not drawn yet
+## What is read but not drawn
 
-These are planned for Phase 10:
-
-- `click` and other links: read and ignored. groff's PDF links do not
-  survive the conversion to SVG, so pomermaid will write them into
-  the SVG itself.
-- A front matter's `title`, and `accTitle` and `accDescr`.
-- The `@{ shape: ... }` form of a node, and edge ids (`e1@-->`). These
-  stop pomermaid with an error.
+- **Links.** `click` and `href` links and tooltips exist only in SVG,
+  which pomermaid writes over the nodes. pic and MetaPost have none.
+  A `click` that calls a function has no link; its tooltip is kept.
+- **Icon and image shapes** (`@{ icon: ... }`, `@{ img: ... }`) are
+  drawn as boxes with their labels.
+- **Animation.** An edge's `animate`, `animation` and `step` are
+  ignored.
+- **Accessibility.** `accTitle` and `accDescr` are read and ignored.
+- **Shapes Mermaid does not document,** such as `note` and the `bpmn-`
+  shapes, are drawn as the nearest documented shape, with a warning.
 
 ## SVG
 

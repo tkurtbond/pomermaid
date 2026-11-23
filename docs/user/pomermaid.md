@@ -115,11 +115,18 @@ error, and pomermaid goes on.
 
 ## What it reads
 
-pomermaid reads Mermaid's flowcharts:
+pomermaid reads Mermaid's flowcharts, as Mermaid 12.3.0 reads them:
 
 - **The first line:** `flowchart` or `graph`, with a direction: `TD`,
   `TB`, `BT`, `LR` or `RL`.
-- **Front matter:** a block between `---` lines, before the first line.
+- **Front matter:** a block between `---` lines, before the first line,
+  with a `title`, drawn above the diagram, and a `config`. Of the
+  configuration, pomermaid uses `flowchart.curve` and the
+  `themeVariables` of Mermaid's default theme that colour a flowchart:
+  `mainBkg`, `nodeBorder`, `textColor`, `nodeTextColor`, `titleColor`,
+  `lineColor`, `edgeLabelBackground`, `clusterBkg`, `clusterBorder`,
+  and those they are made from, `border1`, `border2`, `secondBkg` and
+  `labelBackground`. `%%{init: ...}%%` directives set the same.
 - **Nodes:** an id alone, or an id with a label in one of the bracket
   shapes:
   - `[box]` and `(round)`;
@@ -132,37 +139,58 @@ pomermaid reads Mermaid's flowcharts:
   for new lines, entities such as `#amp;`, `#35;` and `&amp;`, and any
   UTF-8 text. A label wider than Mermaid's 200 pixels is wrapped at
   spaces.
+- **Node metadata:** `A@{ shape: doc, label: "Text" }`, with every
+  shape name and alias Mermaid knows, such as `doc`, `lean-r`,
+  `cyl`, `fork`, `hourglass`, `bolt` and `brace`. An unknown name is
+  an error, as in Mermaid. A few names Mermaid takes but does not
+  document, such as `note` and the `bpmn-` shapes, are drawn as the
+  nearest documented shape, with a warning.
+- **Markdown strings:** ``"`**bold** and _italic_`"``, in bold and
+  italic, measured in those fonts and wrapped as Mermaid wraps them.
+  The rest of a markdown string is drawn as it is written.
 - **Edges:**
   - the lines `-->`, `---`, `-.->`, `-.-`, `==>`, `===` and `~~~`
     (invisible);
   - an arrow, `o` (a circle) or `x` (a cross) at either end, as `<-->`,
     `--o` or `x--x`;
   - longer links, `--->` and `-...->`, for edges that span more ranks;
-  - labels as `-->|text|` or `-- text -->`.
+  - labels as `-->|text|` or `-- text -->`;
+  - ids, `A e1@--> B`, and an edge's metadata, `e1@{ curve: linear }`.
+- **Curves:** Mermaid's twelve, `basis` (the default), `linear`,
+  `step`, `stepBefore`, `stepAfter`, `cardinal`, `catmullRom`,
+  `natural`, `monotoneX`, `monotoneY`, `bumpX` and `bumpY`: for every
+  edge, from `flowchart.curve`; for one, from its metadata; or from
+  `linkStyle ... interpolate`.
 - **Chains and groups:** chains such as `A --> B --> C`, and groups
   joined with `&`, as `A & B --> C`.
 - **Subgraphs:** `subgraph id [Title]` ... `end`, nested to any depth.
   An edge to or from a subgraph's id goes to or from its box.
+  - A subgraph that no edge crosses (an edge to its id does not cross
+    it) is laid out on its own, as Mermaid lays it out: in its own
+    `direction`, or, without one, left to right in a top-to-bottom
+    diagram and top to bottom in any other. In a subgraph that an
+    edge crosses, `direction` is ignored, as in Mermaid.
+  - `S@{ view: collapsed }` draws the subgraph as one small box with
+    its title and three dots. What it holds is not drawn, and edges to
+    any of it go to the box.
 - **Styles:**
   - `classDef`, `class`, `:::class`, `style` and `linkStyle`;
+  - `class` on a subgraph's id, and on an edge's id;
   - the properties `fill`, `stroke`, `stroke-width`,
     `stroke-dasharray` and `color`;
   - colours as `#rgb`, `#rrggbb`, `rgb()`, or one of about 35 CSS
     names;
   - `classDef default` restyles every node.
+- **Links:** `click A "url" "tooltip"`, `click A href ...` and
+  `_blank` and the other targets. They are drawn only in SVG, as links
+  over the nodes; see "SVG".
 - **Comments:** `%%` comments.
 
-Not yet read or drawn:
-
-- The `@{ shape: ... }` form of a node, and edge ids (`e1@-->`). These
-  are errors.
-- `click`, links, `%%{init: ...}%%` and a front matter's `title` and
-  `config`. These are read and ignored.
-- `direction` inside a subgraph. It is read and ignored.
-- Markdown strings, ``"`**bold**`"``. They are drawn as plain text,
-  with the asterisks.
-
-The plan (`PLAN.md`, Phase 10) adds these.
+Read and ignored: `accTitle` and `accDescr`; a node's `icon`, `img`,
+`form`, `pos`, `w`, `h` and `constraint` (an `icon` or `image` node is
+drawn as a box with its label); an edge's `animate`, `animation` and
+`step`; a `click` that calls a function, except for its tooltip in
+SVG. Mermaid's other diagram types are not read yet.
 
 ## Using the output
 

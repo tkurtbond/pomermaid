@@ -16,7 +16,7 @@ node n rank=2 order=2 x=133.13 y=158.53 w=41.96 h=41.96
 node o rank=4 order=2 x=222.66 y=158.53 w=18.37 h=23.99
 node p rank=0 order=3 x=37.81 y=206.89 w=75.62 h=23.99
 node q rank=0 order=4 x=37.81 y=255.25 w=37.09 h=23.99
-node r rank=0 order=5 x=37.81 y=308.29 w=53.94 h=33.35
+node r rank=0 order=5 x=37.81 y=308.29 w=46.53 h=33.35
 node s rank=0 order=6 x=37.81 y=375.37 w=18.37 h=52.07
 node t rank=0 order=7 x=37.81 y=437.77 w=59.55 h=23.99
 node u-v.w rank=0 order=8 x=37.81 y=486.13 w=67.2 h=23.99

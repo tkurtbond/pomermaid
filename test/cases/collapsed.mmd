@@ -1,0 +1,22 @@
+flowchart TB
+  A --> B
+  subgraph G [Group]
+    C --> D
+    subgraph H [Inner]
+      E --> E2
+    end
+  end
+  B --> C
+  E --> F
+  D --> E
+  subgraph K [Kept]
+    P --> Q
+    subgraph J [Folded away]
+      R --> R2
+    end
+  end
+  F --> P
+  Q --> R
+  G@{ view: collapsed }
+  H@{ view: collapsed }
+  J@{ view: collapsed }

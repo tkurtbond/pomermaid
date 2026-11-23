@@ -1,0 +1,25 @@
+direction LR
+title text="Metadata, ids and links"
+curve monotoneX
+config config.flowchart.curve="linear"
+config config.flowchart.curve="monotoneX"
+config config.theme="forest"
+node A shape=cylinder label="Data base" class=hot,clickable link="https://example.com/a" target="_blank" tooltip="Go to A"
+node B shape=doc label="B" class=clickable link="https://example.com/b"
+node C shape=sl-rect label="C" class=warm,clickable tooltip="Callback"
+node D shape=hourglass label="D" class=clickable tooltip="Callback"
+node E shape=round label="Two"/"lines" class=clickable
+node F shape=rect label="" icon="fa:user" form="square" pos="t" w=60 h=40.5 constraint
+node G shape=rect label="Image" img="https://example.com/a.png"
+node X shape=rect label="X" cluster=S
+node Y shape=rect label="Y" cluster=S
+node H shape=diamond label="H"
+edge A -> B id=e1 head=arrow tail=none line=normal len=1 class=hot curve=stepBefore
+edge B -> C head=arrow tail=none line=dotted len=1
+edge C -> D id=e2 head=arrow tail=none line=thick len=1 style=stroke:"#f00" curve=natural
+edge A -> C head=arrow tail=none line=normal len=1
+edge A -> D head=arrow tail=none line=normal len=1
+edge B -> C head=arrow tail=none line=normal len=1
+edge B -> D head=arrow tail=none line=normal len=1
+edge X -> Y head=arrow tail=none line=normal len=1
+cluster S title="Outer" parent=- class=hot collapsed

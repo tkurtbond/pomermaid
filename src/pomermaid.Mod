@@ -29,7 +29,8 @@ BEGIN
       IF O.fontPath # "" THEN M.SetPath(O.fontPath) END;
       IF ~M.Load(O.font, font) THEN
         PmIO.Fail("", "no such groff font in devpdf or devps; see --font and --font-path", PmIO.FontNotFound)
-      END
+      END;
+      M.LoadStyles(font)
     END;
     IF O.to = "svg" THEN
       (* PmSvg opens the output once the SVG is made *)

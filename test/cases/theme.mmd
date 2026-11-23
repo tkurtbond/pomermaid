@@ -1,0 +1,17 @@
+---
+title: A themed flowchart
+config:
+  themeVariables:
+    mainBkg: "#ffe0b0"
+    nodeBorder: "#c06000"
+    lineColor: "#2050a0"
+    textColor: "#102040"
+    edgeLabelBackground: "#d0f0d0"
+    clusterBkg: "#f0f0ff"
+    border2: "#6060c0"
+---
+flowchart LR
+  subgraph S [A subgraph]
+    A[Start] -->|yes| B(Middle)
+  end
+  B --> C{End?}

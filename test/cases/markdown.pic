@@ -1,0 +1,30 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-e8e8e8 rgb #e8e8e8
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 5.4
+.vs 6.48p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.038; arrowwid = 0.038
+spline -> from (0.971, -0.16) to (1.088, -0.16) to (1.205, -0.16) outlined "pm-333333" thickness 0.675
+spline -> from (2.241, -0.16) to (2.567, -0.16) to (2.893, -0.16) outlined "pm-333333" thickness 0.675
+spline -> from (3.912, -0.16) to (4.03, -0.16) to (4.147, -0.16) outlined "pm-333333" thickness 0.675
+spline -> from (5.163, -0.16) to (5.281, -0.16) to (5.398, -0.16) outlined "pm-333333" thickness 0.675
+box wid 0.418 ht 0.09 at (2.567, -0.16) shaded "pm-e8e8e8" outlined "pm-e8e8e8" thickness 0
+"\m[pm-333333]\f[XR]edge \f[]\f[XB]label\f[]\m[]"  at (2.567, -0.16)
+box wid 0.971 ht 0.231 at (0.485, -0.16) shaded "pm-ececff" outlined "pm-9370db" thickness 0.338
+"\m[pm-333333]\f[XB]Bold\f[]\f[XR] and \f[]\f[XI]italic\f[]\f[XR] and \f[]\f[XBI]both\f[]\m[]"  at (0.485, -0.16)
+box wid 1.035 ht 0.231 at (1.723, -0.16) shaded "pm-ececff" outlined "pm-9370db" thickness 0.338
+"\m[pm-333333]\f[XR]snake_case_name and \f[]\f[XI]em\f[]\f[XR] *not*\f[]\m[]"  at (1.723, -0.16)
+box wid 1.02 ht 0.321 at (3.403, -0.16) shaded "pm-ececff" outlined "pm-9370db" thickness 0.338
+"\m[pm-333333]\f[XR]a \f[]\f[XB]long bold phrase\f[]\f[XR] that\f[]\m[]" "\m[pm-333333]\f[XR]wraps over lines\f[]\m[]"  at (3.403, -0.16)
+box wid 1.017 ht 0.321 at (4.655, -0.16) shaded "pm-ececff" outlined "pm-9370db" thickness 0.338
+"\m[pm-333333]\f[XB]strong\f[]\f[XR] \f[]\f[XI]em\f[]\f[XR] **unclosed \f[]\f[XI]mixed\f[]\m[]" "\m[pm-333333]\f[XR]end\f[]\m[]"  at (4.655, -0.16)
+box wid 0.507 ht 0.231 at (5.651, -0.16) shaded "pm-ececff" outlined "pm-9370db" thickness 0.338
+"\m[pm-333333]\f[XI]a \f[]\f[XBI]b\f[]\f[XI] c\f[]\f[XR] and \f[]\f[XBI]x\f[]\f[XI] y\f[]\m[]"  at (5.651, -0.16)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

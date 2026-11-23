@@ -20,7 +20,7 @@ MODULE PmPic;
    is a line of its own. *)
 
 IMPORT Math, PmIO, F := PmFlow, M := PmMetrics, G := PmGeom, L := PmLayout,
-  FL := PmFlowLayout, Lx := PmLex, S := PmStyle;
+  FL := PmFlowLayout, Lx := PmLex, S := PmStyle, Shp := PmShapes, Cv := PmCurves;
 
 CONST
   NoColour = S.NoColour;
@@ -33,6 +33,7 @@ TYPE
 VAR
   px: REAL;          (* a Mermaid pixel, in points *)
   fontName: ARRAY 64 OF CHAR;
+  labelFont: M.Font; (* the labels' font, with its styles *)
 
 (* Output *)
 
@@ -98,10 +99,9 @@ END Paint;
 
 (* A line of text, s[0 ..], escaped for groff: "\" as \e, '"' as \(dq,
    anything outside ASCII as \[uXXXX] *)
-PROCEDURE Escaped(VAR s: ARRAY OF CHAR);
-  VAR i, end, c: LONGINT;
+PROCEDURE EscapedPart(VAR s: ARRAY OF CHAR; i, end: LONGINT);
+  VAR c: LONGINT;
 BEGIN
-  i := 0; end := Lx.Length(s);
   WHILE i < end DO
     IF s[i] >= 80X THEN
       c := M.Decode(s, i, end);
@@ -114,23 +114,55 @@ BEGIN
       INC(i)
     END
   END
+END EscapedPart;
+
+PROCEDURE Escaped(VAR s: ARRAY OF CHAR);
+BEGIN
+  EscapedPart(s, 0, Lx.Length(s))
 END Escaped;
 
+(* line's text, which has styles, each run of a style in its font, each starting from
+   the font before the label and going back to it *)
+PROCEDURE Runs(line: F.Line);
+  VAR i, j, end: LONGINT; st: INTEGER;
+BEGIN
+  end := Lx.Length(line.text^); i := 0;
+  WHILE i < end DO
+    j := i; st := line.style[i];
+    WHILE (j < end) & (line.style[j] = st) DO INC(j) END;
+    W("\f[");
+    IF (st = F.Roman) OR (labelFont = NIL) THEN W(fontName) ELSE W(labelFont.styled[st].name) END;
+    W("]"); EscapedPart(line.text^, i, j); W("\f[]");
+    i := j
+  END
+END Runs;
+
 (* The lines of lab, centred at (x, y), in colour c *)
-PROCEDURE Text(lab: F.Label; x, y: REAL; c: INTEGER);
+(* The text of lab, in colour c, at (x, y), at size points, or the
+   current size for 0 *)
+PROCEDURE SizedText(lab: F.Label; x, y: REAL; c: INTEGER; size: REAL);
   VAR line: F.Line;
 BEGIN
   IF (lab = NIL) OR (lab.n = 0) THEN RETURN END;
   line := lab.lines;
   WHILE line # NIL DO
-    W('"\f['); W(fontName); W("]");
+    W('"');
+    IF size > 0 THEN W("\s["); PmIO.WriteReal(size, 2); W("]") END;
+    IF line.style = NIL THEN W("\f["); W(fontName); W("]") END;
     IF c # NoColour THEN W("\m[pm-"); Hex(S.Rgb(c), 6); W("]") END;
-    Escaped(line.text^);
+    IF line.style = NIL THEN Escaped(line.text^) ELSE Runs(line) END;
     IF c # NoColour THEN W("\m[]") END;
-    W('\f[]" ');
+    IF line.style = NIL THEN W("\f[]") END;
+    IF size > 0 THEN W("\s[0]") END;
+    W('" ');
     line := line.next
   END;
   At(x, y); PmIO.WriteLn
+END SizedText;
+
+PROCEDURE Text(lab: F.Label; x, y: REAL; c: INTEGER);
+BEGIN
+  SizedText(lab, x, y, c, 0)
 END Text;
 
 (* The direction (ux, uy), of length 1, in which an edge reaches its
@@ -177,6 +209,40 @@ BEGIN
     W(" to "); Pt(p[k].x, p[k].y)
   END
 END Path;
+
+(* The closed polygon p[0 .. n-1] in st. pic fills no line, and its
+   polygon is groff 1.24's, so the fill is troff's \D'P', in a string
+   at p[0]: pic sets a string 0.22m below its point, and \v'-0.22m'
+   takes that back. The coordinates are rounded to thousandths of an
+   inch, as pic's own, and each step is their difference. *)
+PROCEDURE Polygon(VAR p: ARRAY OF G.Point; n: INTEGER; VAR st: Style);
+  VAR closed: G.Points; i: INTEGER; x0, y0, x1, y1: LONGINT;
+
+  PROCEDURE Milli(v: REAL): LONGINT;
+  BEGIN
+    RETURN ENTIER(v / 72 * 1000 + 0.5)
+  END Milli;
+
+BEGIN
+  IF n < 2 THEN RETURN END;
+  IF st.fill # NoColour THEN
+    W('"\M[pm-'); Hex(S.Rgb(st.fill), 6); W("]\v'-0.22m'\D'P");
+    x0 := Milli(p[0].x); y0 := Milli(p[0].y);
+    FOR i := 1 TO n - 1 DO
+      x1 := Milli(p[i].x); y1 := Milli(p[i].y);
+      W(" "); PmIO.WriteReal((x1 - x0) / 1000, 3); W("i ");
+      PmIO.WriteReal((y1 - y0) / 1000, 3); W("i");
+      x0 := x1; y0 := y1
+    END;
+    W("'\M[]"); W('" ljust'); At(p[0].x, p[0].y); PmIO.WriteLn
+  END;
+  IF st.line # NoColour THEN
+    closed := G.NewPoints(n + 1);
+    FOR i := 0 TO n - 1 DO closed[i] := p[i] END;
+    closed[n] := p[0];
+    W("line"); Path(closed^, n + 1); Paint(st, FALSE); PmIO.WriteLn
+  END
+END Polygon;
 
 (* The line colour and thickness of st *)
 PROCEDURE Stroke(VAR st: Style);
@@ -242,9 +308,14 @@ BEGIN
   IF (e.line = F.Invisible) OR (st.line = NoColour) THEN RETURN END;
   p := le.points; n := le.nPoints;
   IF n < 2 THEN RETURN END;
+  IF e.curve # F.Basis THEN
+    (* another curve, as the line through its corners or its samples *)
+    Cv.Make(e.curve, p^, n, b, nb);
+    Cv.Sample(Cv.Straight(e.curve, n), b^, nb, Samples, p, n)
+  END;
   IF st.dash > 0 THEN
     (* the curve, sampled, then dashed *)
-    IF n > 2 THEN
+    IF (n > 2) & (e.curve = F.Basis) THEN
       G.Basis(p^, n, b, nb);
       s := G.NewPoints(1 + (nb - 1) DIV 3 * Samples);
       s[0] := b[0]; ns := 1;
@@ -263,7 +334,7 @@ BEGIN
       Head(r^, ns, st)
     END
   ELSE
-    IF n = 2 THEN W("line") ELSE W("spline") END;
+    IF (n = 2) OR (e.curve # F.Basis) THEN W("line") ELSE W("spline") END;
     IF (e.head = F.Arrow) & (e.tail = F.Arrow) THEN W(" <->")
     ELSIF e.head = F.Arrow THEN W(" ->")
     ELSIF e.tail = F.Arrow THEN W(" <-")
@@ -282,15 +353,35 @@ END DrawEdge;
 PROCEDURE DrawLabel(l: FL.Layout; e: F.Edge; le: L.Edge; VAR st: Style; back: INTEGER);
 BEGIN
   IF (e.label = NIL) OR ~le.hasLabel THEN RETURN END;
-  W("box wid "); In(le.labelW); W(" ht "); In(le.labelH); At(le.labelX, le.labelY);
-  W(" shaded "); ColourName(back); W(" outlined "); ColourName(back); W(" thickness 0");
-  PmIO.WriteLn;
+  IF back # NoColour THEN
+    W("box wid "); In(le.labelW); W(" ht "); In(le.labelH); At(le.labelX, le.labelY);
+    W(" shaded "); ColourName(back); W(" outlined "); ColourName(back); W(" thickness 0");
+    PmIO.WriteLn
+  END;
   Text(l.edgeLabel[e.index], le.labelX, le.labelY, st.text)
 END DrawLabel;
 
+(* A part of a drawing of PmShapes's, in st *)
+PROCEDURE DrawPart(VAR pt: Shp.Part; VAR st: Style);
+  VAR s: Style;
+BEGIN
+  IF pt.n < 2 THEN RETURN END;
+  s := st;
+  IF pt.kind = Shp.Line THEN
+    W("line"); Path(pt.p^, pt.n); Paint(s, FALSE); PmIO.WriteLn
+  ELSE
+    IF pt.kind = Shp.Solid THEN
+      IF s.line # NoColour THEN s.fill := s.line ELSE s.line := s.fill END
+    ELSIF pt.kind = Shp.Fill THEN s.line := NoColour
+    END;
+    Polygon(pt.p^, pt.n, s)
+  END
+END DrawPart;
+
 PROCEDURE DrawNode(l: FL.Layout; n: F.Node; VAR st: Style);
   VAR
-    ln: L.Node; x, y, w, h, ry, r, d: REAL; pts, closed: G.Points; i, k: INTEGER; body: Style;
+    ln: L.Node; x, y, w, h, ry, r, d: REAL; pts: G.Points; i, k: INTEGER; body: Style;
+    dr: Shp.Drawing;
 BEGIN
   ln := l.g.node[n.index]; x := ln.x; y := ln.y; w := ln.w; h := ln.h;
   CASE n.shape OF
@@ -333,12 +424,18 @@ BEGIN
         W("circle rad "); In(r - l.size * 5 / 16); At(x, y); Paint(st, TRUE); PmIO.WriteLn
       END
   ELSE
-    FL.Outline(n.shape, x, y, w, h, pts, k);
-    IF k > 0 THEN
-      closed := G.NewPoints(k + 1);
-      FOR i := 0 TO k - 1 DO closed[i] := pts[i] END;
-      closed[k] := pts[0];
-      W("line"); Path(closed^, k + 1); Paint(st, TRUE); PmIO.WriteLn
+    IF Shp.Has(n.shape) THEN
+      Shp.Draw(n.shape, x, y, w, h, l.textH[n.index], l.size, dr);
+      FOR i := 0 TO dr.n - 1 DO DrawPart(dr.part[i], st) END;
+      IF ~dr.label THEN RETURN END;
+      x := dr.lx; y := dr.ly; k := -1
+    ELSE FL.Outline(n.shape, x, y, w, h, l.size, pts, k)
+    END;
+    IF k < 0 THEN
+    ELSIF k > 0 THEN
+      Polygon(pts^, k, st)
+    ELSE
+      W("box wid "); In(w); W(" ht "); In(h); At(x, y); Paint(st, TRUE); PmIO.WriteLn
     END
   END;
   Text(l.nodeLabel[n.index], x, y, st.text)
@@ -346,14 +443,44 @@ END DrawNode;
 
 (* Cluster c's box, its title at its top *)
 PROCEDURE DrawCluster(l: FL.Layout; c: INTEGER; VAR st: Style);
-  VAR lc: L.Cluster;
+  VAR lc: L.Cluster; d: REAL; k: INTEGER; line: Style;
 BEGIN
   lc := l.g.cluster[c];
-  IF lc.w > 0 THEN
+  IF l.collapsed[c] THEN
+    (* Mermaid's collapsedGroup: its title FL.GroupTitle pixels above its
+       centre, a dashed line below the title, three dots below that *)
+    W("box wid "); In(lc.w); W(" ht "); In(lc.h); At(lc.x, lc.y); W(" rad "); In(8 * px);
+    Paint(st, TRUE); PmIO.WriteLn;
+    Text(l.clusterLabel[c], lc.titleX, lc.titleY, st.text);
+    d := lc.y - lc.h / 2 + 16 * px + (lc.h - FL.GroupExtra * px);
+    IF st.line # NoColour THEN
+      line := st; line.dash := 3 * px;
+      W("line from "); Pt(lc.x - lc.w / 2 + 8 * px, d); W(" to "); Pt(lc.x + lc.w / 2 - 8 * px, d);
+      Paint(line, FALSE); PmIO.WriteLn;
+      FOR k := -1 TO 1 DO
+        W("circle rad "); In(2.5 * px); At(lc.x + 10 * k * px, d + 10 * px);
+        W(" shaded "); ColourName(st.line); W(" outlined "); ColourName(st.line);
+        W(" thickness 0"); PmIO.WriteLn
+      END
+    END
+  ELSIF lc.w > 0 THEN
     W("box wid "); In(lc.w); W(" ht "); In(lc.h); At(lc.x, lc.y); Paint(st, TRUE); PmIO.WriteLn;
     Text(l.clusterLabel[c], lc.titleX, lc.titleY, st.text)
   END
 END DrawCluster;
+
+(* The diagram's title, centred above the drawing, its baseline
+   Mermaid's titleTopMargin above the drawing's top, in colour c; an
+   invisible box its size takes its place in the picture's bounds *)
+PROCEDURE DrawTitle(l: FL.Layout; c: INTEGER);
+  VAR cy: REAL;
+BEGIN
+  IF (l.title = NIL) OR (l.title.n = 0) THEN RETURN END;
+  cy := l.titleY - 0.3 * l.titleSize;
+  W("box invis wid "); In(l.titleW); W(" ht "); In(l.titleH); At(l.titleX, cy);
+  PmIO.WriteLn;
+  SizedText(l.title, l.titleX, cy, c, l.titleSize)
+END DrawTitle;
 
 (* The styles of l's nodes, edges and clusters, by index; the colour
    table reset first *)
@@ -361,12 +488,12 @@ PROCEDURE MakeStyles(l: FL.Layout; VAR ns, es, cs: Styles);
   VAR g: F.Graph; n: F.Node; e: F.Edge; k: INTEGER; cn: POINTER TO ARRAY OF F.Node;
 BEGIN
   g := l.graph;
-  px := l.size / 16; S.Reset(px);
+  px := l.size / 16; S.Reset(l.graph, px);
   NEW(ns, g.nNodes + 1); NEW(es, g.nEdges + 1);
   n := g.nodes;
   WHILE n # NIL DO S.NodeStyle(g, n, ns[n.index]); n := n.next END;
   e := g.edges;
-  WHILE e # NIL DO S.EdgeStyle(e, es[e.index]); e := e.next END;
+  WHILE e # NIL DO S.EdgeStyle(g, e, es[e.index]); e := e.next END;
   NEW(cs, g.nClusters + 1); NEW(cn, g.nClusters + 1);
   FOR k := 0 TO g.nClusters - 1 DO cn[k] := NIL END;
   n := g.nodes;
@@ -374,7 +501,7 @@ BEGIN
     IF l.stands[n.index] >= 0 THEN cn[l.stands[n.index]] := n END;
     n := n.next
   END;
-  FOR k := 0 TO g.nClusters - 1 DO S.ClusterStyle(g, cn[k], cs[k]) END
+  FOR k := 0 TO g.nClusters - 1 DO S.ClusterStyle(g, k, cn[k], cs[k]) END
 END MakeStyles;
 
 (* The width of the widest line Write draws for l, in points *)
@@ -396,7 +523,7 @@ END Widest;
 (* Writes l's flowchart in pic, its labels in the groff font font *)
 PROCEDURE Write*(l: FL.Layout; font: ARRAY OF CHAR);
   VAR
-    g: F.Graph; n: F.Node; e: F.Edge; ns, es, cs: Styles; back, k: INTEGER;
+    g: F.Graph; n: F.Node; e: F.Edge; ns, es, cs: Styles; back, title, k: INTEGER;
 
   PROCEDURE DrawClusters(c: INTEGER);  (* c, then those it holds *)
     VAR d: INTEGER;
@@ -408,9 +535,9 @@ PROCEDURE Write*(l: FL.Layout; font: ARRAY OF CHAR);
   END DrawClusters;
 
 BEGIN
-  g := l.graph; COPY(font, fontName);
+  g := l.graph; COPY(font, fontName); labelFont := l.font;
   MakeStyles(l, ns, es, cs);
-  back := S.Colour(S.LabelBack);
+  back := S.LabelBackground(); title := S.TitleColour();
   FOR k := 0 TO S.nColours - 1 DO
     W(".defcolor pm-"); Hex(S.Rgb(k), 6); W(" rgb #"); Hex(S.Rgb(k), 6); PmIO.WriteLn
   END;
@@ -434,6 +561,7 @@ BEGIN
     IF l.g.node[n.index].kind # L.Hidden THEN DrawNode(l, n, ns[n.index]) END;
     n := n.next
   END;
+  DrawTitle(l, title);
   W(".PE"); PmIO.WriteLn;
   W(".ps \n[pm*ps]u"); PmIO.WriteLn;
   W(".vs \n[pm*vs]u"); PmIO.WriteLn

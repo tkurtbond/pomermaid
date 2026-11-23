@@ -89,6 +89,19 @@ cubic Bézier segments (each segment's control points from three
 neighbouring route points), which MetaPost draws directly. Arrow heads are
 placed along the curve's end tangent.
 
+The other eleven curves Mermaid takes (2026-11-22, Phase 10.3) are
+d3's, followed line by line: `linear`, `step`, `stepBefore`,
+`stepAfter`, `cardinal` (tension 0), `catmullRom` (alpha 0.5),
+`natural`, `monotoneX`, `monotoneY`, `bumpX` and `bumpY`. Each is
+built as cubic Bézier pieces, in `PmCurves` for pic and in
+`pm_curved` in `mp/pomermaid.mp` for MetaPost. pic has no Bézier
+curve, so the pieces are sampled into a `line` (straight curves, the
+steps and `linear`, give their corners alone). An unknown curve is
+drawn as basis, with a warning. Where a curve's last control point is
+its end (`catmullRom`), MetaPost's end direction is zero, so the
+arrow head takes its direction from just before the end
+(`pm_enddir`).
+
 ### pic
 
 What the hand-drawn version (`docs/examples/gbh-handdrawn.ms`) found
@@ -102,8 +115,13 @@ works in groff 1.23:
 - labels of several lines as several quoted strings;
 - `groff -k`, with a coding line, for UTF-8 labels.
 
-Diamonds and other polygons are drawn with `line` from point to point;
-rounded boxes with `box rad`; circles with `circle`. The output is the
+Diamonds and other polygons are outlined with `line` from point to
+point; rounded boxes with `box rad`; circles with `circle`. pic does
+not fill a `line`, and its `polygon` is new in groff 1.24, so a
+polygon is filled by troff's `\D'P ...'` in a string placed `ljust`
+at its first point, `\v'-0.22m'` taking back the offset pic gives a
+string (2026-11-22, Phase 10.2; checked with groff 1.25.0 and
+1.23.0). The output is the
 `.defcolor` lines and a `.PS` ... `.PE` block (decision 4). A diagram
 is written at its natural size and scaled with `.PS width` when it is
 wider than `--width`.
@@ -457,7 +475,7 @@ are in the documentation. The user then asked for a man page in mdoc
 (decision 11): `docs/user/pomermaid.1`, installed in
 `$(MANDIR)/man1`, `$(PREFIX)/share/man` by default.
 
-### Phase 10: the rest of the flowchart syntax
+### Phase 10: the rest of the flowchart syntax [done]
 
 **Change:** the other shapes (`(round)`, `([stadium])`,
 `[[subroutine]]`, `[(cylinder)]`, `((circle))`, `>flag]`,
@@ -476,7 +494,37 @@ elsewhere.
 **Check:** case tests for each; Mermaid's own flowchart examples read
 without errors and drawn.
 
-**Done:** no.
+Mermaid 12.3.0 is followed: `packages/mermaid/src/docs/syntax/
+flowchart.md`, `flow.jison`, `flowDb.ts`, and `rendering-util/
+rendering-elements/shapes.ts` with its `shapes/`, at the tag
+`mermaid@12.3.0`. The bracket shapes, the edges, `style`, `linkStyle`
+and `:::class` were done in Phases 2 to 5. What is left, in steps:
+
+- **10.1, the reader:** the `@{ ... }` metadata of a node (`shape`,
+  `label`; `icon`, `img`, `form`, `pos`, `w`, `h` and `constraint`
+  kept), of an edge with an id (`curve`; `animate`, `animation` and
+  `step` read and ignored) and of a subgraph (`view`); every shape name
+  and alias of `shapes.ts`, an unknown one an error as in Mermaid; edge
+  ids (`e1@-->`); `class` on edges and subgraphs; `linkStyle ...
+  interpolate`; `click` and `href` with their tooltips and targets;
+  front matter's `title` and `config`, and `%%{init: ...}%%`. [done]
+- **10.2, the named shapes:** the 39 shapes that have no bracket form,
+  drawn in pic and MetaPost from one table (`PmShapes`), close to
+  Mermaid's drawings. [done]
+- **10.3, configuration:** `flowchart.curve` and the edges' `curve`;
+  the `themeVariables` that name pomermaid's colours; a title above the
+  diagram. Named themes stay in "Later". [done]
+- **10.4, markdown strings:** bold and italic in pic (groff's bold and
+  italic fonts, measured) and in MetaPost (ConTeXt's), and their
+  wrapping. [done]
+- **10.5, links:** `click` and `href` as `<a>` elements over the nodes
+  in the SVG. [done]
+- **10.6, subgraphs:** `@{ view: collapsed }`, and `direction` in a
+  subgraph that no edge crosses. [done]
+- **10.7:** Mermaid's own flowchart examples; the documentation.
+  [done]
+
+**Done:** yes.
 
 ### Phase 11: the BSDs
 
@@ -565,6 +613,22 @@ None at present.
 11. **A man page:** yes, `pomermaid.1`, in mdoc, installed by `make
     install` beside the markdown documentation.
 
+2026-11-22, in Phase 10.6:
+
+12. **Subgraphs as Mermaid lays them out.** A subgraph that no edge
+    crosses (an edge to the subgraph's own id does not count) is
+    laid out alone, in its own `direction`, or, without one, LR in a
+    TB parent and TB otherwise, as Mermaid's extractor does; its rank
+    spacing is 25 pixels more than its parent's. Each such subgraph,
+    and the root, is one layout scope, inner first; in MetaPost each
+    is a `pm_begin ... pm_endsub(k)` block whose picture is placed as
+    a node of its parent (`pm_begin` now comes before the nodes'
+    sizes). A collapsed subgraph (`@{ view: collapsed }`), the
+    outermost only, is one node sized as Mermaid's `collapsedGroup`;
+    what it holds is hidden, edges to it are redirected, and those
+    that would join it to itself are dropped. `class` applies to
+    subgraphs and edges, as Mermaid 12.3.0 applies it (`flowDb.ts`).
+
 ## Later
 
 - A whole-document mode (`-s`) for looking at one diagram alone, if
@@ -573,9 +637,9 @@ None at present.
   planned in podoc).
 - An SVG writer of pomermaid's own (`<svg>` with `rect`, `path`,
   `text`, Bézier edges and `marker` heads), for systems without groff
-  or MuPDF, or for links in SVG, if the user wants it.
-- Mermaid's themes (`theme: dark`, `forest`, `neutral`, `base` and
-  `themeVariables`) mapped to colours.
+  or MuPDF, if the user wants it.
+- Mermaid's named themes (`theme: dark`, `forest`, `neutral`, `base`)
+  mapped to colours.
 
 ## State
 
@@ -705,3 +769,97 @@ were looked at. `make install` and `make uninstall` with a scratch
 macros and the documentation. `pomermaid.1` passes `mandoc -Tlint`
 and formats without a warning with `groff -mdoc -wall` (1.25.0 and
 1.23.0).
+
+2026-11-22, Phase 10.2: the 39 named shapes are drawn by `PmShapes`
+(pic) and by `pm_shapedraw` in `mp/pomermaid.mp` (MetaPost), with
+the same sizes, parts and outlines; edges are cut at the outlines.
+Polygons in pic are now filled (see "pic"); before, diamonds and the
+other polygons were drawn unfilled. `make -B test` passes under `-O2`
+and `-OC`: 69 case tests, with the new `named-shapes` (`.dump`,
+`.layout`, `.pic`, `.mp`) and `loops.pic`, `shapes.pic`,
+`metadata.pic` and `mpInline.mp` regenerated (the fills; `doc` and
+`hourglass` sized as named shapes; the new macros). `named-shapes`
+was looked at as SVG (groff 1.25.0, mutool), as a PDF from groff
+1.23.0 (`-wall`, no warning) and from ConTeXt LMTX.
+
+2026-11-22, Phase 10.3: the curves (see "Curves"), from
+`flowchart.curve` in the front matter or `%%{init}%%`, an edge's
+`@{ curve }` and `linkStyle ... interpolate`; the `themeVariables` of
+Mermaid's default theme that the flowchart uses (`mainBkg`,
+`nodeBorder`, `textColor`, `nodeTextColor`, `titleColor`, `lineColor`,
+`edgeLabelBackground`, `clusterBkg`, `clusterBorder`, and those they
+are made from: `border1`, `border2`, `secondBkg`,
+`labelBackground`), in pic and MetaPost; and the title, 18 pixels to
+the labels' 16, centred, its baseline 25 pixels above the drawing, as
+Mermaid's `titleTopMargin`. The layout keeps room for the title
+(`PmLayout.Reserve`), so the SVG's page holds it and a title wider
+than the drawing widens it. `make -B test` passes under `-O2` and
+`-OC`: 73 case tests, with the new `curves` and `theme` (`.pic`,
+`.mp`), and `metadata.pic` (its title and curves) and `mpInline.mp`
+(the macros) regenerated. Looked at: all twelve curves as SVG (groff
+1.25.0, mutool; drawn with rsvg-convert) and in ConTeXt LMTX with their
+arrow heads; the theme and the title in both, with a title wider than
+its drawing. mutool's own SVG renderer ignores the per-glyph `x` lists
+mutool writes, so SVGs are checked with rsvg-convert.
+
+2026-11-22, Phase 10.4: bold and italic in markdown strings
+(`PmEmphasis`), as Mermaid keeps marked's `strong` and `em`
+(`handle-markdown-text.ts`, mermaid 12.3.0) and writes everything else
+as it was: CommonMark's delimiter runs of `*` and `_`, left- and
+right-flanking, `_` not inside a word, the rule of three, nesting
+(`***x***` is bold italic) and backslash escapes. A label line keeps
+each byte's style. `PmMetrics.LoadStyles` finds the bold, italic and
+bold italic of the labels' font by groff's names (a name ending in R,
+B, I or BI; any other has none and stays regular), and the widths,
+and so the wrapping, are measured in each run's font. pic writes each
+styled run as `\f[XB]run\f[]`, so every run starts from, and the label
+ends in, the font before it, as pic does not restore fonts; MetaPost
+writes `{\bf ...}`, `{\it ...}` and `{\bi ...}`. The dump shows a
+styled line's styles after `=`, a digit a byte. `make -B test` passes
+under `-O2` and `-OC`: 77 case tests, with the new `markdown`
+(`.dump`, `.layout`, `.pic`, `.mp`) in the made-up fonts `XR`, `XB`,
+`XI` and `XBI` (different widths, so the measuring shows), and
+`shapes` (`.dump`, `.layout`, `.pic`, `.mp`) regenerated, as its
+`**markdown**` is now bold. Looked at: the case's labels as SVG
+(groff 1.25.0, mutool, drawn with rsvg-convert) and in ConTeXt LMTX
+with TeX Gyre Termes.
+
+2026-11-22, Phase 10.5: a node's `click` link and tooltip in the SVG.
+After groff's drawing, before the last `</svg>`, PmSvg writes a
+`<g class="pm-links">` holding, for each node with a link, an `<a>`
+with `href` (and `xlink:href` where the root element declares xlink,
+as mutool and pdftocairo do) and the `target` if one was given, as
+Mermaid writes it only then; for a tooltip alone, a `<g>`. Each holds
+the tooltip as a `<title>` and a rectangle over the node's bounds,
+filled white with opacity 0, so it takes the pointer. URLs are made
+`about:blank` as Mermaid's `sanitizeUrl` makes them: a URL with a
+scheme that starts, after any non-word characters, with `javascript`,
+`data` or `vbscript`. Callbacks have no link; their tooltips are kept.
+`make -B test` passes under `-O2` and `-OC`: `PmSvgTest` has two new
+drawings, with `&`, `<`, a target, a tooltip alone, `JavaScript:` and
+`data:` (made `about:blank`), `data-page.html` and `a/b:c.html`
+(kept), with and without xlink. Looked at: the rectangles, made
+visible, lie on the nodes (rect, hexagon, circle, cylinder) in SVG from
+mutool and from pdftocairo (rsvg-convert); both SVGs pass xmllint.
+
+2026-11-22, Phases 10.1, 10.6 and 10.7: 10.1, the reader, was done
+with 10.2 to 10.5 (`@{ ... }` metadata, edge ids, `class` on edges and
+subgraphs, `linkStyle ... interpolate`, `click` and `href`, front
+matter and `%%{init}%%`, with the cases `metadata`, `interpolate`
+and `badMeta*`). 10.6: isolated subgraphs laid out alone with their
+own `direction`, and collapsed subgraphs (decision 12); the collapsed
+group's rule is dashed in MetaPost as in pic and Mermaid; `class` now
+styles subgraphs and edges (`PmStyle.ClusterStyle`, `EdgeStyle`), as
+it was read but not applied. 10.7: Mermaid 12.3.0's 116 flowchart
+examples (`flowchart.md`) all run with exit 0 and no warning under
+`-t pic`, and were drawn with `tools/render` in groff (116 pages) and
+ConTeXt LMTX (no TeX error) and looked at; the subgraph directions
+(TB, RL, BT and the inherited LR) and the collapsed example match
+Mermaid's documentation. The documentation (`pomermaid.md`,
+`differences.md`, `pomermaid.1`, which passes `mandoc -Tlint`) is
+brought up to date. `make test` passes under `-O2` and `-OC`: 86 case
+tests, with the new `collapsed`, `isolated` and `classes`, the `.mp`
+cases regenerated (the sub-picture blocks) and the subgraph cases'
+layouts (the isolated subgraphs); `PmLayoutTest` lays out `collapsed`
+and `isolated` with no fault. Looked at: `collapsed`, `isolated`,
+`subgraphs` and `metadata` in groff and ConTeXt.
