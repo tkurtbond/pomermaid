@@ -1,0 +1,18 @@
+direction TB
+node A shape=rect label="Hall A" cluster=top
+node B shape=rect label="Room B" cluster=top
+node C shape=rect label="Room C" cluster=top
+node D shape=rect label="Lobby" cluster=mid
+node E shape=rect label="Room E" cluster=mid
+node F shape=rect label="Room F" cluster=mid
+node G shape=rect label="Theatre" cluster=low
+node H shape=rect label="Basement" cluster=low
+edge A -> B head=arrow tail=arrow line=normal len=1
+edge D -> E head=arrow tail=arrow line=normal len=1
+edge G -> H head=arrow tail=arrow line=normal len=1
+edge A -> D head=arrow tail=arrow line=normal len=1
+edge D -> G head=arrow tail=arrow line=normal len=1
+edge C -> F head=arrow tail=arrow line=normal len=1
+cluster top title="Top floor" parent=-
+cluster mid title="Middle floor" parent=-
+cluster low title="Ground floor" parent=-

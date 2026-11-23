@@ -1638,6 +1638,15 @@ None at present.
     them, from the source (blanks collapsed and taken from around
     `,`, `;`, `.` and `(`, and before `)`, one pair of quotation marks
     taken off); a leading blank, which HTML does not draw, is dropped.
+71. **Subgraphs side by side** (2026-11-23): the user asked for a
+    layout that does not stack subgraphs, for the
+    Galactic-Bounty-Hunters museum diagram, where Mermaid puts the
+    three floors side by side, each a rank lower. `--subgraphs=side`
+    ranks the nodes by the edges alone, as dagre does (PmLayout's
+    `SetStacked`, which skips `Stack`); `stack`, Phase 7's bands,
+    stays the default, so that diagrams already drawn do not change.
+    podoc selects it per document or per diagram (podoc's decision
+    52).
 
 ## Later
 
@@ -2501,3 +2510,14 @@ yishana) and OpenBSD (jherek, cymoril), the i386 hosts included.
   Galactic-Bounty-Hunters' one-shot, its two flowcharts drew in the
   PDFs podoc made with `groff`, `context` and `pdfmom`, and as SVG
   for HTML. Nothing in pomermaid changed.
+
+- **2026-11-23, decision 71: `--subgraphs=stack|side`.** PmLayout's
+  `SetStacked` skips `Stack`, and `Settle` (Stack's tail: ranks from
+  0, hidden nodes, `ClusterRanks`) now runs either way, so that
+  clusters keep their boxes. New cases `subgraphs-side` (three
+  floors, as the Galactic-Bounty-Hunters museum) and
+  `subgraphs-nested`, with dump, layout, pic and mp; their drawings
+  were looked at. `make test`: 938 of 938 case tests passed under
+  both models. A ConTeXt check showed that `\switchtobodyfont[7pt]`
+  around a `-t mp` diagram makes it smaller (text, boxes and
+  spacing; not line widths). Not yet run on the BSDs.

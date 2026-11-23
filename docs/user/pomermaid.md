@@ -102,6 +102,7 @@ draws one diagram per run.
 | `--font FONT` | The groff font for the labels: `TR` (the default), `HR`, `PR` and so on. |
 | `--size N` | The labels' size in points: 10 by default; `10.5` is allowed. |
 | `--width LEN` | The widest the diagram may be: 6 inches by default. A unit, `i`, `c` or `p`, may follow the number; `0` means no limit. |
+| `--subgraphs stack\|side` | For flowcharts and state diagrams: lay subgraphs out stacked, each a band below those it has edges from (`stack`, the default), or ranked by the edges alone, so that they stand side by side where they fit, as in Mermaid (`side`). |
 | `--font-path DIRS` | Look for groff's fonts in these directories, separated by colons. These are directories that hold `devpdf` or `devps`. |
 | `--mp-macros inline\|input` | For `mp`: copy the macros into each drawing (`inline`, the default) or write `input pomermaid ;` (`input pomermaid-seq ;` for a sequence diagram) (`input`). |
 | `--svg-text text\|outline` | For `svg`: keep the labels as text (the default), or draw their glyphs as outlines. |
@@ -1157,6 +1158,14 @@ document's own font and size, and MetaPost places the nodes to fit
 them. So `--font` and `--size` do not set how the labels look in
 ConTeXt; they set only the estimate the layout starts from. A diagram
 wider than `--width` is scaled down.
+
+The diagram's text, boxes and spacing all follow the font in effect
+where it is set, so a smaller body font makes a smaller diagram:
+
+    \start
+      \switchtobodyfont[8pt]
+      \input diagram
+    \stop
 
 Each block holds the macros it needs, about 30 KB. With several
 diagrams in one document, `--mp-macros=input` writes `input pomermaid ;`

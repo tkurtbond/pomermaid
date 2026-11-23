@@ -58,9 +58,16 @@ differences:
   than its parent's, as Mermaid's is.
 - **A collapsed subgraph** (`@{ view: collapsed }`) is drawn as
   Mermaid draws it, a box with its title, a dashed rule and three dots.
+- **Subgraphs are stacked** by default: where an edge goes from one
+  subgraph to another, the second is moved down, below the whole of
+  the first, so that each subgraph is a band of the drawing. Mermaid
+  ranks the nodes by the edges alone, so that its subgraphs stand side
+  by side and overlap in rank. `--subgraphs=side` lays them out as
+  Mermaid does.
 - **Subgraphs joined both ways,** directly or through a cycle, are not
-  stacked one below the other. Their nodes are ranked by the edges
-  alone, so their boxes may stand side by side or overlap in rank.
+  stacked one below the other, even by default. Their nodes are ranked
+  by the edges alone, so their boxes may stand side by side or overlap
+  in rank.
 
 ## Styles and colours
 

@@ -1,0 +1,18 @@
+layout direction TB width=382.24 height=323.06
+node A rank=0 order=1 x=52.75 y=41.44 w=45.69 h=30.75
+node B rank=2 order=1 x=46.5 y=129.5 w=52.37 h=30.75
+node C rank=0 order=2 x=133.03 y=41.44 w=52.37 h=30.75
+node D rank=2 order=4 x=256.99 y=129.5 w=44.86 h=30.75
+node E rank=4 order=4 x=250.74 y=226.94 w=51.81 h=30.75
+node F rank=2 order=5 x=336.3 y=129.5 w=51.26 h=30.75
+node G rank=4 order=1 x=130.12 y=226.94 w=49.29 h=30.75
+node H rank=6 order=1 x=130.12 y=298.31 w=58.19 h=30.75
+edge A -> B points=(49.65,56.81) (46.5,72.44) (46.5,114.13)
+edge D -> E points=(254.61,144.88) (250.74,169.88) (250.74,211.56)
+edge G -> H points=(130.12,242.31) (130.12,267.31) (130.12,282.94)
+edge A -> D points=(69.56,56.81) (86.64,72.44) (234.56,114.13)
+edge D -> G points=(276.97,144.88) (309.46,169.88) (154.76,211.56)
+edge C -> F points=(133.03,56.81) (133.03,72.44) (310.67,114.13)
+cluster top x=89.76 y=77.13 w=179.52 h=154.25 title=(89.76,10.69)
+cluster mid x=296.51 y=169.88 w=171.47 h=163.63 title=(296.51,98.75)
+cluster low x=130.12 y=254.28 w=98.82 h=137.56 title=(130.12,196.19)

@@ -1,0 +1,15 @@
+flowchart TD
+    subgraph top [Top floor]
+        A[Hall A] <--> B[Room B]
+        C[Room C]
+    end
+    subgraph mid [Middle floor]
+        D[Lobby] <--> E[Room E]
+        F[Room F]
+    end
+    subgraph low [Ground floor]
+        G[Theatre] <--> H[Basement]
+    end
+    A <--> D
+    D <--> G
+    C <--> F

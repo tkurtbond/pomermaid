@@ -1,0 +1,17 @@
+layout direction LR width=318.34 height=204.13
+node X rank=0 order=0 x=28.19 y=15.38 w=37.64 h=30.75
+node outer hidden rank=0 order=0 x=0 y=119.06 w=0 h=0
+node P rank=2 order=2 x=99.79 y=148.13 w=24.31 h=30.75
+node Q rank=4 order=2 x=156.18 y=129.5 w=25.97 h=30.75
+node R rank=0 order=2 x=28.19 y=163.75 w=25.42 h=30.75
+node S rank=6 order=1 x=240.7 y=129.5 w=24.31 h=30.75
+node T rank=8 order=1 x=296.53 y=148.13 w=24.86 h=30.75
+edge X -> outer points=(47.01,30.75) (53.67,62)
+edge P -> Q points=(111.95,139.98) (127.57,129.5) (143.2,129.5)
+edge R -> P points=(40.9,163.75) (47.01,163.75) (47.01,163.75) (62.64,163.75) (87.64,153.24)
+edge S -> T points=(252.85,129.5) (268.48,129.5) (284.1,139.87)
+edge Q -> S points=(169.17,129.5) (203.54,129.5) (228.54,129.5)
+edge outer -> T points=(187.92,166.75) (203.54,166.75) (240.7,166.75) (268.48,166.75) (284.1,156.38)
+cluster inner x=128.4 y=141.41 w=100.28 h=106.69 title=(128.4,98.75)
+cluster outer x=93.96 y=133.06 w=187.92 h=142.13 title=(93.96,72.69)
+cluster other x=268.75 y=140.11 w=99.17 h=109.28 title=(268.75,96.16)

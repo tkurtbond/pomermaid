@@ -10,6 +10,8 @@ pomermaid [OPTIONS] [FILE]
       Set labels at this size, in points (10 by default).
   --width <arg>
       Make a diagram no wider than this, in inches, or with a unit, c or p (6i by default; 0 for no limit).
+  --subgraphs <arg>
+      Lay subgraphs out stacked, each below those it has edges from (stack, the default), or ranked by the edges alone, side by side where they fit, as Mermaid does (side).
   --font-path <arg>
       Look for groff's fonts in these directories, separated by colons.
   --mp-macros <arg>

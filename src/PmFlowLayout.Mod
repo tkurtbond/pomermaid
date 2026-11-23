@@ -98,6 +98,12 @@ TYPE
     titleX-, titleY-: REAL (* its baseline's centre, above the drawing *)
   END;
 
+VAR
+  stacked*: BOOLEAN; (* subgraphs stacked, each a band below those it has
+                        edges from (TRUE, the default), or ranked by the
+                        edges alone, side by side, as Mermaid's
+                        (--subgraphs) *)
+
 (* The outline of a node of shape shape, w by h, centred at (cx, cy):
    pts[0 .. n-1], the corners of a polygon, for the shapes drawn as
    polygons; n is 0 for the others (rectangles, rounded and stadium
@@ -721,6 +727,7 @@ BEGIN
   FOR s := 0 TO nC DO
     IF (s = nC) OR iso[s] THEN
       sg := L.New(sdir[s], ns, EdgeSpacing * scale, srs[s]);
+      L.SetStacked(sg, stacked);
       NEW(sc); sc.g := sg; sc.next := NIL; sc.x := 0; sc.y := 0;
       IF s = nC THEN sc.cluster := -1 ELSE sc.cluster := s END;
       sc.node := Ints(nN + nC); sc.edge := Ints(nE); sc.clus := Ints(nC);
@@ -871,4 +878,6 @@ BEGIN
   END
 END Fit;
 
+BEGIN
+  stacked := TRUE
 END PmFlowLayout.

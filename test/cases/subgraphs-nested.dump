@@ -1,0 +1,17 @@
+direction LR
+node X shape=rect label="Start"
+node outer shape=rect label="outer"
+node P shape=rect label="P" cluster=inner
+node Q shape=rect label="Q" cluster=inner
+node R shape=rect label="R" cluster=outer
+node S shape=rect label="S" cluster=other
+node T shape=rect label="T" cluster=other
+edge X -> outer head=arrow tail=none line=normal len=1
+edge P -> Q head=arrow tail=none line=normal len=1
+edge R -> P head=arrow tail=none line=normal len=1
+edge S -> T head=arrow tail=none line=normal len=1
+edge Q -> S head=arrow tail=none line=normal len=1
+edge outer -> T head=arrow tail=none line=normal len=1
+cluster inner title="Inner" parent=outer
+cluster outer title="Outer" parent=-
+cluster other title="Other" parent=-

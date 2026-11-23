@@ -114,6 +114,8 @@ TYPE
     rankY: POINTER TO ARRAY OF REAL; (* the top of each rank's band *)
     cluster-: Clusters; nClusters-: INTEGER;
     clusterpad-: REAL;      (* between a cluster's box and what it holds *)
+    stacked-: BOOLEAN;      (* clusters stacked, each a band (Stack), or
+                               ranked by the edges alone, side by side *)
     width-, height-: REAL;  (* the drawing's size, after Layout *)
     (* the segments: the edges between neighbouring ranks, from the
        chains *)
@@ -178,8 +180,17 @@ BEGIN
   g.nSeg := 0; g.segU := NewInts(16); g.segV := NewInts(16); g.segW := NewInts(16);
   g.nCsr := 0;
   NEW(g.cluster, 4); g.nClusters := 0; g.clusterpad := edgesep * 3 / 4;
+  g.stacked := TRUE;
   RETURN g
 END New;
+
+(* Whether clusters are stacked, each a band of the drawing below the
+   clusters it has edges from (the default), or ranked by the edges
+   alone, as dagre ranks them, so that clusters may be side by side *)
+PROCEDURE SetStacked*(g: Graph; stacked: BOOLEAN);
+BEGIN
+  g.stacked := stacked
+END SetStacked;
 
 (* Sets the room between a cluster's box and the nodes in it *)
 PROCEDURE SetClusterPad*(g: Graph; pad: REAL);
@@ -696,7 +707,7 @@ END Rank;
    are left as edges between nodes, their clusters side by side. *)
 PROCEDURE Stack(g: Graph);
   VAR
-    pa, pb, epair, stack: Ints; np, i, j, k, a, b, l, t, lim, min, nItems: INTEGER;
+    pa, pb, epair, stack: Ints; np, i, j, k, a, b, l, t, lim, nItems: INTEGER;
     e: Edge; changed, cl: BOOLEAN; kept, seen: Bools;
 
   (* moves cluster c, and the nodes it holds, down by d ranks *)
@@ -789,7 +800,13 @@ BEGIN
       END
     END;
     INC(k)
-  UNTIL ~changed OR (k = lim);
+  UNTIL ~changed OR (k = lim)
+END Stack;
+
+(* The ranks from 0, the hidden nodes' 0, and the clusters' ranks *)
+PROCEDURE Settle(g: Graph);
+  VAR i, min: INTEGER;
+BEGIN
   min := Inf;
   FOR i := 0 TO g.nReal - 1 DO
     IF (g.node[i].kind # Hidden) & (g.node[i].rank < min) THEN min := g.node[i].rank END
@@ -801,7 +818,7 @@ BEGIN
     IF g.node[i].kind = Hidden THEN g.node[i].rank := 0 END
   END;
   ClusterRanks(g)
-END Stack;
+END Settle;
 
 (* Each dummy of an edge's chain in a cluster: that of the edge's tail
    while it is in that cluster's ranks, going out to the clusters
@@ -1261,12 +1278,14 @@ BEGIN
   MakeLists(g)
 END Borders;
 
-(* The topology half: cycles broken, ranks, chains and orders *)
+(* The topology half: cycles broken, ranks (the clusters stacked, unless
+   SetStacked turned that off), chains and orders *)
 PROCEDURE Topology*(g: Graph);
 BEGIN
   Acyclic(g);
   Rank(g);
-  Stack(g);
+  IF g.stacked THEN Stack(g) END;
+  Settle(g);
   MakeChains(g);
   ChainClusters(g);
   MakeLists(g);

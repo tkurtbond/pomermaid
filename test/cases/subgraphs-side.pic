@@ -1,0 +1,44 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-ffffde rgb #ffffde
+.defcolor pm-aaaa33 rgb #aaaa33
+.defcolor pm-e8e8e8 rgb #e8e8e8
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box wid 2.493 ht 2.142 at (1.247, -1.071) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TR]\m[pm-333333]Top floor\m[]\f[]"  at (1.247, -0.148)
+box wid 2.382 ht 2.273 at (4.118, -2.359) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TR]\m[pm-333333]Middle floor\m[]\f[]"  at (4.118, -1.372)
+box wid 1.372 ht 1.911 at (1.807, -3.532) shaded "pm-ffffde" outlined "pm-aaaa33" thickness 0.625
+"\f[TR]\m[pm-333333]Ground floor\m[]\f[]"  at (1.807, -2.725)
+spline <-> from (0.69, -0.789) to (0.646, -1.006) to (0.646, -1.585) outlined "pm-333333" thickness 1.25
+spline <-> from (3.536, -2.012) to (3.483, -2.359) to (3.483, -2.938) outlined "pm-333333" thickness 1.25
+spline <-> from (1.807, -3.365) to (1.807, -3.713) to (1.807, -3.93) outlined "pm-333333" thickness 1.25
+spline <-> from (0.966, -0.789) to (1.203, -1.006) to (3.258, -1.585) outlined "pm-333333" thickness 1.25
+spline <-> from (3.847, -2.012) to (4.298, -2.359) to (2.149, -2.938) outlined "pm-333333" thickness 1.25
+spline <-> from (1.848, -0.789) to (1.848, -1.006) to (4.315, -1.585) outlined "pm-333333" thickness 1.25
+box wid 0.635 ht 0.427 at (0.733, -0.576) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TR]\m[pm-333333]Hall A\m[]\f[]"  at (0.733, -0.576)
+box wid 0.727 ht 0.427 at (0.646, -1.799) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TR]\m[pm-333333]Room B\m[]\f[]"  at (0.646, -1.799)
+box wid 0.727 ht 0.427 at (1.848, -0.576) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TR]\m[pm-333333]Room C\m[]\f[]"  at (1.848, -0.576)
+box wid 0.623 ht 0.427 at (3.569, -1.799) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TR]\m[pm-333333]Lobby\m[]\f[]"  at (3.569, -1.799)
+box wid 0.72 ht 0.427 at (3.483, -3.152) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TR]\m[pm-333333]Room E\m[]\f[]"  at (3.483, -3.152)
+box wid 0.712 ht 0.427 at (4.671, -1.799) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TR]\m[pm-333333]Room F\m[]\f[]"  at (4.671, -1.799)
+box wid 0.685 ht 0.427 at (1.807, -3.152) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TR]\m[pm-333333]Theatre\m[]\f[]"  at (1.807, -3.152)
+box wid 0.808 ht 0.427 at (1.807, -4.143) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TR]\m[pm-333333]Basement\m[]\f[]"  at (1.807, -4.143)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

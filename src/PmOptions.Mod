@@ -24,6 +24,7 @@ VAR
   size*: REAL;     (* --size: their size, in points *)
   fontPath*: String; (* --font-path: where groff's fonts are, "" for PmMetrics' default *)
   width*: REAL;    (* --width: the widest a diagram may be, in points; 0 for no limit *)
+  stacked*: BOOLEAN; (* --subgraphs: stack (TRUE) or side *)
   mpInput*: BOOLEAN; (* --mp-macros=input: the MetaPost writer inputs pomermaid.mp *)
   svgOutline*: BOOLEAN; (* --svg-text=outline: SVG's glyphs drawn as outlines *)
   svgEngine*: INTEGER; (* --svg-engine: 0 for mutool if found, else pdftocairo;
@@ -124,6 +125,17 @@ BEGIN
   RETURN TRUE
 END SetWidth;
 
+(* --subgraphs: stack, each subgraph a band below those it has edges
+   from, or side, ranked by the edges alone, as Mermaid ranks them *)
+PROCEDURE SetSubgraphs(VAR arg: ARRAY OF CHAR): BOOLEAN;
+BEGIN
+  IF arg = "stack" THEN stacked := TRUE
+  ELSIF arg = "side" THEN stacked := FALSE
+  ELSE PmIO.Fail("", "--subgraphs takes stack or side", PmIO.OptionError)
+  END;
+  RETURN TRUE
+END SetSubgraphs;
+
 (* --mp-macros: inline, the macros copied into each MetaPost block, or
    input, "input pomermaid ;" *)
 PROCEDURE SetMpMacros(VAR arg: ARRAY OF CHAR): BOOLEAN;
@@ -180,6 +192,8 @@ BEGIN
     "Set labels at this size, in points (10 by default).", SetSize));
   parser.AddOption(ArgParser.MakeStringOption(0X, "width",
     "Make a diagram no wider than this, in inches, or with a unit, c or p (6i by default; 0 for no limit).", SetWidth));
+  parser.AddOption(ArgParser.MakeStringOption(0X, "subgraphs",
+    "Lay subgraphs out stacked, each below those it has edges from (stack, the default), or ranked by the edges alone, side by side where they fit, as Mermaid does (side).", SetSubgraphs));
   parser.AddOption(ArgParser.MakeStringOption(0X, "font-path",
     "Look for groff's fonts in these directories, separated by colons.", SetFontPath));
   parser.AddOption(ArgParser.MakeStringOption(0X, "mp-macros",
@@ -198,5 +212,5 @@ END Parse;
 BEGIN
   to := "pic"; output := ""; input := "-"; done := FALSE; inputs := 0;
   font := "TR"; size := 10; fontPath := ""; width := 6 * 72;
-  mpInput := FALSE; svgOutline := FALSE; svgEngine := 0
+  stacked := TRUE; mpInput := FALSE; svgOutline := FALSE; svgEngine := 0
 END PmOptions.

@@ -47,7 +47,7 @@ VAR
   alay: AL.Layout;
 
 BEGIN
-  O.Parse;
+  O.Parse; FL.stacked := O.stacked;
   IF ~O.done THEN
     IF (O.to # "pic") & (O.to # "mp") & (O.to # "svg") & (O.to # "svg-ms")
       & (O.to # "dump") & (O.to # "layout") THEN
