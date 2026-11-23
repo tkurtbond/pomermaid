@@ -57,7 +57,10 @@ into `PmFlow`'s model and drawn by the same layout and writers) and
 markers and cardinalities, notes and namespaces) and 14 (entity
 relationship diagrams, `PmEr`: entities with attribute tables,
 crow's-foot ends, subgraphs) and 15 (requirement diagrams, `PmReq`:
-requirement and element boxes, contains and arrow ends) are done. See PLAN.md's State.
+requirement and element boxes, contains and arrow ends) and 16
+(sequence diagrams: `PmSeq`, `PmSeqLayout`, `PmSeqPic`, and
+`PmSeqMp` with its own macros, `mp/pomermaid-seq.mp`) are done. See
+PLAN.md's State.
 
 ## Reference material
 

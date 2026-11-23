@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber 10 5
+    box Aqua Front end
+        actor U as User
+        participant W@{ "type": "boundary", "alias": "Web" }
+    end
+    box Back end
+        participant S@{ "type": "control" } as Service
+        participant D@{ "type": "database" }
+    end
+    participant Q@{ "type": "queue" }
+    participant E@{ "type": "entity" }
+    participant L@{ "type": "collections" }
+    U->>W: Log in
+    W->>S: Check
+    create participant T as Token
+    S->>T: Make
+    S->>D: Store
+    destroy T
+    T-xS: Done
+    S-)Q: Event
+    autonumber off
+    Q->>E: Update
+    E->>L: Add

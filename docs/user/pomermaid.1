@@ -42,8 +42,10 @@ and
 .Ql classDiagram-v2 ,
 entity relationship diagrams,
 .Ql erDiagram ,
-and requirement diagrams,
-.Ql requirementDiagram .
+requirement diagrams,
+.Ql requirementDiagram ,
+and sequence diagrams,
+.Ql sequenceDiagram .
 .Pp
 The labels are set in the document's own fonts.
 For pic and SVG they are measured with groff's font description files;
@@ -124,7 +126,12 @@ the default, or write
 .Ql input pomermaid ;
 .Pq Cm input
 for a document that finds the installed
-.Pa pomermaid.mp .
+.Pa pomermaid.mp ,
+or
+.Ql input pomermaid-seq ;
+and
+.Pa pomermaid-seq.mp
+for a sequence diagram.
 .It Fl -svg-text Cm text | outline
 For
 .Cm svg :
@@ -266,6 +273,6 @@ draws differently from Mermaid.
 .An T. Kurt Bond
 .Sh BUGS
 Only flowcharts, state diagrams, class diagrams, entity relationship
-diagrams and requirement diagrams are read.
+diagrams, requirement diagrams and sequence diagrams are read.
 Links and tooltips are drawn only in SVG.
 Mermaid's named themes, icons, images and animations are not drawn.

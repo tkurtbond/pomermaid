@@ -28,6 +28,15 @@ CONST
   None = -1;  (* a theme's colour that is none *)
 
 TYPE
+  (* A sequence diagram's colours, as 0RRGGBBH, or -1 for none *)
+  SeqTheme* = RECORD
+    actorFill*, actorLine*, actorText*, lifeline*,
+    signal*, signalText*,
+    labelFill*, labelLine*, labelText*, loopText*,
+    noteFill*, noteLine*, noteText*,
+    barFill*, barLine*, number*, numberText*, title*: LONGINT
+  END;
+
   Style* = RECORD
     fill*, line*, text*: INTEGER;  (* indexes into the colours, or NoColour *)
     inner*: INTEGER;               (* a composite state's body's fill, below
@@ -43,6 +52,7 @@ VAR
   nodeFill, nodeLine, nodeText, textColour, titleColour, edgeLine,
   labelBack, clusterFill, clusterLine,
   noteFill, noteLine, noteText, compositeBack, altBack, rowOdd, rowEven: LONGINT;
+  themed: F.Graph;      (* the graph whose themeVariables are read *)
 
 
 (* The colour of index c, as 0RRGGBBH *)
@@ -250,35 +260,35 @@ BEGIN
   RETURN ThemeColour(textColour)
 END TitleColour;
 
+(* c, the themeVariable name's colour, if the graph themed sets it *)
+PROCEDURE Var(name: ARRAY OF CHAR; VAR c: LONGINT): BOOLEAN;
+  VAR q: Y.Pair; key: ARRAY 64 OF CHAR; v: ARRAY 128 OF CHAR;
+    rgb: LONGINT; none: BOOLEAN; i, j: INTEGER;
+BEGIN
+  IF (themed = NIL) OR (themed.config = NIL) THEN RETURN FALSE END;
+  key := "config.themeVariables."; i := 0;
+  WHILE key[i] # 0X DO INC(i) END;
+  j := 0;
+  WHILE name[j] # 0X DO key[i] := name[j]; INC(i); INC(j) END;
+  key[i] := 0X;
+  q := Y.Find(themed.config, key);
+  IF q = NIL THEN RETURN FALSE END;
+  Clean(q.value, v);
+  IF ParseColour(v, rgb, none) THEN
+    IF none THEN c := None ELSE c := rgb END;
+    RETURN TRUE
+  END;
+  PmIO.Message3("ignoring the colour ", v, ", which pomermaid does not know");
+  RETURN FALSE
+END Var;
+
 (* The theme's colours: Mermaid's default theme's, changed by g's
    themeVariables, a variable the flowchart uses (mainBkg, nodeBorder,
    ...) after those it is made from (border1, ...), as Mermaid does *)
 PROCEDURE Theme(g: F.Graph);
   VAR set: BOOLEAN;
-
-  (* c, the themeVariable name's colour, if g sets it *)
-  PROCEDURE Var(name: ARRAY OF CHAR; VAR c: LONGINT): BOOLEAN;
-    VAR q: Y.Pair; key: ARRAY 64 OF CHAR; v: ARRAY 128 OF CHAR;
-      rgb: LONGINT; none: BOOLEAN; i, j: INTEGER;
-  BEGIN
-    IF g.config = NIL THEN RETURN FALSE END;
-    key := "config.themeVariables."; i := 0;
-    WHILE key[i] # 0X DO INC(i) END;
-    j := 0;
-    WHILE name[j] # 0X DO key[i] := name[j]; INC(i); INC(j) END;
-    key[i] := 0X;
-    q := Y.Find(g.config, key);
-    IF q = NIL THEN RETURN FALSE END;
-    Clean(q.value, v);
-    IF ParseColour(v, rgb, none) THEN
-      IF none THEN c := None ELSE c := rgb END;
-      RETURN TRUE
-    END;
-    PmIO.Message3("ignoring the colour ", v, ", which pomermaid does not know");
-    RETURN FALSE
-  END Var;
-
 BEGIN
+  themed := g;
   nodeFill := NodeFill; nodeLine := NodeLine; textColour := TextColour;
   edgeLine := EdgeLine; labelBack := LabelBack;
   clusterFill := ClusterFill; clusterLine := ClusterLine;
@@ -312,6 +322,32 @@ BEGIN
   nColours := 0; px := pixel;
   Theme(g)
 END Reset;
+
+(* t, a sequence diagram's colours: the default theme's, as the
+   theme's colours Reset set, changed by the themeVariables of the
+   sequence diagram (actorBkg, actorBorder, ...) *)
+PROCEDURE SeqColours*(VAR t: SeqTheme);
+  VAR set: BOOLEAN;
+BEGIN
+  t.actorFill := nodeFill; t.actorLine := nodeLine; t.actorText := 0;
+  set := Var("actorBkg", t.actorFill);
+  set := Var("actorBorder", t.actorLine);
+  set := Var("actorTextColor", t.actorText);
+  t.lifeline := t.actorLine; set := Var("actorLineColor", t.lifeline);
+  t.signal := textColour; set := Var("signalColor", t.signal);
+  t.signalText := textColour; set := Var("signalTextColor", t.signalText);
+  t.labelFill := t.actorFill; set := Var("labelBoxBkgColor", t.labelFill);
+  t.labelLine := t.actorLine; set := Var("labelBoxBorderColor", t.labelLine);
+  t.labelText := 0; set := Var("labelTextColor", t.labelText);
+  t.loopText := 0; set := Var("loopTextColor", t.loopText);
+  t.noteFill := noteFill; t.noteLine := noteLine; t.noteText := 0;
+  set := Var("noteTextColor", t.noteText);
+  t.barFill := 0F4F4F4H; set := Var("activationBkgColor", t.barFill);
+  t.barLine := 0666666H; set := Var("activationBorderColor", t.barLine);
+  t.number := t.signal;
+  t.numberText := 0FFFFFFH; set := Var("sequenceNumberColor", t.numberText);
+  t.title := titleColour
+END SeqColours;
 
 (* Applies the classDefs named name *)
 PROCEDURE ApplyClass(g: F.Graph; VAR st: Style; name: ARRAY OF CHAR);

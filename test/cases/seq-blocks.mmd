@@ -1,0 +1,31 @@
+sequenceDiagram
+    autonumber
+    Alice->>John: Hello John, how are you?
+    loop Every minute
+        John-->>Alice: Great!
+    end
+    alt is sick
+        Bob->>Alice: Not so good :(
+    else is well
+        Bob->>Alice: Feeling fresh like a daisy
+    end
+    opt Extra response
+        Bob->>Alice: Thanks for asking
+    end
+    par Alice to Bob
+        Alice->>Bob: Hello guys!
+    and Alice to John
+        Alice->>John: Hello guys!
+    end
+    critical Connect
+        John-->Bob: connect
+    option Timeout
+        John-->John: Log error
+    end
+    break when it fails
+        Bob-->Alice: show failure
+    end
+    rect rgba(0, 0, 255, .1)
+        Alice->>+John: Inside a rect
+        John-->>-Alice: Back
+    end

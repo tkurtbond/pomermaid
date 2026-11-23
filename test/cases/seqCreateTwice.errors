@@ -1,0 +1,1 @@
+pomermaid: seqCreateTwice.mmd:3:24: a participant cannot be created once it exists, even if it was destroyed; give another its text with "as"

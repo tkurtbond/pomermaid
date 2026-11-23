@@ -144,6 +144,37 @@ differences:
 - **`title`** is an error, as Mermaid's grammar has none for this
   diagram.
 
+## Sequence diagrams
+
+- **Layout.** pomermaid spaces the participants and events as
+  Mermaid does in outline, from the widths of the texts between each
+  pair of participants, but more simply: all text is one size, the
+  diagram's, where Mermaid sets messages, notes and labels in sizes of
+  their own.
+- **No wrapping.** `wrap:` and the `wrap` setting are ignored; a long
+  text makes its column wider. Use `<br>` for new lines.
+- **Keywords** are taken only as whole words: `loopback A->>B: hi`
+  is a message from `loopback A`, where Mermaid's lexer reads `loop`
+  and `back`.
+- **`par_over`** is drawn as `par` is.
+- **Activations** left open at the end are drawn to the foot of the
+  diagram.
+- **Participants' icons.** `boundary`, `control`, `entity`,
+  `database`, `queue` and `collections` are drawn as simple outlines
+  close to Mermaid's, not its exact shapes.
+- **A message to itself** is drawn as three straight lines, where
+  Mermaid draws a curve.
+- **`create`** must be followed by a message to or from the
+  participant created; otherwise it is an error.
+- **A destroyed participant** has no box at the foot; a cross ends its
+  line.
+- **Boxes** are outlined in grey, whatever the theme.
+- **Entities.** Numeric entities, `#9829;`, and the named ones
+  pomermaid knows in every diagram, `#amp;`, `#lt;`, `#gt;`, `#quot;`,
+  `#apos;` and `#nbsp;`, are decoded; other names, such as `#infin;`,
+  are left as they are. A character the font lacks, such as Latin Modern's `♥`,
+  is not drawn.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

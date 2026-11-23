@@ -1,0 +1,35 @@
+\startMPcode
+input pomermaid-seq ;
+pms_begin(432, 8, 8, 2, 1);
+pms_colour(0, 0.9255, 0.9255, 1);
+pms_colour(1, 0.5765, 0.4392, 0.8588);
+pms_colour(2, 0, 0, 0);
+pms_colour(3, 0.2, 0.2, 0.2);
+pms_colour(4, 1, 0.9608, 0.6784);
+pms_colour(5, 0.6667, 0.6667, 0.2);
+pms_colour(6, 0.9569, 0.9569, 0.9569);
+pms_colour(7, 0.4, 0.4, 0.4);
+pms_colour(8, 1, 1, 1);
+pms_colour(9, 0.502, 0.502, 0.502);
+pms_colour(10, 0, 1, 1);
+pms_theme(0, 1, 2, 1, 3, 3, 0, 1, 2, 2, 4, 5, 2, 6, 7, 3, 8, 3, 9);
+pms_box(0, 10, "Front end");
+pms_box(1, -1, "Back end");
+pms_actor(0, 1, 0, -1, -1, "User");
+pms_actor(1, 2, 0, -1, -1, "Web");
+pms_actor(2, 3, 1, -1, -1, "Service");
+pms_actor(3, 5, 1, -1, -1, "D");
+pms_actor(4, 7, -1, -1, -1, "Q");
+pms_actor(5, 4, -1, -1, -1, "E");
+pms_actor(6, 6, -1, -1, -1, "L");
+pms_actor(7, 0, -1, 2, 4, "Token");
+pms_msg(0, 0, 1, 0, 1, 0, 0, 0, 0, "10", "Log in");
+pms_msg(1, 1, 2, 0, 1, 0, 0, 0, 0, "15", "Check");
+pms_msg(2, 2, 7, 0, 1, 0, 0, 0, 0, "20", "Make");
+pms_msg(3, 2, 3, 0, 1, 0, 0, 0, 0, "25", "Store");
+pms_msg(4, 7, 2, 0, 3, 0, 0, 0, 0, "30", "Done");
+pms_msg(5, 2, 4, 0, 2, 0, 0, 0, 0, "35", "Event");
+pms_msg(6, 4, 5, 0, 1, 0, 0, 0, 0, "", "Update");
+pms_msg(7, 5, 6, 0, 1, 0, 0, 0, 0, "", "Add");
+pms_end;
+\stopMPcode

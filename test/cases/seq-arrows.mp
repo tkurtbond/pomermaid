@@ -1,0 +1,37 @@
+\startMPcode
+input pomermaid-seq ;
+pms_begin(432, 2, 19, 0, 1);
+pms_colour(0, 0.9255, 0.9255, 1);
+pms_colour(1, 0.5765, 0.4392, 0.8588);
+pms_colour(2, 0, 0, 0);
+pms_colour(3, 0.2, 0.2, 0.2);
+pms_colour(4, 1, 0.9608, 0.6784);
+pms_colour(5, 0.6667, 0.6667, 0.2);
+pms_colour(6, 0.9569, 0.9569, 0.9569);
+pms_colour(7, 0.4, 0.4, 0.4);
+pms_colour(8, 1, 1, 1);
+pms_colour(9, 0.502, 0.502, 0.502);
+pms_theme(0, 1, 2, 1, 3, 3, 0, 1, 2, 2, 4, 5, 2, 6, 7, 3, 8, 3, 9);
+pms_actor(0, 0, -1, -1, -1, "A");
+pms_actor(1, 0, -1, -1, -1, "B");
+pms_msg(0, 0, 1, 0, 0, 0, 0, 0, 0, "", "solid line");
+pms_msg(1, 0, 1, 1, 0, 0, 0, 0, 0, "", "dotted line");
+pms_msg(2, 0, 1, 0, 1, 0, 0, 0, 0, "", "arrow");
+pms_msg(3, 0, 1, 1, 1, 0, 0, 0, 0, "", "dotted arrow");
+pms_msg(4, 0, 1, 0, 1, 1, 0, 0, 0, "", "both ways");
+pms_msg(5, 0, 1, 1, 1, 1, 0, 0, 0, "", "dotted both ways");
+pms_msg(6, 0, 1, 0, 3, 0, 0, 0, 0, "", "cross");
+pms_msg(7, 0, 1, 1, 3, 0, 0, 0, 0, "", "dotted cross");
+pms_msg(8, 0, 1, 0, 2, 0, 0, 0, 0, "", "open");
+pms_msg(9, 0, 1, 1, 2, 0, 0, 0, 0, "", "dotted open");
+pms_msg(10, 0, 1, 0, 4, 0, 0, 0, 0, "", "solid top");
+pms_msg(11, 0, 1, 0, 5, 0, 0, 0, 0, "", "solid bottom");
+pms_msg(12, 0, 1, 0, 6, 0, 0, 0, 0, "", "stick top");
+pms_msg(13, 0, 1, 0, 7, 0, 0, 0, 0, "", "stick bottom");
+pms_msg(14, 1, 0, 0, 0, 4, 0, 0, 0, "", "reverse solid top");
+pms_msg(15, 1, 0, 1, 0, 5, 0, 0, 0, "", "reverse solid bottom, dotted");
+pms_msg(16, 0, 1, 0, 1, 0, 0, 0, 1, "", "central from");
+pms_msg(17, 0, 1, 0, 1, 0, 0, 1, 0, "", "central to");
+pms_msg(18, 1, 0, 0, 1, 0, 0, 1, 1, "", "both central");
+pms_end;
+\stopMPcode

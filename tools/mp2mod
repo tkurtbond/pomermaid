@@ -1,10 +1,11 @@
 #!/bin/sh
 # mp2mod MACROS MODULE
 #
-# Writes MODULE, src/PmMpMacros.Mod, from MACROS, mp/pomermaid.mp: an
-# Oberon module whose Write writes the macros, without their comments
-# and blank lines, for the MetaPost writer's --mp-macros=inline. The
-# macros have one source, MACROS; MODULE is made from it. A line of
+# Writes MODULE, src/PmMpMacros.Mod, from MACROS, mp/pomermaid.mp (or
+# src/PmSeqMacros.Mod from mp/pomermaid-seq.mp): an Oberon module, named
+# for MODULE's file, whose Write writes the macros, without their
+# comments and blank lines, for the MetaPost writers' --mp-macros=inline.
+# The macros have one source, MACROS; MODULE is made from it. A line of
 # MACROS must not have both kinds of quote, nor a "%" in a string.
 
 if [ $# -ne 2 ]; then
@@ -12,10 +13,12 @@ if [ $# -ne 2 ]; then
   exit 2
 fi
 
-awk -v src="$1" '
+mod=`basename "$2" .Mod`
+
+awk -v src="$1" -v mod="$mod" '
 BEGIN {
-  print "MODULE PmMpMacros;"
-  print "(* PmMpMacros: the MetaPost macros of " src ", without their comments,"
+  print "MODULE " mod ";"
+  print "(* " mod ": the MetaPost macros of " src ", without their comments,"
   print "   for the MetaPost writer. Made from " src " by tools/mp2mod: do not"
   print "   edit it; edit " src ". *)"
   print ""
@@ -44,6 +47,6 @@ BEGIN {
 END {
   print "END Write;"
   print ""
-  print "END PmMpMacros."
+  print "END " mod "."
   exit bad
 }' "$1" > "$2.new" && mv "$2.new" "$2" || { rm -f "$2.new"; exit 1; }

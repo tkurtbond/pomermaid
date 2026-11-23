@@ -11,14 +11,14 @@
 # ConTeXt, if it is found, in build/render/cases-context.pdf, and as
 # SVG, in build/render/svg/, if mutool or pdftocairo is found.
 # `make install` installs the pomermaid built under $(MODEL), -OC by
-# default, in $(BINDIR), the MetaPost macros, pomermaid.mp, in
-# $(DATADIR), its manual page, pomermaid.1, in $(MANDIR)/man1, and its
+# default, in $(BINDIR), the MetaPost macros, pomermaid.mp and
+# pomermaid-seq.mp, in $(DATADIR), its manual page, pomermaid.1, in $(MANDIR)/man1, and its
 # documentation in $(DOCDIR), under
 # $(PREFIX), ~/.local by default, or $(DESTDIR)$(PREFIX) for a package;
 # `make uninstall` removes them. `make clean` removes build/.
 #
-# src/PmMpMacros.Mod is made from mp/pomermaid.mp by tools/mp2mod, and
-# kept in the repository, so a build needs no awk.
+# src/PmMpMacros.Mod and src/PmSeqMacros.Mod are made from mp/pomermaid.mp
+# and mp/pomermaid-seq.mp by tools/mp2mod, and kept in the repository, so a build needs no awk.
 #
 # The libraries pomermaid uses are found in $(POCLIBDIR),
 # ~/.local/lib/poc by default, where their own makefiles install them.
@@ -68,6 +68,9 @@ $(BUILD)/%/pomermaid: $(SRCS) $(POC_STAMP)
 src/PmMpMacros.Mod: mp/pomermaid.mp tools/mp2mod
 	tools/mp2mod mp/pomermaid.mp $@
 
+src/PmSeqMacros.Mod: mp/pomermaid-seq.mp tools/mp2mod
+	tools/mp2mod mp/pomermaid-seq.mp $@
+
 test: test-o2 test-oc
 
 test-o2: $(TESTS:%=$(BUILD)/O2/test/%.passed) $(BUILD)/O2/cases.passed
@@ -106,13 +109,13 @@ install: $(BUILD)/$(MODEL)/pomermaid
 	  $(DESTDIR)$(MANDIR)/man1
 	install -m 644 docs/user/pomermaid.1 $(DESTDIR)$(MANDIR)/man1
 	install -m 755 $(BUILD)/$(MODEL)/pomermaid $(DESTDIR)$(BINDIR)/pomermaid
-	install -m 644 mp/pomermaid.mp $(DESTDIR)$(DATADIR)
+	install -m 644 mp/pomermaid.mp mp/pomermaid-seq.mp $(DESTDIR)$(DATADIR)
 	install -m 644 LICENSE docs/user/pomermaid.md docs/user/differences.md \
 	  docs/examples/pomermaid.lua $(DESTDIR)$(DOCDIR)
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/pomermaid
-	rm -f $(DESTDIR)$(DATADIR)/pomermaid.mp
+	rm -f $(DESTDIR)$(DATADIR)/pomermaid.mp $(DESTDIR)$(DATADIR)/pomermaid-seq.mp
 	rm -f $(DESTDIR)$(MANDIR)/man1/pomermaid.1
 	rm -f $(DESTDIR)$(DOCDIR)/LICENSE $(DESTDIR)$(DOCDIR)/pomermaid.md \
 	  $(DESTDIR)$(DOCDIR)/differences.md $(DESTDIR)$(DOCDIR)/pomermaid.lua

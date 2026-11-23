@@ -6,7 +6,7 @@ MODULE PmDump;
 
 IMPORT PmIO, Y := PmYaml, F := PmFlow, FL := PmFlowLayout, L := PmLayout;
 
-PROCEDURE Quoted(s: F.Str);
+PROCEDURE Quoted*(s: F.Str);
   VAR i: LONGINT;
 BEGIN
   PmIO.WriteChar(22X);
@@ -20,7 +20,7 @@ BEGIN
   PmIO.WriteChar(22X)
 END Quoted;
 
-PROCEDURE Label(name: ARRAY OF CHAR; lab: F.Label);
+PROCEDURE Label*(name: ARRAY OF CHAR; lab: F.Label);
   VAR l: F.Line; i: LONGINT;
 BEGIN
   IF lab # NIL THEN

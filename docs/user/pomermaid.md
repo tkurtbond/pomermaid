@@ -14,8 +14,9 @@ and ConTeXt measures them itself for MetaPost.
 It reads flowcharts (`flowchart` and `graph`), state diagrams
 (`stateDiagram-v2` and `stateDiagram`), class diagrams
 (`classDiagram` and `classDiagram-v2`), entity relationship
-diagrams (`erDiagram`) and requirement diagrams
-(`requirementDiagram`). Mermaid's other diagram types are planned, one
+diagrams (`erDiagram`), requirement diagrams
+(`requirementDiagram`) and sequence diagrams (`sequenceDiagram`).
+Mermaid's other diagram types are planned, one
 after another.
 
 ## What it needs
@@ -60,7 +61,8 @@ tests under both. They need no groff, ConTeXt, MuPDF or Mermaid.
 `make install` installs these files:
 
 - the `-OC` build, as `$(PREFIX)/bin/pomermaid`;
-- the MetaPost macros, as `$(PREFIX)/share/pomermaid/pomermaid.mp`;
+- the MetaPost macros, as `$(PREFIX)/share/pomermaid/pomermaid.mp`,
+  and those for sequence diagrams, `pomermaid-seq.mp`;
 - the manual page, as `$(PREFIX)/share/man/man1/pomermaid.1`;
 - this documentation and the example filter, in
   `$(PREFIX)/share/doc/pomermaid`.
@@ -92,7 +94,7 @@ draws one diagram per run.
 | `--size N` | The labels' size in points: 10 by default; `10.5` is allowed. |
 | `--width LEN` | The widest the diagram may be: 6 inches by default. A unit, `i`, `c` or `p`, may follow the number; `0` means no limit. |
 | `--font-path DIRS` | Look for groff's fonts in these directories, separated by colons. These are directories that hold `devpdf` or `devps`. |
-| `--mp-macros inline\|input` | For `mp`: copy the macros into each drawing (`inline`, the default) or write `input pomermaid ;` (`input`). |
+| `--mp-macros inline\|input` | For `mp`: copy the macros into each drawing (`inline`, the default) or write `input pomermaid ;` (`input pomermaid-seq ;` for a sequence diagram) (`input`). |
 | `--svg-text text\|outline` | For `svg`: keep the labels as text (the default), or draw their glyphs as outlines. |
 | `--svg-engine mutool\|pdftocairo` | For `svg`: the converter from PDF to SVG. The default is `mutool` if it is found, else `pdftocairo`. |
 | `-v`, `--version` | Show the version. |
@@ -348,6 +350,48 @@ Each box shows its kind, `<<Requirement>>`, its name in bold, and
 its fields below a line, one to a line; values are read as markdown.
 
 Read and ignored: `accTitle` and `accDescr`.
+### Sequence diagrams
+
+pomermaid reads Mermaid's sequence diagrams, as Mermaid 12.3.0 reads
+them, and lays them out in its own simpler way, from the top down:
+
+- **The first line:** `sequenceDiagram`. Front matter and directives
+  are read as for a flowchart; `mirrorActors: false` in the
+  `sequence` configuration leaves out the participants at the foot.
+- **Statements** end at a line's end or `;`. Keywords are read in any
+  case.
+- **Participants:** `participant name` and `actor name`, with
+  `as text` for the text drawn, and `@{ "type": "...", "alias": "..." }`
+  for one of Mermaid's types: `participant`, `actor`, `boundary`,
+  `control`, `entity`, `database`, `collections` or `queue`. A name
+  first seen in a message is a participant. `create participant ...`
+  (or `actor`) starts a participant at the next message, which must
+  involve it; `destroy name` ends it at the next message.
+- **Boxes:** `box colour title` ... `end`, around participants. The
+  colour may be left out, or be `transparent`.
+- **Messages:** `a->>b: text`, with each of Mermaid's arrows: `->`,
+  `-->`, `->>`, `-->>`, `<<->>`, `<<-->>`, `-x`, `--x`, `-)`, `--)`,
+  and the half arrows of Mermaid 11. `+` or `-` after the arrow
+  activates the target or deactivates the source; `()` before or after
+  the arrow draws a central connection.
+- **Activations:** `activate name` and `deactivate name`, and the
+  `+` and `-` of messages, nested.
+- **Notes:** `note left of a: text`, `note right of a: text`,
+  `note over a: text` and `note over a,b: text`.
+- **Blocks:** `loop`, `opt`, `alt` with `else`, `par` and `par_over`
+  with `and`, `critical` with `option`, `break`, and `rect colour`,
+  each to its `end`, nested.
+- **Numbers:** `autonumber`, `autonumber start`,
+  `autonumber start step` and `autonumber off`.
+- **Text:** `<br>` for new lines, and entities such as `#35;` and
+  `#amp;`, as in flowcharts. `wrap:` and `nowrap:` are read and
+  ignored.
+- **The title:** `title text` or `title: text`.
+- **Comments:** `%%` comments and `#` comments.
+
+Read and ignored: `accTitle`, `accDescr`, `links`, `link`,
+`properties` and `details`.
+
 Mermaid's other diagram types are not read yet.
 
 ## Using the output
@@ -413,7 +457,11 @@ wider than `--width` is scaled down.
 Each block holds the macros it needs, about 30 KB. With several
 diagrams in one document, `--mp-macros=input` writes `input pomermaid ;`
 instead. The installed `share/pomermaid/pomermaid.mp` must then be
-where ConTeXt finds it, such as beside the document.
+where ConTeXt finds it, such as beside the document. A sequence
+diagram's block writes `input pomermaid-seq ;` instead, for
+`share/pomermaid/pomermaid-seq.mp`, its own macros: they lay the
+diagram out again with ConTeXt's sizes, as `--size` and `--font` only
+estimate them.
 
 To centre a diagram, wrap it in `\startlinealignment[middle]` ...
 `\stoplinealignment`, or place it as a figure:

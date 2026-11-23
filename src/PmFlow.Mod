@@ -59,7 +59,7 @@ CONST
   NShapes* = 60;
 
   (* the kinds of diagram *)
-  Flowchart* = 0; State* = 1; Class* = 2; Er* = 3; Req* = 4;
+  Flowchart* = 0; State* = 1; Class* = 2; Er* = 3; Req* = 4; Seq* = 5;
 
   (* the kinds of cluster: a flowchart's subgraph, a composite state,
      a composite state's concurrent region *)
@@ -779,7 +779,7 @@ END Number;
 (* "@{ ... }" at the position: its text, to the first "}" outside
    double quotes, read as Mermaid reads it: as a flow mapping when it
    is on one line, or else as a block mapping *)
-PROCEDURE MetaData(): Y.Pair;
+PROCEDURE MetaData*(): Y.Pair;
   VAR start, end, p: LONGINT; nl, inStr: BOOLEAN; list: Y.Pair; ch: CHAR;
 BEGIN
   INC(sc.pos, 2); start := sc.pos; nl := FALSE; inStr := FALSE;

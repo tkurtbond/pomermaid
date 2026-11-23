@@ -1,0 +1,34 @@
+participant "Alice" type=participant label="Alice"
+participant "John" type=participant label="John"
+participant "Bob" type=participant label="Bob"
+0 message "Alice" -> "John" head=filled number=1 text="Hello John, how are you?"
+1 start loop text="Every minute"
+2 message "John" -> "Alice" dotted head=filled number=2 text="Great!"
+3 end loop
+4 start alt text="is sick"
+5 message "Bob" -> "Alice" head=filled number=3 text="Not so good :("
+6 section alt text="is well"
+7 message "Bob" -> "Alice" head=filled number=4 text="Feeling fresh like a daisy"
+8 end alt
+9 start opt text="Extra response"
+10 message "Bob" -> "Alice" head=filled number=5 text="Thanks for asking"
+11 end opt
+12 start par text="Alice to Bob"
+13 message "Alice" -> "Bob" head=filled number=6 text="Hello guys!"
+14 section par text="Alice to John"
+15 message "Alice" -> "John" head=filled number=7 text="Hello guys!"
+16 end par
+17 start critical text="Connect"
+18 message "John" -> "Bob" dotted head=none number=8 text="connect"
+19 section critical text="Timeout"
+20 message "John" -> "John" dotted head=none number=9 text="Log error"
+21 end critical
+22 start break text="when it fails"
+23 message "Bob" -> "Alice" dotted head=none number=10 text="show failure"
+24 end break
+25 start rect fill=#e6e6ff
+26 message "Alice" -> "John" head=filled activate number=11 text="Inside a rect"
+27 activate "John"
+28 message "John" -> "Alice" dotted head=filled number=12 text="Back"
+29 deactivate "John"
+30 end rect

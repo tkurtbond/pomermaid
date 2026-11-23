@@ -37,7 +37,8 @@ VAR
 
 (* Output *)
 
-PROCEDURE W(s: ARRAY OF CHAR);
+(* Writes s *)
+PROCEDURE W*(s: ARRAY OF CHAR);
 BEGIN
   PmIO.WriteString(s)
 END W;
@@ -56,36 +57,38 @@ BEGIN
   d[digits] := 0X; W(d)
 END HexCase;
 
-PROCEDURE Hex(x: LONGINT; digits: INTEGER);
+(* x in hexadecimal, digits of it, in lower case *)
+PROCEDURE Hex*(x: LONGINT; digits: INTEGER);
 BEGIN
   HexCase(x, digits, FALSE)
 END Hex;
 
-PROCEDURE ColourName(c: INTEGER);
+(* The name of colour c, "pm-rrggbb", quoted *)
+PROCEDURE ColourName*(c: INTEGER);
 BEGIN
   W('"pm-'); Hex(S.Rgb(c), 6); W('"')
 END ColourName;
 
 (* A length in points, in inches *)
-PROCEDURE In(x: REAL);
+PROCEDURE In*(x: REAL);
 BEGIN
   PmIO.WriteReal(x / 72, 3)
 END In;
 
 (* The point (x, y) of the layout, y down, as pic's (x, -y) *)
-PROCEDURE Pt(x, y: REAL);
+PROCEDURE Pt*(x, y: REAL);
 BEGIN
   W("("); In(x); W(", "); In(-y); W(")")
 END Pt;
 
 (* " at (x, y)" *)
-PROCEDURE At(x, y: REAL);
+PROCEDURE At*(x, y: REAL);
 BEGIN
   W(" at "); Pt(x, y)
 END At;
 
 (* The fill, outline, thickness and dashes of st *)
-PROCEDURE Paint(VAR st: Style; filled: BOOLEAN);
+PROCEDURE Paint*(VAR st: Style; filled: BOOLEAN);
 BEGIN
   IF filled & (st.fill # NoColour) THEN W(" shaded "); ColourName(st.fill) END;
   IF st.line # NoColour THEN
@@ -140,7 +143,7 @@ END Runs;
 (* The text of lab, in colour c, at (x, y), at size points, or the
    current size for 0; each line centred there, or starting there if
    left *)
-PROCEDURE Lines(lab: F.Label; x, y: REAL; c: INTEGER; size: REAL; left: BOOLEAN);
+PROCEDURE Lines*(lab: F.Label; x, y: REAL; c: INTEGER; size: REAL; left: BOOLEAN);
   VAR line: F.Line;
 BEGIN
   IF (lab = NIL) OR (lab.n = 0) THEN RETURN END;
@@ -260,7 +263,7 @@ END Path;
    at p[0]: pic sets a string 0.22m below its point, and \v'-0.22m'
    takes that back. The coordinates are rounded to thousandths of an
    inch, as pic's own, and each step is their difference. *)
-PROCEDURE Polygon(VAR p: ARRAY OF G.Point; n: INTEGER; VAR st: Style);
+PROCEDURE Polygon*(VAR p: ARRAY OF G.Point; n: INTEGER; VAR st: Style);
   VAR closed: G.Points; i: INTEGER; x0, y0, x1, y1: LONGINT;
 
   PROCEDURE Milli(v: REAL): LONGINT;
@@ -292,7 +295,7 @@ BEGIN
 END Polygon;
 
 (* The line colour and thickness of st *)
-PROCEDURE Stroke(VAR st: Style);
+PROCEDURE Stroke*(VAR st: Style);
 BEGIN
   W(" outlined "); ColourName(st.line); W(" thickness "); PmIO.WriteReal(st.width, 3)
 END Stroke;
@@ -786,6 +789,39 @@ BEGIN
   SizedText(l.title, l.titleX, cy, c, l.titleSize)
 END DrawTitle;
 
+(* Sets the groff font the labels are in, font, their font f, and a
+   Mermaid pixel, pixel points, for the procedures here *)
+PROCEDURE Setup*(font: ARRAY OF CHAR; f: M.Font; pixel: REAL);
+BEGIN
+  COPY(font, fontName); labelFont := f; px := pixel
+END Setup;
+
+(* Writes a .defcolor line for each of PmStyle's colours, the size and
+   line spacing, size and vs points, and the start of the picture *)
+PROCEDURE Begin*(size, vs: REAL);
+  VAR k: INTEGER;
+BEGIN
+  FOR k := 0 TO S.nColours - 1 DO
+    W(".defcolor pm-"); Hex(S.Rgb(k), 6); W(" rgb #"); Hex(S.Rgb(k), 6); PmIO.WriteLn
+  END;
+  W(".nr pm*ps \n[.ps]"); PmIO.WriteLn;
+  W(".nr pm*vs \n[.v]"); PmIO.WriteLn;
+  W(".ps "); PmIO.WriteReal(size, 2); PmIO.WriteLn;
+  W(".vs "); PmIO.WriteReal(vs, 2); W("p"); PmIO.WriteLn;
+  W(".PS"); PmIO.WriteLn;
+  W("maxpswid = 1000; maxpsht = 1000"); PmIO.WriteLn;
+  W("arrowht = "); In(8 * px); W("; arrowwid = "); In(8 * px); PmIO.WriteLn
+END Begin;
+
+(* Writes the end of the picture, and puts the size and line spacing
+   back *)
+PROCEDURE End*;
+BEGIN
+  W(".PE"); PmIO.WriteLn;
+  W(".ps \n[pm*ps]u"); PmIO.WriteLn;
+  W(".vs \n[pm*vs]u"); PmIO.WriteLn
+END End;
+
 (* The styles of l's nodes, edges and clusters, by index; the colour
    table reset first *)
 PROCEDURE MakeStyles(l: FL.Layout; VAR ns, es, cs: Styles);
@@ -842,16 +878,7 @@ BEGIN
   g := l.graph; COPY(font, fontName); labelFont := l.font;
   MakeStyles(l, ns, es, cs);
   back := S.LabelBackground(); title := S.TitleColour();
-  FOR k := 0 TO S.nColours - 1 DO
-    W(".defcolor pm-"); Hex(S.Rgb(k), 6); W(" rgb #"); Hex(S.Rgb(k), 6); PmIO.WriteLn
-  END;
-  W(".nr pm*ps \n[.ps]"); PmIO.WriteLn;
-  W(".nr pm*vs \n[.v]"); PmIO.WriteLn;
-  W(".ps "); PmIO.WriteReal(l.size, 2); PmIO.WriteLn;
-  W(".vs "); PmIO.WriteReal(l.vs, 2); W("p"); PmIO.WriteLn;
-  W(".PS"); PmIO.WriteLn;
-  W("maxpswid = 1000; maxpsht = 1000"); PmIO.WriteLn;
-  W("arrowht = "); In(8 * px); W("; arrowwid = "); In(8 * px); PmIO.WriteLn;
+  Begin(l.size, l.vs);
   (* the clusters, each before those it holds *)
   FOR k := 0 TO g.nClusters - 1 DO
     IF l.g.cluster[k].parent < 0 THEN DrawClusters(k) END
@@ -869,9 +896,7 @@ BEGIN
     n := n.next
   END;
   DrawTitle(l, title);
-  W(".PE"); PmIO.WriteLn;
-  W(".ps \n[pm*ps]u"); PmIO.WriteLn;
-  W(".vs \n[pm*vs]u"); PmIO.WriteLn
+  End
 END Write;
 
 END PmPic.

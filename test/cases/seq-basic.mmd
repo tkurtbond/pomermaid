@@ -1,0 +1,18 @@
+---
+title: Ordering
+---
+sequenceDiagram
+    actor C as Customer
+    participant W as Web app
+    participant A as API<br>gateway
+    participant Bank
+    C->>W: Place order
+    W->>+A: POST /orders
+    A->>Bank: Authorise payment
+    Bank-->>A: Approved
+    Note over A,Bank: One order, one transaction
+    A-->>-W: 201 Created
+    Note right of W: Shows the receipt
+    W-->>C: Order confirmed
+    Note left of C: Happy
+    C->>C: Thinks

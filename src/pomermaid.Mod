@@ -2,15 +2,17 @@ MODULE pomermaid;
 (* pomermaid: Mermaid diagrams drawn in pic, for groff, and MetaPost,
    for ConTeXt, and SVG made from the pic through groff. The command line is PmOptions'. See PLAN.md. *)
 
-IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
+IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
 
 VAR
   text: PmIO.Text;
   len: LONGINT;
   sc: L.Scanner;
   g: PmFlow.Graph;
+  seq: PmSeq.Diagram;
   font: M.Font;
   lay: FL.Layout;
+  slay: SL.Layout;
 
 BEGIN
   O.Parse;
@@ -25,8 +27,9 @@ BEGIN
     ELSIF PmClass.IsClass(sc) THEN PmClass.Read(sc, g)
     ELSIF PmEr.IsEr(sc) THEN PmEr.Read(sc, g)
     ELSIF PmReq.IsReq(sc) THEN PmReq.Read(sc, g)
+    ELSIF PmSeq.IsSeq(sc) THEN PmSeq.Read(sc, seq)
     ELSIF PmFlow.IsFlowchart(sc) THEN PmFlow.Read(sc, g)
-    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram and requirementDiagram")
+    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram and sequenceDiagram")
     END;
     IF O.to # "dump" THEN
       IF O.fontPath # "" THEN M.SetPath(O.fontPath) END;
@@ -35,13 +38,24 @@ BEGIN
       END;
       M.LoadStyles(font)
     END;
-    IF O.to = "svg" THEN
+    IF (seq # NIL) & (O.to = "svg") THEN
+      SL.Fit(seq, font, O.size, O.width, slay);
+      PmSvg.WriteSeq(slay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
+    ELSIF seq # NIL THEN
+      PmIO.OpenOutput(O.output);
+      IF O.to = "dump" THEN PmSeqDump.Write(seq)
+      ELSIF O.to = "layout" THEN SL.Fit(seq, font, O.size, O.width, slay); PmSeqDump.WriteLayout(slay)
+      ELSIF O.to = "pic" THEN SL.Fit(seq, font, O.size, O.width, slay); PmSeqPic.Write(slay, O.font)
+      ELSIF O.to = "svg-ms" THEN SL.Fit(seq, font, O.size, O.width, slay); PmSvg.WriteSeqDocument(slay, O.font)
+      ELSIF O.to = "mp" THEN PmSeqMp.Write(seq, O.size, O.width, O.mpInput)
+      END
+    ELSIF O.to = "svg" THEN
       (* PmSvg opens the output once the SVG is made *)
       FL.Fit(g, font, O.size, O.width, lay);
       PmSvg.Write(lay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSE PmIO.OpenOutput(O.output)
     END;
-    IF O.to = "svg" THEN
+    IF (seq # NIL) OR (O.to = "svg") THEN
     ELSIF O.to = "svg-ms" THEN FL.Fit(g, font, O.size, O.width, lay); PmSvg.WriteDocument(lay, O.font)
     ELSIF O.to = "dump" THEN PmDump.Write(g)
     ELSIF O.to = "layout" THEN FL.Fit(g, font, O.size, O.width, lay); PmDump.WriteLayout(lay)

@@ -19,7 +19,8 @@ MODULE PmSvg;
    <a> element, or a <g> for a tooltip alone, holding the tooltip as a
    <title> and a rectangle over the node's bounds, filled but clear. *)
 
-IMPORT PmIO, F := PmFlow, FL := PmFlowLayout, L := PmLayout, PmPic, R := PmRun;
+IMPORT PmIO, F := PmFlow, FL := PmFlowLayout, L := PmLayout, PmPic, R := PmRun,
+  SL := PmSeqLayout, PmSeqPic;
 
 CONST
   MinMargin = 2; (* points round the drawing, at least, for lines' widths *)
@@ -30,32 +31,47 @@ CONST
 VAR
   vs, margin, pageW, pageH: REAL; (* pic's line space, the margin, and the
                                      page's size, in points *)
+  flow: FL.Layout; seq: SL.Layout; (* what Write draws: one of them *)
 
-(* The page's size for l, rounded as it is written *)
-PROCEDURE PageSize(l: FL.Layout);
+(* The page's size for a drawing w by h points, pic's line space
+   lvs, its widest line widest points wide, rounded as it is written *)
+PROCEDURE PageSize(lvs, widest, w, h: REAL);
 BEGIN
-  vs := ENTIER(l.vs * 100 + 0.5) / 100;
-  margin := ENTIER(PmPic.Widest(l) / 2 + 1.99);
+  vs := ENTIER(lvs * 100 + 0.5) / 100;
+  margin := ENTIER(widest / 2 + 1.99);
   IF margin < MinMargin THEN margin := MinMargin END;
-  pageW := ENTIER((l.g.width + 2 * margin) * 100 + 0.5) / 100;
-  pageH := ENTIER((l.g.height + 2 * margin) * 100 + 0.5) / 100 + vs
+  pageW := ENTIER((w + 2 * margin) * 100 + 0.5) / 100;
+  pageH := ENTIER((h + 2 * margin) * 100 + 0.5) / 100 + vs
 END PageSize;
 
-(* Writes the groff document for l, its labels in the groff font font:
-   a page the size of the drawing, its margins and one line space, for
-   groff -p -Tpdf -P-p<height>,<width>, which its first line gives. *)
-PROCEDURE WriteDocument*(l: FL.Layout; font: ARRAY OF CHAR);
+(* The start of the groff document for a drawing w by h points: a page
+   the size of the drawing, its margins and one line space, for
+   groff -p -Tpdf -P-p<height>,<width>, which its first line gives *)
+PROCEDURE Header(lvs, widest, w, h: REAL);
 BEGIN
-  PageSize(l);
+  PageSize(lvs, widest, w, h);
   PmIO.WriteString('.\" pomermaid -t svg: groff -p -Tpdf -P-p');
   PmIO.WriteReal(pageH, 2); PmIO.WriteString("p,");
   PmIO.WriteReal(pageW, 2); PmIO.WriteString("p"); PmIO.WriteLn;
   PmIO.WriteString(".pl "); PmIO.WriteReal(pageH, 2); PmIO.WriteString("p"); PmIO.WriteLn;
   PmIO.WriteString(".po "); PmIO.WriteReal(margin, 0); PmIO.WriteString("p"); PmIO.WriteLn;
-  PmIO.WriteString(".ll "); PmIO.WriteReal(l.g.width, 2); PmIO.WriteString("p"); PmIO.WriteLn;
-  PmIO.WriteString(".sp "); PmIO.WriteReal(margin, 0); PmIO.WriteString("p"); PmIO.WriteLn;
+  PmIO.WriteString(".ll "); PmIO.WriteReal(w, 2); PmIO.WriteString("p"); PmIO.WriteLn;
+  PmIO.WriteString(".sp "); PmIO.WriteReal(margin, 0); PmIO.WriteString("p"); PmIO.WriteLn
+END Header;
+
+(* Writes the groff document for l, its labels in the groff font font *)
+PROCEDURE WriteDocument*(l: FL.Layout; font: ARRAY OF CHAR);
+BEGIN
+  Header(l.vs, PmPic.Widest(l), l.g.width, l.g.height);
   PmPic.Write(l, font)
 END WriteDocument;
+
+(* Writes the groff document for the sequence diagram l *)
+PROCEDURE WriteSeqDocument*(l: SL.Layout; font: ARRAY OF CHAR);
+BEGIN
+  Header(l.vs, PmSeqPic.Widest(l), l.width, l.height);
+  PmSeqPic.Write(l, font)
+END WriteSeqDocument;
 
 (* Crop *)
 
@@ -173,7 +189,7 @@ PROCEDURE Links(l: FL.Layout; xlink: BOOLEAN);
   END Href;
 
 BEGIN
-  PageSize(l); first := TRUE;
+  PageSize(l.vs, PmPic.Widest(l), l.g.width, l.g.height); first := TRUE;
   n := l.graph.nodes;
   WHILE n # NIL DO
     IF (n.link # NIL) OR (n.tooltip # NIL) THEN
@@ -302,7 +318,7 @@ END AddFontPath;
    as text; made with engine, Auto for mutool if it is found and else
    pdftocairo. Ends pomermaid with 47 if a program is missing, 43 if one
    fails. *)
-PROCEDURE Write*(l: FL.Layout; font, fontPath, output: ARRAY OF CHAR;
+PROCEDURE Run(font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
   VAR dir, tr, pdf, svg, arg: R.Path; c: R.Command; ok: BOOLEAN; t: PmIO.Text; len: LONGINT;
 
@@ -328,7 +344,9 @@ BEGIN
   COPY(dir, tr); R.Append(tr, "/diagram.tr");
   COPY(dir, pdf); R.Append(pdf, "/diagram.pdf");
   COPY(dir, svg); R.Append(svg, "/diagram.svg");
-  PmIO.OpenOutput(tr); WriteDocument(l, font); PmIO.CloseOutput;
+  PmIO.OpenOutput(tr);
+  IF seq # NIL THEN WriteSeqDocument(seq, font) ELSE WriteDocument(flow, font) END;
+  PmIO.CloseOutput;
   c := R.New(); R.AddText(c, "groff -p -Tpdf");
   IF fontPath # "" THEN AddFontPath(c, fontPath) END;
   COPY("-P-p", arg); AppendPoints(arg, pageH); R.Append(arg, ",");
@@ -351,9 +369,22 @@ BEGIN
   IF ~PmIO.Exists(svg) THEN Fail("no SVG was made", PmIO.ProgramError) END;
   PmIO.ReadFile(svg, t, len);
   PmIO.OpenOutput(output);
-  IF ~Crop(t, len, vs, l) THEN Fail("the SVG made has no height or viewBox pomermaid can read", PmIO.ProgramError) END;
+  IF ~Crop(t, len, vs, flow) THEN Fail("the SVG made has no height or viewBox pomermaid can read", PmIO.ProgramError) END;
   PmIO.CloseOutput;
   R.RemoveDir(dir)
+END Run;
+
+PROCEDURE Write*(l: FL.Layout; font, fontPath, output: ARRAY OF CHAR;
+  outline: BOOLEAN; engine: INTEGER);
+BEGIN
+  flow := l; seq := NIL; Run(font, fontPath, output, outline, engine)
 END Write;
+
+(* Writes the sequence diagram l as SVG, as Write does a flowchart *)
+PROCEDURE WriteSeq*(l: SL.Layout; font, fontPath, output: ARRAY OF CHAR;
+  outline: BOOLEAN; engine: INTEGER);
+BEGIN
+  flow := NIL; seq := l; Run(font, fontPath, output, outline, engine)
+END WriteSeq;
 
 END PmSvg.

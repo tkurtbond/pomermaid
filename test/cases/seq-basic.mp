@@ -1,0 +1,33 @@
+\startMPcode
+input pomermaid-seq ;
+pms_begin(432, 4, 12, 0, 1);
+pms_colour(0, 0.9255, 0.9255, 1);
+pms_colour(1, 0.5765, 0.4392, 0.8588);
+pms_colour(2, 0, 0, 0);
+pms_colour(3, 0.2, 0.2, 0.2);
+pms_colour(4, 1, 0.9608, 0.6784);
+pms_colour(5, 0.6667, 0.6667, 0.2);
+pms_colour(6, 0.9569, 0.9569, 0.9569);
+pms_colour(7, 0.4, 0.4, 0.4);
+pms_colour(8, 1, 1, 1);
+pms_colour(9, 0.502, 0.502, 0.502);
+pms_theme(0, 1, 2, 1, 3, 3, 0, 1, 2, 2, 4, 5, 2, 6, 7, 3, 8, 3, 9);
+pms_actor(0, 1, -1, -1, -1, "Customer");
+pms_actor(1, 0, -1, -1, -1, "Web app");
+pms_actor(2, 0, -1, -1, -1, "API\\gateway");
+pms_actor(3, 0, -1, -1, -1, "Bank");
+pms_msg(0, 0, 1, 0, 1, 0, 0, 0, 0, "", "Place order");
+pms_msg(1, 1, 2, 0, 1, 0, 1, 0, 0, "", "POST /orders");
+pms_activate(2, 2);
+pms_msg(3, 2, 3, 0, 1, 0, 0, 0, 0, "", "Authorise payment");
+pms_msg(4, 3, 2, 1, 1, 0, 0, 0, 0, "", "Approved");
+pms_note(5, 2, 3, 2, "One order, one transaction");
+pms_msg(6, 2, 1, 1, 1, 0, 0, 0, 0, "", "201 Created");
+pms_deactivate(7, 2);
+pms_note(8, 1, 1, 1, "Shows the receipt");
+pms_msg(9, 1, 0, 1, 1, 0, 0, 0, 0, "", "Order confirmed");
+pms_note(10, 0, 0, 0, "Happy");
+pms_msg(11, 0, 0, 0, 1, 0, 0, 0, 0, "", "Thinks");
+pms_title := "Ordering";
+pms_end;
+\stopMPcode

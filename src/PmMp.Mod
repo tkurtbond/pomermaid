@@ -52,8 +52,8 @@ BEGIN
   W(", ")
 END C;
 
-(* lab as a MetaPost string of ConTeXt text: "" for none *)
-PROCEDURE Label(lab: F.Label);
+(* Writes lab as a MetaPost string of ConTeXt text: "" for none *)
+PROCEDURE Label*(lab: F.Label);
   VAR line: F.Line; i, end: LONGINT; ch: CHAR; st: INTEGER;
 BEGIN
   W('"');
