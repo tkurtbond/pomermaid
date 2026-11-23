@@ -1,0 +1,24 @@
+config config.logLevel="debug"
+config config.theme="default"
+config config.themeVariables.gitBranchLabel0="#ffffff"
+config config.themeVariables.gitBranchLabel1="#ffffff"
+config config.themeVariables.gitBranchLabel2="#ffffff"
+config config.themeVariables.gitBranchLabel3="#ffffff"
+config config.themeVariables.gitBranchLabel4="#ffffff"
+config config.themeVariables.gitBranchLabel5="#ffffff"
+config config.themeVariables.gitBranchLabel6="#ffffff"
+config config.themeVariables.gitBranchLabel7="#ffffff"
+config config.themeVariables.gitBranchLabel8="#ffffff"
+config config.themeVariables.gitBranchLabel9="#ffffff"
+gitGraph dir=LR titleTopMargin=25 diagramPadding=8 showCommitLabel=true showBranches=true rotateCommitLabel=true parallelCommits=false mainBranchName="main"
+branch 0 "main" order=0
+branch 1 "branch1" order=0.1
+branch 2 "branch2" order=0.2
+branch 3 "branch3" order=0.3
+branch 4 "branch4" order=0.4
+branch 5 "branch5" order=0.5
+branch 6 "branch6" order=0.6
+branch 7 "branch7" order=0.7
+branch 8 "branch8" order=0.8
+branch 9 "branch9" order=0.9
+commit "0-06a4a23" seq=0 type=normal branch="branch1" msg=""

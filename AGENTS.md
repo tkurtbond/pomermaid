@@ -73,7 +73,9 @@ journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
 `PmXyPic`, with `PmPic.Along`, and `PmXyMp`) and 23 (radar charts:
 `PmRadar`, `PmRadarLayout`, `PmRadarPic` and `PmRadarMp`) and 24
 (sankey diagrams: `PmSankey`, `PmSankeyLayout`, d3-sankey's layout,
-`PmSankeyPic` and `PmSankeyMp`) are done. See
+`PmSankeyPic` and `PmSankeyMp`) and 25 (git graphs: `PmGit`,
+`PmGitLayout`, Mermaid's renderer, `PmGitPic` and `PmGitMp`) are
+done. See
 PLAN.md's State.
 
 ## Reference material

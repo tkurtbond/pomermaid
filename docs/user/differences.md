@@ -330,6 +330,27 @@ differences:
 - **Colours** that are not CSS's, in `nodeColors`, are black, as
   Mermaid's SVG fill would be; in `linkColor`, no link is drawn.
 
+## Git graphs
+
+- **Made ids.** A commit without an id is given one: its number, `-`
+  and 7 hexadecimal digits. Mermaid's digits are random; pomermaid's
+  are a hash of the number, the branch and the message, the same on
+  each run (decision 24).
+- **Transparency.** Mermaid draws the commit labels' backgrounds at an
+  opacity of 0.5; pomermaid draws each in its colour taken over white
+  (decision 25), so that it hides the arrow under it.
+- **Arrows' corners** are quarter circles drawn as Béziers, where
+  Mermaid's are SVG arcs; pic draws them as lines through 8 points of
+  each, with a round end drawn as a circle (decision 26).
+- **Labels** are not passed through Mermaid's `sanitizeText`
+  (decision 27).
+- **A duplicate commit id** is a warning on standard error, with its
+  line; Mermaid's is on the browser's console (decision 28).
+- **Themes.** The colours are the default theme's, changed by the
+  themeVariables; other themes are not drawn.
+- **Text heights** are set as for XY charts: a text's middle is 0.35
+  of its size above its baseline.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

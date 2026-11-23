@@ -1,0 +1,12 @@
+gitGraph dir=TB titleTopMargin=25 diagramPadding=8 showCommitLabel=true showBranches=true rotateCommitLabel=true parallelCommits=false mainBranchName="main"
+branch 0 "main" order=0
+branch 1 "develop" order=0.1
+commit "0-e745ced" seq=0 type=normal branch="main" msg=""
+commit "1-85a1cf8" seq=1 type=normal branch="main" msg="" parent="0-e745ced"
+commit "2-0076937" seq=2 type=normal branch="develop" msg="" parent="1-85a1cf8"
+commit "3-adbfee0" seq=3 type=normal branch="develop" msg="" parent="2-0076937"
+commit "4-30b5d19" seq=4 type=normal branch="main" msg="" parent="1-85a1cf8"
+commit "5-cf11d24" seq=5 type=normal branch="main" msg="" parent="4-30b5d19"
+commit "6-66db937" seq=6 type=merge branch="main" msg="merged branch develop into main" parent="5-cf11d24" parent="3-adbfee0"
+commit "7-f3c9d3a" seq=7 type=normal branch="main" msg="" parent="6-66db937"
+commit "8-9225d45" seq=8 type=normal branch="main" msg="" parent="7-f3c9d3a"

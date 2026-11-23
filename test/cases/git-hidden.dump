@@ -1,0 +1,29 @@
+config config.logLevel="debug"
+config config.theme="base"
+config config.gitGraph.showBranches="false"
+config config.gitGraph.showCommitLabel="false"
+gitGraph dir=LR titleTopMargin=25 diagramPadding=8 showCommitLabel=false showBranches=false rotateCommitLabel=true parallelCommits=false mainBranchName="main"
+branch 0 "main" order=0
+branch 1 "hotfix" order=0.1
+branch 2 "develop" order=0.2
+branch 3 "featureB" order=0.3
+branch 4 "featureA" order=0.4
+branch 5 "release" order=0.5
+commit "0-e745ced" seq=0 type=normal branch="main" msg=""
+commit "1-f57ee73" seq=1 type=normal branch="hotfix" msg="" parent="0-e745ced"
+commit "ash" seq=2 type=normal branch="develop" msg="" parent="1-f57ee73"
+commit "3-d4689d5" seq=3 type=highlight branch="featureB" msg="" parent="ash"
+commit "4-85bd29c" seq=4 type=normal branch="hotfix" msg="" parent="1-f57ee73"
+commit "5-0852a32" seq=5 type=reverse branch="develop" msg="" parent="ash"
+commit "6-c204a46" seq=6 type=normal branch="featureB" msg="" parent="3-d4689d5"
+commit "7-ad0f6b3" seq=7 type=merge branch="main" msg="merged branch hotfix into main" parent="0-e745ced" parent="4-85bd29c"
+commit "8-fb1753c" seq=8 type=normal branch="featureB" msg="" parent="6-c204a46"
+commit "9-af9c7ae" seq=9 type=normal branch="featureA" msg="" parent="5-0852a32"
+commit "10-dc813b1" seq=10 type=merge branch="develop" msg="merged branch hotfix into develop" parent="5-0852a32" parent="4-85bd29c"
+commit "11-be8e5a5" seq=11 type=normal branch="featureA" msg="" parent="9-af9c7ae"
+commit "12-5b1be29" seq=12 type=normal branch="featureB" msg="" parent="8-fb1753c"
+commit "13-c8e486d" seq=13 type=merge branch="develop" msg="merged branch featureA into develop" parent="10-dc813b1" parent="11-be8e5a5"
+commit "14-b7fc430" seq=14 type=normal branch="release" msg="" parent="13-c8e486d"
+commit "15-2a4f343" seq=15 type=normal branch="main" msg="" parent="7-ad0f6b3"
+commit "16-3633494" seq=16 type=merge branch="release" msg="merged branch main into release" parent="14-b7fc430" parent="15-2a4f343"
+commit "17-a1d39f9" seq=17 type=merge branch="develop" msg="merged branch release into develop" parent="13-c8e486d" parent="16-3633494"

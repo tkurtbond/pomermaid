@@ -1,0 +1,18 @@
+config config.logLevel="debug"
+config config.theme="base"
+config config.gitGraph.rotateCommitLabel="false"
+gitGraph dir=LR titleTopMargin=25 diagramPadding=8 showCommitLabel=true showBranches=true rotateCommitLabel=false parallelCommits=false mainBranchName="main"
+branch 0 "main" order=0
+branch 1 "c2" order=0.1
+branch 2 "b1" order=0.2
+branch 3 "b2" order=0.3
+commit "feat(api): ..." seq=0 type=normal branch="main" msg=""
+commit "a" seq=1 type=normal branch="main" msg="" parent="feat(api): ..."
+commit "b" seq=2 type=normal branch="main" msg="" parent="a"
+commit "fix(client): .extra long label.." seq=3 type=normal branch="main" msg="" parent="b"
+commit "feat(modules): ..." seq=4 type=normal branch="c2" msg="" parent="fix(client): .extra long label.."
+commit "test(client): ..." seq=5 type=normal branch="c2" msg="" parent="feat(modules): ..."
+commit "fix(api): ..." seq=6 type=normal branch="main" msg="" parent="fix(client): .extra long label.."
+commit "ci: ..." seq=7 type=normal branch="main" msg="" parent="fix(api): ..."
+commit "8-e0f04fb" seq=8 type=normal branch="b1" msg="" parent="ci: ..."
+commit "9-5139377" seq=9 type=normal branch="b2" msg="" parent="8-e0f04fb"

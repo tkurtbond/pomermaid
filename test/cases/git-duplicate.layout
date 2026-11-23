@@ -1,0 +1,75 @@
+layout width=428.24 height=129.62
+line (68.19,16.72) (424.44,16.72) dash=0.95 fill=none line=#333333 width=0.47
+rect at=(3.8,11.21) w=47.77 h=11.02 r=1.9 fill=#0000ec line=none
+text at=(27.68,16.72) size=7.6 w=39.22 line=#ffffff text="MetroLine1"
+line (68.19,59.47) (424.44,59.47) dash=0.95 fill=none line=#333333 width=0.47
+rect at=(3.8,53.96) w=47.77 h=11.02 r=1.9 fill=#dede00 line=none
+text at=(27.68,59.47) size=7.6 w=39.22 line=#000000 text="MetroLine2"
+line (68.19,102.22) (424.44,102.22) dash=0.95 fill=none line=#333333 width=0.47
+rect at=(3.8,96.71) w=47.77 h=11.02 r=1.9 fill=#9dec00 line=none
+text at=(27.68,102.22) size=7.6 w=39.22 line=#000000 text="MetroLine3"
+curve (72.94,16.72) (72.94,16.72) (96.69,16.72) (96.69,16.72) fill=none line=#0000ec width=3.8
+curve (96.69,16.72) (96.69,16.72) (96.69,49.97) (96.69,49.97) (96.69,55.22) (100.94,59.47) (106.19,59.47) (106.19,59.47) (120.44,59.47) (120.44,59.47) fill=none line=#dede00 width=3.8
+curve (120.44,59.47) (120.44,59.47) (144.19,59.47) (144.19,59.47) fill=none line=#dede00 width=3.8
+curve (144.19,59.47) (144.19,59.47) (167.94,59.47) (167.94,59.47) fill=none line=#dede00 width=3.8
+curve (167.94,59.47) (167.94,59.47) (167.94,92.72) (167.94,92.72) (167.94,97.97) (172.19,102.22) (177.44,102.22) (177.44,102.22) (191.69,102.22) (191.69,102.22) fill=none line=#9dec00 width=3.8
+curve (191.69,102.22) (191.69,102.22) (215.44,102.22) (215.44,102.22) fill=none line=#9dec00 width=3.8
+curve (334.19,16.72) (334.19,16.72) (357.94,16.72) (357.94,16.72) fill=none line=#0000ec width=3.8
+curve (96.69,16.72) (96.69,16.72) (239.19,16.72) (239.19,16.72) fill=none line=#0000ec width=3.8
+curve (239.19,16.72) (239.19,16.72) (262.94,16.72) (262.94,16.72) fill=none line=#0000ec width=3.8
+curve (357.94,16.72) (357.94,16.72) (262.94,16.72) (262.94,16.72) fill=none line=#0000ec width=3.8
+curve (262.94,16.72) (262.94,16.72) (286.69,16.72) (286.69,16.72) fill=none line=#0000ec width=3.8
+curve (286.69,16.72) (286.69,16.72) (310.44,16.72) (310.44,16.72) fill=none line=#0000ec width=3.8
+curve (310.44,16.72) (310.44,16.72) (334.19,16.72) (334.19,16.72) fill=none line=#0000ec width=3.8
+curve (167.94,59.47) (167.94,59.47) (324.69,59.47) (324.69,59.47) (329.94,59.47) (334.19,55.22) (334.19,49.97) (334.19,49.97) (334.19,16.72) (334.19,16.72) fill=none line=#dede00 width=3.8
+curve (357.94,16.72) (357.94,16.72) (381.69,16.72) (381.69,16.72) fill=none line=#0000ec width=3.8
+curve (381.69,16.72) (381.69,16.72) (405.44,16.72) (405.44,16.72) fill=none line=#0000ec width=3.8
+circle at=(72.94,16.72) r=4.75 fill=#0000ec line=#0000ec width=0.47
+circle at=(96.69,16.72) r=4.75 fill=#0000ec line=#0000ec width=0.47
+circle at=(120.44,59.47) r=4.75 fill=#dede00 line=#dede00 width=0.47
+circle at=(144.19,59.47) r=4.75 fill=#dede00 line=#dede00 width=0.47
+circle at=(167.94,59.47) r=4.75 fill=#dede00 line=#dede00 width=0.47
+circle at=(191.69,102.22) r=4.75 fill=#9dec00 line=#9dec00 width=0.47
+rect at=(210.69,97.47) w=9.5 h=9.5 fill=#310092 line=#310092 width=0.47
+rect at=(212.59,99.37) w=5.7 h=5.7 fill=#ececff line=#ececff width=0.47
+circle at=(239.19,16.72) r=4.75 fill=#0000ec line=#0000ec width=0.47
+circle at=(262.94,16.72) r=4.75 fill=#0000ec line=#0000ec width=0.47
+circle at=(262.94,16.72) r=2.85 fill=#ececff line=#ececff width=0.47
+circle at=(286.69,16.72) r=4.75 fill=#0000ec line=#0000ec width=0.47
+circle at=(310.44,16.72) r=4.75 fill=#0000ec line=#0000ec width=0.47
+circle at=(334.19,16.72) r=4.75 fill=#0000ec line=#0000ec width=0.47
+circle at=(334.19,16.72) r=2.85 fill=#ececff line=#ececff width=0.47
+circle at=(357.94,16.72) r=4.75 fill=#0000ec line=#0000ec width=0.47
+circle at=(381.69,16.72) r=4.75 fill=#0000ec line=#0000ec width=0.47
+circle at=(405.44,16.72) r=4.75 fill=#0000ec line=#0000ec width=0.47
+line (403.07,14.35) (407.82,19.1) fill=none line=#ececff width=1.43
+line (403.07,19.1) (407.82,14.35) fill=none line=#ececff width=1.43
+poly (57.15,35.51) (70.92,21.74) (76.3,27.11) (62.53,40.88) fill=#ffffef line=none
+text at=(66.72,31.31) size=4.75 w=17.58 angle=-45 line=#000021 text="NewYork"
+poly (83.17,33.37) (94.76,21.78) (100.13,27.15) (88.54,38.74) fill=#ffffef line=none
+text at=(91.65,30.26) size=4.75 w=14.49 angle=-45 line=#000021 text="Dallas"
+poly (99.63,83) (118.24,64.39) (123.62,69.77) (105.01,88.38) fill=#ffffef line=none
+text at=(111.63,76.38) size=4.75 w=24.42 angle=-45 line=#000021 text="LosAngeles"
+poly (128.99,77.7) (142.19,64.5) (147.57,69.87) (134.37,83.07) fill=#ffffef line=none
+text at=(138.28,73.78) size=4.75 w=16.77 angle=-45 line=#000021 text="Chicago"
+poly (152.74,77.7) (165.94,64.5) (171.32,69.87) (158.12,83.07) fill=#ffffef line=none
+text at=(162.03,73.78) size=4.75 w=16.77 angle=-45 line=#000021 text="Houston"
+poly (176.49,120.45) (189.69,107.25) (195.07,112.62) (181.87,125.82) fill=#ffffef line=none
+text at=(185.78,116.53) size=4.75 w=16.77 angle=-45 line=#000021 text="Phoenix"
+poly (201.92,118.87) (213.51,107.28) (218.88,112.65) (207.29,124.24) fill=#ffffef line=none
+text at=(210.4,115.76) size=4.75 w=14.49 angle=-45 line=#000021 text="Denver"
+poly (223.99,34.95) (237.19,21.75) (242.57,27.12) (229.37,40.32) fill=#ffffef line=none
+text at=(233.28,31.03) size=4.75 w=16.77 angle=-45 line=#000021 text="Atlanta"
+poly (274.84,31.78) (284.82,21.81) (290.19,27.18) (280.21,37.16) fill=#ffffef line=none
+text at=(282.51,29.48) size=4.75 w=12.21 angle=-45 line=#000021 text="Miami"
+poly (290.23,39.69) (308.26,21.65) (313.64,27.03) (295.6,45.06) fill=#ffffef line=none
+text at=(301.93,33.36) size=4.75 w=23.61 angle=-45 line=#000021 text="Washington"
+poly (312.46,8.55) (312.46,6.65) (316.26,3.8) (352.13,3.8) (352.13,11.4) (316.26,11.4) fill=#ececff line=#c7c7f1 width=0.47
+circle at=(314.36,7.6) r=0.71 fill=#333333 line=none
+text at=(334.19,7.46) size=4.75 w=32.07 line=#131300 text="MY JUNCTION"
+poly (344.42,33.37) (356.01,21.78) (361.38,27.15) (349.79,38.74) fill=#ffffef line=none
+text at=(352.9,30.26) size=4.75 w=14.49 angle=-45 line=#000021 text="Boston"
+poly (366.49,34.95) (379.69,21.75) (385.07,27.12) (371.87,40.32) fill=#ffffef line=none
+text at=(375.78,31.03) size=4.75 w=16.77 angle=-45 line=#000021 text="Detroit"
+poly (381.29,43.41) (403.12,21.58) (408.5,26.96) (386.66,48.79) fill=#ffffef line=none
+text at=(394.89,35.18) size=4.75 w=28.98 angle=-45 line=#000021 text="SanFrancisco"

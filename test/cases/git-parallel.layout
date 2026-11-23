@@ -1,0 +1,26 @@
+layout width=170.47 height=107.89
+line (71.72,12.25) (165.47,12.25) dash=1.25 fill=none line=#333333 width=0.63
+rect at=(19.4,5) w=30.45 h=14.5 r=2.5 fill=#0000ec line=none
+text at=(34.63,12.25) size=10 w=19.2 line=#ffffff text="main"
+line (71.72,68.5) (165.47,68.5) dash=1.25 fill=none line=#333333 width=0.63
+rect at=(5,61.25) w=44.85 h=14.5 r=2.5 fill=#dede00 line=none
+text at=(27.42,68.5) size=10 w=33.6 line=#000000 text="develop"
+curve (77.97,12.25) (77.97,12.25) (77.97,56) (77.97,56) (77.97,62.9) (83.57,68.5) (90.47,68.5) (90.47,68.5) (109.22,68.5) (109.22,68.5) fill=none line=#dede00 width=5
+curve (109.22,68.5) (109.22,68.5) (140.47,68.5) (140.47,68.5) fill=none line=#dede00 width=5
+curve (77.97,12.25) (77.97,12.25) (109.22,12.25) (109.22,12.25) fill=none line=#0000ec width=5
+curve (109.22,12.25) (109.22,12.25) (140.47,12.25) (140.47,12.25) fill=none line=#0000ec width=5
+circle at=(77.97,12.25) r=6.25 fill=#0000ec line=#0000ec width=0.63
+circle at=(109.22,68.5) r=6.25 fill=#dede00 line=#dede00 width=0.63
+circle at=(140.47,68.5) r=6.25 fill=#dede00 line=#dede00 width=0.63
+circle at=(109.22,12.25) r=6.25 fill=#0000ec line=#0000ec width=0.63
+circle at=(140.47,12.25) r=6.25 fill=#0000ec line=#0000ec width=0.63
+poly (54.82,39.22) (75.23,18.81) (82.31,25.88) (61.89,46.29) fill=#ffffef line=none
+text at=(68.56,32.55) size=6.25 w=26.38 angle=-45 line=#000021 text="0-e745ced"
+poly (85.98,95.56) (106.48,75.05) (113.55,82.12) (93.05,102.63) fill=#ffffef line=none
+text at=(99.76,88.84) size=6.25 w=26.5 angle=-45 line=#000021 text="1-3b2d38e"
+poly (116.95,95.82) (137.72,75.05) (144.79,82.12) (124.02,102.89) fill=#ffffef line=none
+text at=(130.87,88.97) size=6.25 w=26.88 angle=-45 line=#000021 text="2-0076937"
+poly (86.07,39.22) (106.48,18.81) (113.56,25.88) (93.14,46.29) fill=#ffffef line=none
+text at=(99.81,32.55) size=6.25 w=26.38 angle=-45 line=#000021 text="3-aa59d0e"
+poly (117.13,39.4) (137.73,18.8) (144.8,25.87) (124.2,46.47) fill=#ffffef line=none
+text at=(130.97,32.63) size=6.25 w=26.63 angle=-45 line=#000021 text="4-30b5d19"

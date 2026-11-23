@@ -19,7 +19,8 @@ diagrams (`erDiagram`), requirement diagrams
 user journeys (`journey`), timelines (`timeline`), Gantt
 charts (`gantt`), pie charts (`pie`), quadrant charts
 (`quadrantChart`), XY charts (`xychart`), radar charts
-(`radar-beta`) and sankey diagrams (`sankey-beta`).
+(`radar-beta`), sankey diagrams (`sankey-beta`) and git graphs
+(`gitGraph`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -761,6 +762,53 @@ labelled with its name and, unless `showValues` is false, its value.
   turn, as d3 gives them.
 - **Text the diagram cannot hold** widens the drawing, as Mermaid's
   does.
+
+### Git graphs
+
+pomermaid reads Mermaid's git graphs (`gitGraph`), as Mermaid 12.3.0
+reads them, and draws them as Mermaid does: each branch a lane, with
+its name; the commits along the lanes, in the order they were made;
+an arrow from each commit to the next on its branch, and from each
+branch's start and each merge's or cherry-pick's other parent; the
+commits' ids beside them, and their tags.
+
+- **The first line:** `gitGraph`, `gitGraph:`, or `gitGraph` and a
+  direction, `LR:` (left to right, the default), `TB:` (top to
+  bottom) or `BT:` (bottom to top).
+- **`commit`,** then any of `id: "x"`, `msg: "x"` (or just `"x"`),
+  `tag: "x"` and `type: NORMAL`, `REVERSE` or `HIGHLIGHT`. A commit
+  with no id is given one: its number, `-` and 7 hexadecimal digits.
+  An id used before is a warning, and the new commit replaces the
+  old, as in Mermaid.
+- **`branch name`,** then `order: N`: makes the branch at the current
+  commit and checks it out. Branches are placed by order, then in the
+  order made.
+- **`checkout name`** or **`switch name`.**
+- **`merge name`,** then any of `id:`, `tag:` and `type:`: a merge
+  commit on the current branch.
+- **`cherry-pick id: "x"`,** then any of `tag:` and `parent: "x"`
+  (which of a merge commit's parents to pick from).
+- **Names** are letters, digits, `_`, `-`, `.` and `/`, or a string
+  in quotation marks.
+- **`title`,** and `%%` comments; `accTitle` and `accDescr` are read
+  and ignored.
+- **Mermaid's errors:** a branch checked out before it is made, or
+  made twice; a branch merged into itself, or a merge with nothing to
+  merge; a cherry-pick of a commit that does not exist or is on the
+  current branch.
+- **Configuration:** `gitGraph`'s `showBranches` (true),
+  `showCommitLabel` (true), `rotateCommitLabel` (true: the ids are
+  turned 45 degrees), `parallelCommits` (false: each commit a step
+  further along; true: each a step past its parents),
+  `mainBranchName` (`main`), `mainBranchOrder` (0), `titleTopMargin`
+  (25) and `diagramPadding` (8).
+- **Colours:** the default theme's, each changed by its
+  themeVariable: `git0` to `git7` (the branches, in turn),
+  `gitInv0` to `gitInv7`, `gitBranchLabel0` to `gitBranchLabel7`,
+  `commitLabelColor`, `commitLabelBackground`, `commitLabelFontSize`,
+  `tagLabelColor`, `tagLabelBackground`, `tagLabelBorder`,
+  `tagLabelFontSize`, `primaryColor`, `commitLineColor` (else
+  `lineColor`) and `textColor`.
 
 Mermaid's other diagram types are not read yet.
 

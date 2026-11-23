@@ -1,0 +1,17 @@
+---
+title: Example Git diagram
+---
+gitGraph
+   commit
+   commit id: "x" tag: "v1"
+   branch develop order: 2
+   checkout develop
+   commit id: "d1" type: HIGHLIGHT
+   commit
+   checkout main
+   merge develop tag: "m" type: REVERSE
+   branch feat
+   commit "hello"
+   checkout main
+   cherry-pick id: "d1"
+   commit

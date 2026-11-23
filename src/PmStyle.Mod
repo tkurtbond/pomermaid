@@ -99,6 +99,16 @@ TYPE
     curveOpacity*, graticuleOpacity*: REAL  (* from 0 to 1 *)
   END;
 
+  (* A git graph's colours, as 0RRGGBBH, or -1 for none, and its
+     sizes, in Mermaid's pixels *)
+  GitTheme* = RECORD
+    git*, inv*, label*: ARRAY 8 OF LONGINT;  (* git0 .., gitInv0 .., gitBranchLabel0 .. *)
+    primary*, text*, line*: LONGINT;         (* primaryColor, textColor, the branches' lines *)
+    tagText*, tagFill*, tagLine*: LONGINT;
+    commitText*, commitFill*: LONGINT;       (* commitFill blended over white at 0.5 *)
+    commitSize*, tagSize*: REAL
+  END;
+
   Style* = RECORD
     fill*, line*, text*: INTEGER;  (* indexes into the colours, or NoColour *)
     inner*: INTEGER;               (* a composite state's body's fill, below
@@ -690,6 +700,56 @@ BEGIN
   ELSIF t.graticuleOpacity > 1 THEN t.graticuleOpacity := 1
   END
 END RadarColours;
+
+(* t, a git graph's colours and sizes: the default theme's, changed by
+   themeVariables: git0 to git7, gitInv0 to gitInv7, gitBranchLabel0
+   to gitBranchLabel7, primaryColor, textColor, commitLineColor (else
+   lineColor), tagLabelColor, tagLabelBackground, tagLabelBorder,
+   commitLabelColor, commitLabelBackground, commitLabelFontSize and
+   tagLabelFontSize. The default theme computes git0 .. git7 twice,
+   darkening them twice, and gitInv0 .. gitInv7 from the first; these
+   are its results. *)
+PROCEDURE GitColours*(VAR t: GitTheme);
+  VAR set: BOOLEAN; k: INTEGER; name: ARRAY 20 OF CHAR; x: REAL; c: LONGINT;
+
+  PROCEDURE Name(base: ARRAY OF CHAR; k: INTEGER);
+    VAR i: INTEGER;
+  BEGIN
+    COPY(base, name); i := 0; WHILE name[i] # 0X DO INC(i) END;
+    name[i] := CHR(ORD("0") + k); name[i + 1] := 0X
+  END Name;
+
+  PROCEDURE Blend(a: LONGINT): LONGINT;  (* a at 0.5 over white, rounded *)
+  BEGIN
+    RETURN ((a DIV 10000H + 256) DIV 2) * 10000H + ((a DIV 100H MOD 100H + 256) DIV 2) * 100H
+      + (a MOD 100H + 256) DIV 2
+  END Blend;
+
+BEGIN
+  t.git[0] := 00000ECH; t.git[1] := 0DEDE00H; t.git[2] := 09DEC00H; t.git[3] := 00076ECH;
+  t.git[4] := 000ECECH; t.git[5] := 000EC76H; t.git[6] := 0EC00ECH; t.git[7] := 0EC0000H;
+  t.inv[0] := 0121200H; t.inv[1] := 00000A1H; t.inv[2] := 0310092H; t.inv[3] := 0924900H;
+  t.inv[4] := 0920000H; t.inv[5] := 0920049H; t.inv[6] := 0009200H; t.inv[7] := 0009292H;
+  FOR k := 0 TO 7 DO t.label[k] := 0 END;
+  t.label[0] := 0FFFFFFH; t.label[3] := 0FFFFFFH;
+  FOR k := 0 TO 7 DO
+    Name("git", k); set := Var(name, t.git[k]);
+    Name("gitInv", k); set := Var(name, t.inv[k]);
+    Name("gitBranchLabel", k); set := Var(name, t.label[k])
+  END;
+  t.primary := 0ECECFFH; set := Var("primaryColor", t.primary);
+  t.text := textColour;
+  t.line := edgeLine; set := Var("commitLineColor", t.line);
+  t.tagText := 0131300H; set := Var("tagLabelColor", t.tagText);
+  t.tagFill := 0ECECFFH; set := Var("tagLabelBackground", t.tagFill);
+  t.tagLine := 0C7C7F1H; set := Var("tagLabelBorder", t.tagLine);
+  t.commitText := 0000021H; set := Var("commitLabelColor", t.commitText);
+  c := 0FFFFDEH; set := Var("commitLabelBackground", c);
+  IF c = None THEN t.commitFill := None ELSE t.commitFill := Blend(c) END;
+  t.commitSize := 10; t.tagSize := 10;
+  IF VarLength("commitLabelFontSize", x) THEN t.commitSize := x / px END;
+  IF VarLength("tagLabelFontSize", x) THEN t.tagSize := x / px END
+END GitColours;
 
 (* Applies the classDefs named name *)
 PROCEDURE ApplyClass(g: F.Graph; VAR st: Style; name: ARRAY OF CHAR);

@@ -986,6 +986,38 @@ configuration's schema, and d3-sankey 0.12.3's `sankey.js`,
 - **24.4, MetaPost:** the same drawing.
 - **24.5:** Mermaid's examples; the documentation.
 
+### Phase 25: git graphs [done]
+
+**Change:** `gitGraph`, read by a new module, `PmGit`, into a model
+of its own (the commits, in Mermaid's order, each with its id,
+message, type, tags, parents and branch; the branches, each with its
+name, order and tip), laid out by `PmGitLayout` as Mermaid's
+`gitGraphRenderer.ts` draws it, and drawn in pic, SVG and MetaPost.
+
+**Check:** case tests for each direction (LR, TB, BT),
+`parallelCommits`, `rotateCommitLabel`, `showBranches` and
+`showCommitLabel`, merges, cherry-picks (with `parent:`), tags,
+commit types, rerouted arrows, a duplicate id, the theme's variables,
+and the errors; Mermaid's own git graph examples read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/gitgraph.md`, the Langium
+grammar (`packages/parser/src/language/gitGraph/`),
+`diagrams/git/gitGraphAst.ts`, `gitGraphParser.ts`,
+`gitGraphRenderer.ts` and `styles.js`, and the default theme's git
+colours. In steps:
+
+- **25.1, the model and the reader:** the statements, their
+  arguments and strings; the db's rules and errors; `config.gitGraph`;
+  the dump.
+- **25.2, the layout:** the branches' places by order, the commits'
+  (in sequence, or parallel), the branch lines and labels, the arrows
+  (straight, curved, or rerouted through a free lane), the bullets of
+  each type, the commit labels and tags, turned for TB and BT and by
+  `rotateCommitLabel`, the title; the layout dump.
+- **25.3, pic and SVG; 25.4, MetaPost:** the same drawing, in the
+  layout's order.
+- **25.5:** Mermaid's examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1166,6 +1198,31 @@ None at present.
     outlined labels' halo is not drawn. MetaPost draws the same. A
     sankey diagram's texts widen the drawing, as Mermaid's do: its
     bounds are its items'.
+
+2026-11-23, in Phase 25, under decision 2:
+
+24. **A git graph's made commit ids are a hash.** Mermaid gives a
+    commit without an id its sequence number, "-" and 7 random
+    hexadecimal digits, different on each run. pomermaid's 7 digits
+    are a hash of the number, the branch and the message, so that the
+    output is the same each time and can be tested.
+25. **A git graph's commit label backgrounds are blended.** Mermaid
+    draws them at an opacity of 0.5; pic has no transparency, so, as
+    decision 22 says, each is its colour taken over white. It hides
+    what is beneath it, an arrow's line, for one.
+26. **A git graph's arrows are Béziers.** Mermaid's arrows turn their
+    corners with SVG arcs; pomermaid's are quarter circles, each a
+    Bézier (with Mermaid's centres and radii), which MetaPost draws as
+    it is and pic takes at 8 points. pic's lines have no round caps,
+    so each arrow has a filled circle at each end, as wide as it.
+27. **A git graph's labels are a line each.** Branch names, commit
+    ids and tags are each set on one line, as Mermaid sets them, and
+    are not passed through Mermaid's `sanitizeText`, which removes
+    HTML: pic and MetaPost have none to remove.
+28. **A duplicate commit id is a warning.** Mermaid writes it to the
+    browser's console and replaces the earlier commit; pomermaid
+    does the same, writing the warning, with the line, to standard
+    error.
 
 ## Later
 
@@ -1821,3 +1878,43 @@ through ConTeXt, and looked at; d3-sankey itself was not run, so the
 layout is checked against its source, not its output. On 2026-11-23,
 `make test` passes, 520 of 520 under both models, on FreeBSD (alerik,
 rackhir), NetBSD (artos, yishana) and OpenBSD (jherek, cymoril).
+
+Phase 25, git graphs, is done, 2026-11-23, on Mermaid 12.3.0.
+`PmGit` reads `gitGraph` (with `LR:`, `TB:` or `BT:`): `commit`
+(`id:`, `msg:`, `tag:`, `type:`), `branch` (`order:`), `merge`,
+`checkout` and `switch`, `cherry-pick` (`id:`, `tag:`, `parent:`),
+`title`, `accTitle` and `accDescr`, and `config.gitGraph`
+(`showBranches`, `showCommitLabel`, `rotateCommitLabel`,
+`parallelCommits`, `mainBranchName`, `mainBranchOrder`,
+`titleTopMargin`, `diagramPadding`), with Mermaid's db's rules and
+errors; a branch without an order sorts as Mermaid's,
+`parseFloat("0." + i)`. Made ids are a hash (decision 24), and a
+duplicate id is a warning (decision 28). `PmGitLayout` is Mermaid's
+renderer, ported: the branches' places, the commits' (in sequence or
+parallel, `setParallelBTPos`), the branch lines and labels, the
+arrows, rerouted through a free lane where a commit is in the way,
+the bullets (normal, reverse, highlight, merge, cherry-pick), the
+commit labels and tags, turned for TB and BT and by
+`rotateCommitLabel`, and the title. Its arithmetic is LONGREAL. The
+colours are the default theme's, each changed by its themeVariable
+(`PmStyle.GitColours`); the commit labels' backgrounds are blended
+over white (decision 25), and the arrows' corners are Béziers
+(decision 26). `PmGitPic` draws it in pic, SVG coming from that
+through groff (`PmSvg`'s `WriteGitDocument`); an unstroked rounded box
+is given a hairline outline in its fill colour, as `box rad` with
+`thickness 0` comes out of mutool with corners of the default SVG
+stroke width, scaled. `PmGitMp` writes the MetaPost. `make test`
+passes under `-O2` and `-OC`: 549 case tests, with `git-basic` and
+`git-tb` (dump, layout, pic, mp and svg-ms), `git-bt`,
+`git-parallel`, `git-unrotated`, `git-hidden`, `git-colours`,
+`git-cherry-parent` and `git-duplicate` (dump and layout; most from
+Mermaid's `docs/syntax/gitgraph.md`), and five error cases
+(`git-bad-branch`, `git-bad-checkout`, `git-bad-cherry`,
+`git-bad-merge`, `git-bad-type`). All 35 of Mermaid's git graph
+examples were read and laid out; `git-basic` was drawn as SVG,
+through groff to PDF and through ConTeXt, and the directions,
+`parallelCommits`, `rotateCommitLabel: false` and the colours as SVG,
+and looked at. Mermaid itself was not run, so the layout is checked
+against its source, not its output. On 2026-11-23, `make test`
+passes, 549 of 549 under both models, on FreeBSD (alerik, rackhir),
+NetBSD (artos, yishana) and OpenBSD (jherek, cymoril).

@@ -1,0 +1,9 @@
+config config.gitGraph.parallelCommits="true"
+gitGraph dir=LR titleTopMargin=25 diagramPadding=8 showCommitLabel=true showBranches=true rotateCommitLabel=true parallelCommits=true mainBranchName="main"
+branch 0 "main" order=0
+branch 1 "develop" order=0.1
+commit "0-e745ced" seq=0 type=normal branch="main" msg=""
+commit "1-3b2d38e" seq=1 type=normal branch="develop" msg="" parent="0-e745ced"
+commit "2-0076937" seq=2 type=normal branch="develop" msg="" parent="1-3b2d38e"
+commit "3-aa59d0e" seq=3 type=normal branch="main" msg="" parent="0-e745ced"
+commit "4-30b5d19" seq=4 type=normal branch="main" msg="" parent="3-aa59d0e"

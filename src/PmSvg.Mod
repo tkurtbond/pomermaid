@@ -24,7 +24,7 @@ IMPORT PmIO, F := PmFlow, FL := PmFlowLayout, L := PmLayout, PmPic, R := PmRun,
   TL := PmTimelineLayout, PmTimelinePic, GL := PmGanttLayout, PmGanttPic,
   PL := PmPieLayout, PmPiePic, QL := PmQuadrantLayout, PmQuadrantPic,
   XL := PmXyLayout, PmXyPic, RL := PmRadarLayout, PmRadarPic,
-  KL := PmSankeyLayout, PmSankeyPic;
+  KL := PmSankeyLayout, PmSankeyPic, HL := PmGitLayout, PmGitPic;
 
 CONST
   MinMargin = 2; (* points round the drawing, at least, for lines' widths *)
@@ -41,6 +41,7 @@ VAR
   xy: XL.Layout;
   radar: RL.Layout;
   sankey: KL.Layout;
+  git: HL.Layout;
 
 (* The page's size for a drawing w by h points, pic's line space
    lvs, its widest line widest points wide, rounded as it is written *)
@@ -137,6 +138,13 @@ BEGIN
   Header(l.vs, PmSankeyPic.Widest(l), l.width, l.height);
   PmSankeyPic.Write(l, font)
 END WriteSankeyDocument;
+
+(* Writes the git graph l as WriteDocument does a flowchart *)
+PROCEDURE WriteGitDocument*(l: HL.Layout; font: ARRAY OF CHAR);
+BEGIN
+  Header(l.vs, PmGitPic.Widest(l), l.width, l.height);
+  PmGitPic.Write(l, font)
+END WriteGitDocument;
 
 (* Crop *)
 
@@ -419,6 +427,7 @@ BEGIN
   ELSIF xy # NIL THEN WriteXyDocument(xy, font)
   ELSIF radar # NIL THEN WriteRadarDocument(radar, font)
   ELSIF sankey # NIL THEN WriteSankeyDocument(sankey, font)
+  ELSIF git # NIL THEN WriteGitDocument(git, font)
   ELSE WriteDocument(flow, font) END;
   PmIO.CloseOutput;
   c := R.New(); R.AddText(c, "groff -p -Tpdf");
@@ -452,7 +461,8 @@ END Run;
 PROCEDURE None;
 BEGIN
   flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL;
-  quadrant := NIL; xy := NIL; radar := NIL; sankey := NIL
+  quadrant := NIL; xy := NIL; radar := NIL; sankey := NIL;
+  git := NIL
 END None;
 
 PROCEDURE Write*(l: FL.Layout; font, fontPath, output: ARRAY OF CHAR;
@@ -523,5 +533,12 @@ PROCEDURE WriteSankey*(l: KL.Layout; font, fontPath, output: ARRAY OF CHAR;
 BEGIN
   None; sankey := l; Run(font, fontPath, output, outline, engine)
 END WriteSankey;
+
+(* Writes the git graph l as SVG, as Write does a flowchart *)
+PROCEDURE WriteGit*(l: HL.Layout; font, fontPath, output: ARRAY OF CHAR;
+  outline: BOOLEAN; engine: INTEGER);
+BEGIN
+  None; git := l; Run(font, fontPath, output, outline, engine)
+END WriteGit;
 
 END PmSvg.
