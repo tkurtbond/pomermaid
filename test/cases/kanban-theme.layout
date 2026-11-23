@@ -1,0 +1,10 @@
+layout width=203.13 height=85.25
+rect at=(6.25,6.25) w=93.75 h=72.75 r=3.13 fill=#ff3333 line=#ff3333 width=0.63
+text at=(53.13,24.25) size=10 w=77 line=#00ff00 text=md:"A section with a"/"rather long title"/"that wraps"
+rect at=(103.13,6.25) w=93.75 h=66.75 r=3.13 fill=#dcb9ff line=#dcb9ff width=0.63
+text at=(150,12.25) size=10 w=6.5 line=#ffffff text=md:"B"
+rect at=(10.94,42.25) w=84.38 h=30.5 r=3.13 fill=#ffffee line=#0000ff width=0.63
+text at=(25.24,51.5) size=10 w=16.1 line=#990000 text=md:"One"
+text at=(72.26,63.5) size=10 w=33.6 line=#990000 text=md:"someone"
+rect at=(107.81,42.25) w=84.38 h=24.5 r=3.13 fill=#ffffee line=#0000ff width=0.63
+text at=(122.11,54.5) size=10 w=16.1 line=#990000 text=md:"Two"

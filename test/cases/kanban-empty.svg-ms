@@ -1,0 +1,20 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p59.75p,141.5p
+.pl 59.75p
+.po 2p
+.ll 137.5p
+.sp 2p
+.defcolor pm-e8ffb9 rgb #e8ffb9
+.defcolor pm-000000 rgb #000000
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 1.91 ht 0.608 at (0.955, -0.304)
+box wid 1.736 ht 0.434 rad 0.043 at (0.955, -0.304) shaded "pm-e8ffb9" outlined "pm-e8ffb9" thickness 0.625
+"\s[10]\f[TS]\m[pm-000000]Only a section\m[]\f[]\s[0]"  at (0.955, -0.17)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

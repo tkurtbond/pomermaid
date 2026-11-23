@@ -1,0 +1,21 @@
+layout width=290.56 height=197
+rect at=(6.25,6.25) w=125 h=184.5 r=3.13 fill=#e8ffb9 line=#e8ffb9 width=0.63
+text at=(68.75,12.25) size=10 w=35.3 line=#000000 text=md:"Rounded"
+rect at=(134.38,6.25) w=125 h=86 r=3.13 fill=#dcb9ff line=#dcb9ff width=0.63
+text at=(196.88,12.25) size=10 w=30.5 line=#ffffff text=md:"Second"
+rect at=(10.94,21.88) w=115.63 h=24.5 r=3.13 fill=#ffffff line=#9370db width=0.63
+text at=(32.44,34.13) size=10 w=30.5 line=#333333 text=md:"Circle"
+rect at=(10.94,49.5) w=115.63 h=24.5 r=3.13 fill=#ffffff line=#9370db width=0.63
+text at=(30.04,61.75) size=10 w=25.7 line=#333333 text=md:"Cloud"
+rect at=(10.94,77.13) w=115.63 h=24.5 r=3.13 fill=#ffffff line=#9370db width=0.63
+text at=(27.64,89.38) size=10 w=20.9 line=#333333 text=md:"Bang"
+rect at=(10.94,104.75) w=115.63 h=24.5 r=3.13 fill=#ffffff line=#9370db width=0.63
+text at=(34.84,117) size=10 w=35.3 line=#333333 text=md:"Hexagon"
+rect at=(10.94,132.38) w=115.63 h=24.5 r=3.13 fill=#ffffff line=#9370db width=0.63
+text at=(46.29,144.63) size=10 w=58.2 line=#333333 text=md:"Quoted [text]"
+rect at=(10.94,160) w=115.63 h=24.5 r=3.13 fill=#ffffff line=#9370db width=0.63
+text at=(56.54,172.25) size=10 w=78.7 line=#333333 text=md:"A markdown string"=00222222220000000
+rect at=(139.06,21.88) w=115.63 h=24.5 r=3.13 fill=#ffffff line=#9370db width=0.63
+text at=(179.01,34.13) size=10 w=67.4 line=#333333 text=md:"plain text card"
+rect at=(139.06,49.5) w=115.63 h=36.5 r=3.13 fill=#ffffff line=#9370db width=0.63
+text at=(214.81,67.75) size=10 w=139 line=#333333 text=md:"style n2"/"stroke:#AA00FF,fill:#E1BEE7"

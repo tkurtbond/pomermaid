@@ -1,0 +1,49 @@
+layout width=417.66 height=15.9
+rect at=(1.69,1.69) w=33.75 h=12.52 r=0.84 fill=#e8ffb9 line=#e8ffb9 width=0.17
+text at=(18.56,3.31) size=2.7 w=11.56 line=#000000 text=md:"Section 1"
+rect at=(36.28,1.69) w=33.75 h=12.52 r=0.84 fill=#dcb9ff line=#dcb9ff width=0.17
+text at=(53.16,3.31) size=2.7 w=11.56 line=#ffffff text=md:"Section 2"
+rect at=(70.88,1.69) w=33.75 h=12.52 r=0.84 fill=#ffb9ff line=#ffb9ff width=0.17
+text at=(87.75,3.31) size=2.7 w=11.56 line=#000000 text=md:"Section 3"
+rect at=(105.47,1.69) w=33.75 h=12.52 r=0.84 fill=#ffb9dc line=#ffb9dc width=0.17
+text at=(122.34,3.31) size=2.7 w=11.56 line=#000000 text=md:"Section 4"
+rect at=(140.06,1.69) w=33.75 h=12.52 r=0.84 fill=#ffb9b9 line=#ffb9b9 width=0.17
+text at=(156.94,3.31) size=2.7 w=11.56 line=#000000 text=md:"Section 5"
+rect at=(174.66,1.69) w=33.75 h=12.52 r=0.84 fill=#ffdcb9 line=#ffdcb9 width=0.17
+text at=(191.53,3.31) size=2.7 w=11.56 line=#000000 text=md:"Section 6"
+rect at=(209.25,1.69) w=33.75 h=12.52 r=0.84 fill=#dcffb9 line=#dcffb9 width=0.17
+text at=(226.13,3.31) size=2.7 w=11.56 line=#000000 text=md:"Section 7"
+rect at=(243.84,1.69) w=33.75 h=12.52 r=0.84 fill=#b9ffdc line=#b9ffdc width=0.17
+text at=(260.72,3.31) size=2.7 w=11.56 line=#000000 text=md:"Section 8"
+rect at=(278.44,1.69) w=33.75 h=12.52 r=0.84 fill=#b9ffff line=#b9ffff width=0.17
+text at=(295.31,3.31) size=2.7 w=11.56 line=#000000 text=md:"Section 9"
+rect at=(313.03,1.69) w=33.75 h=12.52 r=0.84 fill=#b9dcff line=#b9dcff width=0.17
+text at=(329.91,3.31) size=2.7 w=12.91 line=#000000 text=md:"Section 10"
+rect at=(347.63,1.69) w=33.75 h=12.52 r=0.84 fill=#e8ffb9 line=#e8ffb9 width=0.17
+text at=(364.5,3.31) size=2.7 w=12.91 line=#000000 text=md:"Section 11"
+rect at=(382.22,1.69) w=33.75 h=12.52 r=0.84 fill=#dcb9ff line=#dcb9ff width=0.17
+text at=(399.09,3.31) size=2.7 w=12.91 line=#ffffff text=md:"Section 12"
+rect at=(2.95,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(8.47,9.21) size=2.7 w=7.67 line=#333333 text=md:"Item 1"
+rect at=(37.55,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(43.07,9.21) size=2.7 w=7.67 line=#333333 text=md:"Item 2"
+rect at=(72.14,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(77.66,9.21) size=2.7 w=7.67 line=#333333 text=md:"Item 3"
+rect at=(106.73,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(112.26,9.21) size=2.7 w=7.67 line=#333333 text=md:"Item 4"
+rect at=(141.33,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(146.85,9.21) size=2.7 w=7.67 line=#333333 text=md:"Item 5"
+rect at=(175.92,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(181.44,9.21) size=2.7 w=7.67 line=#333333 text=md:"Item 6"
+rect at=(210.52,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(216.04,9.21) size=2.7 w=7.67 line=#333333 text=md:"Item 7"
+rect at=(245.11,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(250.63,9.21) size=2.7 w=7.67 line=#333333 text=md:"Item 8"
+rect at=(279.7,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(285.22,9.21) size=2.7 w=7.67 line=#333333 text=md:"Item 9"
+rect at=(314.3,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(320.49,9.21) size=2.7 w=9.02 line=#333333 text=md:"Item 10"
+rect at=(348.89,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(355.09,9.21) size=2.7 w=9.02 line=#333333 text=md:"Item 11"
+rect at=(383.48,5.91) w=31.22 h=6.61 r=0.84 fill=#ffffff line=#9370db width=0.17
+text at=(389.68,9.21) size=2.7 w=9.02 line=#333333 text=md:"Item 12"

@@ -1,0 +1,11 @@
+config config.kanban.sectionWidth="150"
+config config.themeVariables.cScale2="#ff0000"
+config config.themeVariables.cScaleLabel2="#00ff00"
+config config.themeVariables.background="#ffffee"
+config config.themeVariables.nodeBorder="#0000ff"
+config config.themeVariables.textColor="#990000"
+kanban sectionWidth=150 padding=10 sections=2 nodes=4
+section index=0 level=2 shape=2 padding=20 id="A" label=md:"A section with a rather long title that wraps"
+  item index=1 level=4 shape=2 padding=20 id="x" section=0 label=md:"One" assigned="someone"
+section index=2 level=2 shape=0 padding=10 id="B" label=md:"B"
+  item index=3 level=4 shape=2 padding=20 id="y" section=2 label=md:"Two"

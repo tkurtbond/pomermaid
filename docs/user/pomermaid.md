@@ -21,7 +21,8 @@ charts (`gantt`), pie charts (`pie`), quadrant charts
 (`quadrantChart`), XY charts (`xychart`), radar charts
 (`radar-beta`), sankey diagrams (`sankey-beta`), git graphs
 (`gitGraph`), mindmaps (`mindmap`), treemaps (`treemap-beta`),
-block diagrams (`block-beta`) and packet diagrams (`packet-beta`).
+block diagrams (`block-beta`), packet diagrams (`packet-beta`) and
+kanban boards (`kanban`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -938,6 +939,34 @@ in the row, with the field's first and last bit numbers over it.
   `labelColor`, `titleColor`, `blockStrokeColor`, `blockFillColor`,
   `byteFontSize`, `labelFontSize`, `titleFontSize` and
   `blockStrokeWidth`.
+
+### Kanban diagrams
+
+pomermaid reads Mermaid's kanban diagrams (`kanban`), as Mermaid
+12.3.0 reads them, and draws them as Mermaid does: each section is a
+coloured column, its label along its top, with its items in boxes
+below it, one under another.
+
+- **The first line:** `kanban`.
+- **Sections and items:** each line is a node, as in a mindmap: an id,
+  a label in brackets, or both (`id[Label]`); a label may be a quoted
+  markdown string. The least indented nodes are the sections, and the
+  nodes under a section are its items. An item before any section is
+  an error.
+- **Metadata:** `@{ ... }` after a node: `label`, `shape` (lowercase),
+  `ticket`, `assigned` and `priority` (`Very High`, `High`, `Low` or
+  `Very Low`, drawn as a coloured line along the item's left). The
+  ticket is drawn below the label, at the left, and assigned at the
+  right.
+- **Icons and classes,** `::icon(...)` and `:::class`, are read and,
+  as in Mermaid, not drawn; `%%` comments.
+- **Configuration:** `kanban`'s `sectionWidth` (200) and
+  `ticketBaseUrl`, which is read but not made into links: a ticket is
+  text, and pomermaid warns (decision 54).
+- **Theme variables:** `cScale2` to `cScale11`, lightened by 10%, and
+  `cScaleLabel2` to `cScaleLabel11` for the first ten sections (past
+  the tenth, their colours are used again, decision 53), and `background`,
+  `nodeBorder` and `textColor` for the items.
 
 Mermaid's other diagram types are not read yet.
 

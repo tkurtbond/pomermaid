@@ -1,0 +1,9 @@
+kanban sectionWidth=200 padding=10 sections=2 nodes=8
+section index=0 level=0 shape=2 padding=20 id="todo" label=md:"Todo"
+  item index=1 level=2 shape=2 padding=20 id="id3" section=0 label=md:"Update Database Function" ticket="MC-2037" assigned="knsv" priority="High"
+  item index=2 level=2 shape=2 padding=20 id="a" section=0 label=md:"Low one" ticket="42" priority="Low"
+  item index=3 level=2 shape=2 padding=20 id="b" section=0 label=md:"Medium one" priority="Medium"
+  item index=4 level=2 shape=2 padding=20 id="c" section=0 label=md:"Odd one" priority="high"
+  item index=5 level=2 shape=0 padding=10 id="id2" section=0 label=md:"From the metadata" assigned="knsv" priority="Very Low" icon="fa fa-book" class="urgent"
+section index=6 level=0 shape=2 padding=20 id="done" label=md:"Done"
+  item index=7 level=2 shape=2 padding=20 id="d" section=6 label=md:"A bold and italic card"=0011110000022222200000

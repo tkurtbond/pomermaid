@@ -2,7 +2,7 @@ MODULE pomermaid;
 (* pomermaid: Mermaid diagrams drawn in pic, for groff, and MetaPost,
    for ConTeXt, and SVG made from the pic through groff. The command line is PmOptions'. See PLAN.md. *)
 
-IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmGantt, PmGanttDump, GL := PmGanttLayout, PmGanttPic, PmGanttMp, PmPie, PmPieDump, PL := PmPieLayout, PmPiePic, PmPieMp, PmQuadrant, PmQuadrantDump, QL := PmQuadrantLayout, PmQuadrantPic, PmQuadrantMp, PmXy, PmXyDump, XL := PmXyLayout, PmXyPic, PmXyMp, PmRadar, PmRadarDump, RL := PmRadarLayout, PmRadarPic, PmRadarMp, PmSankey, PmSankeyDump, KL := PmSankeyLayout, PmSankeyPic, PmSankeyMp, PmGit, PmGitDump, HL := PmGitLayout, PmMindmap, PmMindmapDump, ML := PmMindmapLayout, PmTreemap, PmTreemapDump, TML := PmTreemapLayout, PmBlock, PmBlockDump, BL := PmBlockLayout, PmPacket, PmPacketDump, PKL := PmPacketLayout, PmDrawDump, PmDrawPic, PmDrawMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
+IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmGantt, PmGanttDump, GL := PmGanttLayout, PmGanttPic, PmGanttMp, PmPie, PmPieDump, PL := PmPieLayout, PmPiePic, PmPieMp, PmQuadrant, PmQuadrantDump, QL := PmQuadrantLayout, PmQuadrantPic, PmQuadrantMp, PmXy, PmXyDump, XL := PmXyLayout, PmXyPic, PmXyMp, PmRadar, PmRadarDump, RL := PmRadarLayout, PmRadarPic, PmRadarMp, PmSankey, PmSankeyDump, KL := PmSankeyLayout, PmSankeyPic, PmSankeyMp, PmGit, PmGitDump, HL := PmGitLayout, PmMindmap, PmMindmapDump, ML := PmMindmapLayout, PmTreemap, PmTreemapDump, TML := PmTreemapLayout, PmBlock, PmBlockDump, BL := PmBlockLayout, PmPacket, PmPacketDump, PKL := PmPacketLayout, PmKanban, PmKanbanDump, KBL := PmKanbanLayout, PmDrawDump, PmDrawPic, PmDrawMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
 
 VAR
   text: PmIO.Text;
@@ -23,6 +23,7 @@ VAR
   tm: PmTreemap.Diagram;
   blk: PmBlock.Diagram;
   pkt: PmPacket.Diagram;
+  kan: PmKanban.Diagram;
   font: M.Font;
   lay: FL.Layout;
   slay: SL.Layout;
@@ -39,6 +40,7 @@ VAR
   tmlay: TML.Layout;
   blay: BL.Layout;
   pklay: PKL.Layout;
+  kblay: KBL.Layout;
 
 BEGIN
   O.Parse;
@@ -67,8 +69,9 @@ BEGIN
     ELSIF PmTreemap.IsTreemap(sc) THEN PmTreemap.Read(sc, tm)
     ELSIF PmBlock.IsBlock(sc) THEN PmBlock.Read(sc, blk)
     ELSIF PmPacket.IsPacket(sc) THEN PmPacket.Read(sc, pkt)
+    ELSIF PmKanban.IsKanban(sc) THEN PmKanban.Read(sc, kan)
     ELSIF PmFlow.IsFlowchart(sc) THEN PmFlow.Read(sc, g)
-    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey, timeline, gantt, pie, quadrantChart, xychart, radar-beta, sankey-beta, gitGraph, mindmap, treemap, block and packet")
+    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey, timeline, gantt, pie, quadrantChart, xychart, radar-beta, sankey-beta, gitGraph, mindmap, treemap, block, packet and kanban")
     END;
     IF O.to # "dump" THEN
       IF O.fontPath # "" THEN M.SetPath(O.fontPath) END;
@@ -77,7 +80,19 @@ BEGIN
       END;
       M.LoadStyles(font)
     END;
-    IF (pkt # NIL) & (O.to = "svg") THEN
+    IF (kan # NIL) & (O.to = "svg") THEN
+      KBL.Fit(kan, font, O.size, O.width, kblay);
+      PmSvg.WriteDrawing(kblay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
+    ELSIF kan # NIL THEN
+      PmIO.OpenOutput(O.output);
+      IF O.to = "dump" THEN PmKanbanDump.Write(kan)
+      ELSIF O.to = "layout" THEN KBL.Fit(kan, font, O.size, O.width, kblay); PmDrawDump.WriteLayout(kblay)
+      ELSIF O.to = "pic" THEN KBL.Fit(kan, font, O.size, O.width, kblay); PmDrawPic.Write(kblay, O.font)
+      ELSIF O.to = "svg-ms" THEN KBL.Fit(kan, font, O.size, O.width, kblay); PmSvg.WriteDrawingDocument(kblay, O.font)
+      ELSIF O.to = "mp" THEN KBL.Fit(kan, font, O.size, O.width, kblay); PmDrawMp.Write(kblay)
+      ELSE PmIO.Fail("", "no writer for this format yet", PmIO.UnknownWriter)
+      END
+    ELSIF (pkt # NIL) & (O.to = "svg") THEN
       PKL.Fit(pkt, font, O.size, O.width, pklay);
       PmSvg.WriteDrawing(pklay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSIF pkt # NIL THEN
@@ -249,7 +264,7 @@ BEGIN
       PmSvg.Write(lay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSE PmIO.OpenOutput(O.output)
     END;
-    IF (seq # NIL) OR (jour # NIL) OR (tim # NIL) OR (gan # NIL) OR (pie # NIL) OR (quad # NIL) OR (xy # NIL) OR (radar # NIL) OR (sankey # NIL) OR (git # NIL) OR (mm # NIL) OR (tm # NIL) OR (blk # NIL) OR (pkt # NIL) OR (O.to = "svg") THEN
+    IF (seq # NIL) OR (jour # NIL) OR (tim # NIL) OR (gan # NIL) OR (pie # NIL) OR (quad # NIL) OR (xy # NIL) OR (radar # NIL) OR (sankey # NIL) OR (git # NIL) OR (mm # NIL) OR (tm # NIL) OR (blk # NIL) OR (pkt # NIL) OR (kan # NIL) OR (O.to = "svg") THEN
     ELSIF O.to = "svg-ms" THEN FL.Fit(g, font, O.size, O.width, lay); PmSvg.WriteDocument(lay, O.font)
     ELSIF O.to = "dump" THEN PmDump.Write(g)
     ELSIF O.to = "layout" THEN FL.Fit(g, font, O.size, O.width, lay); PmDump.WriteLayout(lay)

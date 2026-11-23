@@ -1,0 +1,11 @@
+kanban sectionWidth=200 padding=10 sections=2 nodes=10
+section index=0 level=2 shape=1 padding=20 id="Rounded" label=md:"Rounded"
+  item index=1 level=4 shape=3 padding=10 id="Circle" section=0 label=md:"Circle"
+  item index=2 level=4 shape=4 padding=10 id="Cloud" section=0 label=md:"Cloud"
+  item index=3 level=4 shape=5 padding=10 id="Bang" section=0 label=md:"Bang"
+  item index=4 level=4 shape=6 padding=20 id="Hexagon" section=0 label=md:"Hexagon"
+  item index=5 level=4 shape=2 padding=20 id="id1" section=0 label=md:"Quoted [text]"
+  item index=6 level=4 shape=2 padding=20 id="id2" section=0 label=md:"A markdown string"=00222222220000000
+section index=7 level=2 shape=2 padding=20 id="sec" label=md:"Second"
+  item index=8 level=4 shape=0 padding=10 id="plain text card" section=7 label=md:"plain text card"
+  item index=9 level=4 shape=0 padding=10 id="style n2 stroke:#AA00FF,fill:#E1BEE7" section=7 label=md:"style n2 stroke:#AA00FF,fill:#E1BEE7"

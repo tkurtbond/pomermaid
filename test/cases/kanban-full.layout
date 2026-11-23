@@ -1,0 +1,44 @@
+layout width=427.97 height=89.17
+rect at=(3.44,3.44) w=68.75 h=47.3 r=1.72 fill=#e8ffb9 line=#e8ffb9 width=0.34
+text at=(37.81,6.74) size=5.5 w=11.49 line=#000000 text=md:"Todo"
+rect at=(73.91,3.44) w=68.75 h=58.51 r=1.72 fill=#dcb9ff line=#dcb9ff width=0.34
+text at=(108.28,6.74) size=5.5 w=28.71 line=#ffffff text=md:"In progress"
+rect at=(144.38,3.44) w=68.75 h=28.81 r=1.72 fill=#ffb9ff line=#ffb9ff width=0.34
+text at=(178.75,6.74) size=5.5 w=40.65 line=#000000 text=md:"Ready for deploy"
+rect at=(214.84,3.44) w=68.75 h=47.3 r=1.72 fill=#ffb9dc line=#ffb9dc width=0.34
+text at=(249.22,6.74) size=5.5 w=35.37 line=#000000 text=md:"Ready for test"
+rect at=(285.31,3.44) w=68.75 h=82.29 r=1.72 fill=#ffb9b9 line=#ffb9b9 width=0.34
+text at=(319.69,6.74) size=5.5 w=11.49 line=#000000 text=md:"Done"
+rect at=(355.78,3.44) w=68.75 h=32.11 r=1.72 fill=#ffdcb9 line=#ffdcb9 width=0.34
+text at=(390.16,6.74) size=5.5 w=38.28 line=#000000 text=md:"Can't reproduce"
+rect at=(6.02,12.03) w=63.59 h=13.47 r=1.72 fill=#ffffff line=#9370db width=0.34
+text at=(36.16,18.77) size=5.5 w=53.4 line=#333333 text=md:"Create Documentation"
+rect at=(6.02,27.22) w=63.59 h=20.07 r=1.72 fill=#ffffff line=#9370db width=0.34
+text at=(36.21,37.26) size=5.5 w=53.51 line=#333333 text=md:"Create Blog about the"/"new diagram"
+rect at=(76.48,12.03) w=63.59 h=46.47 r=1.72 fill=#ffffff line=#9370db width=0.34
+text at=(109.9,35.27) size=5.5 w=59.95 line=#333333 text=md:"Create renderer so that"/"it works in all cases. We"/"also add some extra text"/"here for testing"/"purposes. And some more"/"just for the extra flare."
+rect at=(146.95,12.03) w=63.59 h=16.78 r=1.72 fill=#ffffff line=#9370db width=0.34
+text at=(168.71,17.12) size=5.5 w=36.63 line=#333333 text=md:"Design grammar"
+text at=(201.83,23.72) size=5.5 w=10.56 line=#333333 text=md:"knsv"
+rect at=(217.42,12.03) w=63.59 h=16.78 r=1.72 fill=#ffffff line=#9370db width=0.34
+line (218.11,12.72) (218.11,28.12) fill=none line=#ffa500 width=1.38
+text at=(246.46,17.12) size=5.5 w=51.21 line=#333333 text=md:"Create parsing tests"
+text at=(230.76,23.72) size=5.5 w=19.8 line=#333333 text=md:"MC-2038"
+text at=(261.3,23.72) size=5.5 w=32.56 line=#333333 text=md:"K.Sveidqvist"
+rect at=(217.42,30.53) w=63.59 h=16.78 r=1.72 fill=#ffffff line=#9370db width=0.34
+line (218.11,31.21) (218.11,46.61) fill=none line=#add8e6 width=1.38
+text at=(232.11,35.61) size=5.5 w=22.5 line=#333333 text=md:"last item"
+text at=(272.3,42.21) size=5.5 w=10.56 line=#333333 text=md:"knsv"
+rect at=(287.89,12.03) w=63.59 h=13.47 r=1.72 fill=#ffffff line=#9370db width=0.34
+text at=(309.64,18.77) size=5.5 w=36.63 line=#333333 text=md:"define getData"
+rect at=(287.89,27.22) w=63.59 h=36.57 r=1.72 fill=#ffffff line=#9370db width=0.34
+line (288.58,27.91) (288.58,63.11) fill=none line=#ff0000 width=1.38
+text at=(320.95,42.21) size=5.5 w=59.24 line=#333333 text=md:"Title of diagram is more"/"than 100 chars when user"/"duplicates diagram with"/"100 char"
+text at=(301.23,58.71) size=5.5 w=19.8 line=#333333 text=md:"MC-2036"
+rect at=(287.89,65.52) w=63.59 h=16.78 r=1.72 fill=#ffffff line=#9370db width=0.34
+line (288.58,66.21) (288.58,81.61) fill=none line=#ffa500 width=1.38
+text at=(315.23,70.61) size=5.5 w=47.79 line=#333333 text=md:"Update DB function"
+text at=(301.23,77.21) size=5.5 w=19.8 line=#333333 text=md:"MC-2037"
+text at=(342.77,77.21) size=5.5 w=10.56 line=#333333 text=md:"knsv"
+rect at=(358.36,12.03) w=63.59 h=20.07 r=1.72 fill=#ffffff line=#9370db width=0.34
+text at=(386.08,22.07) size=5.5 w=48.56 line=#333333 text=md:"Weird flickering in"/"Firefox"

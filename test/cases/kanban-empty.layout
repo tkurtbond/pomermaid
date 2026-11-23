@@ -1,0 +1,3 @@
+layout width=137.5 height=43.75
+rect at=(6.25,6.25) w=125 h=31.25 r=3.13 fill=#e8ffb9 line=#e8ffb9 width=0.63
+text at=(68.75,12.25) size=10 w=64.3 line=#000000 text=md:"Only a section"

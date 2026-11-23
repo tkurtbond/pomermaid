@@ -1146,6 +1146,28 @@ Mermaid 12.3.0 is followed: `docs/syntax/packet.md`,
 `diagrams/packet/` (`parser.ts`, `db.ts`, `renderer.ts`, `styles.ts`)
 and the Langium grammar, `packages/parser/src/language/packet/`.
 
+### Phase 30: kanban boards [done]
+
+**Change:** `kanban`, read by a new module, `PmKanban`, with
+mindmap's lexer: sections (the least indented nodes) and their items,
+`@{ ... }` metadata (`label`, `shape`, `ticket`, `assigned`,
+`priority`), icons and classes; `PmKanbanDump` writes the model for
+`-t dump`. `PmKanbanLayout` draws it as Mermaid's renderer does, in a
+`PmDraw.Drawing`: a coloured column for each section, its label along
+its top, and its items below it, with their priority lines, tickets
+and assignees. `PmStyle.KanbanColours` gives the colours, with
+`PmStyle.Lighten`, khroma's `lighten`.
+
+**Check:** case tests for sections and items, metadata, shapes,
+markdown labels, many sections, `sectionWidth` and theme variables,
+an empty board and Mermaid's errors; Mermaid's examples read and
+drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/kanban.md`,
+`diagrams/kanban/` (`parser/kanban.jison`, `kanbanDb.ts`,
+`kanbanRenderer.ts`, `styles.ts`) and the kanban item shape,
+`rendering-util/rendering-elements/shapes/kanbanItem.ts`.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1455,6 +1477,12 @@ None at present.
     (2026-11-23); another is ignored with a warning, and 32 is used.
     More than 10000 rows are left out with a warning, as Mermaid
     leaves them out.
+53. **Kanban sections past the tenth reuse the first ten's colours**
+    (2026-11-23): section k takes cScale((k-1) mod 10 + 2), where
+    Mermaid's eleventh and later sections have no colour class.
+54. **Kanban tickets are not links** (2026-11-23): `ticketBaseUrl`
+    is read, but no output makes a ticket a link; a board with both
+    gets a warning.
 
 ## Later
 
@@ -2231,4 +2259,19 @@ snapshots. Mermaid itself was not run.
 
 On 2026-11-23, `make test` passes, 704 of 704 under both models, on
 FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
+(jherek, cymoril).
+
+2026-11-23, Phase 30: kanban boards. `PmKanban` reads `kanban`
+(`PmKanbanDump` writes its model for `-t dump`), and
+`PmKanbanLayout` draws it as Mermaid does in a `PmDraw.Drawing`.
+`make test` passes under `-O2` and `-OC`: 745 case tests, with
+`kanban-basic`, `kanban-full` (Mermaid's documentation example, with
+the ticketBaseUrl warning), `kanban-meta`, `kanban-shapes`,
+`kanban-many` (12 sections), `kanban-theme` and `kanban-empty` (dump,
+layout, pic, mp and svg-ms) and six error cases (`kanban-err-caret`,
+`kanban-err-icon`, `kanban-err-label`, `kanban-err-nosection`,
+`kanban-err-shape`, `kanban-err-word`). The boards were drawn as SVG
+and looked at. Mermaid itself was not run.
+On 2026-11-23, `make test` passes, 745 of 745 under both models,
+on FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
 (jherek, cymoril).

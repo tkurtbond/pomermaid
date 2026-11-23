@@ -1,0 +1,2 @@
+kanban sectionWidth=200 padding=10 sections=1 nodes=1
+section index=0 level=2 shape=0 padding=10 id="Only a section" label=md:"Only a section"

@@ -1,0 +1,9 @@
+kanban sectionWidth=200 padding=10 sections=2 nodes=8
+section index=0 level=2 shape=0 padding=10 id="Todo" label=md:"Todo"
+  item index=1 level=4 shape=0 padding=10 id="Create JISON" section=0 label=md:"Create JISON"
+  item index=2 level=4 shape=0 padding=10 id="Update DB function" section=0 label=md:"Update DB function"
+  item index=3 level=4 shape=0 padding=10 id="Create parsing tests" section=0 label=md:"Create parsing tests"
+  item index=4 level=4 shape=0 padding=10 id="define getData" section=0 label=md:"define getData"
+  item index=5 level=4 shape=0 padding=10 id="Create renderer" section=0 label=md:"Create renderer"
+section index=6 level=2 shape=0 padding=10 id="In progress" label=md:"In progress"
+  item index=7 level=4 shape=0 padding=10 id="Design grammar" section=6 label=md:"Design grammar"

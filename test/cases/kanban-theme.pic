@@ -1,0 +1,27 @@
+.defcolor pm-ff3333 rgb #ff3333
+.defcolor pm-00ff00 rgb #00ff00
+.defcolor pm-dcb9ff rgb #dcb9ff
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-ffffee rgb #ffffee
+.defcolor pm-0000ff rgb #0000ff
+.defcolor pm-990000 rgb #990000
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 2.821 ht 1.184 at (1.411, -0.592)
+box wid 1.302 ht 1.01 rad 0.043 at (0.738, -0.592) shaded "pm-ff3333" outlined "pm-ff3333" thickness 0.625
+"\s[10]\f[TS]\m[pm-00ff00]A section with a\m[]\f[]\s[0]" "\s[10]\f[TS]\m[pm-00ff00]rather long title\m[]\f[]\s[0]" "\s[10]\f[TS]\m[pm-00ff00]that wraps\m[]\f[]\s[0]"  at (0.738, -0.337)
+box wid 1.302 ht 0.927 rad 0.043 at (2.083, -0.55) shaded "pm-dcb9ff" outlined "pm-dcb9ff" thickness 0.625
+"\s[10]\f[TS]\m[pm-ffffff]B\m[]\f[]\s[0]"  at (2.083, -0.17)
+box wid 1.172 ht 0.424 rad 0.043 at (0.738, -0.799) shaded "pm-ffffee" outlined "pm-0000ff" thickness 0.625
+"\s[10]\f[TS]\m[pm-990000]One\m[]\f[]\s[0]"  at (0.351, -0.715)
+"\s[10]\f[TS]\m[pm-990000]someone\m[]\f[]\s[0]"  at (1.004, -0.882)
+box wid 1.172 ht 0.34 rad 0.043 at (2.083, -0.757) shaded "pm-ffffee" outlined "pm-0000ff" thickness 0.625
+"\s[10]\f[TS]\m[pm-990000]Two\m[]\f[]\s[0]"  at (1.696, -0.757)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

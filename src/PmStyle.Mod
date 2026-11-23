@@ -107,6 +107,15 @@ TYPE
     byteSize*, labelSize*, titleSize*, blockWidth*: REAL
   END;
 
+  (* A kanban board's colours, as 0RRGGBBH, or -1 for none *)
+  KanbanTheme* = RECORD
+    fill*, label*: ARRAY 12 OF LONGINT;  (* section k's, from 1: cScale(k+1)
+                                    lightened by 10, its fill and outline,
+                                    and cScaleLabel(k+1), its text *)
+    itemFill*, itemLine*, text*: LONGINT  (* the items': background,
+                                    nodeBorder and textColor *)
+  END;
+
   (* A git graph's colours, as 0RRGGBBH, or -1 for none, and its
      sizes, in Mermaid's pixels *)
   GitTheme* = RECORD
@@ -764,6 +773,68 @@ BEGIN
   VarPixels("packet.titleFontSize", t.titleSize);
   VarPixels("packet.blockStrokeWidth", t.blockWidth)
 END PacketColours;
+
+(* rgb lightened as khroma's lighten does: its HSL lightness raised
+   by amount percent, to at most 100, rounded *)
+PROCEDURE Lighten*(rgb: LONGINT; amount: LONGREAL): LONGINT;
+  VAR r, g, b, mx, mn, h, s, l, d, q, p: LONGREAL;
+
+  PROCEDURE Hue(t: LONGREAL): LONGREAL;
+  BEGIN
+    IF t < 0 THEN t := t + 1 END;
+    IF t > 1 THEN t := t - 1 END;
+    IF t < 1 / 6.0D0 THEN RETURN p + (q - p) * 6 * t
+    ELSIF t < 0.5D0 THEN RETURN q
+    ELSIF t < 2 / 3.0D0 THEN RETURN p + (q - p) * (2 / 3.0D0 - t) * 6
+    END;
+    RETURN p
+  END Hue;
+
+  PROCEDURE Byte(x: LONGREAL): LONGINT;
+  BEGIN
+    x := ENTIER(x * 255 + 0.5D0);
+    IF x < 0 THEN x := 0 ELSIF x > 255 THEN x := 255 END;
+    RETURN ENTIER(x)
+  END Byte;
+
+BEGIN
+  IF rgb = None THEN RETURN None END;
+  r := (rgb DIV 10000H) / 255.0D0; g := (rgb DIV 100H MOD 100H) / 255.0D0;
+  b := (rgb MOD 100H) / 255.0D0;
+  mx := r; IF g > mx THEN mx := g END; IF b > mx THEN mx := b END;
+  mn := r; IF g < mn THEN mn := g END; IF b < mn THEN mn := b END;
+  l := (mx + mn) / 2; d := mx - mn; h := 0; s := 0;
+  IF d > 0 THEN
+    IF l > 0.5D0 THEN s := d / (2 - mx - mn) ELSE s := d / (mx + mn) END;
+    IF mx = r THEN h := (g - b) / d; IF g < b THEN h := h + 6 END
+    ELSIF mx = g THEN h := (b - r) / d + 2
+    ELSE h := (r - g) / d + 4
+    END;
+    h := h / 6
+  END;
+  l := l + amount / 100;
+  IF l > 1 THEN l := 1 ELSIF l < 0 THEN l := 0 END;
+  IF s = 0 THEN r := l; g := l; b := l
+  ELSE
+    IF l < 0.5D0 THEN q := l * (1 + s) ELSE q := l + s - l * s END;
+    p := 2 * l - q;
+    r := Hue(h + 1 / 3.0D0); g := Hue(h); b := Hue(h - 1 / 3.0D0)
+  END;
+  RETURN Byte(r) * 10000H + Byte(g) * 100H + Byte(b)
+END Lighten;
+
+(* t, a kanban board's colours: the timeline's colour scale,
+   TimelineColours', its cScale colours lightened by 10, as Mermaid's
+   kanban styles make them, and background (white), nodeBorder and
+   textColor, each changed by its themeVariable *)
+PROCEDURE KanbanColours*(VAR t: KanbanTheme);
+  VAR tl: TimelineTheme; set: BOOLEAN; k: INTEGER;
+BEGIN
+  TimelineColours(tl);
+  FOR k := 0 TO 11 DO t.fill[k] := Lighten(tl.scale[k], 10); t.label[k] := tl.label[k] END;
+  t.itemFill := 0FFFFFFH; set := Var("background", t.itemFill);
+  t.itemLine := nodeLine; t.text := textColour
+END KanbanColours;
 
 (* t, a git graph's colours and sizes: the default theme's, changed by
    themeVariables: git0 to git7, gitInv0 to gitInv7, gitBranchLabel0

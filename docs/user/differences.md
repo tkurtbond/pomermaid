@@ -426,6 +426,19 @@ differences:
 - **`bitsPerRow`** must be a whole number from 1 to 100000; another is
   ignored with a warning, and 32 is used (decision 52).
 
+## Kanban diagrams
+
+- **Section colours.** Past the tenth section, sections take the
+  first ten's colours again (decision 53); in Mermaid they have none.
+- **Tickets.** `ticketBaseUrl` is read, but tickets are not made
+  links, in any output; pomermaid warns when a board has both
+  (decision 54).
+- **Icons and classes** (`::icon(...)`, `:::class`) are read and not
+  drawn, as in Mermaid.
+- **Labels.** An item's label is wrapped and set at its left, its
+  lines centred on one another; a word longer than the item runs past
+  its right side, as in Mermaid.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,
