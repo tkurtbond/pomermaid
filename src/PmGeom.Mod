@@ -169,11 +169,15 @@ END Basis;
 (* The point at t, from 0 to 1, on the cubic Bézier curve from a with
    control points b and c to d *)
 PROCEDURE OnCurve*(VAR a, b, c, d: Point; t: REAL; VAR r: Point);
-  VAR s: REAL;
+  VAR s, u, k0, k1, k2, k3: LONGREAL;
 BEGIN
-  s := 1 - t;
-  r.x := s * s * s * a.x + 3 * s * s * t * b.x + 3 * s * t * t * c.x + t * t * t * d.x;
-  r.y := s * s * s * a.y + 3 * s * s * t * b.y + 3 * s * t * t * c.y + t * t * t * d.y
+  (* in LONGREAL, rounded to REAL once: REAL arithmetic rounds each step
+     on x86-64 but not in i386's x87, and the sampled points of a curve
+     came out a digit apart *)
+  u := t; s := 1 - u;
+  k0 := s * s * s; k1 := 3 * s * s * u; k2 := 3 * s * u * u; k3 := u * u * u;
+  r.x := SHORT(k0 * a.x + k1 * b.x + k2 * c.x + k3 * d.x);
+  r.y := SHORT(k0 * a.y + k1 * b.y + k2 * c.y + k3 * d.y)
 END OnCurve;
 
 END PmGeom.

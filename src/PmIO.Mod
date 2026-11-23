@@ -231,15 +231,29 @@ BEGIN
   WHILE i > 0 DO DEC(i); WriteChar(d[i]) END
 END WriteInt;
 
+(* |x| * 10^d rounded to the nearest whole number, for d from 0 to 4.
+   The product is made in LONGREAL, where a REAL times 10^d is exact:
+   REAL arithmetic rounds it on x86-64, and on i386 x87 arithmetic
+   keeps more precision, so 0.3625 as a REAL (a little less) times 1000
+   could round to 363 on one and 362 on the other. Exact, it is 362
+   on both. *)
+PROCEDURE Round*(x: REAL; d: INTEGER): LONGINT;
+  VAR scale: LONGINT; i: INTEGER; y: LONGREAL;
+BEGIN
+  scale := 1; FOR i := 1 TO d DO scale := scale * 10 END;
+  y := x; IF y < 0 THEN y := -y END;
+  RETURN ENTIER(y * scale + 0.5)
+END Round;
+
 (* Writes x rounded to d decimals (0 to 4), without trailing zeros or
    a trailing point, and "0" for what rounds to zero: the same x gives
-   the same text everywhere. *)
+   the same text everywhere, i386's x87 included (see Round). *)
 PROCEDURE WriteReal*(x: REAL; d: INTEGER);
   VAR scale, n, ip: LONGINT; i: INTEGER; neg: BOOLEAN; frac: ARRAY 8 OF CHAR;
 BEGIN
   scale := 1; FOR i := 1 TO d DO scale := scale * 10 END;
-  neg := x < 0; IF neg THEN x := -x END;
-  n := ENTIER(x * scale + 0.5);
+  neg := x < 0;
+  n := Round(x, d);
   IF n = 0 THEN WriteChar("0")
   ELSE
     IF neg THEN WriteChar("-") END;

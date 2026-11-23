@@ -21,7 +21,10 @@ To build it:
 - the Peaseblossom Oberon Compiler, `poc`;
 - the poc libraries ArgParser and pounicode, installed under both size
   models;
-- GNU make.
+- GNU make (`gmake` on the BSDs).
+
+It builds and passes its tests on Linux, FreeBSD, NetBSD and OpenBSD,
+on x86-64, i386 and arm64.
 
 To run it:
 
@@ -31,9 +34,14 @@ To run it:
 - **To use pic:** groff with pic (`groff -p`), and the ms or mom
   macros.
 - **To use MetaPost:** ConTeXt LMTX.
-- **For SVG:** groff, and one of these converters:
+- **For SVG:** groff with `-Tpdf`, and one of these converters:
   - `mutool`, from MuPDF;
   - `pdftocairo`, from poppler.
+
+NetBSD's own groff, 1.19.2, draws the pic, and pomermaid finds its
+fonts, but it has no `-Tpdf`, so SVG needs pkgsrc's groff. FreeBSD
+and OpenBSD have no groff of their own: install it from ports or
+packages.
 
 ## Building and installing
 
@@ -361,7 +369,9 @@ text with, so the measurements match groff's to the unit. It looks for
 2. otherwise `GROFF_FONT_PATH`, if it is set;
 3. otherwise the `site-font` and `current/font` directories of the
    groff found in `PATH`;
-4. then `/usr/local`, `/usr/pkg` and `/usr`.
+4. then the same under `/usr/local`, `/usr/pkg` and `/usr`;
+5. then `/usr/share/groff_font`, where NetBSD's own groff keeps them,
+   and `/usr/lib/font`.
 
 For `-t svg`, `--font-path` is also passed to groff, as `-F`.
 

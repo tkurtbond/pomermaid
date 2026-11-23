@@ -1,10 +1,10 @@
 layout direction LR width=425.17 height=23.09
-node A rank=0 order=0 x=34.95 y=11.54 w=69.9 h=16.61
-node B rank=2 order=0 x=124.05 y=11.54 w=74.55 h=16.61
+node A rank=0 order=0 x=34.95 y=11.54 w=69.9 h=16.6
+node B rank=2 order=0 x=124.05 y=11.54 w=74.55 h=16.6
 node C rank=4 order=0 x=244.98 y=11.54 w=73.41 h=23.09
 node D rank=6 order=0 x=335.16 y=11.54 w=73.2 h=23.09
-node E rank=8 order=0 x=406.9 y=11.54 w=36.53 h=16.61
+node E rank=8 order=0 x=406.9 y=11.54 w=36.53 h=16.6
 edge A -> B points=(69.9,11.54) (78.34,11.54) (86.78,11.54)
-edge B -> C points=(161.33,11.54) (184.8,11.54) (208.28,11.54) label=(184.8,11.54)
+edge B -> C points=(161.32,11.54) (184.8,11.54) (208.28,11.54) label=(184.8,11.54)
 edge C -> D points=(281.69,11.54) (290.13,11.54) (298.57,11.54)
 edge D -> E points=(371.76,11.54) (380.2,11.54) (388.64,11.54)

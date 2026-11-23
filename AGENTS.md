@@ -50,7 +50,8 @@ Mermaid's flowchart syntax: `@{ ... }` metadata, the named shapes in
 `PmShapes`, curves in `PmCurves`, `themeVariables` and the title,
 bold and italic in `PmEmphasis`, links in the SVG, collapsed
 subgraphs, and isolated subgraphs laid out alone with their own
-`direction`) are done. See PLAN.md's State.
+`direction`) and 11 (the BSDs: FreeBSD, NetBSD and OpenBSD, on
+x86-64, i386 and arm64) are done. See PLAN.md's State.
 
 ## Reference material
 

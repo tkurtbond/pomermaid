@@ -1,4 +1,4 @@
-layout direction TB width=102.83 height=455.69
+layout direction TB width=102.82 height=455.69
 node A rank=0 order=0 x=51.41 y=15.38 w=25.25 h=30.75
 node B rank=2 order=0 x=51.41 y=77.38 w=25.25 h=30.75
 node C hidden rank=0 order=0 x=62.35 y=0 w=0 h=0
@@ -23,4 +23,4 @@ edge Q -> R points=(51.41,375.56) (51.41,391.19) (51.41,406.81)
 cluster H empty
 cluster G collapsed x=51.41 y=143.75 w=50 h=39.5 title=(51.41,135)
 cluster J collapsed x=51.41 y=426.56 w=62.2 h=39.5 title=(51.41,417.81)
-cluster K x=51.41 y=356.22 w=102.83 h=198.94 title=(51.41,267.44)
+cluster K x=51.41 y=356.22 w=102.82 h=198.94 title=(51.41,267.44)

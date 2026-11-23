@@ -374,6 +374,7 @@ BEGIN
   GroffPrefix(prefix);
   IF prefix # "" THEN AddPrefix(prefix) END;
   AddPrefix("/usr/local"); AddPrefix("/usr/pkg"); AddPrefix("/usr");
+  AddDir("/usr/share/groff_font"); (* NetBSD's own groff *)
   AddDir("/usr/lib/font")
 END DefaultPath;
 

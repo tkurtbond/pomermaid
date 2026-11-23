@@ -2,7 +2,7 @@ layout direction LR width=428.12 height=498.13
 node a rank=2 order=3 x=133.13 y=486.13 w=29.6 h=23.99
 node b rank=4 order=3 x=222.66 y=486.13 w=33.35 h=23.99
 node c rank=6 order=2 x=311.47 y=486.13 w=52.83 h=23.99
-node d rank=8 order=0 x=398.19 y=486.13 w=59.87 h=23.99
+node d rank=8 order=0 x=398.19 y=486.13 w=59.86 h=23.99
 node e rank=0 order=0 x=37.81 y=32.41 w=44.58 h=37.13
 node f rank=2 order=0 x=133.13 y=32.41 w=37.09 h=37.09
 node g rank=4 order=0 x=222.66 y=32.41 w=64.06 h=23.99

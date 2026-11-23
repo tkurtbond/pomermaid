@@ -526,7 +526,7 @@ and `:::class` were done in Phases 2 to 5. What is left, in steps:
 
 **Done:** yes.
 
-### Phase 11: the BSDs
+### Phase 11: the BSDs [done]
 
 **Change:** whatever the BSDs need.
 
@@ -534,7 +534,7 @@ and `:::class` were done in Phases 2 to 5. What is left, in steps:
 as for podoc (the VMs on atla), with clean copies of the checkout and
 the libraries, removed afterwards.
 
-**Done:** no.
+**Done:** yes.
 
 ### Phases 12 and later: the other diagram types
 
@@ -863,3 +863,27 @@ cases regenerated (the sub-picture blocks) and the subgraph cases'
 layouts (the isolated subgraphs); `PmLayoutTest` lays out `collapsed`
 and `isolated` with no fault. Looked at: `collapsed`, `isolated`,
 `subgraphs` and `metadata` in groff and ConTeXt.
+
+2026-11-22, Phase 11: `gmake` and `gmake test` (both models; the unit
+tests and 86 case tests) pass on FreeBSD 15.1 (alerik, x86-64;
+rackhir, arm64), NetBSD 11.0 (artos, x86-64; yishana, i386) and
+OpenBSD 7.9 (jherek, x86-64; cymoril, i386), from clean copies of the
+working tree, removed afterwards, with the ArgParser installed on each
+for poc 0.15.0. The first run found two faults.
+`metadata.pic` measured with the system's groff fonts, and the BSDs
+have other fonts or none (exit 97): it now has `metadata.pic.args`
+with the tests' fonts. And on i386 a sampled curve point in
+`curves.pic` came out a digit apart, because x87 arithmetic keeps more
+precision than REAL's: `PmGeom.OnCurve` now evaluates in LONGREAL and
+rounds to REAL once, and `PmIO.WriteReal` (with the new `PmIO.Round`,
+also used for pic's polygon fills) makes its product exactly in
+LONGREAL, so a REAL just under a tie rounds down everywhere. That
+moved 75 numbers in 12 expected files by one in the last digit (each
+checked to be exactly that), the rounding now of the REAL's exact
+value. pomermaid now also looks for fonts in `/usr/share/groff_font`,
+NetBSD's own groff's. On artos, with only NetBSD's groff 1.19.2,
+pomermaid found and read its `devps` fonts with no `--font-path`, and
+`groff -p -ms -Tps -wall` drew `theme`, `classes` and nine other cases
+(fills, colours, dashes, collapsed and nested isolated subgraphs)
+without a warning; looked at with Ghostscript. groff 1.24.1 (yishana,
+pkgsrc) did the same. Linux's `make test` passes under both models.

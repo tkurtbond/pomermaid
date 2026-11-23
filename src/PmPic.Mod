@@ -220,7 +220,9 @@ PROCEDURE Polygon(VAR p: ARRAY OF G.Point; n: INTEGER; VAR st: Style);
 
   PROCEDURE Milli(v: REAL): LONGINT;
   BEGIN
-    RETURN ENTIER(v / 72 * 1000 + 0.5)
+    IF v < 0 THEN RETURN -PmIO.Round(v / 72, 3)
+    ELSE RETURN PmIO.Round(v / 72, 3)
+    END
   END Milli;
 
 BEGIN
