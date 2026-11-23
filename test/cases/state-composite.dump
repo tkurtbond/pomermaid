@@ -1,0 +1,45 @@
+direction LR
+node fork_state shape=fork label=md:"fork_state"
+node root_start shape=sm-circ label=md:"root_start"
+node State2 shape=state label=md:"State2"
+node State3 shape=state label=md:"State3"
+node join_state shape=fork label=md:"join_state"
+node Active shape=state label=md:"Active"
+node if_state shape=choice label=md:"if_state"
+node False shape=state label=md:"False" class=bad
+node True shape=state label=md:"True"
+node Long shape=state label=md:"A long name" class=bad link="http://x" tooltip="tip"
+node divider-id-1_start shape=sm-circ label=md:"divider-id-1_start" cluster=divider-id-1
+node NumLockOff shape=state label=md:"NumLockOff" cluster=divider-id-1
+node NumLockOn shape=state label=md:"NumLockOn" cluster=divider-id-1
+node divider-id-2_start shape=sm-circ label=md:"divider-id-2_start" cluster=divider-id-2
+node CapsLockOff shape=state label=md:"CapsLockOff" cluster=divider-id-2
+node CapsLockOn shape=state label=md:"CapsLockOn" cluster=divider-id-2
+node Inner shape=state label=md:"Inner" cluster=divider-id-2
+node x shape=state label=md:"x" cluster=Inner
+node y shape=state label=md:"y" cluster=Inner
+node Long----note-16 shape=rect label=md:"A note"/"on two lines"=000222000000
+node root_end shape=fr-circ label=md:"root_end"
+edge root_start -> fork_state head=arrow tail=none line=normal len=1
+edge fork_state -> State2 head=arrow tail=none line=normal len=1
+edge fork_state -> State3 head=arrow tail=none line=normal len=1
+edge State2 -> join_state head=arrow tail=none line=normal len=1
+edge State3 -> join_state head=arrow tail=none line=normal len=1
+edge join_state -> Active head=arrow tail=none line=normal len=1
+edge Active -> if_state head=arrow tail=none line=normal len=1
+edge if_state -> False head=arrow tail=none line=normal len=1 label=md:"if n < 0"
+edge if_state -> True head=arrow tail=none line=normal len=1 label=md:"if n >= 0"
+edge Long -> Active head=arrow tail=none line=normal len=1
+edge divider-id-1_start -> NumLockOff head=arrow tail=none line=normal len=1
+edge NumLockOff -> NumLockOn head=arrow tail=none line=normal len=1 label=md:"EvNumLockPressed"
+edge NumLockOn -> NumLockOff head=arrow tail=none line=normal len=1 label=md:"EvNumLockPressed"
+edge divider-id-2_start -> CapsLockOff head=arrow tail=none line=normal len=1
+edge CapsLockOff -> CapsLockOn head=arrow tail=none line=normal len=1 label=md:"EvCapsLockPressed"
+edge x -> y head=arrow tail=none line=normal len=1
+edge Long----note-16 -> Long head=none tail=none line=dotted len=1
+edge False -> root_end head=arrow tail=none line=normal len=1
+cluster divider-id-1 parent=Active direction=LR region alt
+cluster Inner title=md:"Inner" parent=divider-id-2 direction=TB composite
+cluster divider-id-2 parent=Active direction=TB region alt
+cluster Active title=md:"Active" parent=- direction=TB composite
+classDef bad props=fill:"#f00"

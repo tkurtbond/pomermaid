@@ -20,11 +20,16 @@ CONST
   EdgeLine = 0333333H;
   LabelBack = 0E8E8E8H;  (* behind an edge's label *)
   ClusterFill = 0FFFFDEH; ClusterLine = 0AAAA33H;
+  (* and its state diagrams' *)
+  NoteFill = 0FFF5ADH; NoteLine = 0AAAA33H;
+  CompositeBack = 0FFFFFFH; AltBack = 0F0F0F0H;
   None = -1;  (* a theme's colour that is none *)
 
 TYPE
   Style* = RECORD
     fill*, line*, text*: INTEGER;  (* indexes into the colours, or NoColour *)
+    inner*: INTEGER;               (* a composite state's body's fill, below
+                                      its title, or NoColour *)
     width*, dash*: REAL            (* points; dash 0 for a solid line *)
   END;
 
@@ -34,7 +39,8 @@ VAR
   px: REAL;             (* a Mermaid pixel, in points *)
   (* the theme's colours, as 0RRGGBBH, or None *)
   nodeFill, nodeLine, nodeText, textColour, titleColour, edgeLine,
-  labelBack, clusterFill, clusterLine: LONGINT;
+  labelBack, clusterFill, clusterLine,
+  noteFill, noteLine, noteText, compositeBack, altBack: LONGINT;
 
 
 (* The colour of index c, as 0RRGGBBH *)
@@ -283,7 +289,14 @@ BEGIN
   set := Var("lineColor", edgeLine);
   IF ~Var("edgeLabelBackground", labelBack) THEN set := Var("labelBackground", labelBack) END;
   IF ~Var("clusterBkg", clusterFill) THEN set := Var("secondBkg", clusterFill) END;
-  IF ~Var("clusterBorder", clusterLine) THEN set := Var("border2", clusterLine) END
+  IF ~Var("clusterBorder", clusterLine) THEN set := Var("border2", clusterLine) END;
+  noteFill := NoteFill; noteLine := NoteLine; noteText := textColour;
+  compositeBack := CompositeBack; altBack := AltBack;
+  set := Var("noteBkgColor", noteFill);
+  set := Var("noteBorderColor", noteLine);
+  set := Var("noteTextColor", noteText);
+  IF ~Var("compositeBackground", compositeBack) THEN set := Var("background", compositeBack) END;
+  set := Var("altBackground", altBack)
 END Theme;
 
 (* Empties the colour table, and sets the theme's colours from g's
@@ -307,12 +320,23 @@ BEGIN
 END ApplyClass;
 
 (* st, node n's style: Mermaid's default theme, then classDef default,
-   n's classes and its style statements *)
+   n's classes and its style statements. In a state diagram, start and
+   end markers and forks are in the line colour, and notes (Rect) in
+   the notes' colours *)
 PROCEDURE NodeStyle*(g: F.Graph; n: F.Node; VAR st: Style);
   VAR c: F.Name;
 BEGIN
   st.fill := ThemeColour(nodeFill); st.line := ThemeColour(nodeLine); st.text := ThemeColour(nodeText);
-  st.width := px; st.dash := 0;
+  st.width := px; st.dash := 0; st.inner := NoColour;
+  IF g.kind = F.State THEN
+    IF (n.shape = F.SmCircle) OR (n.shape = F.Fork) THEN
+      st.fill := ThemeColour(edgeLine); st.line := st.fill
+    ELSIF n.shape = F.FrCircle THEN
+      st.line := ThemeColour(edgeLine); st.width := 2 * px
+    ELSIF n.shape = F.Rect THEN
+      st.fill := ThemeColour(noteFill); st.line := ThemeColour(noteLine); st.text := ThemeColour(noteText)
+    END
+  END;
   ApplyClass(g, st, "default");
   c := n.classes;
   WHILE c # NIL DO ApplyClass(g, st, c.name^); c := c.next END;
@@ -321,13 +345,22 @@ END NodeStyle;
 
 (* st, subgraph k's style: Mermaid's default theme's, then its class
    statements', as Mermaid's flowDb compiles them, then the classes and
-   style statements of n, the node with the subgraph's id, if not NIL *)
+   style statements of n, the node with the subgraph's id, if not NIL.
+   A composite state's title band is filled as a state, its body
+   (inner) white, or grey if it alternates; a region is grey and
+   dashed *)
 PROCEDURE ClusterStyle*(g: F.Graph; k: INTEGER; n: F.Node; VAR st: Style);
   VAR c: F.Name; cl: F.Cluster;
 BEGIN
   st.fill := ThemeColour(clusterFill); st.line := ThemeColour(clusterLine); st.text := ThemeColour(titleColour);
-  st.width := px; st.dash := 0;
+  st.width := px; st.dash := 0; st.inner := NoColour;
   cl := g.clusters; WHILE (cl # NIL) & (cl.index # k) DO cl := cl.next END;
+  IF (cl # NIL) & (cl.kind = F.Composite) THEN
+    st.fill := ThemeColour(nodeFill); st.line := ThemeColour(nodeLine); st.text := ThemeColour(nodeText);
+    IF cl.alt THEN st.inner := ThemeColour(altBack) ELSE st.inner := ThemeColour(compositeBack) END
+  ELSIF (cl # NIL) & (cl.kind = F.Region) THEN
+    st.fill := ThemeColour(altBack); st.line := ThemeColour(nodeLine); st.dash := 10 * px
+  END;
   IF cl # NIL THEN
     c := cl.classes;
     WHILE c # NIL DO ApplyClass(g, st, c.name^); c := c.next END
@@ -345,8 +378,12 @@ PROCEDURE EdgeStyle*(g: F.Graph; e: F.Edge; VAR st: Style);
   VAR c: F.Name;
 BEGIN
   st.fill := NoColour; st.line := ThemeColour(edgeLine); st.text := ThemeColour(nodeText);
-  st.width := 2 * px; st.dash := 0;
-  IF e.line = F.Thick THEN st.width := 3.5 * px
+  st.width := 2 * px; st.dash := 0; st.inner := NoColour;
+  IF g.kind = F.State THEN
+    (* transitions are 1 pixel wide; a note's edge is dashed *)
+    st.width := px;
+    IF e.line = F.Dotted THEN st.dash := 5 * px END
+  ELSIF e.line = F.Thick THEN st.width := 3.5 * px
   ELSIF e.line = F.Dotted THEN st.dash := 3 * px
   END;
   c := e.classes;
@@ -358,5 +395,7 @@ BEGIN
   nColours := 0; px := 1;
   nodeFill := NodeFill; nodeLine := NodeLine; nodeText := TextColour;
   textColour := TextColour; titleColour := TextColour; edgeLine := EdgeLine;
-  labelBack := LabelBack; clusterFill := ClusterFill; clusterLine := ClusterLine
+  labelBack := LabelBack; clusterFill := ClusterFill; clusterLine := ClusterLine;
+  noteFill := NoteFill; noteLine := NoteLine; noteText := TextColour;
+  compositeBack := CompositeBack; altBack := AltBack
 END PmStyle.

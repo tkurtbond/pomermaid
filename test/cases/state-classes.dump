@@ -1,0 +1,15 @@
+direction TB
+node root_start shape=sm-circ label=md:"root_start"
+node Still shape=state label=md:"Still" class=notMoving
+node root_end shape=fr-circ label=md:"root_end"
+node Moving shape=state label=md:"Moving" class=movement
+node Crash shape=state label=md:"Crash" class=movement,badBadEvent
+edge root_start -> Still head=arrow tail=none line=normal len=1
+edge Still -> root_end head=arrow tail=none line=normal len=1
+edge Still -> Moving head=arrow tail=none line=normal len=1
+edge Moving -> Still head=arrow tail=none line=normal len=1
+edge Moving -> Crash head=arrow tail=none line=normal len=1
+edge Crash -> root_end head=arrow tail=none line=normal len=1
+classDef notMoving props=fill:"white"
+classDef movement props=font-style:"italic"
+classDef badBadEvent props=fill:"#f00",color:"white",font-weight:"bold",stroke-width:"2px",stroke:"yellow"

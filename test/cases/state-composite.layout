@@ -1,0 +1,44 @@
+layout direction LR width=429.33 height=158.98
+node fork_state rank=2 order=0 x=17.25 y=66.66 w=2.5 h=17.5
+node root_start rank=0 order=0 x=1.75 y=66.66 w=3.5 h=3.5
+node State2 rank=4 order=0 x=45.35 y=56.01 w=16.28 h=8.8
+node State3 rank=4 order=1 x=45.35 y=77.31 w=16.28 h=8.8
+node join_state rank=6 order=0 x=84.18 y=66.66 w=2.5 h=17.5
+node Active hidden rank=0 order=0 x=0 y=79.49 w=0 h=0
+node if_state rank=10 order=0 x=367.89 y=79.49 w=7 h=7
+node False rank=12 order=0 x=406.19 y=68.84 w=14.28 h=8.8
+node True rank=12 order=1 x=406.19 y=90.14 w=12.36 h=8.8
+node Long rank=6 order=1 x=84.18 y=102.86 w=23.96 h=8.8
+node divider-id-1_start rank=0 order=1 x=122.28 y=82.36 w=3.5 h=3.5
+node NumLockOff rank=2 order=1 x=161.65 y=82.36 w=25.24 h=8.8
+node NumLockOn rank=4 order=1 x=246.37 y=82.36 w=23.32 h=8.8
+node divider-id-2_start rank=0 order=1 x=299.21 y=47.56 w=3.5 h=3.5
+node CapsLockOff rank=2 order=1 x=299.21 y=108.47 w=27.16 h=8.8
+node CapsLockOn rank=4 order=1 x=299.21 y=147.07 w=25.24 h=8.8
+node Inner hidden rank=0 order=0 x=0 y=79.49 w=0 h=0
+node x rank=0 order=1 x=324.55 y=30.88 w=5.92 h=8.8
+node y rank=2 order=1 x=324.55 y=70.93 w=5.92 h=8.8
+node Long----note-16 rank=4 order=2 x=45.35 y=102.86 w=28.7 h=17.1
+node root_end rank=14 order=0 x=427.58 y=68.84 w=3.5 h=3.5
+edge root_start -> fork_state points=(3.5,66.66) (9.75,66.66) (16,66.66)
+edge fork_state -> State2 points=(18.5,64.89) (24.75,56.01) (31,56.01) (31,56.01) (37.21,56.01)
+edge fork_state -> State3 points=(18.5,68.44) (24.75,77.31) (31,77.31) (31,77.31) (37.21,77.31)
+edge State2 -> join_state points=(53.49,56.01) (59.7,56.01) (59.7,56.01) (65.95,56.01) (72.2,65.93) (72.2,65.93) (82.93,65.93)
+edge State3 -> join_state points=(53.49,77.31) (59.7,77.31) (59.7,77.31) (65.95,77.31) (72.2,67.39) (72.2,67.39) (82.93,67.39)
+edge join_state -> Active points=(85.43,66.66) (96.16,66.66) (96.16,66.66) (102.41,66.66) (108.66,67.29)
+edge Active -> if_state points=(351.89,79.49) (358.14,79.49) (364.39,79.49)
+edge if_state -> False points=(370.05,78.16) (385.21,68.84) (399.05,68.84) label=(385.21,68.84)
+edge if_state -> True points=(370.05,80.82) (385.21,90.14) (399.05,90.14) (399.05,90.14) (400.01,90.14) label=(385.21,90.14)
+edge Long -> Active points=(96.16,102.86) (102.41,102.86) (108.66,101.72)
+edge divider-id-1_start -> NumLockOff points=(124.03,82.36) (136.53,82.36) (149.03,82.36)
+edge NumLockOff -> NumLockOn points=(174.27,80.91) (204.49,77.46) (234.71,80.99) label=(204.49,77.46)
+edge NumLockOn -> NumLockOff reversed points=(234.71,83.72) (204.49,87.26) (174.27,83.8) label=(204.49,87.26)
+edge divider-id-2_start -> CapsLockOff points=(299.21,49.31) (299.21,79.07) (299.21,79.07) (299.21,91.57) (299.21,104.07)
+edge CapsLockOff -> CapsLockOn points=(299.21,112.88) (299.21,127.78) (299.21,142.68) label=(299.21,127.78)
+edge x -> y points=(324.55,35.28) (324.55,50.9) (324.55,66.53)
+edge Long----note-16 -> Long points=(59.7,102.86) (65.95,102.86) (72.2,102.86)
+edge False -> root_end points=(413.33,68.84) (419.58,68.84) (425.83,68.84)
+cluster divider-id-1 isolated x=189.28 y=82.83 w=145 h=31.91 title=(189.28,68.74)
+cluster Inner isolated x=324.55 y=47.56 w=22.17 h=63.02 title=(324.55,20.33)
+cluster divider-id-2 isolated x=309.02 y=82.83 w=69.47 h=144.8 title=(309.02,12.3)
+cluster Active isolated x=230.27 y=79.49 w=243.23 h=158.98 title=(230.27,4.28)

@@ -64,14 +64,38 @@ differences:
 
 ## Styles and colours
 
-- **Themes.** Only Mermaid's default theme is drawn: `theme` is
-  ignored. The `themeVariables` that colour a flowchart are used.
+- **Themes.** Only Mermaid's `default` theme and `classic` look are
+  drawn: `theme` and `look` are ignored. Since version 12.0.0, Mermaid
+  draws flowcharts by default in its `redux-color` theme and `neo`
+  look, so pomermaid's drawings look like Mermaid's with `theme:
+  default` and `look: classic`. The `themeVariables` that colour a
+  flowchart are used.
 - **Colours.** pomermaid knows hex colours, `rgb()` and about 35 CSS
   names. Any other colour is ignored with a warning, and the default
   is used.
 - **Dashed and dotted edges** are drawn in pic as a row of short
   lines along the curve. pic cannot dash a spline. They look as
   Mermaid's do.
+
+## State diagrams
+
+- **Layout.** A state diagram is laid out as a flowchart is: a
+  composite state or region is a subgraph, and a transition to a
+  composite state goes to its box.
+- **Notes** are boxes beside their states, ranked as the layout
+  places them, joined by a dashed line. Mermaid puts a note and its
+  state in a group of their own (its `noteGroup`), side by side.
+- **A state with descriptions** draws them as one block of lines
+  below its name. Mermaid writes each description as a line of its
+  own.
+- **The end marker's dot** is drawn in the line colour. Mermaid fills
+  it with the state border colour.
+- **Ids** end at `;` and, inside a composite state, at `}`, so that
+  `a --> b; b --> c` and `state X { a --> b }` read as they look.
+  Mermaid takes those characters into an id.
+- **Styles of the `neo` look** and `redux-color` theme, Mermaid's
+  default for state diagrams since 12.0.0, are not drawn: see "Styles
+  and colours".
 
 ## What is read but not drawn
 
@@ -83,6 +107,9 @@ differences:
 - **Animation.** An edge's `animate`, `animation` and `step` are
   ignored.
 - **Accessibility.** `accTitle` and `accDescr` are read and ignored.
+- **State diagrams:** `hide empty description` and `scale` are read
+  and ignored, and so are floating notes, `note "text" as id`, which
+  Mermaid does not draw either.
 - **Shapes Mermaid does not document,** such as `note` and the `bpmn-`
   shapes, are drawn as the nearest documented shape, with a warning.
 

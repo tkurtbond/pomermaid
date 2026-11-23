@@ -44,7 +44,17 @@ CONST
   Triangle* = 39; WinPane* = 40; FCircle* = 41; NotchPent* = 42;
   FlipTriangle* = 43; SlRect* = 44; Docs* = 45; StRect* = 46; BowRect* = 47;
   CrossCircle* = 48; TagDoc* = 49; TagRect* = 50; Flag* = 51; LinDoc* = 52;
-  NShapes* = 53;
+  (* a state diagram's (PmState): a choice, a state, and a state with
+     descriptions, its name the label's first line *)
+  Choice* = 53; StateBox* = 54; StateDesc* = 55;
+  NShapes* = 56;
+
+  (* the kinds of diagram *)
+  Flowchart* = 0; State* = 1;
+
+  (* the kinds of cluster: a flowchart's subgraph, a composite state,
+     a composite state's concurrent region *)
+  Plain* = 0; Composite* = 1; Region* = 2;
 
   (* edge curves, d3's: an edge's curve, or the diagram's *)
   Basis* = 0; Linear* = 1; Step* = 2; StepBefore* = 3; StepAfter* = 4;
@@ -131,6 +141,9 @@ TYPE
     dir*: INTEGER;      (* its direction statement, or NoDir *)
     classes*: Name;     (* class statements' names *)
     collapsed*: BOOLEAN; (* "@{ view: collapsed }" *)
+    kind*: INTEGER;     (* Plain (a subgraph), Composite or Region *)
+    alt*: BOOLEAN;      (* a composite state or region at an alternate
+                           depth, filled with the alternate colour *)
     mentioned: NodeList; (* the nodes its statements mention *)
     lastMentioned: NodeList;
     index*: INTEGER;    (* from 0, in order of their "end" *)
@@ -154,6 +167,7 @@ TYPE
 
   Graph* = POINTER TO GraphDesc;
   GraphDesc* = RECORD
+    kind*: INTEGER;     (* Flowchart or State *)
     dir*: INTEGER;
     nodes*: Node; nNodes*: INTEGER;
     edges*: Edge; nEdges*: INTEGER;
@@ -326,15 +340,12 @@ BEGIN
   lab.lines := first
 END Emphasize;
 
-(* The label of t[start .. end-1], decoded; quoted says it was in
-   quotation marks, where "`...`" makes a markdown string *)
-PROCEDURE MakeLabel(VAR t: ARRAY OF CHAR; start, end: LONGINT; quoted: BOOLEAN): Label;
+(* The label of t[start .. end-1], decoded; markdown says it is a
+   markdown string's text *)
+PROCEDURE Decode(VAR t: ARRAY OF CHAR; start, end: LONGINT; markdown: BOOLEAN): Label;
   VAR lab: Label; i, n: LONGINT;
 BEGIN
-  NEW(lab); lab.lines := NIL; lab.n := 0; lab.markdown := FALSE;
-  IF quoted & (end - start >= 2) & (t[start] = "`") & (t[end - 1] = "`") THEN
-    lab.markdown := TRUE; INC(start); DEC(end)
-  END;
+  NEW(lab); lab.lines := NIL; lab.n := 0; lab.markdown := markdown;
   bufLen := 0; i := start;
   WHILE i < end DO
     n := Br(t, i, end);
@@ -351,10 +362,28 @@ BEGIN
   AddLine(lab);
   IF lab.markdown THEN Emphasize(lab) END;
   RETURN lab
+END Decode;
+
+(* The label of t[start .. end-1], decoded; quoted says it was in
+   quotation marks, where "`...`" makes a markdown string *)
+PROCEDURE MakeLabel*(VAR t: ARRAY OF CHAR; start, end: LONGINT; quoted: BOOLEAN): Label;
+BEGIN
+  IF quoted & (end - start >= 2) & (t[start] = "`") & (t[end - 1] = "`") THEN
+    RETURN Decode(t, start + 1, end - 1, TRUE)
+  END;
+  RETURN Decode(t, start, end, FALSE)
 END MakeLabel;
 
+(* The label of t[start .. end-1] read as markdown, as a markdown
+   string's text is: a line end breaks a line, and bold and italic are
+   kept *)
+PROCEDURE MarkdownLabel*(VAR t: ARRAY OF CHAR; start, end: LONGINT): Label;
+BEGIN
+  RETURN Decode(t, start, end, TRUE)
+END MarkdownLabel;
+
 (* A label of one line, s *)
-PROCEDURE PlainLabel(s: Str): Label;
+PROCEDURE PlainLabel*(s: Str): Label;
 BEGIN
   RETURN MakeLabel(s^, 0, L.Length(s^), FALSE)
 END PlainLabel;
@@ -386,7 +415,7 @@ END Text;
 
 (* Properties: "name:value,name:value"; a comma in parentheses does not
    separate *)
-PROCEDURE Props(s: Str): Prop;
+PROCEDURE Props*(s: Str): Prop;
   VAR first, last, p: Prop; i, start, colon, end, depth: LONGINT;
   PROCEDURE Trim(VAR a, b: LONGINT);
   BEGIN
@@ -418,7 +447,7 @@ BEGIN
 END Props;
 
 (* Appends b to the list a *)
-PROCEDURE AppendProps(VAR a: Prop; b: Prop);
+PROCEDURE AppendProps*(VAR a: Prop; b: Prop);
   VAR p: Prop;
 BEGIN
   IF a = NIL THEN a := b
@@ -429,7 +458,7 @@ END AppendProps;
 (* The model *)
 
 (* The node id, made if it is new *)
-PROCEDURE GetNode(id: Str): Node;
+PROCEDURE GetNode*(id: Str): Node;
   VAR n: Node;
 BEGIN
   n := g.nodes;
@@ -462,7 +491,7 @@ BEGIN
   END
 END Mention;
 
-PROCEDURE AddName(VAR list: Name; name: Str);
+PROCEDURE AddName*(VAR list: Name; name: Str);
   VAR c, p: Name;
 BEGIN
   NEW(c); c.name := name; c.next := NIL;
@@ -471,12 +500,12 @@ BEGIN
   END
 END AddName;
 
-PROCEDURE AddClass(n: Node; name: Str);
+PROCEDURE AddClass*(n: Node; name: Str);
 BEGIN AddName(n.classes, name)
 END AddClass;
 
 (* The node id, or NIL *)
-PROCEDURE FindNode(id: ARRAY OF CHAR): Node;
+PROCEDURE FindNode*(id: ARRAY OF CHAR): Node;
   VAR n: Node;
 BEGIN
   n := g.nodes;
@@ -1062,7 +1091,7 @@ PROCEDURE Subgraph;
 BEGIN
   NEW(c); c.parent := current; c.dir := NoDir; c.mentioned := NIL; c.lastMentioned := NIL;
   c.id := NIL; c.title := NIL; c.next := NIL; c.index := -1;
-  c.classes := NIL; c.collapsed := FALSE;
+  c.classes := NIL; c.collapsed := FALSE; c.kind := Plain; c.alt := FALSE;
   sc.SkipBlanks;
   IF sc.Ch() = 22X THEN
     c.title := Text("", "")
@@ -1119,7 +1148,7 @@ BEGIN
 END End;
 
 (* "classDef a,b props" *)
-PROCEDURE ClassDefStmt;
+PROCEDURE ClassDefStmt*;
   VAR names, props: Str; i, start: LONGINT; d: ClassDef; p: Prop;
 BEGIN
   sc.SkipBlanks;
@@ -1241,7 +1270,7 @@ END Quoted;
 (* "click ids ...": a link, "href "url"" or ""url"", with a tooltip
    and a target, or a callback, "call f(args)" or "f", with a tooltip.
    Callbacks are JavaScript, and are not kept; their tooltips are. *)
-PROCEDURE Click;
+PROCEDURE Click*;
   VAR ids, url, tip, target, id: Str; i, start: LONGINT; callback: BOOLEAN; n: Node;
 BEGIN
   sc.SkipBlanks;
@@ -1292,7 +1321,7 @@ END Click;
 
 (* "accTitle: text", "accDescr: text" and "accDescr { ... }" are for
    readers of the web page; they are skipped *)
-PROCEDURE Accessibility;
+PROCEDURE Accessibility*;
 BEGIN
   WHILE ~sc.AtEnd() & (sc.Ch() # ":") & (sc.Ch() # "{") & (sc.Ch() # 0AX) DO INC(sc.pos) END;
   IF sc.Ch() = "{" THEN
@@ -1398,6 +1427,89 @@ BEGIN
   sc.pos := save
 END Directives;
 
+(* Building a graph, for the readers of other diagrams (PmState) *)
+
+(* Begins graph, a new one of kind kind (Flowchart or State), for the
+   text of s: its front matter and its directives are read, and the
+   scanner is left at the diagram's first word *)
+PROCEDURE Begin*(s: L.Scanner; kind: INTEGER; VAR graph: Graph);
+BEGIN
+  sc := s; current := NIL; autoIds := 0; defaultLinkStyle := NIL; defaultCurve := DefaultCurve;
+  NEW(g); g.kind := kind; g.dir := TB; g.nodes := NIL; g.nNodes := 0; g.edges := NIL;
+  g.nEdges := 0; g.clusters := NIL; g.nClusters := 0; g.classDefs := NIL;
+  g.title := NIL; g.config := NIL; g.curve := Basis;
+  g.lastNode := NIL; g.lastEdge := NIL; g.lastCluster := NIL; g.lastClassDef := NIL;
+  FrontMatter(TRUE); Directives; sc.SkipSpace;
+  graph := g
+END Begin;
+
+(* A new edge from from to to, with ends head and tail (None, Arrow
+   ...), line line (Normal ...) and label label, or NIL *)
+PROCEDURE NewEdge*(from, to: Node; head, tail, line: INTEGER; label: Label): Edge;
+  VAR a: ArrowDesc;
+BEGIN
+  a.head := head; a.tail := tail; a.line := line; a.length := 1; a.label := label; a.id := NIL;
+  AddEdge(from, to, a, NIL);
+  RETURN g.lastEdge
+END NewEdge;
+
+(* A new cluster id of kind kind, with title title and in parent, or
+   NIL; it is not in the graph until AddCluster *)
+PROCEDURE NewCluster*(id: Str; title: Label; parent: Cluster; kind: INTEGER): Cluster;
+  VAR c: Cluster;
+BEGIN
+  NEW(c); c.id := id; c.title := title; c.parent := parent; c.dir := NoDir;
+  c.classes := NIL; c.collapsed := FALSE; c.kind := kind; c.alt := FALSE;
+  c.mentioned := NIL; c.lastMentioned := NIL; c.index := -1; c.next := NIL;
+  RETURN c
+END NewCluster;
+
+(* Puts cluster c in the graph, after those there: a cluster must be
+   added after those it holds *)
+PROCEDURE AddCluster*(c: Cluster);
+BEGIN
+  c.index := g.nClusters; INC(g.nClusters);
+  IF g.clusters = NIL THEN g.clusters := c ELSE g.lastCluster.next := c END;
+  g.lastCluster := c
+END AddCluster;
+
+(* Ends the graph: a node with no label is labelled with its id, and
+   the edges get the diagram's curve: linkStyle default's, or a
+   flowchart's configuration's, or else Basis *)
+PROCEDURE Finish*;
+  VAR e: Edge; n: Node; q: Y.Pair;
+BEGIN
+  n := g.nodes;
+  WHILE n # NIL DO
+    IF n.label = NIL THEN n.label := PlainLabel(n.id) END;
+    n := n.next
+  END;
+  IF defaultCurve # DefaultCurve THEN g.curve := defaultCurve
+  ELSIF g.kind = Flowchart THEN
+    q := Y.Find(g.config, "config.flowchart.curve");
+    IF q # NIL THEN g.curve := Curve(q.value, q.pos) END
+  END;
+  e := g.edges;
+  WHILE e # NIL DO
+    IF e.curve = DefaultCurve THEN e.curve := g.curve END;
+    e := e.next
+  END;
+  IF defaultLinkStyle # NIL THEN
+    e := g.edges;
+    WHILE e # NIL DO
+      IF e.style = NIL THEN e.style := defaultLinkStyle END;
+      e := e.next
+    END
+  END
+END Finish;
+
+(* Moves s past the front matter, if there is one, and what is between
+   statements: to the diagram's first word *)
+PROCEDURE SkipFrontMatter*(s: L.Scanner);
+BEGIN
+  sc := s; FrontMatter(FALSE); sc.SkipSpace
+END SkipFrontMatter;
+
 (* Whether the scanner's text, after front matter and comments, starts
    with "flowchart" or "graph" *)
 PROCEDURE IsFlowchart*(s: L.Scanner): BOOLEAN;
@@ -1413,13 +1525,8 @@ END IsFlowchart;
 
 (* Reads the flowchart in s's text into g *)
 PROCEDURE Read*(s: L.Scanner; VAR graph: Graph);
-  VAR e: Edge; n: Node; q: Y.Pair;
 BEGIN
-  sc := s; current := NIL; autoIds := 0; defaultLinkStyle := NIL; defaultCurve := DefaultCurve;
-  NEW(g); g.dir := TB; g.nodes := NIL; g.nNodes := 0; g.edges := NIL; g.nEdges := 0;
-  g.clusters := NIL; g.nClusters := 0; g.classDefs := NIL;
-  g.title := NIL; g.config := NIL; g.curve := Basis;
-  FrontMatter(TRUE); Directives; sc.SkipSpace;
+  Begin(s, Flowchart, graph);
   IF sc.Accept("flowchart-elk") OR sc.Accept("flowchart") OR sc.Accept("graph") THEN
     IF ~sc.AtStatementEnd() THEN g.dir := Direction() END;
     IF ~sc.AtStatementEnd() THEN sc.Error("unexpected text") END
@@ -1431,30 +1538,7 @@ BEGIN
     Statement
   END;
   IF current # NIL THEN sc.Error('a subgraph has no "end"') END;
-  n := g.nodes;
-  WHILE n # NIL DO
-    IF n.label = NIL THEN n.label := PlainLabel(n.id) END;
-    n := n.next
-  END;
-  (* the curve: linkStyle default's, or else the configuration's *)
-  IF defaultCurve # DefaultCurve THEN g.curve := defaultCurve
-  ELSE
-    q := Y.Find(g.config, "config.flowchart.curve");
-    IF q # NIL THEN g.curve := Curve(q.value, q.pos) END
-  END;
-  e := g.edges;
-  WHILE e # NIL DO
-    IF e.curve = DefaultCurve THEN e.curve := g.curve END;
-    e := e.next
-  END;
-  IF defaultLinkStyle # NIL THEN
-    e := g.edges;
-    WHILE e # NIL DO
-      IF e.style = NIL THEN e.style := defaultLinkStyle END;
-      e := e.next
-    END
-  END;
-  graph := g
+  Finish
 END Read;
 
 BEGIN

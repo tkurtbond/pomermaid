@@ -1,0 +1,36 @@
+stateDiagram-v2
+    direction LR
+    state fork_state <<fork>>
+    [*] --> fork_state
+    fork_state --> State2
+    fork_state --> State3
+    state join_state <<join>>
+    State2 --> join_state
+    State3 --> join_state
+    join_state --> Active
+    state if_state <<choice>>
+    Active --> if_state
+    if_state --> False: if n < 0
+    if_state --> True : if n >= 0
+    state "A long name" as Long
+    Long --> Active
+    state Active {
+        direction LR
+        [*] --> NumLockOff
+        NumLockOff --> NumLockOn : EvNumLockPressed
+        NumLockOn --> NumLockOff : EvNumLockPressed
+        --
+        [*] --> CapsLockOff
+        CapsLockOff --> CapsLockOn : EvCapsLockPressed
+        state Inner {
+          x --> y
+        }
+    }
+    note left of Long
+        A note
+        on *two* lines
+    end note
+    classDef bad fill:#f00
+    class Crash,Long bad
+    False:::bad --> [*]
+    click Long "http://x" "tip"

@@ -28,7 +28,8 @@ pm_hcylinder := 35; pm_lincylinder := 36; pm_curvtrap := 37; pm_divrect := 38;
 pm_triangle := 39; pm_winpane := 40; pm_fcircle := 41; pm_notchpent := 42;
 pm_fliptriangle := 43; pm_slrect := 44; pm_docs := 45; pm_strect := 46; pm_bowrect := 47;
 pm_crosscircle := 48; pm_tagdoc := 49; pm_tagrect := 50; pm_flag := 51; pm_lindoc := 52;
-pm_sub := 53; pm_collapsed := 54;
+pm_choice := 53; pm_statebox := 54; pm_statedesc := 55;
+pm_sub := 56; pm_collapsed := 57;
 pm_endnone := 0; pm_endarrow := 1; pm_endcircle := 2; pm_endcross := 3;
 numeric pm_ranksep, pm_subof[]; picture pm_subpic[];
 def pm_begin(expr d, s, mw, nn, ne, nr, nc) =
@@ -41,9 +42,13 @@ def pm_subnode(expr v, k) = pm_subof[v] := k; enddef;
 def pm_cluster(expr c, p, mn, mx, lab) =
   pm_cparent[c] := p; pm_cmin[c] := mn; pm_cmax[c] := mx; pm_ctitle[c] := lab;
 enddef;
+numeric pm_cin[];
 def pm_cstyle(expr c, f, l, t, w, d) =
-  pm_style(pm_nn + c, f, l, t, w, d);
+  pm_style(pm_nn + c, f, l, t, w, d); pm_cin[c] := -1;
 enddef;
+def pm_cinner(expr c, i) = pm_cin[c] := i; enddef;
+numeric pm_nl[];
+def pm_lines(expr v, n) = pm_nl[v] := n; enddef;
 def pm_colour(expr c, r, g, b) =
   pm_c[c] := (r, g, b);
 enddef;
@@ -129,6 +134,8 @@ def pm_xsize =
   elseif sh = pm_bowrect: w := w + 2 * (h / 2 / (2.5 + h / 50));
   elseif sh = pm_crosscircle: w := 60u; h := w;
   elseif sh = pm_flag: h := h + h / 4;
+  elseif sh = pm_choice: w := 28u; h := w;
+  elseif (sh = pm_statebox) or (sh = pm_statedesc): w := tw + 16u; h := th + 16u;
   fi
   endgroup
 enddef;
@@ -653,6 +660,13 @@ def pm_shapedraw(expr v) =
     pm_B(0); pm_document(0, 0, w, h); pm_EO;
     pm_B(1); pm_P(xl + 8u, yt); pm_P(xl + 8u, pm_wavey(xl + 8u, w, ybo - a, a, 0.8)); pm_E;
     pm_slx := pm_ox + 4u; pm_sly := pm_oy - a / 2;
+  elseif sh = pm_choice:
+    pm_B(0); pm_P(0, yt); pm_P(xr, 0); pm_P(0, ybo); pm_P(xl, 0); pm_EO; pm_slab := false;
+  elseif sh = pm_statebox: pm_B(0); pm_rarcs(xl, yt, xr, ybo, 5u); pm_EO;
+  elseif sh = pm_statedesc:
+    pm_B(0); pm_box(xl, yt, xr, ybo); pm_EO;
+    t := -th / 2 + th / pm_nl[v];
+    pm_B(1); pm_P(xl, t); pm_P(xr, t); pm_E;
   else: pm_B(0); pm_box(xl, yt, xr, ybo); pm_EO;
   fi
   endgroup
@@ -1051,8 +1065,21 @@ def pm_drawnode(expr v) =
 enddef;
 def pm_drawcluster(expr c) =
   if pm_cmin[c] >= 0:
-    pm_paint(unitsquare shifted (-1/2, -1/2) xscaled pm_cw[c] yscaled pm_ch[c]
-      shifted pm_up((pm_cx[c], pm_cy[c])), pm_nn + c, true);
+    if (pm_cin[c] >= 0) and (abs(pm_ctx[c] - pm_cx[c]) < 0.5) and (pm_cty[c] < pm_cy[c]):
+      begingroup save th, top, d, bot;
+      pm_paint(pm_rbox(pm_up((pm_cx[c], pm_cy[c])), pm_cw[c], pm_ch[c], 5pm_px), pm_nn + c, true);
+      th := ypart urcorner pm_cpic[c] - ypart llcorner pm_cpic[c];
+      top := pm_cy[c] - pm_ch[c] / 2; bot := pm_cy[c] + pm_ch[c] / 2;
+      d := pm_cty[c] + th / 2 + (pm_cty[c] - top - th / 2);
+      fill unitsquare shifted (-1/2, -1/2) xscaled pm_cw[c] yscaled (bot - d)
+        shifted pm_up((pm_cx[c], (d + bot) / 2)) withcolor pm_c[pm_cin[c]];
+      pm_paint(unitsquare shifted (-1/2, -1/2) xscaled pm_cw[c] yscaled (bot - d)
+        shifted pm_up((pm_cx[c], (d + bot) / 2)), pm_nn + c, false);
+      endgroup;
+    else:
+      pm_paint(unitsquare shifted (-1/2, -1/2) xscaled pm_cw[c] yscaled pm_ch[c]
+        shifted pm_up((pm_cx[c], pm_cy[c])), pm_nn + c, true);
+    fi
     draw pm_cpic[c] shifted (pm_up((pm_ctx[c], pm_cty[c])) - center pm_cpic[c])
       withcolor pm_col(pm_text[pm_nn + c]);
   fi

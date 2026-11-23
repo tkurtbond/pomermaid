@@ -118,6 +118,9 @@ BEGIN
   | F.TagRect: PmIO.WriteString("tag-rect")
   | F.Flag: PmIO.WriteString("flag")
   | F.LinDoc: PmIO.WriteString("lin-doc")
+  | F.Choice: PmIO.WriteString("choice")
+  | F.StateBox: PmIO.WriteString("state")
+  | F.StateDesc: PmIO.WriteString("state-desc")
   ELSE PmIO.WriteString("?")
   END
 END Shape;
@@ -237,6 +240,10 @@ BEGIN
     IF c.dir # F.NoDir THEN PmIO.WriteString(" direction="); Dir(c.dir) END;
     Names("class", c.classes);
     IF c.collapsed THEN PmIO.WriteString(" collapsed") END;
+    IF c.kind = F.Composite THEN PmIO.WriteString(" composite")
+    ELSIF c.kind = F.Region THEN PmIO.WriteString(" region")
+    END;
+    IF c.alt THEN PmIO.WriteString(" alt") END;
     PmIO.WriteLn;
     c := c.next
   END;

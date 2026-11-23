@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> Still
+    Still --> [*]
+    Still --> Moving : **go**
+    Moving --> Still
+    Moving --> Crash
+    Crash --> [*]
+    Crash : A crash
+    Crash : second line
+    note right of Moving : moving fast

@@ -536,6 +536,38 @@ the libraries, removed afterwards.
 
 **Done:** yes.
 
+### Phase 12: state diagrams [done]
+
+**Change:** `stateDiagram-v2` (and `stateDiagram`), read by a new
+module, `PmState`, into the flowchart model (`PmFlow.Graph`), so that
+the layout and the three writers are shared.
+
+**Check:** case tests for each construct; Mermaid's own state
+examples read without errors and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/stateDiagram.md`,
+`diagrams/state/parser/stateDiagram.jison`, `stateDb.ts`,
+`dataFetcher.ts` and the state shapes of `rendering-elements/shapes/`.
+In steps:
+
+- **12.1, the model:** `PmFlow`'s builders exported for other readers
+  (`Begin`, `NewEdge`, `NewCluster`, `AddCluster`, `Finish`); a graph
+  kind (flowchart or state) and a cluster kind (plain, composite,
+  region) with its alternating fill; the shapes `choice`, `state` and
+  `state-desc` (a state with descriptions, its title above a line) in
+  `PmShapes` and `pomermaid.mp`.
+- **12.2, the reader:** states, `state "desc" as id`, descriptions,
+  transitions and their labels, `[*]` as a start or end in each
+  composite, `<<fork>>`, `<<join>>`, `<<choice>>`, composite states,
+  `--` regions, notes (one line and `end note`), `direction`,
+  `classDef`, `class`, `:::`, `style`, `click`, comments, and the
+  statements Mermaid accepts and pomermaid ignores (`hide empty
+  description`, `scale`, `accTitle`, `accDescr`).
+- **12.3, drawing:** composite states as clusters with a title band,
+  regions dashed, notes in the note colours, start and end markers,
+  in pic and MetaPost.
+- **12.4:** Mermaid's own examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -629,6 +661,17 @@ None at present.
     that would join it to itself are dropped. `class` applies to
     subgraphs and edges, as Mermaid 12.3.0 applies it (`flowDb.ts`).
 
+2026-11-22, before Phase 12, the user's answer:
+
+13. **The classic look for every type.** Since v12.0.0 Mermaid draws
+    flowcharts and state, class, ER, requirement and sequence diagrams
+    by default in the `redux-color` theme and the `neo` look
+    (`docs/config/theming.md`, "Per-diagram defaults"); the `default`
+    theme and `classic` look are what a diagram gets when it asks for
+    them. pomermaid draws the `default` theme and `classic` look for
+    every type, as its flowcharts already do: consistent between types
+    and good in print. The new look is in "Later".
+
 ## Later
 
 - A whole-document mode (`-s`) for looking at one diagram alone, if
@@ -640,6 +683,9 @@ None at present.
   or MuPDF, if the user wants it.
 - Mermaid's named themes (`theme: dark`, `forest`, `neutral`, `base`)
   mapped to colours.
+- Mermaid 12's `redux-color` theme and `neo` look, its default since
+  v12.0.0 for flowcharts and state, class, ER, requirement and
+  sequence diagrams (decision 13), drawn when a diagram asks for them.
 
 ## State
 
@@ -887,3 +933,31 @@ pomermaid found and read its `devps` fonts with no `--font-path`, and
 (fills, colours, dashes, collapsed and nested isolated subgraphs)
 without a warning; looked at with Ghostscript. groff 1.24.1 (yishana,
 pkgsrc) did the same. Linux's `make test` passes under both models.
+
+2026-11-22, Phase 12: state diagrams. `PmState` reads
+`stateDiagram-v2` and `stateDiagram` into `PmFlow`'s model, with
+`PmFlow`'s builders exported (`Begin`, `NewEdge`, `NewCluster`,
+`AddCluster`, `Finish`, `MarkdownLabel`, `SkipFrontMatter`); the graph
+and cluster kinds, the alternating fill of composite states and
+regions, and the shapes `choice`, `state` and `state-desc` in
+`PmShapes`, `PmStyle`, both writers and `pomermaid.mp`. The reader
+follows Mermaid 12.3.0's `stateDiagram.jison`, `stateDb.ts` and
+`dataFetcher.ts`: `[*]` as each composite's and region's start and
+end, `--` regions (renamed as Mermaid renames them), notes with
+Mermaid's ids, descriptions, forks, joins and choices, and `class`,
+`style` and `click` applied at the end. `make test` passes under
+`-O2` and `-OC`: 106 case tests, with the new `state-basic`,
+`state-composite`, `state-nested` and `state-classes` (dump, layout,
+pic, mp; classes dump and pic) and six error cases. All 21 examples
+of Mermaid's `docs/syntax/stateDiagram.md` read with no error or
+warning; looked at in SVG: the regions example, the classes example,
+the notes example, and the four state cases in `make render`.
+Decision 13 (the classic look for every type) is recorded in
+`differences.md`. On the i386 BSDs, a dash boundary on a vertex of a
+dotted note edge was taken at the start of the next piece instead of
+at the end of the last, which wrote a point twice; `PmPic.Dashes` now
+drops a point within 0.01 of the one before it, which took duplicate
+points out of `classes.pic`, `edges.pic` and `state-nested.pic`. With
+that, `gmake` and `gmake test` (106 case tests under both models)
+pass on FreeBSD 15.1 (alerik, rackhir), NetBSD 11.0 (artos, yishana)
+and OpenBSD 7.9 (jherek, cymoril), from clean copies, 2026-11-22.

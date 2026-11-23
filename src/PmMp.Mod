@@ -25,7 +25,7 @@ IMPORT PmIO, F := PmFlow, L := PmLayout, FL := PmFlowLayout, Lx := PmLex,
   S := PmStyle, PmMpMacros;
 
 CONST
-  Sub = 53; Collapsed = 54; (* pomermaid.mp's pm_sub and pm_collapsed *)
+  Sub = 56; Collapsed = 57; (* pomermaid.mp's pm_sub and pm_collapsed *)
 
 TYPE
   Styles = POINTER TO ARRAY OF S.Style;
@@ -111,7 +111,10 @@ BEGIN
     lc := lg.cluster[k]; i := sc.clus[k];
     W("pm_cluster("); I(k); C; I(lc.parent); C; I(lc.minRank); C; I(lc.maxRank); C;
     Label(l.clusterLabel[i]); W(");"); PmIO.WriteLn;
-    W("pm_cstyle("); I(k); C; Style(cst[i], TRUE); W(");"); PmIO.WriteLn
+    W("pm_cstyle("); I(k); C; Style(cst[i], TRUE); W(");"); PmIO.WriteLn;
+    IF cst[i].inner # S.NoColour THEN
+      W("pm_cinner("); I(k); C; I(cst[i].inner); W(");"); PmIO.WriteLn
+    END
   END;
   (* the nodes, then the dummies and borders *)
   FOR v := 0 TO lg.nNodes - 1 DO
@@ -123,7 +126,10 @@ BEGIN
       IF i >= 0 THEN
         I(nodes[i].shape); C; I(ln.edge); C; Label(l.nodeLabel[i]); W(");");
         PmIO.WriteLn;
-        W("pm_style("); I(v); C; Style(nst[i], TRUE); W(");")
+        W("pm_style("); I(v); C; Style(nst[i], TRUE); W(");");
+        IF nodes[i].shape = F.StateDesc THEN
+          PmIO.WriteLn; W("pm_lines("); I(v); C; I(l.nodeLabel[i].n); W(");")
+        END
       ELSIF l.isolated[-1 - i] THEN
         I(Sub); C; I(ln.edge); W(', "");'); PmIO.WriteLn;
         W("pm_subnode("); I(v); C; I(-1 - i); W(");")

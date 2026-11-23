@@ -260,9 +260,14 @@ PROCEDURE Dashes(VAR s: ARRAY OF G.Point; ns: INTEGER; VAR st: Style);
     piece: G.Points; np, k: INTEGER; on: BOOLEAN;
     left, pos, len, dx, dy: REAL;
 
+  (* a point within rounding of the last is left out: whether a dash
+     boundary at a vertex falls at the end of one piece or at the start
+     of the next depends on the floating point's precision *)
   PROCEDURE Add(x, y: REAL);
   BEGIN
-    G.Set(piece[np], x, y); INC(np)
+    IF (np = 0) OR (ABS(x - piece[np - 1].x) > 0.01) OR (ABS(y - piece[np - 1].y) > 0.01) THEN
+      G.Set(piece[np], x, y); INC(np)
+    END
   END Add;
 
   PROCEDURE Flush;
@@ -445,7 +450,7 @@ END DrawNode;
 
 (* Cluster c's box, its title at its top *)
 PROCEDURE DrawCluster(l: FL.Layout; c: INTEGER; VAR st: Style);
-  VAR lc: L.Cluster; d: REAL; k: INTEGER; line: Style;
+  VAR lc: L.Cluster; d, th, top: REAL; k: INTEGER; line: Style;
 BEGIN
   lc := l.g.cluster[c];
   IF l.collapsed[c] THEN
@@ -465,6 +470,18 @@ BEGIN
         W(" thickness 0"); PmIO.WriteLn
       END
     END
+  ELSIF (lc.w > 0) & (st.inner # NoColour) & (ABS(lc.titleX - lc.x) < 0.5) & (lc.titleY < lc.y) THEN
+    (* a composite state: its title on a band at its top, a body below
+       it as far down as the bottom *)
+    W("box wid "); In(lc.w); W(" ht "); In(lc.h); At(lc.x, lc.y); W(" rad "); In(5 * px);
+    Paint(st, TRUE); PmIO.WriteLn;
+    th := l.clusterLabel[c].n * l.vs;
+    top := lc.y - lc.h / 2;
+    d := lc.titleY + th / 2 + (lc.titleY - top - th / 2);
+    line := st; line.fill := st.inner;
+    W("box wid "); In(lc.w); W(" ht "); In(lc.y + lc.h / 2 - d);
+    At(lc.x, (d + lc.y + lc.h / 2) / 2); Paint(line, TRUE); PmIO.WriteLn;
+    Text(l.clusterLabel[c], lc.titleX, lc.titleY, st.text)
   ELSIF lc.w > 0 THEN
     W("box wid "); In(lc.w); W(" ht "); In(lc.h); At(lc.x, lc.y); Paint(st, TRUE); PmIO.WriteLn;
     Text(l.clusterLabel[c], lc.titleX, lc.titleY, st.text)

@@ -1,0 +1,27 @@
+---
+title: Nested states
+---
+stateDiagram
+    %% the v1 header, keywords in any case, # comments
+    [*] --> First
+    STATE First {
+        [*] --> second
+        second --> [*]   # a comment
+        State second {
+            [*] --> third
+            third --> [*]
+            state Fourth {
+                a --> b
+            }
+        }
+    }
+    First --> Last : done
+    Last --> [*]
+    note right of Last : one line
+    hide empty description
+    scale 350 width
+    accTitle: A title
+    state "Described" as D
+    D : and a description
+    Last --> D
+    style D fill:#ccf,stroke:#00f

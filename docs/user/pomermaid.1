@@ -31,7 +31,11 @@ MetaPost, for ConTeXt, or as SVG, for HTML.
 It reads flowcharts,
 .Ql flowchart
 and
-.Ql graph .
+.Ql graph ,
+and state diagrams,
+.Ql stateDiagram-v2
+and
+.Ql stateDiagram .
 .Pp
 The labels are set in the document's own fonts.
 For pic and SVG they are measured with groff's font description files;
@@ -253,6 +257,6 @@ draws differently from Mermaid.
 .Sh AUTHORS
 .An T. Kurt Bond
 .Sh BUGS
-Only flowcharts are read.
+Only flowcharts and state diagrams are read.
 Links and tooltips are drawn only in SVG.
 Mermaid's named themes, icons, images and animations are not drawn.

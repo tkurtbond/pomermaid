@@ -1,0 +1,30 @@
+direction TB
+title text="Nested states"
+node root_start shape=sm-circ label=md:"root_start"
+node First shape=state label=md:"First"
+node First_start shape=sm-circ label=md:"First_start" cluster=First
+node second shape=state label=md:"second" cluster=First
+node First_end shape=fr-circ label=md:"First_end" cluster=First
+node second_start shape=sm-circ label=md:"second_start" cluster=second
+node third shape=state label=md:"third" cluster=second
+node second_end shape=fr-circ label=md:"second_end" cluster=second
+node Fourth shape=state label=md:"Fourth" cluster=second
+node a shape=state label=md:"a" cluster=Fourth
+node b shape=state label=md:"b" cluster=Fourth
+node Last shape=state label=md:"Last"
+node root_end shape=fr-circ label=md:"root_end"
+node Last----note-8 shape=rect label=md:"one line"
+node D shape=state-desc label=md:"Described"/"and a description" style=fill:"#ccf",stroke:"#00f"
+edge root_start -> First head=arrow tail=none line=normal len=1
+edge First_start -> second head=arrow tail=none line=normal len=1
+edge second -> First_end head=arrow tail=none line=normal len=1
+edge second_start -> third head=arrow tail=none line=normal len=1
+edge third -> second_end head=arrow tail=none line=normal len=1
+edge a -> b head=arrow tail=none line=normal len=1
+edge First -> Last head=arrow tail=none line=normal len=1 label=md:"done"
+edge Last -> root_end head=arrow tail=none line=normal len=1
+edge Last -> Last----note-8 head=none tail=none line=dotted len=1
+edge Last -> D head=arrow tail=none line=normal len=1
+cluster Fourth title=md:"Fourth" parent=second direction=TB composite
+cluster second title=md:"second" parent=First direction=TB composite alt
+cluster First title=md:"First" parent=- direction=TB composite

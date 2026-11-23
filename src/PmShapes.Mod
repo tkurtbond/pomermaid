@@ -1,7 +1,8 @@
 MODULE PmShapes;
 (* PmShapes: the shapes a flowchart's node gets only by name, with
-   "@{ shape: name }" (PmFlow's DataStore to LinDoc): their sizes,
-   their drawings and their outlines.
+   "@{ shape: name }" (PmFlow's DataStore to LinDoc), and the state
+   diagrams' Choice, StateBox and StateDesc: their sizes, their
+   drawings and their outlines.
 
    A drawing is a few parts, each a list of points: the body, filled
    and outlined in the node's style; lines, outlined only; solids,
@@ -50,7 +51,7 @@ VAR
 (* Whether shape is one of PmShapes's *)
 PROCEDURE Has*(shape: INTEGER): BOOLEAN;
 BEGIN
-  RETURN (shape >= F.DataStore) & (shape <= F.LinDoc)
+  RETURN (shape >= F.DataStore) & (shape <= F.StateDesc)
 END Has;
 
 PROCEDURE Max(a, b: REAL): REAL;
@@ -126,6 +127,8 @@ BEGIN
   | F.CrossCircle: w := 60 * px; h := w
   | F.TagRect:
   | F.Flag: h := h + h / 4
+  | F.Choice: w := 28 * px; h := w
+  | F.StateBox, F.StateDesc: w := tw + 16 * px; h := th + 16 * px
   ELSE
   END
 END Size;
@@ -440,6 +443,16 @@ BEGIN
       Begin(Body); Document(0, 0, w, h); EndOutline(d);
       Begin(Line); P(x0 + 8 * px, y0); P(x0 + 8 * px, WaveY(x0 + 8 * px, w, y1 - a, a, 0.8)); End(d);
       d.lx := cx + 4 * px; d.ly := cy - a / 2
+  | F.Choice:
+      Begin(Body); P(0, y0); P(x1, 0); P(0, y1); P(x0, 0); EndOutline(d); d.label := FALSE
+  | F.StateBox:
+      Begin(Body); RBox(x0, y0, x1, y1, 5 * px); EndOutline(d)
+  | F.StateDesc:
+      (* the title is the label's first line, the descriptions the
+         rest, lines 1.2 size apart *)
+      Begin(Body); Box(x0, y0, x1, y1); EndOutline(d);
+      t := -th / 2 + 1.2 * size;
+      Begin(Line); P(x0, t); P(x1, t); End(d)
   ELSE
     Begin(Body); Box(x0, y0, x1, y1); EndOutline(d)
   END

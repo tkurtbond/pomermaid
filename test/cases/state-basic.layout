@@ -1,0 +1,14 @@
+layout direction TB width=182.88 height=232.5
+node root_start rank=0 order=0 x=35.96 y=4.38 w=8.75 h=8.75
+node Still rank=2 order=0 x=35.96 y=51 w=35.7 h=22
+node root_end rank=8 order=0 x=26.06 y=228.13 w=8.75 h=8.75
+node Moving rank=4 order=1 x=100.19 y=116.25 w=40.5 h=22
+node Crash rank=6 order=1 x=52.13 y=175.5 w=60.5 h=34
+node Moving----note-6 rank=6 order=2 x=148.25 y=175.5 w=69.25 h=30.75
+edge root_start -> Still points=(35.96,8.74) (35.96,24.38) (35.96,40)
+edge Still -> root_end points=(23.84,62) (0,83.63) (0,116.25) (0,142.88) (0,175.5) (0,208.13) (23.19,224.83)
+edge Still -> Moving points=(35.96,62) (35.96,83.63) (81.2,105.87) label=(35.96,83.63)
+edge Moving -> Still reversed points=(103.53,105.25) (110.09,83.63) (52.43,61.47)
+edge Moving -> Crash points=(81.31,126.71) (52.13,142.88) (52.13,158.5)
+edge Crash -> root_end points=(52.13,192.5) (52.13,208.13) (28.93,224.83)
+edge Moving -> Moving----note-6 points=(119.07,126.71) (148.25,142.88) (148.25,158.5) (148.25,158.5) (148.25,160.13)

@@ -51,7 +51,9 @@ Mermaid's flowchart syntax: `@{ ... }` metadata, the named shapes in
 bold and italic in `PmEmphasis`, links in the SVG, collapsed
 subgraphs, and isolated subgraphs laid out alone with their own
 `direction`) and 11 (the BSDs: FreeBSD, NetBSD and OpenBSD, on
-x86-64, i386 and arm64) are done. See PLAN.md's State.
+x86-64, i386 and arm64) and 12 (state diagrams, `PmState`, read
+into `PmFlow`'s model and drawn by the same layout and writers) are
+done. See PLAN.md's State.
 
 ## Reference material
 

@@ -1,0 +1,14 @@
+direction TB
+node root_start shape=sm-circ label=md:"root_start"
+node Still shape=state label=md:"Still"
+node root_end shape=fr-circ label=md:"root_end"
+node Moving shape=state label=md:"Moving"
+node Crash shape=state-desc label=md:"A crash"/"second line"
+node Moving----note-6 shape=rect label=md:"moving fast"
+edge root_start -> Still head=arrow tail=none line=normal len=1
+edge Still -> root_end head=arrow tail=none line=normal len=1
+edge Still -> Moving head=arrow tail=none line=normal len=1 label=md:"go"=11
+edge Moving -> Still head=arrow tail=none line=normal len=1
+edge Moving -> Crash head=arrow tail=none line=normal len=1
+edge Crash -> root_end head=arrow tail=none line=normal len=1
+edge Moving -> Moving----note-6 head=none tail=none line=dotted len=1

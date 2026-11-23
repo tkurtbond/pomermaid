@@ -11,8 +11,9 @@ It needs no browser and no JavaScript. The labels are set in the
 document's own fonts: groff's font files measure them for pic and SVG,
 and ConTeXt measures them itself for MetaPost.
 
-It reads flowcharts (`flowchart` and `graph`). Mermaid's other diagram
-types are planned, one after another.
+It reads flowcharts (`flowchart` and `graph`) and state diagrams
+(`stateDiagram-v2` and `stateDiagram`). Mermaid's other diagram types
+are planned, one after another.
 
 ## What it needs
 
@@ -198,7 +199,46 @@ Read and ignored: `accTitle` and `accDescr`; a node's `icon`, `img`,
 `form`, `pos`, `w`, `h` and `constraint` (an `icon` or `image` node is
 drawn as a box with its label); an edge's `animate`, `animation` and
 `step`; a `click` that calls a function, except for its tooltip in
-SVG. Mermaid's other diagram types are not read yet.
+SVG.
+
+### State diagrams
+
+pomermaid reads Mermaid's state diagrams, as Mermaid 12.3.0 reads
+them, and lays them out and draws them as it does flowcharts:
+
+- **The first line:** `stateDiagram-v2` or `stateDiagram`. A diagram
+  is drawn top to bottom unless a `direction TB`, `BT`, `LR` or `RL`
+  says otherwise. Front matter and directives are read as for a
+  flowchart.
+- **States:** an id, `state "A name" as id`, and descriptions,
+  `id : text`. The first description is the state's name; with more,
+  the state is drawn with its name above a line and its descriptions
+  below.
+- **Transitions:** `a --> b`, with a label, `a --> b : text`. `[*]`
+  is the start, before `-->` or alone, or the end, after it; the
+  diagram and each composite state have their own.
+- **Forks, joins and choices:** `state f <<fork>>`, `<<join>>` and
+  `<<choice>>`, or `[[fork]]` and so on.
+- **Composite states:** `state id { ... }`, nested to any depth, drawn
+  as a box with the state's name in a band at its top, filled in
+  alternating colours as they nest. A composite state is laid out top
+  to bottom unless a `direction` statement in it says otherwise. `--`
+  divides one into concurrent regions, drawn as dashed boxes, each
+  with its own `direction`.
+- **Notes:** `note left of id : text`, `note right of id : text`, or
+  the note's lines up to `end note`, in a box in the note colours,
+  joined to its state by a dashed line.
+- **Styles:** `classDef`, `class`, `:::class` in a transition, and
+  `style`, at the top level; `class` and `style` apply to states
+  anywhere, as in Mermaid. `click id "url" "tooltip"` and `click id
+  href "url"` make links in SVG.
+- **Text:** labels are markdown, as Mermaid reads them: a line end in
+  a note breaks the line, and bold and italic are kept.
+- **Comments:** `%%` and `#` comments; keywords are read in any case.
+
+Read and ignored: `hide empty description`, `scale`, `accTitle`,
+`accDescr`, and floating notes, `note "text" as id`, which Mermaid
+does not draw. Mermaid's other diagram types are not read yet.
 
 ## Using the output
 
