@@ -1,0 +1,60 @@
+layout width=428.75 height=400.24
+rect at=(0,0) w=428.75 h=400.24 colour=#ffffff
+text at=(208.89,107.47) size=12.25 w=81.59 centre colour=#131300 text="Rotated labels"
+rect at=(38.22,285.02) w=51.2 h=55.33 colour=#ececff
+rect at=(134.93,209.73) w=51.2 h=130.62 colour=#ececff
+rect at=(231.65,147) w=51.2 h=193.35 colour=#ececff
+rect at=(328.36,243.19) w=51.2 h=97.16 colour=#ececff
+text at=(63.82,309.21) size=36.14 w=36.14 centre colour=#131300 text="12"
+text at=(160.54,233.93) size=36.14 w=36.14 centre colour=#131300 text="30"
+text at=(257.25,171.19) size=36.14 w=36.14 centre colour=#131300 text="45"
+text at=(353.96,267.39) size=36.14 w=36.14 centre colour=#131300 text="22"
+rect at=(38.22,314.3) w=51.2 h=26.06 colour=#8493a6
+rect at=(134.93,251.56) w=51.2 h=88.79 colour=#8493a6
+rect at=(231.65,188.82) w=51.2 h=151.53 colour=#8493a6
+rect at=(328.36,167.91) w=51.2 h=172.44 colour=#8493a6
+text at=(63.82,330.22) size=19.6 w=9.8 centre colour=#131300 text="5"
+text at=(160.54,267.48) size=19.6 w=19.6 centre colour=#131300 text="20"
+text at=(257.25,204.75) size=19.6 w=19.6 centre colour=#131300 text="35"
+text at=(353.96,183.83) size=19.6 w=19.6 centre colour=#131300 text="40"
+path (63.82,264.11) (160.54,126.09) (257.25,0.61) (353.96,75.9) width=1.22 colour=#ffc3a0
+rect at=(387.04,213.5) w=6.43 h=6.43 colour=#ececff
+rect at=(387.04,226.36) w=6.43 h=6.43 colour=#8493a6
+path (387.04,242.44) (393.47,242.44) width=1.22 colour=#ffc3a0
+text at=(396.47,216.71) size=8.57 w=26.15 start colour=#131300 text="Apples"
+text at=(396.47,229.57) size=8.57 w=22.04 start colour=#131300 text="Pears"
+text at=(396.47,242.44) size=8.57 w=22.04 start colour=#131300 text="Total"
+path (36.87,340.96) (380.91,340.96) width=1.22 colour=#131300
+text at=(63.82,363.5) size=8.57 w=30.27 centre angle=45 colour=#131300 text="January"
+text at=(160.54,363.5) size=8.57 w=34.39 centre angle=45 colour=#131300 text="February"
+text at=(257.25,363.5) size=8.57 w=22.04 centre angle=45 colour=#131300 text="March"
+text at=(353.96,363.5) size=8.57 w=22.04 centre angle=45 colour=#131300 text="April"
+path (63.82,341.58) (63.82,344.64) width=1.22 colour=#131300
+path (160.54,341.58) (160.54,344.64) width=1.22 colour=#131300
+path (257.25,341.58) (257.25,344.64) width=1.22 colour=#131300
+path (353.96,341.58) (353.96,344.64) width=1.22 colour=#131300
+text at=(208.89,390.32) size=9.8 w=25.19 centre colour=#131300 text="Month"
+path (36.26,120.94) (36.26,340.35) width=1.22 colour=#131300
+text at=(29.52,335.21) size=8.57 w=4.29 end colour=#131300 text="0"
+text at=(29.52,314.3) size=8.57 w=4.29 end colour=#131300 text="5"
+text at=(29.52,293.38) size=8.57 w=8.58 end colour=#131300 text="10"
+text at=(29.52,272.47) size=8.57 w=8.58 end colour=#131300 text="15"
+text at=(29.52,251.56) size=8.57 w=8.58 end colour=#131300 text="20"
+text at=(29.52,230.65) size=8.57 w=8.58 end colour=#131300 text="25"
+text at=(29.52,209.73) size=8.57 w=8.58 end colour=#131300 text="30"
+text at=(29.52,188.82) size=8.57 w=8.58 end colour=#131300 text="35"
+text at=(29.52,167.91) size=8.57 w=8.58 end colour=#131300 text="40"
+text at=(29.52,147) size=8.57 w=8.58 end colour=#131300 text="45"
+text at=(29.52,126.09) size=8.57 w=8.58 end colour=#131300 text="50"
+path (35.65,335.21) (32.59,335.21) width=1.22 colour=#131300
+path (35.65,314.3) (32.59,314.3) width=1.22 colour=#131300
+path (35.65,293.38) (32.59,293.38) width=1.22 colour=#131300
+path (35.65,272.47) (32.59,272.47) width=1.22 colour=#131300
+path (35.65,251.56) (32.59,251.56) width=1.22 colour=#131300
+path (35.65,230.65) (32.59,230.65) width=1.22 colour=#131300
+path (35.65,209.73) (32.59,209.73) width=1.22 colour=#131300
+path (35.65,188.82) (32.59,188.82) width=1.22 colour=#131300
+path (35.65,167.91) (32.59,167.91) width=1.22 colour=#131300
+path (35.65,147) (32.59,147) width=1.22 colour=#131300
+path (35.65,126.09) (32.59,126.09) width=1.22 colour=#131300
+text at=(7.96,230.65) size=9.8 w=25.19 centre angle=270 colour=#131300 text="Count"

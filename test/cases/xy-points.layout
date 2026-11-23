@@ -1,0 +1,43 @@
+layout width=428.75 height=306.25
+rect at=(0,0) w=428.75 h=306.25 colour=#ffffff
+text at=(202.74,13.47) size=12.25 w=37.36 centre colour=#131300 text="Points"
+path (21.05,243.16) (111.89,131.42) (202.74,193.49) width=1.22 colour=#ececff
+text at=(21.05,237.03) size=7.35 w=10.58 centre colour=#ececff text="low"
+text at=(111.89,125.29) size=7.35 w=14.11 centre colour=#ececff text="high"
+path (21.05,94.17) (111.89,218.33) (202.74,56.93) (293.58,255.57) (384.43,168.66) width=1.22 colour=#8493a6
+path (392.61,155.18) (399.04,155.18) width=1.22 colour=#ececff
+text at=(402.05,155.18) size=8.57 w=20.58 start colour=#131300 text="first"
+path (18.99,286.16) (386.49,286.16) width=1.22 colour=#131300
+text at=(21.05,298.04) size=8.57 w=4.12 centre colour=#131300 text="a"
+text at=(111.89,298.04) size=8.57 w=4.12 centre colour=#131300 text="b"
+text at=(202.74,298.04) size=8.57 w=4.12 centre colour=#131300 text="c"
+text at=(293.58,298.04) size=8.57 w=4.12 centre colour=#131300 text="d"
+text at=(384.43,298.04) size=8.57 w=4.12 centre colour=#131300 text="e"
+path (21.05,286.77) (21.05,289.83) width=1.22 colour=#131300
+path (111.89,286.77) (111.89,289.83) width=1.22 colour=#131300
+path (202.74,286.77) (202.74,289.83) width=1.22 colour=#131300
+path (293.58,286.77) (293.58,289.83) width=1.22 colour=#131300
+path (384.43,286.77) (384.43,289.83) width=1.22 colour=#131300
+path (18.38,26.95) (18.38,285.55) width=1.22 colour=#131300
+text at=(11.64,280.4) size=8.57 w=4.29 end colour=#131300 text="0"
+text at=(11.64,255.57) size=8.57 w=4.29 end colour=#131300 text="2"
+text at=(11.64,230.74) size=8.57 w=4.29 end colour=#131300 text="4"
+text at=(11.64,205.91) size=8.57 w=4.29 end colour=#131300 text="6"
+text at=(11.64,181.08) size=8.57 w=4.29 end colour=#131300 text="8"
+text at=(11.64,156.25) size=8.57 w=8.58 end colour=#131300 text="10"
+text at=(11.64,131.42) size=8.57 w=8.58 end colour=#131300 text="12"
+text at=(11.64,106.59) size=8.57 w=8.58 end colour=#131300 text="14"
+text at=(11.64,81.76) size=8.57 w=8.58 end colour=#131300 text="16"
+text at=(11.64,56.93) size=8.57 w=8.58 end colour=#131300 text="18"
+text at=(11.64,32.09) size=8.57 w=8.58 end colour=#131300 text="20"
+path (17.76,280.4) (14.7,280.4) width=1.22 colour=#131300
+path (17.76,255.57) (14.7,255.57) width=1.22 colour=#131300
+path (17.76,230.74) (14.7,230.74) width=1.22 colour=#131300
+path (17.76,205.91) (14.7,205.91) width=1.22 colour=#131300
+path (17.76,181.08) (14.7,181.08) width=1.22 colour=#131300
+path (17.76,156.25) (14.7,156.25) width=1.22 colour=#131300
+path (17.76,131.42) (14.7,131.42) width=1.22 colour=#131300
+path (17.76,106.59) (14.7,106.59) width=1.22 colour=#131300
+path (17.76,81.76) (14.7,81.76) width=1.22 colour=#131300
+path (17.76,56.93) (14.7,56.93) width=1.22 colour=#131300
+path (17.76,32.09) (14.7,32.09) width=1.22 colour=#131300

@@ -157,14 +157,21 @@ BEGIN
   W('"')
 END LineString;
 
+(* The first line of lab, in colour c, at size points, centred on the
+   line from (x1, y1) to (x2, y2) and turned along it *)
+PROCEDURE Along*(lab: F.Label; x1, y1, x2, y2: REAL; c: INTEGER; size: REAL);
+BEGIN
+  IF (lab = NIL) OR (lab.n = 0) THEN RETURN END;
+  W("line invis from "); Pt(x1, y1); W(" to "); Pt(x2, y2); W(" ");
+  LineString(lab.lines, c, size); W(" aligned"); PmIO.WriteLn
+END Along;
+
 (* The first line of lab, in colour c, at size points, turned to read
    upward, centred at (x, (y1 + y2) / 2), y1 below y2: its middle on the
    vertical line from (x, y1) to (x, y2) *)
 PROCEDURE Rotated*(lab: F.Label; x, y1, y2: REAL; c: INTEGER; size: REAL);
 BEGIN
-  IF (lab = NIL) OR (lab.n = 0) THEN RETURN END;
-  W("line invis from "); Pt(x, y1); W(" to "); Pt(x, y2); W(" ");
-  LineString(lab.lines, c, size); W(" aligned"); PmIO.WriteLn
+  Along(lab, x, y1, x, y2, c, size)
 END Rotated;
 
 (* The text of lab, in colour c, at (x, y), at size points, or the

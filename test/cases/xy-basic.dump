@@ -1,0 +1,32 @@
+title text="Sales Revenue"
+xychart vertical width=700 height=500 titleFontSize=20 titlePadding=10 showTitle=true showLegend=true legendFontSize=14 legendPadding=10 showDataLabel=false showDataLabelOutsideBar=false plotReservedSpacePercent=50
+xAxis showLabel=true labelFontSize=14 labelPadding=5 showTitle=true titleFontSize=16 titlePadding=5 showTick=true tickLength=5 tickWidth=2 showAxisLine=true axisLineWidth=2 labelRotation=0
+yAxis showLabel=true labelFontSize=14 labelPadding=5 showTitle=true titleFontSize=16 titlePadding=5 showTick=true tickLength=5 tickWidth=2 showAxisLine=true axisLineWidth=2 labelRotation=0
+x-axis band cat="jan" cat="feb" cat="mar" cat="apr" cat="may" cat="jun" cat="jul" cat="aug" cat="sep" cat="oct" cat="nov" cat="dec"
+y-axis title="Revenue (in $)" linear min=4000 max=11000
+bar 0
+  "jan" 5000
+  "feb" 6000
+  "mar" 7500
+  "apr" 8200
+  "may" 9500
+  "jun" 10500
+  "jul" 11000
+  "aug" 10200
+  "sep" 9200
+  "oct" 8500
+  "nov" 7000
+  "dec" 6000
+line 1
+  "jan" 5000
+  "feb" 6000
+  "mar" 7500
+  "apr" 8200
+  "may" 9500
+  "jun" 10500
+  "jul" 11000
+  "aug" 10200
+  "sep" 9200
+  "oct" 8500
+  "nov" 7000
+  "dec" 6000

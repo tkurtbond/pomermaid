@@ -1,0 +1,46 @@
+\startMPcode
+numeric pmxx[]; picture pmxp;
+pmxx0 := 0; pmxx1 := -187.5pt; pmxx2 := 313.125pt; pmxx3 := 0;
+def pmxtext(expr p, q, a, d, c) =
+  pmxp := p shifted -(if (a = 0): xpart llcorner p elseif (a = 1): xpart center p else: xpart lrcorner p fi, ypart center p) rotated -d shifted q;
+  draw pmxp withcolor c;
+  pmxx0 := min(pmxx0, xpart llcorner pmxp); pmxx1 := min(pmxx1, ypart llcorner pmxp);
+  pmxx2 := max(pmxx2, xpart urcorner pmxp); pmxx3 := max(pmxx3, ypart urcorner pmxp);
+enddef;
+begingroup interim linecap := butt;
+fill unitsquare xscaled 313.125pt yscaled 187.5pt shifted (0pt, -187.5pt) withcolor (0.9412,0.9412,0.9412);
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Themed" & "}") scaled 1.25, (167.5pt, -13.75pt), 1, 0, (0.6667,0,0));
+fill unitsquare xscaled 61.75pt yscaled 50.55pt shifted (24.125pt, -151.25pt) withcolor (1,0,0);
+fill unitsquare xscaled 61.75pt yscaled 90.188pt shifted (136.625pt, -151.25pt) withcolor (1,0,0);
+fill unitsquare xscaled 61.75pt yscaled 73.2pt shifted (249.125pt, -151.25pt) withcolor (1,0,0);
+draw (55pt, -89.375pt) -- (167.5pt, -72.387pt) -- (280pt, -44.075pt) withcolor (0,0.6667,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -151.875pt) -- (312.5pt, -151.875pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Q1" & "}") scaled 0.875, (55pt, -160.875pt), 1, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Q2" & "}") scaled 0.875, (167.5pt, -160.875pt), 1, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Q3" & "}") scaled 0.875, (280pt, -160.875pt), 1, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Quarter" & "}") scaled 1, (167.5pt, -177.375pt), 1, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "0" & "}") scaled 0.875, (16.25pt, -146pt), 2, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "10" & "}") scaled 0.875, (16.25pt, -134.675pt), 2, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "20" & "}") scaled 0.875, (16.25pt, -123.35pt), 2, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "30" & "}") scaled 0.875, (16.25pt, -112.025pt), 2, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "40" & "}") scaled 0.875, (16.25pt, -100.7pt), 2, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "50" & "}") scaled 0.875, (16.25pt, -89.375pt), 2, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "60" & "}") scaled 0.875, (16.25pt, -78.05pt), 2, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "70" & "}") scaled 0.875, (16.25pt, -66.725pt), 2, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "80" & "}") scaled 0.875, (16.25pt, -55.4pt), 2, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "90" & "}") scaled 0.875, (16.25pt, -44.075pt), 2, 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "100" & "}") scaled 0.875, (16.25pt, -32.75pt), 2, 0, (0.0745,0.0745,0));
+draw (22.5pt, -146pt) -- (19.375pt, -146pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -134.675pt) -- (19.375pt, -134.675pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -123.35pt) -- (19.375pt, -123.35pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -112.025pt) -- (19.375pt, -112.025pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -100.7pt) -- (19.375pt, -100.7pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -89.375pt) -- (19.375pt, -89.375pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -78.05pt) -- (19.375pt, -78.05pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -66.725pt) -- (19.375pt, -66.725pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -55.4pt) -- (19.375pt, -55.4pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -44.075pt) -- (19.375pt, -44.075pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+draw (22.5pt, -32.75pt) -- (19.375pt, -32.75pt) withcolor (0.0745,0.0745,0) withpen pencircle scaled 1.25pt;
+endgroup;
+setbounds currentpicture to (pmxx0, pmxx1) -- (pmxx2, pmxx1) -- (pmxx2, pmxx3) -- (pmxx0, pmxx3) -- cycle;
+\stopMPcode

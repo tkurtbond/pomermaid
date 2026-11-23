@@ -271,6 +271,28 @@ differences:
 - **Text heights.** A text set "hanging" in Mermaid's SVG, its top at
   its place, is set with its middle half its size below that.
 
+## XY charts
+
+- **Text the chart cannot hold,** a title or a label past the chart's
+  edge, widens the drawing (decision 19); Mermaid's is cut off. The
+  background covers the whole drawing.
+- **Turned x labels** (`labelRotation`) are turned about their
+  centres (decision 20); Mermaid turns them about their anchors.
+- **Data labels.** Each bar plot shows its own values (decision 21);
+  Mermaid shows the first bar plot's values over every bar plot. A
+  value is shown as it was written, without leading zeros and with
+  a decimal's trailing zeros dropped. The legend's markers have none.
+- **Ticks** are written as plain numbers, never in exponent form.
+- **Linear x axes.** A point whose key is not a number is skipped;
+  keys are written with 15 significant digits.
+- **Lines** stop at the first point with no value.
+- **Line labels** are not clipped to the plot, and are drawn in the
+  line's colour, as Mermaid draws them.
+- **Markdown strings** are drawn as they are written, as Mermaid
+  draws them.
+- **Baselines.** Text Mermaid sets on its alphabetic baseline is set
+  with its middle 0.35 of its size above that.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

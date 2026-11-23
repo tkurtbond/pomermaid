@@ -1,0 +1,43 @@
+layout width=429.36 height=306.86
+rect at=(0,0) w=429.36 h=306.86 colour=#ffffff
+text at=(229.87,13.47) size=12.25 w=81.59 centre colour=#131300 text="Outside labels"
+rect at=(30.99,48.72) w=140.5 h=40.73 colour=#ececff
+rect at=(30.99,120.63) w=276.72 h=40.73 colour=#ececff
+rect at=(30.99,192.54) w=52.94 h=40.73 colour=#ececff
+rect at=(30.99,264.45) w=354.55 h=40.73 colour=#ececff
+text at=(177.62,69.09) size=15.93 w=20.7 start colour=#131300 text="3.5"
+text at=(313.83,141) size=15.93 w=7.96 start colour=#131300 text="7"
+text at=(90.05,212.91) size=15.93 w=28.67 start colour=#131300 text="1.25"
+text at=(391.67,284.81) size=15.93 w=7.96 start colour=#131300 text="9"
+path (30.38,47.65) (30.38,306.25) width=1.22 colour=#131300
+text at=(23.64,69.09) size=8.57 w=20.58 end colour=#131300 text="north"
+text at=(23.64,141) size=8.57 w=20.58 end colour=#131300 text="south"
+text at=(23.64,212.91) size=8.57 w=16.46 end colour=#131300 text="east"
+text at=(23.64,284.81) size=8.57 w=16.46 end colour=#131300 text="west"
+path (29.77,69.09) (26.7,69.09) width=1.22 colour=#131300
+path (29.77,141) (26.7,141) width=1.22 colour=#131300
+path (29.77,212.91) (26.7,212.91) width=1.22 colour=#131300
+path (29.77,284.81) (26.7,284.81) width=1.22 colour=#131300
+path (30.99,47.04) (428.75,47.04) width=1.22 colour=#131300
+text at=(35.28,34.3) size=8.57 w=4.29 centre colour=#131300 text="0"
+text at=(74.2,34.3) size=8.57 w=4.29 centre colour=#131300 text="1"
+text at=(113.12,34.3) size=8.57 w=4.29 centre colour=#131300 text="2"
+text at=(152.03,34.3) size=8.57 w=4.29 centre colour=#131300 text="3"
+text at=(190.95,34.3) size=8.57 w=4.29 centre colour=#131300 text="4"
+text at=(229.87,34.3) size=8.57 w=4.29 centre colour=#131300 text="5"
+text at=(268.79,34.3) size=8.57 w=4.29 centre colour=#131300 text="6"
+text at=(307.71,34.3) size=8.57 w=4.29 centre colour=#131300 text="7"
+text at=(346.63,34.3) size=8.57 w=4.29 centre colour=#131300 text="8"
+text at=(385.54,34.3) size=8.57 w=4.29 centre colour=#131300 text="9"
+text at=(424.46,34.3) size=8.57 w=8.58 centre colour=#131300 text="10"
+path (35.28,46.43) (35.28,43.36) width=1.22 colour=#131300
+path (74.2,46.43) (74.2,43.36) width=1.22 colour=#131300
+path (113.12,46.43) (113.12,43.36) width=1.22 colour=#131300
+path (152.03,46.43) (152.03,43.36) width=1.22 colour=#131300
+path (190.95,46.43) (190.95,43.36) width=1.22 colour=#131300
+path (229.87,46.43) (229.87,43.36) width=1.22 colour=#131300
+path (268.79,46.43) (268.79,43.36) width=1.22 colour=#131300
+path (307.71,46.43) (307.71,43.36) width=1.22 colour=#131300
+path (346.63,46.43) (346.63,43.36) width=1.22 colour=#131300
+path (385.54,46.43) (385.54,43.36) width=1.22 colour=#131300
+path (424.46,46.43) (424.46,43.36) width=1.22 colour=#131300

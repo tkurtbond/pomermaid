@@ -878,7 +878,7 @@ default theme. In steps:
   ConTeXt's widths.
 - **21.5:** Mermaid's examples; the documentation.
 
-### Phase 22: XY charts
+### Phase 22: XY charts [done]
 
 **Change:** `xychart-beta` (and `xychart`), read by a new module,
 `PmXy`, into a model of its own (the orientation, the title, the
@@ -1632,3 +1632,30 @@ through ConTeXt and as SVG, and looked at; ConTeXt's font has no ❤.
 yishana) and OpenBSD (jherek, cymoril) under both models: 362 of 362
 on yishana and cymoril (i386), and 363 of 363 on the others, which
 ran before `quadrant-basic`'s layout was dropped.
+
+Phase 22, XY charts, is done, 2026-11-23, on Mermaid 12.3.0. `PmXy`
+reads `xychart-beta` and `xychart` (`vertical` or `horizontal`, the
+title, `accTitle`/`accDescr`, `x-axis` with a title and categories
+or a range, `y-axis` with a title and a range, `bar` and `line` with
+optional titles, quoted, markdown and unquoted texts joined as
+Mermaid's lexer joins them, and `config.xyChart`), setting the axes'
+defaults from the data as `xychartDb.ts` does. `PmXyLayout` lays it
+out on the orchestrator's pixels at the labels' size: the title, the
+axes (band and linear, d3's ticks), the legend, the bars, the lines
+and the data labels, vertical and horizontal; the drawing grows for
+text that does not fit (decision 19). Its arithmetic is LONGREAL, each
+item's places and sizes rounded once to a 1/8192 point: rounded to the
+nearest REAL, the y axis's ticks at 10000 and 10500 came out a digit
+apart on i386. `PmXyPic` draws it in pic (turned texts with the new
+`PmPic.Along`), SVG coming from that through groff (`PmSvg`'s
+`WriteXyDocument`); `PmXyMp` writes the MetaPost. The colours are the
+default theme's, changed by the `xyChart` themeVariables and
+`plotColorPalette` (`PmStyle.XyColours`). `make test` passes under
+`-O2` and `-OC`: 392 case tests, with `xy-basic`, `xy-horizontal`,
+`xy-labels`, `xy-outside`, `xy-points` and `xy-theme` (dump, layout,
+pic, mp; svg-ms for three) and three error cases (`xy-data`,
+`xy-noplot`, `xy-statement`). The cases and Mermaid's eight XY chart
+examples (`docs/syntax/xyChart.md`) were drawn through groff, through
+ConTeXt and as SVG, and looked at. `make test` passes, 392 of 392
+under both models, on FreeBSD (alerik, rackhir), NetBSD (artos,
+yishana) and OpenBSD (jherek, cymoril).

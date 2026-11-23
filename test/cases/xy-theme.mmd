@@ -1,0 +1,23 @@
+---
+config:
+  xyChart:
+    width: 500
+    height: 300
+    showLegend: false
+    xAxis:
+      showTick: false
+    yAxis:
+      showAxisLine: false
+      showTitle: false
+  themeVariables:
+    xyChart:
+      backgroundColor: "#f0f0f0"
+      titleColor: "#aa0000"
+      plotColorPalette: "#ff0000, #00aa00"
+---
+xychart
+  title Themed
+  x-axis "Quarter" [Q1, Q2, Q3]
+  y-axis "Hidden title" 0 --> 100
+  bar [40, 75, 60]
+  line [50, 65, 90]

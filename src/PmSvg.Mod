@@ -22,7 +22,8 @@ MODULE PmSvg;
 IMPORT PmIO, F := PmFlow, FL := PmFlowLayout, L := PmLayout, PmPic, R := PmRun,
   SL := PmSeqLayout, PmSeqPic, JL := PmJourneyLayout, PmJourneyPic,
   TL := PmTimelineLayout, PmTimelinePic, GL := PmGanttLayout, PmGanttPic,
-  PL := PmPieLayout, PmPiePic, QL := PmQuadrantLayout, PmQuadrantPic;
+  PL := PmPieLayout, PmPiePic, QL := PmQuadrantLayout, PmQuadrantPic,
+  XL := PmXyLayout, PmXyPic;
 
 CONST
   MinMargin = 2; (* points round the drawing, at least, for lines' widths *)
@@ -36,6 +37,7 @@ VAR
   flow: FL.Layout; seq: SL.Layout; journey: JL.Layout; timeline: TL.Layout;
   gantt: GL.Layout; pie: PL.Layout;
   quadrant: QL.Layout;                (* what Write draws: one of them *)
+  xy: XL.Layout;
 
 (* The page's size for a drawing w by h points, pic's line space
    lvs, its widest line widest points wide, rounded as it is written *)
@@ -111,6 +113,13 @@ BEGIN
   Header(l.vs, PmQuadrantPic.Widest(l), l.width, l.height);
   PmQuadrantPic.Write(l, font)
 END WriteQuadrantDocument;
+
+(* Writes the XY chart l as WriteDocument does a flowchart *)
+PROCEDURE WriteXyDocument*(l: XL.Layout; font: ARRAY OF CHAR);
+BEGIN
+  Header(l.vs, PmXyPic.Widest(l), l.width, l.height);
+  PmXyPic.Write(l, font)
+END WriteXyDocument;
 
 (* Crop *)
 
@@ -390,6 +399,7 @@ BEGIN
   ELSIF gantt # NIL THEN WriteGanttDocument(gantt, font)
   ELSIF pie # NIL THEN WritePieDocument(pie, font)
   ELSIF quadrant # NIL THEN WriteQuadrantDocument(quadrant, font)
+  ELSIF xy # NIL THEN WriteXyDocument(xy, font)
   ELSE WriteDocument(flow, font) END;
   PmIO.CloseOutput;
   c := R.New(); R.AddText(c, "groff -p -Tpdf");
@@ -422,28 +432,28 @@ END Run;
 PROCEDURE Write*(l: FL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := l; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL; quadrant := NIL; Run(font, fontPath, output, outline, engine)
+  flow := l; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL; quadrant := NIL; xy := NIL; Run(font, fontPath, output, outline, engine)
 END Write;
 
 (* Writes the sequence diagram l as SVG, as Write does a flowchart *)
 PROCEDURE WriteSeq*(l: SL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := l; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL; quadrant := NIL; Run(font, fontPath, output, outline, engine)
+  flow := NIL; seq := l; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL; quadrant := NIL; xy := NIL; Run(font, fontPath, output, outline, engine)
 END WriteSeq;
 
 (* Writes the user journey l as SVG, as Write does a flowchart *)
 PROCEDURE WriteJourney*(l: JL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := l; timeline := NIL; gantt := NIL; pie := NIL; quadrant := NIL; Run(font, fontPath, output, outline, engine)
+  flow := NIL; seq := NIL; journey := l; timeline := NIL; gantt := NIL; pie := NIL; quadrant := NIL; xy := NIL; Run(font, fontPath, output, outline, engine)
 END WriteJourney;
 
 (* Writes the timeline l as SVG, as Write does a flowchart *)
 PROCEDURE WriteTimeline*(l: TL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := l; gantt := NIL; pie := NIL; quadrant := NIL;
+  flow := NIL; seq := NIL; journey := NIL; timeline := l; gantt := NIL; pie := NIL; quadrant := NIL; xy := NIL;
   Run(font, fontPath, output, outline, engine)
 END WriteTimeline;
 
@@ -451,7 +461,7 @@ END WriteTimeline;
 PROCEDURE WriteGantt*(l: GL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := l; pie := NIL; quadrant := NIL;
+  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := l; pie := NIL; quadrant := NIL; xy := NIL;
   Run(font, fontPath, output, outline, engine)
 END WriteGantt;
 
@@ -459,7 +469,7 @@ END WriteGantt;
 PROCEDURE WritePie*(l: PL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := l; quadrant := NIL;
+  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := l; quadrant := NIL; xy := NIL;
   Run(font, fontPath, output, outline, engine)
 END WritePie;
 
@@ -468,7 +478,15 @@ PROCEDURE WriteQuadrant*(l: QL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
   flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL;
-  quadrant := l; Run(font, fontPath, output, outline, engine)
+  xy := NIL; quadrant := l; Run(font, fontPath, output, outline, engine)
 END WriteQuadrant;
+
+(* Writes the XY chart l as SVG, as Write does a flowchart *)
+PROCEDURE WriteXy*(l: XL.Layout; font, fontPath, output: ARRAY OF CHAR;
+  outline: BOOLEAN; engine: INTEGER);
+BEGIN
+  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL;
+  quadrant := NIL; xy := l; Run(font, fontPath, output, outline, engine)
+END WriteXy;
 
 END PmSvg.

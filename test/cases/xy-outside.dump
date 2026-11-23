@@ -1,0 +1,13 @@
+title text="Outside labels"
+config config.xyChart.showDataLabel="true"
+config config.xyChart.showDataLabelOutsideBar="true"
+xychart horizontal width=700 height=500 titleFontSize=20 titlePadding=10 showTitle=true showLegend=true legendFontSize=14 legendPadding=10 showDataLabel=true showDataLabelOutsideBar=true plotReservedSpacePercent=50
+xAxis showLabel=true labelFontSize=14 labelPadding=5 showTitle=true titleFontSize=16 titlePadding=5 showTick=true tickLength=5 tickWidth=2 showAxisLine=true axisLineWidth=2 labelRotation=0
+yAxis showLabel=true labelFontSize=14 labelPadding=5 showTitle=true titleFontSize=16 titlePadding=5 showTick=true tickLength=5 tickWidth=2 showAxisLine=true axisLineWidth=2 labelRotation=0
+x-axis band cat="north" cat="south" cat="east" cat="west"
+y-axis linear min=0 max=10
+bar 0
+  "north" 3.5
+  "south" 7
+  "east" 1.25
+  "west" 9

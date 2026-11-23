@@ -69,7 +69,8 @@ journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
 20 (pie charts: `PmPie`, `PmPieLayout`, `PmPiePic` and `PmPieMp`) and
 21 (quadrant charts: `PmQuadrant`, `PmQuadrantLayout`,
 `PmQuadrantPic`, with `PmPic.Rotated` for turned text, and
-`PmQuadrantMp`) are done. See
+`PmQuadrantMp`) and 22 (XY charts: `PmXy`, `PmXyLayout`,
+`PmXyPic`, with `PmPic.Along`, and `PmXyMp`) are done. See
 PLAN.md's State.
 
 ## Reference material

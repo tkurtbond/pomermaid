@@ -81,6 +81,14 @@ TYPE
     textFill*: LONGINT                 (* textColor: a point whose colour is invalid *)
   END;
 
+  (* An XY chart's colours, as 0RRGGBBH *)
+  XyTheme* = RECORD
+    background*, title*, dataLabel*, legend*: LONGINT;
+    axisTitle*, axisLabel*, axisTick*, axisLine*: ARRAY 2 OF LONGINT;  (* x, y *)
+    palette*: ARRAY 32 OF LONGINT;     (* the plots', plotColorPalette *)
+    nPalette*: INTEGER
+  END;
+
   Style* = RECORD
     fill*, line*, text*: INTEGER;  (* indexes into the colours, or NoColour *)
     inner*: INTEGER;               (* a composite state's body's fill, below
@@ -582,6 +590,54 @@ BEGIN
   t.internal := 0C7C7F1H; set := Var("quadrantInternalBorderStrokeFill", t.internal);
   t.external := 0C7C7F1H; set := Var("quadrantExternalBorderStrokeFill", t.external)
 END QuadrantColours;
+
+(* t, an XY chart's colours: the default theme's, changed by
+   themeVariables: background and primaryTextColor, and those of
+   xyChart, which override them. plotColorPalette is colours separated
+   by commas; one pomermaid does not know is left out. *)
+PROCEDURE XyColours*(VAR t: XyTheme);
+  VAR set: BOOLEAN; text: LONGINT; k: INTEGER; i, j: LONGINT;
+    v, w: ARRAY 512 OF CHAR; rgb: LONGINT; none: BOOLEAN;
+BEGIN
+  t.background := 0FFFFFFH; set := Var("background", t.background);
+  set := Var("xyChart.backgroundColor", t.background);
+  text := 0131300H; set := Var("primaryTextColor", text);
+  t.title := text; set := Var("xyChart.titleColor", t.title);
+  t.dataLabel := text; set := Var("xyChart.dataLabelColor", t.dataLabel);
+  t.legend := text; set := Var("xyChart.legendTextColor", t.legend);
+  FOR k := 0 TO 1 DO
+    t.axisTitle[k] := text; t.axisLabel[k] := text; t.axisTick[k] := text; t.axisLine[k] := text
+  END;
+  set := Var("xyChart.xAxisTitleColor", t.axisTitle[0]);
+  set := Var("xyChart.xAxisLabelColor", t.axisLabel[0]);
+  set := Var("xyChart.xAxisTickColor", t.axisTick[0]);
+  set := Var("xyChart.xAxisLineColor", t.axisLine[0]);
+  set := Var("xyChart.yAxisTitleColor", t.axisTitle[1]);
+  set := Var("xyChart.yAxisLabelColor", t.axisLabel[1]);
+  set := Var("xyChart.yAxisTickColor", t.axisTick[1]);
+  set := Var("xyChart.yAxisLineColor", t.axisLine[1]);
+  IF ~VarText("xyChart.plotColorPalette", v) THEN
+    v := "#ececff,#8493a6,#ffc3a0,#dcdde1,#b8e994,#d1a36f,#c3cde6,#ffb6c1,#496078,#f8f3e3"
+  END;
+  t.nPalette := 0; i := 0;
+  LOOP
+    WHILE v[i] = " " DO INC(i) END;
+    j := 0;
+    WHILE (v[i] # 0X) & (v[i] # ",") DO
+      IF j < LEN(w) - 1 THEN w[j] := v[i]; INC(j) END; INC(i)
+    END;
+    WHILE (j > 0) & (w[j - 1] = " ") DO DEC(j) END;
+    w[j] := 0X;
+    IF (j > 0) & (t.nPalette < LEN(t.palette)) THEN
+      IF ParseColour(w, rgb, none) & ~none THEN t.palette[t.nPalette] := rgb; INC(t.nPalette)
+      ELSE PmIO.Message3("ignoring the colour ", w, ", which pomermaid does not know")
+      END
+    END;
+    IF v[i] = 0X THEN EXIT END;
+    INC(i)
+  END;
+  IF t.nPalette = 0 THEN t.palette[0] := 0ECECFFH; t.nPalette := 1 END
+END XyColours;
 
 (* Applies the classDefs named name *)
 PROCEDURE ApplyClass(g: F.Graph; VAR st: Style; name: ARRAY OF CHAR);

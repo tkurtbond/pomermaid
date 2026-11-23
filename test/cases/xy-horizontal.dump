@@ -1,0 +1,14 @@
+title text="words"
+xychart horizontal width=700 height=500 titleFontSize=20 titlePadding=10 showTitle=true showLegend=true legendFontSize=14 legendPadding=10 showDataLabel=false showDataLabelOutsideBar=false plotReservedSpacePercent=50
+xAxis showLabel=true labelFontSize=14 labelPadding=5 showTitle=true titleFontSize=16 titlePadding=5 showTick=true tickLength=5 tickWidth=2 showAxisLine=true axisLineWidth=2 labelRotation=0
+yAxis showLabel=true labelFontSize=14 labelPadding=5 showTitle=true titleFontSize=16 titlePadding=5 showTick=true tickLength=5 tickWidth=2 showAxisLine=true axisLineWidth=2 labelRotation=0
+x-axis linear min=1 max=4
+y-axis title="y" linear min=0 max=3
+line 0 title="first"
+  "1" 1.5 label="a"
+  "2" 0
+  "3" 0.5 label="b c"
+  "4" 3
+bar 1
+  "1" 1
+  "4" 2

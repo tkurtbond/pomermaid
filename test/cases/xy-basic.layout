@@ -1,0 +1,73 @@
+layout width=429.36 height=306.25
+rect at=(0,0) w=429.36 h=306.25 colour=#ffffff
+text at=(239.24,13.47) size=12.25 w=77.79 centre colour=#131300 text="Sales Revenue"
+rect at=(50.26,244.93) w=19.78 h=40.62 colour=#ececff
+rect at=(82.82,209.46) w=19.78 h=76.09 colour=#ececff
+rect at=(115.38,156.25) w=19.78 h=129.3 colour=#ececff
+rect at=(147.95,131.42) w=19.78 h=154.13 colour=#ececff
+rect at=(180.51,85.3) w=19.78 h=200.24 colour=#ececff
+rect at=(213.07,49.83) w=19.78 h=235.72 colour=#ececff
+rect at=(245.63,32.09) w=19.78 h=253.45 colour=#ececff
+rect at=(278.2,60.47) w=19.78 h=225.07 colour=#ececff
+rect at=(310.76,95.95) w=19.78 h=189.6 colour=#ececff
+rect at=(343.32,120.78) w=19.78 h=164.77 colour=#ececff
+rect at=(375.88,173.98) w=19.78 h=111.56 colour=#ececff
+rect at=(408.45,209.46) w=19.78 h=76.09 colour=#ececff
+path (60.15,244.93) (92.71,209.46) (125.28,156.25) (157.84,131.42) (190.4,85.3) (222.96,49.83) (255.53,32.09) (288.09,60.47) (320.65,95.95) (353.21,120.78) (385.78,173.98) (418.34,209.46) width=1.22 colour=#8493a6
+path (49.74,286.16) (428.75,286.16) width=1.22 colour=#131300
+text at=(60.15,298.04) size=8.57 w=12.35 centre colour=#131300 text="jan"
+text at=(92.71,298.04) size=8.57 w=12.35 centre colour=#131300 text="feb"
+text at=(125.28,298.04) size=8.57 w=12.35 centre colour=#131300 text="mar"
+text at=(157.84,298.04) size=8.57 w=12.35 centre colour=#131300 text="apr"
+text at=(190.4,298.04) size=8.57 w=12.35 centre colour=#131300 text="may"
+text at=(222.96,298.04) size=8.57 w=12.35 centre colour=#131300 text="jun"
+text at=(255.53,298.04) size=8.57 w=12.35 centre colour=#131300 text="jul"
+text at=(288.09,298.04) size=8.57 w=12.35 centre colour=#131300 text="aug"
+text at=(320.65,298.04) size=8.57 w=12.35 centre colour=#131300 text="sep"
+text at=(353.21,298.04) size=8.57 w=12.35 centre colour=#131300 text="oct"
+text at=(385.78,298.04) size=8.57 w=12.35 centre colour=#131300 text="nov"
+text at=(418.34,298.04) size=8.57 w=12.35 centre colour=#131300 text="dec"
+path (60.15,286.77) (60.15,289.83) width=1.22 colour=#131300
+path (92.71,286.77) (92.71,289.83) width=1.22 colour=#131300
+path (125.28,286.77) (125.28,289.83) width=1.22 colour=#131300
+path (157.84,286.77) (157.84,289.83) width=1.22 colour=#131300
+path (190.4,286.77) (190.4,289.83) width=1.22 colour=#131300
+path (222.96,286.77) (222.96,289.83) width=1.22 colour=#131300
+path (255.53,286.77) (255.53,289.83) width=1.22 colour=#131300
+path (288.09,286.77) (288.09,289.83) width=1.22 colour=#131300
+path (320.65,286.77) (320.65,289.83) width=1.22 colour=#131300
+path (353.21,286.77) (353.21,289.83) width=1.22 colour=#131300
+path (385.78,286.77) (385.78,289.83) width=1.22 colour=#131300
+path (418.34,286.77) (418.34,289.83) width=1.22 colour=#131300
+path (49.13,26.95) (49.13,285.55) width=1.22 colour=#131300
+text at=(42.39,280.4) size=8.57 w=17.15 end colour=#131300 text="4000"
+text at=(42.39,262.67) size=8.57 w=17.15 end colour=#131300 text="4500"
+text at=(42.39,244.93) size=8.57 w=17.15 end colour=#131300 text="5000"
+text at=(42.39,227.19) size=8.57 w=17.15 end colour=#131300 text="5500"
+text at=(42.39,209.46) size=8.57 w=17.15 end colour=#131300 text="6000"
+text at=(42.39,191.72) size=8.57 w=17.15 end colour=#131300 text="6500"
+text at=(42.39,173.98) size=8.57 w=17.15 end colour=#131300 text="7000"
+text at=(42.39,156.25) size=8.57 w=17.15 end colour=#131300 text="7500"
+text at=(42.39,138.51) size=8.57 w=17.15 end colour=#131300 text="8000"
+text at=(42.39,120.78) size=8.57 w=17.15 end colour=#131300 text="8500"
+text at=(42.39,103.04) size=8.57 w=17.15 end colour=#131300 text="9000"
+text at=(42.39,85.3) size=8.57 w=17.15 end colour=#131300 text="9500"
+text at=(42.39,67.57) size=8.57 w=21.44 end colour=#131300 text="10000"
+text at=(42.39,49.83) size=8.57 w=21.44 end colour=#131300 text="10500"
+text at=(42.39,32.09) size=8.57 w=21.44 end colour=#131300 text="11000"
+path (48.51,280.4) (45.45,280.4) width=1.22 colour=#131300
+path (48.51,262.67) (45.45,262.67) width=1.22 colour=#131300
+path (48.51,244.93) (45.45,244.93) width=1.22 colour=#131300
+path (48.51,227.19) (45.45,227.19) width=1.22 colour=#131300
+path (48.51,209.46) (45.45,209.46) width=1.22 colour=#131300
+path (48.51,191.72) (45.45,191.72) width=1.22 colour=#131300
+path (48.51,173.98) (45.45,173.98) width=1.22 colour=#131300
+path (48.51,156.25) (45.45,156.25) width=1.22 colour=#131300
+path (48.51,138.51) (45.45,138.51) width=1.22 colour=#131300
+path (48.51,120.78) (45.45,120.78) width=1.22 colour=#131300
+path (48.51,103.04) (45.45,103.04) width=1.22 colour=#131300
+path (48.51,85.3) (45.45,85.3) width=1.22 colour=#131300
+path (48.51,67.57) (45.45,67.57) width=1.22 colour=#131300
+path (48.51,49.83) (45.45,49.83) width=1.22 colour=#131300
+path (48.51,32.09) (45.45,32.09) width=1.22 colour=#131300
+text at=(7.96,156.25) size=9.8 w=57.72 centre angle=270 colour=#131300 text="Revenue (in $)"

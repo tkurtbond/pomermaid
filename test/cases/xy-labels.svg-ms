@@ -1,0 +1,80 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p416p,432.75p
+.pl 416p
+.po 2p
+.ll 428.75p
+.sp 2p
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-131300 rgb #131300
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-8493a6 rgb #8493a6
+.defcolor pm-ffc3a0 rgb #ffc3a0
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 9.8
+.vs 11.76p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.068; arrowwid = 0.068
+box invis wid 5.955 ht 5.559 at (2.977, -2.779)
+box wid 5.955 ht 5.559 at (2.977, -2.779) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+"\s[12.25]\f[TS]\m[pm-131300]Rotated labels\m[]\f[]\s[0]"  at (2.901, -1.493)
+box wid 0.711 ht 0.769 at (0.886, -4.343) shaded "pm-ececff" outlined "pm-ececff" thickness 0
+box wid 0.711 ht 1.814 at (2.23, -3.82) shaded "pm-ececff" outlined "pm-ececff" thickness 0
+box wid 0.711 ht 2.685 at (3.573, -3.384) shaded "pm-ececff" outlined "pm-ececff" thickness 0
+box wid 0.711 ht 1.349 at (4.916, -4.052) shaded "pm-ececff" outlined "pm-ececff" thickness 0
+"\s[36.14]\f[TS]\m[pm-131300]12\m[]\f[]\s[0]"  at (0.886, -4.295)
+"\s[36.14]\f[TS]\m[pm-131300]30\m[]\f[]\s[0]"  at (2.23, -3.249)
+"\s[36.14]\f[TS]\m[pm-131300]45\m[]\f[]\s[0]"  at (3.573, -2.378)
+"\s[36.14]\f[TS]\m[pm-131300]22\m[]\f[]\s[0]"  at (4.916, -3.714)
+box wid 0.711 ht 0.362 at (0.886, -4.546) shaded "pm-8493a6" outlined "pm-8493a6" thickness 0
+box wid 0.711 ht 1.233 at (2.23, -4.11) shaded "pm-8493a6" outlined "pm-8493a6" thickness 0
+box wid 0.711 ht 2.105 at (3.573, -3.675) shaded "pm-8493a6" outlined "pm-8493a6" thickness 0
+box wid 0.711 ht 2.395 at (4.916, -3.53) shaded "pm-8493a6" outlined "pm-8493a6" thickness 0
+"\s[19.6]\f[TS]\m[pm-131300]5\m[]\f[]\s[0]"  at (0.886, -4.586)
+"\s[19.6]\f[TS]\m[pm-131300]20\m[]\f[]\s[0]"  at (2.23, -3.715)
+"\s[19.6]\f[TS]\m[pm-131300]35\m[]\f[]\s[0]"  at (3.573, -2.844)
+"\s[19.6]\f[TS]\m[pm-131300]40\m[]\f[]\s[0]"  at (4.916, -2.553)
+line from (0.886, -3.668) to (2.23, -1.751) to (3.573, -0.009) to (4.916, -1.054) outlined "pm-ffc3a0" thickness 1.225
+box wid 0.089 ht 0.089 at (5.42, -3.01) shaded "pm-ececff" outlined "pm-ececff" thickness 0
+box wid 0.089 ht 0.089 at (5.42, -3.189) shaded "pm-8493a6" outlined "pm-8493a6" thickness 0
+line from (5.376, -3.367) to (5.465, -3.367) outlined "pm-ffc3a0" thickness 1.225
+"\s[8.57]\f[TS]\m[pm-131300]Apples\m[]\f[]\s[0]" ljust  at (5.507, -3.01)
+"\s[8.57]\f[TS]\m[pm-131300]Pears\m[]\f[]\s[0]" ljust  at (5.507, -3.189)
+"\s[8.57]\f[TS]\m[pm-131300]Total\m[]\f[]\s[0]" ljust  at (5.507, -3.367)
+line from (0.512, -4.736) to (5.29, -4.736) outlined "pm-131300" thickness 1.225
+line invis from (0.738, -4.9) to (1.035, -5.197) "\s[8.57]\f[TS]\m[pm-131300]January\m[]\f[]\s[0]" aligned
+line invis from (2.061, -4.88) to (2.399, -5.217) "\s[8.57]\f[TS]\m[pm-131300]February\m[]\f[]\s[0]" aligned
+line invis from (3.465, -4.94) to (3.681, -5.157) "\s[8.57]\f[TS]\m[pm-131300]March\m[]\f[]\s[0]" aligned
+line invis from (4.808, -4.94) to (5.024, -5.157) "\s[8.57]\f[TS]\m[pm-131300]April\m[]\f[]\s[0]" aligned
+line from (0.886, -4.744) to (0.886, -4.787) outlined "pm-131300" thickness 1.225
+line from (2.23, -4.744) to (2.23, -4.787) outlined "pm-131300" thickness 1.225
+line from (3.573, -4.744) to (3.573, -4.787) outlined "pm-131300" thickness 1.225
+line from (4.916, -4.744) to (4.916, -4.787) outlined "pm-131300" thickness 1.225
+"\s[9.8]\f[TS]\m[pm-131300]Month\m[]\f[]\s[0]"  at (2.901, -5.421)
+line from (0.504, -1.68) to (0.504, -4.727) outlined "pm-131300" thickness 1.225
+"\s[8.57]\f[TS]\m[pm-131300]0\m[]\f[]\s[0]" rjust  at (0.41, -4.656)
+"\s[8.57]\f[TS]\m[pm-131300]5\m[]\f[]\s[0]" rjust  at (0.41, -4.365)
+"\s[8.57]\f[TS]\m[pm-131300]10\m[]\f[]\s[0]" rjust  at (0.41, -4.075)
+"\s[8.57]\f[TS]\m[pm-131300]15\m[]\f[]\s[0]" rjust  at (0.41, -3.784)
+"\s[8.57]\f[TS]\m[pm-131300]20\m[]\f[]\s[0]" rjust  at (0.41, -3.494)
+"\s[8.57]\f[TS]\m[pm-131300]25\m[]\f[]\s[0]" rjust  at (0.41, -3.203)
+"\s[8.57]\f[TS]\m[pm-131300]30\m[]\f[]\s[0]" rjust  at (0.41, -2.913)
+"\s[8.57]\f[TS]\m[pm-131300]35\m[]\f[]\s[0]" rjust  at (0.41, -2.623)
+"\s[8.57]\f[TS]\m[pm-131300]40\m[]\f[]\s[0]" rjust  at (0.41, -2.332)
+"\s[8.57]\f[TS]\m[pm-131300]45\m[]\f[]\s[0]" rjust  at (0.41, -2.042)
+"\s[8.57]\f[TS]\m[pm-131300]50\m[]\f[]\s[0]" rjust  at (0.41, -1.751)
+line from (0.495, -4.656) to (0.453, -4.656) outlined "pm-131300" thickness 1.225
+line from (0.495, -4.365) to (0.453, -4.365) outlined "pm-131300" thickness 1.225
+line from (0.495, -4.075) to (0.453, -4.075) outlined "pm-131300" thickness 1.225
+line from (0.495, -3.784) to (0.453, -3.784) outlined "pm-131300" thickness 1.225
+line from (0.495, -3.494) to (0.453, -3.494) outlined "pm-131300" thickness 1.225
+line from (0.495, -3.203) to (0.453, -3.203) outlined "pm-131300" thickness 1.225
+line from (0.495, -2.913) to (0.453, -2.913) outlined "pm-131300" thickness 1.225
+line from (0.495, -2.623) to (0.453, -2.623) outlined "pm-131300" thickness 1.225
+line from (0.495, -2.332) to (0.453, -2.332) outlined "pm-131300" thickness 1.225
+line from (0.495, -2.042) to (0.453, -2.042) outlined "pm-131300" thickness 1.225
+line from (0.495, -1.751) to (0.453, -1.751) outlined "pm-131300" thickness 1.225
+line invis from (0.111, -3.378) to (0.111, -3.029) "\s[9.8]\f[TS]\m[pm-131300]Count\m[]\f[]\s[0]" aligned
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

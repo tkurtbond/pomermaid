@@ -17,8 +17,8 @@ It reads flowcharts (`flowchart` and `graph`), state diagrams
 diagrams (`erDiagram`), requirement diagrams
 (`requirementDiagram`), sequence diagrams (`sequenceDiagram`),
 user journeys (`journey`), timelines (`timeline`), Gantt
-charts (`gantt`), pie charts (`pie`) and quadrant charts
-(`quadrantChart`).
+charts (`gantt`), pie charts (`pie`), quadrant charts
+(`quadrantChart`) and XY charts (`xychart`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -629,6 +629,54 @@ above.
   `quadrantExternalBorderStrokeFill`.
 - **Text the chart cannot hold,** a long title or a point's text at
   its edge, widens the drawing (decision 18).
+- **Comments:** `%%` comments.
+
+Read and ignored: `accTitle` and `accDescr`.
+
+### XY charts
+
+pomermaid reads Mermaid's XY charts (`xychart`, or `xychart-beta`),
+as Mermaid 12.3.0 reads them, and draws them as Mermaid does: a
+chart 700 by 500 pixels, the title above, the axes with their ticks,
+labels and titles, the bars and lines in the plot, and a legend of
+the plots that have titles, unless `showLegend` is false.
+
+- **The first line:** `xychart`, or `xychart-beta`, then `vertical`
+  or `horizontal`; a horizontal chart has its x axis on the left and
+  its bars across.
+- **Keywords** are read in any case. A statement ends at the end of
+  the line or at `;`.
+- **The title:** `title text`.
+- **The x axis:** `x-axis text`, its title; `x-axis [a, b, ...]`,
+  categories; or `x-axis n --> m`, a range; with a title before the
+  categories or the range, or not. Without categories or a range,
+  the axis counts the data's points, 1, 2 and on.
+- **The y axis:** `y-axis text`, `y-axis n --> m`, or both. Without
+  a range, the axis spans the data, as Mermaid's does.
+- **Plots:** `bar [n, ...]` and `line [n, ...]`, with a title before
+  the data or not, drawn in the order written. In a line's data, a
+  number may have a string after it, `[5 "start", 7, ...]`, the
+  point's label.
+- **Texts** are strings in quotation marks, `"..."`; markdown strings,
+  `` "`...`" ``, drawn as they are written; or words of letters,
+  digits and `+ = * # _ . & -`, joined without the blanks between
+  them, as Mermaid's lexer joins them.
+- **Configuration:** `xyChart`'s `width`, `height`, `titleFontSize`,
+  `titlePadding`, `showTitle`, `showLegend`, `legendFontSize`,
+  `legendPadding`, `showDataLabel`, `showDataLabelOutsideBar`,
+  `plotReservedSpacePercent` and `chartOrientation`; and `xAxis`'s and
+  `yAxis`'s `showLabel`, `labelFontSize`, `labelPadding`,
+  `showTitle`, `titleFontSize`, `titlePadding`, `showTick`,
+  `tickLength`, `tickWidth`, `showAxisLine`, `axisLineWidth` and
+  `labelRotation` (degrees, clockwise). Sizes are in pixels, 16 of
+  them to `--size`.
+- **Colours:** the default theme's, each changed by its theme
+  variable: `xyChart.backgroundColor`, `titleColor`,
+  `dataLabelColor`, `legendTextColor`, `xAxisTitleColor`,
+  `xAxisLabelColor`, `xAxisTickColor`, `xAxisLineColor`, the same
+  four for `yAxis`, and `plotColorPalette`, colours separated by
+  commas, one for each plot in turn.
+- **Text the chart cannot hold** widens the drawing (decision 19).
 - **Comments:** `%%` comments.
 
 Read and ignored: `accTitle` and `accDescr`.

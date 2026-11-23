@@ -1,0 +1,23 @@
+title text="Themed"
+config config.xyChart.width="500"
+config config.xyChart.height="300"
+config config.xyChart.showLegend="false"
+config config.xyChart.xAxis.showTick="false"
+config config.xyChart.yAxis.showAxisLine="false"
+config config.xyChart.yAxis.showTitle="false"
+config config.themeVariables.xyChart.backgroundColor="#f0f0f0"
+config config.themeVariables.xyChart.titleColor="#aa0000"
+config config.themeVariables.xyChart.plotColorPalette="#ff0000, #00aa00"
+xychart vertical width=500 height=300 titleFontSize=20 titlePadding=10 showTitle=true showLegend=false legendFontSize=14 legendPadding=10 showDataLabel=false showDataLabelOutsideBar=false plotReservedSpacePercent=50
+xAxis showLabel=true labelFontSize=14 labelPadding=5 showTitle=true titleFontSize=16 titlePadding=5 showTick=false tickLength=5 tickWidth=2 showAxisLine=true axisLineWidth=2 labelRotation=0
+yAxis showLabel=true labelFontSize=14 labelPadding=5 showTitle=false titleFontSize=16 titlePadding=5 showTick=true tickLength=5 tickWidth=2 showAxisLine=false axisLineWidth=2 labelRotation=0
+x-axis title="Quarter" band cat="Q1" cat="Q2" cat="Q3"
+y-axis title="Hidden title" linear min=0 max=100
+bar 0
+  "Q1" 40
+  "Q2" 75
+  "Q3" 60
+line 1
+  "Q1" 50
+  "Q2" 65
+  "Q3" 90

@@ -1,0 +1,23 @@
+title text="Rotated labels"
+config config.xyChart.showDataLabel="true"
+config config.xyChart.xAxis.labelRotation="45"
+xychart vertical width=700 height=500 titleFontSize=20 titlePadding=10 showTitle=true showLegend=true legendFontSize=14 legendPadding=10 showDataLabel=true showDataLabelOutsideBar=false plotReservedSpacePercent=50
+xAxis showLabel=true labelFontSize=14 labelPadding=5 showTitle=true titleFontSize=16 titlePadding=5 showTick=true tickLength=5 tickWidth=2 showAxisLine=true axisLineWidth=2 labelRotation=45
+yAxis showLabel=true labelFontSize=14 labelPadding=5 showTitle=true titleFontSize=16 titlePadding=5 showTick=true tickLength=5 tickWidth=2 showAxisLine=true axisLineWidth=2 labelRotation=0
+x-axis title="Month" band cat="January" cat="February" cat="March" cat="April"
+y-axis title="Count" linear min=0 max=50
+bar 0 title="Apples"
+  "January" 12
+  "February" 30
+  "March" 45
+  "April" 22
+bar 1 title="Pears"
+  "January" 5
+  "February" 20
+  "March" 35
+  "April" 40
+line 2 title="Total"
+  "January" 17
+  "February" 50
+  "March" 80
+  "April" 62
