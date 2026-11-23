@@ -1,0 +1,6 @@
+layout width=218.75 height=141.13 actor-height=46.38
+title at=(109.38,10.13)
+participant "Alice" x=46.88 w=93.75 top=25.75 label-y=59.88 life=65.88 to=141.13
+participant "Bob" x=171.88 w=93.75 top=25.75 label-y=48.94 life=72.13 to=141.13
+0 message from=(46.88,100.38) to=(171.88,100.38) text=(109.38,90.63)
+1 message from=(171.88,128.63) to=(46.88,128.63) text=(109.38,118.88)

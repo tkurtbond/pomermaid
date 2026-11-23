@@ -1,0 +1,6 @@
+title text="Aliases"
+mirror off
+participant "A" type=participant label="Alice"
+participant "J" type=participant label="John"
+0 message "A" -> "J" head=open text="Hello John,how are you?"
+1 message "J" -> "A" head=open text="Great!"

@@ -1,0 +1,36 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-fff5ad rgb #fff5ad
+.defcolor pm-aaaa33 rgb #aaaa33
+.defcolor pm-f4f4f4 rgb #f4f4f4
+.defcolor pm-666666 rgb #666666
+.defcolor pm-808080 rgb #808080
+.defcolor pm-000000 rgb #000000
+.defcolor pm-ffffff rgb #ffffff
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+line from (0.651, -0.557) to (0.651, -1.804) outlined "pm-9370db" thickness 0.313
+line from (2.387, -0.644) to (2.387, -1.804) outlined "pm-9370db" thickness 0.313
+box wid 0.087 ht 0 at (2.387, -1.63) shaded "pm-f4f4f4" outlined "pm-666666" thickness 0.625
+box wid 2.17 ht 0.507 at (1.519, -0.984) shaded "pm-fff5ad" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-000000]a comment on a message.\m[]\f[]" "\m[pm-000000]\f[TS]Markdown\f[]\f[TS] is supported.\f[]\m[]"  at (1.519, -0.984)
+line from (0.651, -1.63) to (2.344, -1.63) outlined "pm-333333" thickness 0.938
+"\M[pm-333333]\v'-0.22m'\D'P -0.087i -0.043i 0i 0.087i'\M[]" ljust at (2.344, -1.63)
+"\f[TS]\m[pm-333333]getBook()\m[]\f[]"  at (1.497, -1.495)
+circle rad 0.061 at (0.651, -0.061) shaded "pm-ececff" outlined "pm-9370db" thickness 0.938
+line from (0.651, -0.122) to (0.651, -0.243) outlined "pm-9370db" thickness 0.938
+line from (0.547, -0.165) to (0.755, -0.165) outlined "pm-9370db" thickness 0.938
+line from (0.651, -0.243) to (0.564, -0.347) outlined "pm-9370db" thickness 0.938
+line from (0.651, -0.243) to (0.738, -0.347) outlined "pm-9370db" thickness 0.938
+"\f[TS]\m[pm-000000]\m[]\f[]"  at (0.651, -0.474)
+box wid 1.302 ht 0.644 at (2.387, -0.322) rad 0.026 shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-000000]BookService\m[]\f[]"  at (2.387, -0.322)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

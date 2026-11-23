@@ -40,6 +40,7 @@ BEGIN
   L('pms_kname[0] := "loop"; pms_kname[1] := "opt"; pms_kname[2] := "alt";');
   L('pms_kname[3] := "par"; pms_kname[4] := "par"; pms_kname[5] := "critical";');
   L('pms_kname[6] := "break"; pms_kname[7] := "";');
+  L('pms_kname[8] := "try"; pms_kname[9] := "section"; pms_kname[10] := "ref";');
   L("def pms_begin(expr mw, n, ne, nb, m) =");
   L("  pms_maxw := mw; pms_n := n; pms_ne := ne; pms_nb := nb; pms_mirror := m;");
   L('  pms_title := "";');

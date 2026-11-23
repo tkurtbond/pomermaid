@@ -487,6 +487,23 @@ differences:
 - **Sprites and links** (`$sprite`, `$link`) are read; a sprite only
   chooses a shape, and neither is drawn.
 
+## ZenUML
+
+- **The look.** ZenUML draws its diagrams in HTML of its own;
+  pomermaid draws them as Mermaid's sequence diagrams (decision 65).
+  Participants' colours, widths and emoji are read and not drawn.
+- **Activations.** A sync message with no block has no activation
+  bar, where ZenUML draws a short one (decision 64).
+- **Comments** are notes over the message's participants, before it,
+  where ZenUML writes them over the message (decision 66); their
+  `[style]` is dropped.
+- **Dividers** are notes across the diagram, and **`ref`** a `ref`
+  block around a note (decision 67).
+- **Unfinished statements,** which ZenUML draws with placeholders,
+  are errors (decision 69).
+- **Texts** are formatted as ZenUML formats them, so `A->B: Hello,
+  world` reads "Hello,world" (decision 70).
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

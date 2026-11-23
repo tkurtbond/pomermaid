@@ -1,0 +1,65 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-fff5ad rgb #fff5ad
+.defcolor pm-aaaa33 rgb #aaaa33
+.defcolor pm-f4f4f4 rgb #f4f4f4
+.defcolor pm-666666 rgb #666666
+.defcolor pm-808080 rgb #808080
+.defcolor pm-000000 rgb #000000
+.defcolor pm-ffffff rgb #ffffff
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 9.2
+.vs 11.04p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.064; arrowwid = 0.064
+line from (0.599, -0.513) to (0.599, -4.851) outlined "pm-9370db" thickness 0.287
+line from (2.625, -0.593) to (2.625, -4.851) outlined "pm-9370db" thickness 0.287
+line from (5.366, -0.593) to (5.366, -4.851) outlined "pm-9370db" thickness 0.287
+box wid 0.08 ht 0.361 at (2.625, -1.527) shaded "pm-f4f4f4" outlined "pm-666666" thickness 0.575
+box wid 0.08 ht 0.361 at (2.625, -2.642) shaded "pm-f4f4f4" outlined "pm-666666" thickness 0.575
+box wid 0.08 ht 0.361 at (2.625, -3.757) shaded "pm-f4f4f4" outlined "pm-666666" thickness 0.575
+box wid 2.425 ht 0.313 at (1.612, -0.829) shaded "pm-fff5ad" outlined "pm-aaaa33" thickness 0.575
+"\f[TS]\m[pm-000000]1. assign a variable from a sync message.\m[]\f[]"  at (1.612, -0.829)
+line from (0.599, -1.346) to (2.585, -1.346) outlined "pm-333333" thickness 0.862
+"\M[pm-333333]\v'-0.22m'\D'P -0.08i -0.039i 0i 0.079i'\M[]" ljust at (2.585, -1.346)
+"\f[TS]\m[pm-333333]SyncMessage()\m[]\f[]"  at (1.592, -1.222)
+line from (2.585, -1.707) to (0.599, -1.707) outlined "pm-333333" thickness 0.862 dashed 0.024
+"\M[pm-333333]\v'-0.22m'\D'P 0.08i 0.048i -0.04i -0.048i 0.04i -0.047i'\M[]" ljust at (0.599, -1.707)
+"\f[TS]\m[pm-333333]a\m[]\f[]"  at (1.592, -1.583)
+box wid 2.425 ht 0.313 at (1.612, -1.944) shaded "pm-fff5ad" outlined "pm-aaaa33" thickness 0.575
+"\f[TS]\m[pm-000000]1.1. optionally give the variable a type\m[]\f[]"  at (1.612, -1.944)
+line from (0.599, -2.461) to (2.585, -2.461) outlined "pm-333333" thickness 0.862
+"\M[pm-333333]\v'-0.22m'\D'P -0.08i -0.04i 0i 0.08i'\M[]" ljust at (2.585, -2.461)
+"\f[TS]\m[pm-333333]SyncMessage()\m[]\f[]"  at (1.592, -2.337)
+line from (2.585, -2.822) to (0.599, -2.822) outlined "pm-333333" thickness 0.862 dashed 0.024
+"\M[pm-333333]\v'-0.22m'\D'P 0.08i 0.048i -0.04i -0.048i 0.04i -0.048i'\M[]" ljust at (0.599, -2.822)
+"\f[TS]\m[pm-333333]a:SomeType\m[]\f[]"  at (1.592, -2.698)
+box wid 2.425 ht 0.313 at (1.612, -3.059) shaded "pm-fff5ad" outlined "pm-aaaa33" thickness 0.575
+"\f[TS]\m[pm-000000]2. use return keyword\m[]\f[]"  at (1.612, -3.059)
+line from (0.599, -3.576) to (2.585, -3.576) outlined "pm-333333" thickness 0.862
+"\M[pm-333333]\v'-0.22m'\D'P -0.08i -0.04i 0i 0.08i'\M[]" ljust at (2.585, -3.576)
+"\f[TS]\m[pm-333333]SyncMessage()\m[]\f[]"  at (1.592, -3.452)
+line from (2.585, -3.937) to (0.599, -3.937) outlined "pm-333333" thickness 0.862 dashed 0.024
+"\M[pm-333333]\v'-0.22m'\D'P 0.08i 0.048i -0.04i -0.048i 0.04i -0.048i'\M[]" ljust at (0.599, -3.937)
+"\f[TS]\m[pm-333333]result\m[]\f[]"  at (1.592, -3.813)
+box wid 3.141 ht 0.313 at (3.996, -4.174) shaded "pm-fff5ad" outlined "pm-aaaa33" thickness 0.575
+"\f[TS]\m[pm-000000]3. use @return or @reply annotator on an async message\m[]\f[]"  at (3.996, -4.174)
+line from (2.625, -4.691) to (5.366, -4.691) outlined "pm-333333" thickness 0.862 dashed 0.024
+"\M[pm-333333]\v'-0.22m'\D'P -0.08i -0.048i 0.04i 0.048i -0.04i 0.048i'\M[]" ljust at (5.366, -4.691)
+"\f[TS]\m[pm-333333]result\m[]\f[]"  at (3.996, -4.566)
+circle rad 0.056 at (0.599, -0.056) shaded "pm-ececff" outlined "pm-9370db" thickness 0.862
+line from (0.599, -0.112) to (0.599, -0.224) outlined "pm-9370db" thickness 0.862
+line from (0.503, -0.152) to (0.695, -0.152) outlined "pm-9370db" thickness 0.862
+line from (0.599, -0.224) to (0.519, -0.319) outlined "pm-9370db" thickness 0.862
+line from (0.599, -0.224) to (0.679, -0.319) outlined "pm-9370db" thickness 0.862
+"\f[TS]\m[pm-000000]\m[]\f[]"  at (0.599, -0.436)
+box wid 1.198 ht 0.593 at (2.625, -0.296) rad 0.024 shaded "pm-ececff" outlined "pm-9370db" thickness 0.575
+"\f[TS]\m[pm-000000]A\m[]\f[]"  at (2.625, -0.296)
+box wid 1.198 ht 0.593 at (5.366, -0.296) rad 0.024 shaded "pm-ececff" outlined "pm-9370db" thickness 0.575
+"\f[TS]\m[pm-000000]B\m[]\f[]"  at (5.366, -0.296)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

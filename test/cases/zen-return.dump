@@ -1,0 +1,17 @@
+title text="Reply message"
+mirror off
+participant "Client" type=participant label="Client"
+participant "A" type=participant label="A"
+participant "B" type=participant label="B"
+0 message "Client" -> "A" head=filled activate text="method()"
+1 activate "A"
+2 message "A" -> "B" head=filled activate text="method()"
+3 activate "B"
+4 start alt text="condition"
+5 message "B" -> "A" dotted head=open text="x1"
+6 note over "Client","A" text=md:"return early"
+7 message "A" -> "Client" dotted head=open text="x11"
+8 end alt
+9 deactivate "B"
+10 message "A" -> "Client" dotted head=open text="x2"
+11 deactivate "A"

@@ -1,0 +1,56 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-fff5ad rgb #fff5ad
+.defcolor pm-aaaa33 rgb #aaaa33
+.defcolor pm-f4f4f4 rgb #f4f4f4
+.defcolor pm-666666 rgb #666666
+.defcolor pm-808080 rgb #808080
+.defcolor pm-000000 rgb #000000
+.defcolor pm-ffffff rgb #ffffff
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+line from (0.651, -0.922) to (0.651, -3.859) outlined "pm-9370db" thickness 0.313
+line from (2.387, -0.922) to (2.387, -3.859) outlined "pm-9370db" thickness 0.313
+line from (4.123, -0.922) to (4.123, -3.859) outlined "pm-9370db" thickness 0.313
+box wid 0.087 ht 2.372 at (2.387, -2.5) shaded "pm-f4f4f4" outlined "pm-666666" thickness 0.625
+box wid 0.087 ht 1.587 at (4.123, -2.5) shaded "pm-f4f4f4" outlined "pm-666666" thickness 0.625
+box wid 3.819 ht 1.5 at (2.257, -2.543) outlined "pm-9370db" thickness 1.25 dashed 0.017
+"\M[pm-ececff]\v'-0.22m'\D'P 0.434i 0i 0i 0.141i -0.073i 0.061i -0.361i 0i'\M[]" ljust at (0.347, -1.793)
+line from (0.347, -1.793) to (0.781, -1.793) to (0.781, -1.934) to (0.708, -1.995) \
+  to (0.347, -1.995) to (0.347, -1.793) outlined "pm-9370db" thickness 0.625
+"\m[pm-000000]\f[TS]alt\f[]\m[]"  at (0.564, -1.894)
+"\f[TS]\m[pm-000000][condition]\m[]\f[]"  at (2.257, -1.894)
+line from (0.651, -1.314) to (2.344, -1.314) outlined "pm-333333" thickness 0.938
+"\M[pm-333333]\v'-0.22m'\D'P -0.087i -0.043i 0i 0.087i'\M[]" ljust at (2.344, -1.314)
+"\f[TS]\m[pm-333333]method()\m[]\f[]"  at (1.497, -1.179)
+line from (2.431, -1.707) to (4.08, -1.707) outlined "pm-333333" thickness 0.938
+"\M[pm-333333]\v'-0.22m'\D'P -0.087i -0.044i 0i 0.087i'\M[]" ljust at (4.08, -1.707)
+"\f[TS]\m[pm-333333]method()\m[]\f[]"  at (3.255, -1.571)
+line from (4.08, -2.387) to (2.431, -2.387) outlined "pm-333333" thickness 0.938 dashed 0.026
+"\M[pm-333333]\v'-0.22m'\D'P 0.086i 0.052i -0.043i -0.052i 0.043i -0.052i'\M[]" ljust at (2.431, -2.387)
+"\f[TS]\m[pm-333333]x1\m[]\f[]"  at (3.255, -2.252)
+box wid 2.17 ht 0.34 at (1.519, -2.644) shaded "pm-fff5ad" outlined "pm-aaaa33" thickness 0.625
+"\f[TS]\m[pm-000000]return early\m[]\f[]"  at (1.519, -2.644)
+line from (2.344, -3.207) to (0.651, -3.207) outlined "pm-333333" thickness 0.938 dashed 0.026
+"\M[pm-333333]\v'-0.22m'\D'P 0.087i 0.052i -0.044i -0.052i 0.044i -0.052i'\M[]" ljust at (0.651, -3.207)
+"\f[TS]\m[pm-333333]x11\m[]\f[]"  at (1.497, -3.071)
+line from (2.344, -3.686) to (0.651, -3.686) outlined "pm-333333" thickness 0.938 dashed 0.026
+"\M[pm-333333]\v'-0.22m'\D'P 0.087i 0.052i -0.044i -0.052i 0.044i -0.052i'\M[]" ljust at (0.651, -3.686)
+"\f[TS]\m[pm-333333]x2\m[]\f[]"  at (1.497, -3.55)
+box wid 1.302 ht 0.564 at (0.651, -0.64) rad 0.026 shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-000000]Client\m[]\f[]"  at (0.651, -0.64)
+box wid 1.302 ht 0.564 at (2.387, -0.64) rad 0.026 shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-000000]A\m[]\f[]"  at (2.387, -0.64)
+box wid 1.302 ht 0.564 at (4.123, -0.64) rad 0.026 shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-000000]B\m[]\f[]"  at (4.123, -0.64)
+box invis wid 0.966 ht 0.188 at (2.387, -0.094)
+"\s[11.25]\f[TS]\m[pm-333333]Reply message\m[]\f[]\s[0]"  at (2.387, -0.094)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

@@ -1,0 +1,11 @@
+layout width=343.75 height=233.38 actor-height=40.63
+participant "Consumer" x=46.88 w=93.75 top=0 label-y=20.31 life=40.63 to=233.38
+participant "API" x=171.88 w=93.75 top=0 label-y=20.31 life=40.63 to=233.38
+participant "BookingService" x=296.88 w=93.75 top=0 label-y=20.31 life=40.63 to=233.38
+1 message from=(46.88,89.63) to=(171.88,89.63) text=(109.38,79.88)
+2 message from=(171.88,117.88) to=(296.88,117.88) text=(234.38,108.13)
+4 message from=(171.88,166.25) to=(46.88,166.25) text=(109.38,156.5)
+6 message from=(171.88,214.63) to=(296.88,214.63) text=(234.38,204.88)
+frame try depth=0 from=(40.63,46.88) to=(303.13,220.88) label-w=31.25 label-h=14.5
+section y=124.13 text=(171.88,132)
+section y=172.5 text=(171.88,180.38)

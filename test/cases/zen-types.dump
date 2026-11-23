@@ -1,0 +1,6 @@
+title text="Annotators"
+mirror off
+participant "Alice" type=actor label="Alice"
+participant "Bob" type=database label="Bob"
+0 message "Alice" -> "Bob" head=open text="Hi Bob"
+1 message "Bob" -> "Alice" head=open text="Hi Alice"

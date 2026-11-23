@@ -1,0 +1,11 @@
+layout width=369.9 height=169.38 actor-height=46.38
+title at=(184.95,10.13)
+participant "_STARTER_" x=46.88 w=93.75 top=25.75 label-y=59.88 life=65.88 to=169.38
+participant "A" x=198.02 w=93.75 top=25.75 label-y=48.94 life=72.13 to=169.38
+participant "B" x=323.02 w=93.75 top=25.75 label-y=48.94 life=72.13 to=169.38
+0 message from=(46.88,100.38) to=(194.9,100.38) text=(120.89,90.63)
+3 message from=(46.88,128.63) to=(194.9,128.63) text=(120.89,118.88)
+5 message from=(201.15,156.88) to=(319.9,156.88) text=(260.52,147.13)
+bar "A" from=(194.9,100.38) to=(201.15,100.38)
+bar "A" from=(194.9,128.63) to=(201.15,156.88)
+bar "B" from=(319.9,156.88) to=(326.15,156.88)

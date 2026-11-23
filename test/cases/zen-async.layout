@@ -1,0 +1,7 @@
+layout width=218.75 height=163.63 actor-height=40.63
+title at=(109.38,10.13)
+participant "Alice" x=46.88 w=93.75 top=25.75 label-y=46.06 life=66.38 to=163.63
+participant "John" x=171.88 w=93.75 top=25.75 label-y=46.06 life=66.38 to=163.63
+0 message from=(46.88,94.63) to=(171.88,94.63) text=(109.38,84.88)
+1 message from=(171.88,122.88) to=(46.88,122.88) text=(109.38,113.13)
+2 message from=(46.88,151.13) to=(171.88,151.13) text=(109.38,141.38)

@@ -1,0 +1,8 @@
+layout width=343.75 height=176.63 actor-height=46.38
+participant "_STARTER_" x=46.88 w=93.75 top=0 label-y=34.13 life=40.13 to=176.63
+participant "A1" x=171.88 w=93.75 top=58.88 label-y=82.06 life=105.25 to=176.63
+participant "A2" x=296.88 w=93.75 top=117.75 label-y=140.94 life=164.13 to=176.63
+0 message from=(46.88,82.06) to=(125,82.06) text=(85.94,72.31)
+3 message from=(46.88,140.94) to=(250,140.94) text=(148.44,131.19)
+bar "A1" from=(168.75,82.06) to=(175,82.06)
+bar "A2" from=(293.75,140.94) to=(300,140.94)

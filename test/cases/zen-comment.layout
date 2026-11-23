@@ -1,0 +1,6 @@
+layout width=218.75 height=129.88 actor-height=46.38
+participant "_STARTER_" x=46.88 w=93.75 top=0 label-y=34.13 life=40.13 to=129.88
+participant "BookService" x=171.88 w=93.75 top=0 label-y=23.19 life=46.38 to=129.88
+0 note from=(31.25,52.63) to=(187.5,89.13) text=(109.38,70.88)
+1 message from=(46.88,117.38) to=(168.75,117.38) text=(107.81,107.63)
+bar "BookService" from=(168.75,117.38) to=(175,117.38)

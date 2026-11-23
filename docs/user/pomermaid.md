@@ -1061,6 +1061,41 @@ in rows, the boundaries in rows inside their parents.
 - **Strings:** as in Mermaid, a string runs to the next `"`, across
   lines, so one left open takes the text after it.
 
+### ZenUML
+
+pomermaid reads ZenUML's sequence diagrams (`zenuml`, Mermaid's
+plugin @mermaid-js/mermaid-zenuml), as @zenuml/core 3 reads them, and
+draws them as Mermaid's sequence diagrams.
+
+- **The first line:** `zenuml`; then, optionally, `title` and the
+  rest of its line.
+- **Participants** are named first or as they are used: `@Actor
+  Alice`, `@Database <<storage>> DB as "Order DB"` (an annotation,
+  `@Actor`, `@Boundary`, `@Control`, `@Entity`, `@Database`,
+  `@Collections` or `@Queue`, chooses the shape; a stereotype is drawn
+  above the name), and `group Name { A B }` puts them in a box.
+  `@Starter(Alice)` names where the first messages come from; without
+  it, an unnamed person is drawn first when a message needs one.
+- **Sync messages:** `A.method(x)`, `A->B.method(x)`, or `method(x)`
+  inside another's block, with a block, `{ ... }`, of the messages it
+  sends, and an assignment, `result = A.m()` or `Type result =
+  A.m()`, drawn as a return.
+- **Async messages:** `A->B: text`, or `B: text`.
+- **Creations:** `a = new A(params)`; the participant is drawn where
+  it is created.
+- **Returns:** `return expr` (to the caller), `@return A->B: text` and
+  `A-->B: text`.
+- **Fragments:** `if (c) { } else if (c) { } else { }`, `opt`, `par`,
+  `critical`, `while`, `for`, `forEach` and `loop`, each with an
+  optional condition, `try { } catch (e) { } finally { }`, `section
+  (text) { }` or `frame`, and `ref(text, participants)`.
+- **Dividers and comments:** a line `== text ==` is drawn as a note
+  across the diagram; a `//` comment before a statement as a note,
+  read as markdown, over its participants.
+- **Errors:** what ZenUML's editor draws with placeholders while it is
+  being typed, as `A - B` or a `{` with no `}`, stops pomermaid with a
+  message.
+
 Mermaid's other diagram types are not read yet.
 
 ## Using the output

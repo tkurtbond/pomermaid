@@ -2,7 +2,7 @@ MODULE pomermaid;
 (* pomermaid: Mermaid diagrams drawn in pic, for groff, and MetaPost,
    for ConTeXt, and SVG made from the pic through groff. The command line is PmOptions'. See PLAN.md. *)
 
-IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmGantt, PmGanttDump, GL := PmGanttLayout, PmGanttPic, PmGanttMp, PmPie, PmPieDump, PL := PmPieLayout, PmPiePic, PmPieMp, PmQuadrant, PmQuadrantDump, QL := PmQuadrantLayout, PmQuadrantPic, PmQuadrantMp, PmXy, PmXyDump, XL := PmXyLayout, PmXyPic, PmXyMp, PmRadar, PmRadarDump, RL := PmRadarLayout, PmRadarPic, PmRadarMp, PmSankey, PmSankeyDump, KL := PmSankeyLayout, PmSankeyPic, PmSankeyMp, PmGit, PmGitDump, HL := PmGitLayout, PmMindmap, PmMindmapDump, ML := PmMindmapLayout, PmTreemap, PmTreemapDump, TML := PmTreemapLayout, PmBlock, PmBlockDump, BL := PmBlockLayout, PmPacket, PmPacketDump, PKL := PmPacketLayout, PmKanban, PmKanbanDump, KBL := PmKanbanLayout, PmArch, PmArchDump, AL := PmArchLayout, PmC4, PmC4Dump, C4L := PmC4Layout, PmDrawDump, PmDrawPic, PmDrawMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
+IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmGantt, PmGanttDump, GL := PmGanttLayout, PmGanttPic, PmGanttMp, PmPie, PmPieDump, PL := PmPieLayout, PmPiePic, PmPieMp, PmQuadrant, PmQuadrantDump, QL := PmQuadrantLayout, PmQuadrantPic, PmQuadrantMp, PmXy, PmXyDump, XL := PmXyLayout, PmXyPic, PmXyMp, PmRadar, PmRadarDump, RL := PmRadarLayout, PmRadarPic, PmRadarMp, PmSankey, PmSankeyDump, KL := PmSankeyLayout, PmSankeyPic, PmSankeyMp, PmGit, PmGitDump, HL := PmGitLayout, PmMindmap, PmMindmapDump, ML := PmMindmapLayout, PmTreemap, PmTreemapDump, TML := PmTreemapLayout, PmBlock, PmBlockDump, BL := PmBlockLayout, PmPacket, PmPacketDump, PKL := PmPacketLayout, PmKanban, PmKanbanDump, KBL := PmKanbanLayout, PmArch, PmArchDump, AL := PmArchLayout, PmC4, PmC4Dump, C4L := PmC4Layout, PmZen, PmDrawDump, PmDrawPic, PmDrawMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
 
 VAR
   text: PmIO.Text;
@@ -60,6 +60,7 @@ BEGIN
     ELSIF PmEr.IsEr(sc) THEN PmEr.Read(sc, g)
     ELSIF PmReq.IsReq(sc) THEN PmReq.Read(sc, g)
     ELSIF PmSeq.IsSeq(sc) THEN PmSeq.Read(sc, seq)
+    ELSIF PmZen.IsZen(sc) THEN PmZen.Read(sc, seq)
     ELSIF PmJourney.IsJourney(sc) THEN PmJourney.Read(sc, jour)
     ELSIF PmTimeline.IsTimeline(sc) THEN PmTimeline.Read(sc, tim)
     ELSIF PmGantt.IsGantt(sc) THEN PmGantt.Read(sc, gan)
@@ -77,7 +78,7 @@ BEGIN
     ELSIF PmArch.IsArch(sc) THEN PmArch.Read(sc, arch)
     ELSIF PmC4.IsC4(sc) THEN PmC4.Read(sc, c4)
     ELSIF PmFlow.IsFlowchart(sc) THEN PmFlow.Read(sc, g)
-    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey, timeline, gantt, pie, quadrantChart, xychart, radar-beta, sankey-beta, gitGraph, mindmap, treemap, block, packet, kanban, architecture-beta, C4Context, C4Container, C4Component, C4Dynamic and C4Deployment")
+    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey, timeline, gantt, pie, quadrantChart, xychart, radar-beta, sankey-beta, gitGraph, mindmap, treemap, block, packet, kanban, architecture-beta, C4Context, C4Container, C4Component, C4Dynamic, C4Deployment and zenuml")
     END;
     IF O.to # "dump" THEN
       IF O.fontPath # "" THEN M.SetPath(O.fontPath) END;

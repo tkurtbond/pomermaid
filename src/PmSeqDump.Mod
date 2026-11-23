@@ -56,6 +56,9 @@ BEGIN
   | Q.Critical: PmIO.WriteString("critical")
   | Q.Break: PmIO.WriteString("break")
   | Q.Rect: PmIO.WriteString("rect")
+  | Q.Try: PmIO.WriteString("try")
+  | Q.Frame: PmIO.WriteString("section")
+  | Q.Ref: PmIO.WriteString("ref")
   END
 END Block;
 

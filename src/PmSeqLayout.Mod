@@ -211,6 +211,9 @@ BEGIN
   | Q.Par, Q.ParOver: s := "par"
   | Q.Critical: s := "critical"
   | Q.Break: s := "break"
+  | Q.Try: s := "try"
+  | Q.Frame: s := "section"
+  | Q.Ref: s := "ref"
   | Q.Rect: RETURN NIL
   END;
   lab := F.PlainLabel(Lx.New(s));

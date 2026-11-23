@@ -1,0 +1,7 @@
+title text="Demo"
+mirror off
+participant "Alice" type=participant label="Alice"
+participant "John" type=participant label="John"
+0 message "Alice" -> "John" head=open text="Hello John,how are you?"
+1 message "John" -> "Alice" head=open text="Great!"
+2 message "Alice" -> "John" head=open text="See you later!"

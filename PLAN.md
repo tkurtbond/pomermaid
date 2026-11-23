@@ -1224,6 +1224,28 @@ Mermaid 12.3.0 is followed: `docs/syntax/c4.md`, `diagrams/c4/`
 `cylinder.ts`, `tiltedCylinder.ts`, `roundedRect.ts`,
 `subroutine.ts`).
 
+### Phase 33: ZenUML [done]
+
+**Change:** `zenuml`, read by a new module, `PmZen`, with
+@zenuml/core's lexer and parser (`sequenceLexer.g4`,
+`sequenceParser.g4`) and its rules for senders, receivers, returns
+and the order of participants (`From.ts`, `Owner.js`, `Origin.js`,
+`RetContext.js`, `ToCollector.js`, `OrderedParticipants.ts`): the
+title, participants with annotations, stereotypes, aliases and
+groups, `@Starter`, sync and async messages, creations, assignments,
+returns (`return`, `@return`, `-->`), `if`/`else`, `par`, `opt`,
+`critical`, the loops, `section`/`frame`, `try`/`catch`/`finally`,
+`ref`, dividers and comments. It is read into Phase 16's model and
+drawn by `PmSeqLayout` and the sequence writers (decisions 64 to
+70); PmSeq gained builders and the `try`, frame and `ref` blocks.
+
+**Check:** case tests of ZenUML's documentation examples in
+Mermaid's `docs/syntax/zenuml.md`, a larger example with every
+construct, and the errors; the diagrams drawn as SVG and looked at.
+
+@mermaid-js/mermaid-zenuml 1.0.1 and the @zenuml/core 3 it depends
+on (`^3.47.9`) are followed.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1582,6 +1604,40 @@ None at present.
     quarter ellipses taken at 24 points, and a relationship ends where it meets
     them; a dashed boundary has square corners, as dashes would break
     its 2.5-pixel corners into dots.
+64. **A ZenUML sync call with no block draws no activation bar**
+    (2026-11-23): its bar has no height, as in Mermaid's sequence
+    diagrams, where ZenUML draws a short one; a minimum height is in
+    "Later".
+65. **ZenUML is drawn as Mermaid's sequence diagrams** (2026-11-23):
+    `PmZen` reads it into Phase 16's model, and `PmSeqLayout` draws
+    it, not in ZenUML's own HTML look. A sync message is solid with a
+    filled head and activates its receiver for its block; an async
+    message is solid with an open head; creations and returns are
+    dashed with open heads; a sync message or creation with an
+    assignment ends with a return of its assignee (on a self call,
+    the assignment is the message's text). `try` and `section` or
+    `frame` are blocks of PmSeq's own, drawn as Mermaid draws `alt`.
+66. **ZenUML's comments are notes** (2026-11-23): a `//` comment on a
+    statement is a note, read as markdown, over the message's two
+    participants, or a fragment's, before it; ZenUML draws it inside
+    the message. A comment's `[style]` is dropped.
+67. **ZenUML's dividers and `ref`s are notes** (2026-11-23): a
+    divider is a note across all the participants; `ref(text,
+    participants)` is a `ref` block around a note over them.
+    Creations are dashed messages to the participant, drawn at that
+    line, with `«parameters»` or `«create»`.
+68. **ZenUML's starter** (2026-11-23): a message whose sender is not
+    named, and is not inside another's block, comes from
+    `@Starter`'s participant, or else from an unnamed person put first,
+    as ZenUML does.
+69. **Unfinished ZenUML statements are errors** (2026-11-23): ZenUML
+    draws what its editor's user has not finished typing (`A - B`,
+    `x = 3`, a `{` with no `}`) with placeholders; pomermaid stops with
+    a message and status 64.
+70. **ZenUML's texts** (2026-11-23) are made as its `formatText` makes
+    them, from the source (blanks collapsed and taken from around
+    `,`, `;`, `.` and `(`, and before `)`, one pair of quotation marks
+    taken off); a leading blank, which HTML does not draw, is dropped.
 
 ## Later
 
@@ -1597,6 +1653,10 @@ None at present.
 - Mermaid 12's `redux-color` theme and `neo` look, its default since
   v12.0.0 for flowcharts and state, class, ER, requirement and
   sequence diagrams (decision 13), drawn when a diagram asks for them.
+- A minimum height for an activation bar with nothing in it, as
+  ZenUML draws a sync call with no block (decision 64).
+- ZenUML's own look (its HTML and CSS), its emoji and participant
+  colours and widths, which are read and not drawn.
 
 ## State
 
@@ -2402,5 +2462,21 @@ diagrams were drawn as SVG and looked at; this found dashed boundaries
 drawn solid, now drawn as dashed paths. The pic output of
 `c4-context` was run through `groff -p`. Mermaid itself was not run.
 On 2026-11-23, `make test` passes, 855 of 855 under both models, on
+FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
+(jherek, cymoril).
+
+2026-11-23, Phase 33: ZenUML. `PmZen` reads `zenuml` into PmSeq's
+model, which `PmSeqLayout` and the sequence writers draw (decisions
+64 to 70). `make test` passes under `-O2` and `-OC`: 923 case tests,
+with `zen-async`, `zen-types`, `zen-alias`, `zen-sync`, `zen-new`,
+`zen-assign`, `zen-return`, `zen-comment`, `zen-if`, `zen-try`,
+`zen-frags` (ZenUML's examples in Mermaid's documentation),
+`zen-order` (every construct) and `zen-empty` (dump, layout, pic, mp
+and svg-ms; `zen-assign`'s layout dropped, as i386 rounds a few of
+its numbers in the last digit) and four error cases (`zen-err-*`); `notFlow` now uses
+`notADiagram`. The diagrams were drawn as SVG and looked at; this
+narrowed a comment's note from its whole block to its message.
+ZenUML itself was not run.
+On 2026-11-23, `make test` passes, 923 of 923 under both models, on
 FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
 (jherek, cymoril).

@@ -1,0 +1,7 @@
+mirror off
+participant "_STARTER_" type=actor label=""
+participant "BookService" type=participant label="BookService"
+0 note over "_STARTER_","BookService" text=md:"a comment on a message."/"Markdown is supported."=1111111100000000000000
+1 message "_STARTER_" -> "BookService" head=filled activate text="getBook()"
+2 activate "BookService"
+3 deactivate "BookService"

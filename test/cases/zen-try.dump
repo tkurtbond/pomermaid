@@ -1,0 +1,12 @@
+mirror off
+participant "Consumer" type=participant label="Consumer"
+participant "API" type=participant label="API"
+participant "BookingService" type=participant label="BookingService"
+0 start try
+1 message "Consumer" -> "API" head=open text="Book something"
+2 message "API" -> "BookingService" head=open text="Start booking process"
+3 section try text="catch"
+4 message "API" -> "Consumer" head=open text="show failure"
+5 section try text="finally"
+6 message "API" -> "BookingService" head=open text="rollback status"
+7 end try

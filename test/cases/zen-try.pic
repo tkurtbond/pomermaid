@@ -1,0 +1,50 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-fff5ad rgb #fff5ad
+.defcolor pm-aaaa33 rgb #aaaa33
+.defcolor pm-f4f4f4 rgb #f4f4f4
+.defcolor pm-666666 rgb #666666
+.defcolor pm-808080 rgb #808080
+.defcolor pm-000000 rgb #000000
+.defcolor pm-ffffff rgb #ffffff
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+line from (0.651, -0.564) to (0.651, -3.241) outlined "pm-9370db" thickness 0.313
+line from (2.387, -0.564) to (2.387, -3.241) outlined "pm-9370db" thickness 0.313
+line from (4.123, -0.564) to (4.123, -3.241) outlined "pm-9370db" thickness 0.313
+box wid 3.646 ht 2.417 at (2.387, -1.859) outlined "pm-9370db" thickness 1.25 dashed 0.017
+"\M[pm-ececff]\v'-0.22m'\D'P 0.434i 0i 0i 0.141i -0.073i 0.06i -0.361i 0i'\M[]" ljust at (0.564, -0.651)
+line from (0.564, -0.651) to (0.998, -0.651) to (0.998, -0.792) to (0.925, -0.852) \
+  to (0.564, -0.852) to (0.564, -0.651) outlined "pm-9370db" thickness 0.625
+"\m[pm-000000]\f[TS]try\f[]\m[]"  at (0.781, -0.752)
+line from (0.564, -1.724) to (4.21, -1.724) outlined "pm-9370db" thickness 1.25 dashed 0.017
+"\f[TS]\m[pm-000000][catch]\m[]\f[]"  at (2.387, -1.833)
+line from (0.564, -2.396) to (4.21, -2.396) outlined "pm-9370db" thickness 1.25 dashed 0.017
+"\f[TS]\m[pm-000000][finally]\m[]\f[]"  at (2.387, -2.505)
+line from (0.651, -1.245) to (2.387, -1.245) outlined "pm-333333" thickness 0.938
+"\M[pm-333333]\v'-0.22m'\D'P -0.087i -0.052i 0.044i 0.052i -0.044i 0.052i'\M[]" ljust at (2.387, -1.245)
+"\f[TS]\m[pm-333333]Book something\m[]\f[]"  at (1.519, -1.109)
+line from (2.387, -1.637) to (4.123, -1.637) outlined "pm-333333" thickness 0.938
+"\M[pm-333333]\v'-0.22m'\D'P -0.087i -0.052i 0.044i 0.052i -0.044i 0.052i'\M[]" ljust at (4.123, -1.637)
+"\f[TS]\m[pm-333333]Start booking process\m[]\f[]"  at (3.255, -1.502)
+line from (2.387, -2.309) to (0.651, -2.309) outlined "pm-333333" thickness 0.938
+"\M[pm-333333]\v'-0.22m'\D'P 0.087i 0.052i -0.044i -0.052i 0.044i -0.052i'\M[]" ljust at (0.651, -2.309)
+"\f[TS]\m[pm-333333]show failure\m[]\f[]"  at (1.519, -2.174)
+line from (2.387, -2.981) to (4.123, -2.981) outlined "pm-333333" thickness 0.938
+"\M[pm-333333]\v'-0.22m'\D'P -0.087i -0.052i 0.044i 0.052i -0.044i 0.052i'\M[]" ljust at (4.123, -2.981)
+"\f[TS]\m[pm-333333]rollback status\m[]\f[]"  at (3.255, -2.845)
+box wid 1.302 ht 0.564 at (0.651, -0.282) rad 0.026 shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-000000]Consumer\m[]\f[]"  at (0.651, -0.282)
+box wid 1.302 ht 0.564 at (2.387, -0.282) rad 0.026 shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-000000]API\m[]\f[]"  at (2.387, -0.282)
+box wid 1.302 ht 0.564 at (4.123, -0.282) rad 0.026 shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-000000]BookingService\m[]\f[]"  at (4.123, -0.282)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

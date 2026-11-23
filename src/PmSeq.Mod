@@ -60,6 +60,8 @@ CONST
   (* blocks *)
   Loop* = 0; Opt* = 1; Alt* = 2; Par* = 3; ParOver* = 4; Critical* = 5;
   Break* = 6; Rect* = 7;
+  (* ZenUML's, PmZen's: try ... catch ... finally, section (frame) and ref *)
+  Try* = 8; Frame* = 9; Ref* = 10;
 
   NoColour* = -1;
   MaxDepth = 64;        (* blocks inside blocks *)
@@ -848,6 +850,48 @@ BEGIN
   ELSE Message; ExpectEnd
   END
 END Statement;
+
+(* Building a diagram from another reader, PmZen's *)
+
+(* Starts diagram, with graph g, the title and the configuration, as
+   the diagram the procedures below add to; mirror says the
+   participants are drawn again at the bottom *)
+PROCEDURE Start*(diagram: Diagram; g: F.Graph; mirror: BOOLEAN);
+BEGIN
+  d := diagram; d.g := g; d.mirror := mirror;
+  d.actors := NIL; d.nActors := 0; d.boxes := NIL; d.nBoxes := 0;
+  d.events := NIL; d.nEvents := 0; d.lastActor := NIL; d.lastBox := NIL; d.lastEvent := NIL
+END Start;
+
+(* A new box, with title title, or NIL, and no colour *)
+PROCEDURE AddBox*(title: F.Label): Box;
+  VAR b: Box;
+BEGIN
+  NEW(b); b.title := title; b.fill := NoColour; b.index := d.nBoxes; INC(d.nBoxes); b.next := NIL;
+  IF d.boxes = NIL THEN d.boxes := b ELSE d.lastBox.next := b END;
+  d.lastBox := b;
+  RETURN b
+END AddBox;
+
+(* A new participant id, after those there, drawn with label, of type
+   type (Participant ...), in b, or NIL *)
+PROCEDURE AddActor*(id: Str; label: F.Label; type: INTEGER; b: Box): Actor;
+  VAR a: Actor;
+BEGIN
+  NEW(a); a.id := id; a.label := label; a.type := type; a.box := b;
+  a.index := d.nActors; INC(d.nActors);
+  a.created := NIL; a.destroyed := NIL; a.next := NIL;
+  IF d.actors = NIL THEN d.actors := a ELSE d.lastActor.next := a END;
+  d.lastActor := a;
+  RETURN a
+END AddActor;
+
+(* A new event of kind kind (Msg ...), after those there, with the
+   defaults of NewEvent *)
+PROCEDURE AddEvent*(kind: INTEGER): Event;
+BEGIN
+  RETURN NewEvent(kind)
+END AddEvent;
 
 (* Whether the scanner's text, after front matter and comments, starts
    with "sequenceDiagram" *)

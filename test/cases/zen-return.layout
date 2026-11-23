@@ -1,0 +1,14 @@
+layout width=343.75 height=277.88 actor-height=40.63
+title at=(171.88,10.13)
+participant "Client" x=46.88 w=93.75 top=25.75 label-y=46.06 life=66.38 to=277.88
+participant "A" x=171.88 w=93.75 top=25.75 label-y=46.06 life=66.38 to=277.88
+participant "B" x=296.88 w=93.75 top=25.75 label-y=46.06 life=66.38 to=277.88
+0 message from=(46.88,94.63) to=(168.75,94.63) text=(107.81,84.88)
+2 message from=(175,122.88) to=(293.75,122.88) text=(234.38,113.13)
+5 message from=(293.75,171.88) to=(175,171.88) text=(234.38,162.13)
+6 note from=(31.25,178.13) to=(187.5,202.63) text=(109.38,190.38)
+7 message from=(168.75,230.88) to=(46.88,230.88) text=(107.81,221.13)
+10 message from=(168.75,265.38) to=(46.88,265.38) text=(107.81,255.63)
+frame alt depth=0 from=(25,129.13) to=(300,237.13) label-w=31.25 label-h=14.5 text=(162.5,136.38)
+bar "A" from=(168.75,94.63) to=(175,265.38)
+bar "B" from=(293.75,122.88) to=(300,237.13)

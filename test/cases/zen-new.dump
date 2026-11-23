@@ -1,0 +1,10 @@
+mirror off
+participant "_STARTER_" type=actor label=""
+participant "A1" type=participant created=0 label="A1"
+participant "A2" type=participant created=3 label="A2"
+0 message "_STARTER_" -> "A1" dotted head=open activate text="«create»"
+1 activate "A1"
+2 deactivate "A1"
+3 message "_STARTER_" -> "A2" dotted head=open activate text="«with,parameters»"
+4 activate "A2"
+5 deactivate "A2"

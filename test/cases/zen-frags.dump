@@ -1,0 +1,17 @@
+mirror off
+participant "Alice" type=participant label="Alice"
+participant "John" type=participant label="John"
+participant "Bob" type=participant label="Bob"
+0 message "Alice" -> "John" head=open text="Hello John,how are you?"
+1 start loop text="true"
+2 message "John" -> "Alice" head=open text="Great!"
+3 end loop
+4 message "Alice" -> "Bob" head=open text="Hello Bob,how are you?"
+5 message "Bob" -> "Alice" head=open text="Not so good :("
+6 start opt
+7 message "Bob" -> "Alice" head=open text="Thanks for asking"
+8 end opt
+9 start par
+10 message "Alice" -> "Bob" head=open text="Hello guys!"
+11 message "Alice" -> "John" head=open text="Hello guys!"
+12 end par

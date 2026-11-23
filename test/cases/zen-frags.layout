@@ -1,0 +1,14 @@
+layout width=343.75 height=331.88 actor-height=40.63
+participant "Alice" x=46.88 w=93.75 top=0 label-y=20.31 life=40.63 to=331.88
+participant "John" x=171.88 w=93.75 top=0 label-y=20.31 life=40.63 to=331.88
+participant "Bob" x=296.88 w=93.75 top=0 label-y=20.31 life=40.63 to=331.88
+0 message from=(46.88,68.88) to=(171.88,68.88) text=(109.38,59.13)
+2 message from=(171.88,117.88) to=(46.88,117.88) text=(109.38,108.13)
+4 message from=(46.88,152.38) to=(296.88,152.38) text=(171.88,142.63)
+5 message from=(296.88,180.63) to=(46.88,180.63) text=(171.88,170.88)
+7 message from=(296.88,229.63) to=(46.88,229.63) text=(171.88,219.88)
+10 message from=(46.88,284.88) to=(296.88,284.88) text=(171.88,275.13)
+11 message from=(46.88,313.13) to=(171.88,313.13) text=(109.38,303.38)
+frame loop depth=0 from=(40.63,75.13) to=(178.13,124.13) label-w=31.7 label-h=14.5 text=(109.38,82.38)
+frame opt depth=0 from=(40.63,186.88) to=(303.13,235.88) label-w=31.25 label-h=14.5
+frame par depth=0 from=(40.63,242.13) to=(303.13,319.38) label-w=31.25 label-h=14.5

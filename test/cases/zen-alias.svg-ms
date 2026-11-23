@@ -1,0 +1,39 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p151.38p,222.75p
+.pl 151.38p
+.po 2p
+.ll 218.75p
+.sp 2p
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-fff5ad rgb #fff5ad
+.defcolor pm-aaaa33 rgb #aaaa33
+.defcolor pm-f4f4f4 rgb #f4f4f4
+.defcolor pm-666666 rgb #666666
+.defcolor pm-808080 rgb #808080
+.defcolor pm-000000 rgb #000000
+.defcolor pm-ffffff rgb #ffffff
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+line from (0.651, -0.922) to (0.651, -1.88) outlined "pm-9370db" thickness 0.313
+line from (2.387, -0.922) to (2.387, -1.88) outlined "pm-9370db" thickness 0.313
+line from (0.651, -1.314) to (2.387, -1.314) outlined "pm-333333" thickness 0.938
+"\M[pm-333333]\v'-0.22m'\D'P -0.087i -0.052i 0.044i 0.052i -0.044i 0.052i'\M[]" ljust at (2.387, -1.314)
+"\f[TS]\m[pm-333333]Hello John,how are you?\m[]\f[]"  at (1.519, -1.179)
+line from (2.387, -1.707) to (0.651, -1.707) outlined "pm-333333" thickness 0.938
+"\M[pm-333333]\v'-0.22m'\D'P 0.087i 0.052i -0.044i -0.052i 0.044i -0.052i'\M[]" ljust at (0.651, -1.707)
+"\f[TS]\m[pm-333333]Great!\m[]\f[]"  at (1.519, -1.571)
+box wid 1.302 ht 0.564 at (0.651, -0.64) rad 0.026 shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-000000]Alice\m[]\f[]"  at (0.651, -0.64)
+box wid 1.302 ht 0.564 at (2.387, -0.64) rad 0.026 shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-000000]John\m[]\f[]"  at (2.387, -0.64)
+box invis wid 0.552 ht 0.188 at (1.519, -0.094)
+"\s[11.25]\f[TS]\m[pm-333333]Aliases\m[]\f[]\s[0]"  at (1.519, -0.094)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

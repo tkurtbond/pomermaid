@@ -1,0 +1,38 @@
+zenuml
+title Order Service
+@Actor Client #FFEBE6
+@Boundary <<BFF>> OrderController
+group BusinessService {
+  @Control OrderService
+  @Database DB as "Order DB"
+}
+@Starter(Client)
+// `POST /orders`
+OrderController.post(payload) {
+  OrderService.create(payload) {
+    order = new Order(payload, status = "new")
+    if(order != null) {
+      par {
+        DB.save(order)
+        PurchaseService.charge(order.amount) {
+          return "ok"
+        }
+      }
+    } else if (retry) {
+      ref(Retry, OrderService, DB)
+    } else {
+      return error
+    }
+  }
+  == Respond ==
+  section(Notify) {
+    Notifier->Client: done
+  }
+  int id = OrderService.id()
+  forEach(item in items) {
+    OrderService.ship(item)
+  }
+  critical(lock) {
+    x = self()
+  }
+}

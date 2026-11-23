@@ -1,0 +1,9 @@
+mirror off
+participant "Alice" type=participant label="Alice"
+participant "Bob" type=participant label="Bob"
+0 message "Alice" -> "Bob" head=open text="Hello Bob,how are you?"
+1 start alt text="is_sick"
+2 message "Bob" -> "Alice" head=open text="Not so good :("
+3 section alt text="else"
+4 message "Bob" -> "Alice" head=open text="Feeling fresh like a daisy"
+5 end alt

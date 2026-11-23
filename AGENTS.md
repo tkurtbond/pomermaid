@@ -85,7 +85,8 @@ diagrams: `PmPacket`, `PmPacketLayout` and `PmPacketDump`) and 30
 (kanban boards: `PmKanban`, `PmKanbanLayout` and `PmKanbanDump`) and
 31 (architecture diagrams: `PmArch`, `PmArchLayout`, a grid of its
 own, and `PmArchDump`) and 32 (C4 diagrams: `PmC4`, `PmC4Layout`,
-Mermaid's rows, and `PmC4Dump`) are done. See
+Mermaid's rows, and `PmC4Dump`) and 33 (ZenUML: `PmZen`, read into
+PmSeq's model) are done. See
 PLAN.md's State.
 
 ## Reference material
