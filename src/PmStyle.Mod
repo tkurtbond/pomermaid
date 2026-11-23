@@ -74,6 +74,13 @@ TYPE
     opacity*: REAL               (* the slices', from 0 to 1 *)
   END;
 
+  QuadrantTheme* = RECORD
+    fill*, text*: ARRAY 5 OF LONGINT;  (* quadrants 1 .. 4' *)
+    pointFill*, pointStroke*: LONGINT; (* the points' defaults; -1 for none *)
+    pointText*, xAxis*, yAxis*, title*, internal*, external*: LONGINT;
+    textFill*: LONGINT                 (* textColor: a point whose colour is invalid *)
+  END;
+
   Style* = RECORD
     fill*, line*, text*: INTEGER;  (* indexes into the colours, or NoColour *)
     inner*: INTEGER;               (* a composite state's body's fill, below
@@ -551,6 +558,30 @@ BEGIN
     IF t.opacity < 0 THEN t.opacity := 0 ELSIF t.opacity > 1 THEN t.opacity := 1 END
   END
 END PieColours;
+
+(* t, a quadrant chart's colours: the default theme's, changed by
+   themeVariables. The points' default fill, quadrantPointFill, is an
+   invalid colour in Mermaid's default theme, so the points are drawn
+   in the text's colour, inherited, and not outlined; a
+   quadrantPointFill given is their fill and their outline. *)
+PROCEDURE QuadrantColours*(VAR t: QuadrantTheme);
+  VAR set: BOOLEAN; k: INTEGER; name: ARRAY 24 OF CHAR;
+BEGIN
+  t.fill[1] := 0ECECFFH; t.fill[2] := 0F1F1FFH; t.fill[3] := 0F6F6FFH; t.fill[4] := 0FBFBFFH;
+  t.text[1] := 0131300H; t.text[2] := 00E0E00H; t.text[3] := 0090900H; t.text[4] := 0040400H;
+  FOR k := 1 TO 4 DO
+    name := "quadrant1Fill"; name[8] := CHR(ORD("0") + k); set := Var(name, t.fill[k]);
+    name := "quadrant1TextFill"; name[8] := CHR(ORD("0") + k); set := Var(name, t.text[k])
+  END;
+  t.textFill := textColour; t.pointFill := textColour; t.pointStroke := -1;
+  IF Var("quadrantPointFill", t.pointFill) THEN t.pointStroke := t.pointFill END;
+  t.pointText := 0131300H; set := Var("quadrantPointTextFill", t.pointText);
+  t.xAxis := 0131300H; set := Var("quadrantXAxisTextFill", t.xAxis);
+  t.yAxis := 0131300H; set := Var("quadrantYAxisTextFill", t.yAxis);
+  t.title := 0131300H; set := Var("quadrantTitleFill", t.title);
+  t.internal := 0C7C7F1H; set := Var("quadrantInternalBorderStrokeFill", t.internal);
+  t.external := 0C7C7F1H; set := Var("quadrantExternalBorderStrokeFill", t.external)
+END QuadrantColours;
 
 (* Applies the classDefs named name *)
 PROCEDURE ApplyClass(g: F.Graph; VAR st: Style; name: ARRAY OF CHAR);

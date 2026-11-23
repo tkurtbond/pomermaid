@@ -839,6 +839,86 @@ default theme. In steps:
   text widths (decision 3).
 - **20.5:** Mermaid's examples; the documentation.
 
+### Phase 21: quadrant charts [done]
+
+**Change:** `quadrantChart`, read by a new module, `PmQuadrant`, into
+a model of its own (the title, the axes' and the quadrants' texts,
+the points with their styles, the classes, the configuration), laid
+out by `PmQuadrantLayout` on Mermaid's geometry, and drawn in pic,
+SVG and MetaPost.
+
+**Check:** case tests for each construct and error, with and without
+points, the axes in each place; Mermaid's own quadrant examples read
+and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/quadrantChart.md`,
+`diagrams/quadrant-chart/parser/quadrant.jison`, `quadrantDb.ts`,
+`quadrantBuilder.ts`, `quadrantRenderer.ts`, `utils.ts` and the
+default theme. In steps:
+
+- **21.1, the model and the reader:** `quadrantChart`, `title`,
+  `accTitle` and `accDescr`, `x-axis` and `y-axis` (one text, or two
+  joined by `-->`, a missing second text adding " ⟶ " to the first),
+  `quadrant-1` to `quadrant-4`, `classDef`, the points (`text:
+  [x, y]`, with `:::class` and styles: `radius`, `color`,
+  `stroke-color`, `stroke-width`, checked as Mermaid checks them),
+  quoted and markdown texts, `;` and line ends, comments, front
+  matter and directives; keywords in any case; `config.quadrantChart`;
+  the dump.
+- **21.2, the layout:** Mermaid's pixels at the labels' size, the
+  quadrants' 16 pixels to the size: the chart 500 pixels square, the
+  space for the title and the axes, the quadrants and their texts,
+  the borders, the points, drawn in reverse order, and their texts,
+  the axes' texts, the y axis's turned; the drawing widened for text
+  that does not fit; the layout dump.
+- **21.3, pic and SVG:** the quadrants, the borders, the points, the
+  texts, the y axis's along a line; the colours changed by
+  themeVariables.
+- **21.4, MetaPost:** the same drawing written directly, the text with
+  ConTeXt's widths.
+- **21.5:** Mermaid's examples; the documentation.
+
+### Phase 22: XY charts
+
+**Change:** `xychart-beta` (and `xychart`), read by a new module,
+`PmXy`, into a model of its own (the orientation, the title, the
+axes, the bar and line plots, the configuration), laid out by
+`PmXyLayout` on Mermaid's geometry, and drawn in pic, SVG and
+MetaPost.
+
+**Check:** case tests for each construct and error: band and linear
+x axes, a given and a computed y range, bars and lines together,
+vertical and horizontal, the legend, data labels, rotated labels,
+the configuration and themeVariables; Mermaid's own XY chart
+examples read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/xyChart.md`,
+`diagrams/xychart/parser/xychart.jison`, `xychartDb.ts`,
+`chartBuilder/` (the orchestrator, the axes, the title, the legend,
+the plots), `xychartRenderer.ts`, the configuration's schema and the
+default theme. In steps:
+
+- **22.1, the model and the reader:** `xychart-beta` and `xychart`
+  with `vertical` or `horizontal`, `title`, `accTitle` and
+  `accDescr`, `x-axis` (a title, categories, or a range), `y-axis` (a
+  title, a range), `bar` and `line` (an optional title, the values,
+  a line's points' texts), quoted and markdown texts, unquoted texts
+  joined as Mermaid's lexer joins them, `;` and line ends, comments,
+  front matter and directives; the axes' defaults from the data, as
+  `xychartDb.ts` sets them; `config.xyChart`; the dump.
+- **22.2, the layout:** Mermaid's pixels at the labels' size (16
+  pixels to the size), the chart 700 by 500: the space for the title,
+  the axes and the legend, as the orchestrator gives it, vertical and
+  horizontal; band and linear scales, d3's ticks; the bars, the
+  lines, the legend, the data labels; the drawing widened for text
+  that does not fit; the layout dump.
+- **22.3, pic and SVG:** the background, the bars, the lines, the
+  texts, the axes, the turned texts; the colours changed by
+  themeVariables.
+- **22.4, MetaPost:** the same drawing written directly, the text with
+  ConTeXt's widths.
+- **22.5:** Mermaid's examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -969,6 +1049,30 @@ None at present.
     legend. pomermaid centres it over the pie wherever the legend is,
     and a title wider than the drawing widens it on both sides,
     where Mermaid's is cut off.
+
+2026-11-23, in Phase 21, under decision 2:
+
+18. **A quadrant chart's texts widen the drawing.** Mermaid draws
+    the chart in a fixed box and lets a title, a point's text or an
+    axis's text that does not fit run past its edge, where it is cut
+    off. pomermaid takes the union of the chart, its texts and its
+    points as the drawing's bounds, and moves the drawing to start at
+    (0, 0).
+
+2026-11-23, in Phase 22, under decision 2:
+
+19. **An XY chart's texts widen the drawing,** as a quadrant chart's
+    do (decision 18): a title, a legend or a label that runs past
+    Mermaid's fixed box widens the drawing instead of being cut off.
+20. **Turned x axis labels are turned about their centres.** With
+    `labelRotation`, Mermaid reserves the turned labels' height below
+    the axis and turns each label about the middle of its top, moved
+    by half its turned width. pomermaid reserves the same height and
+    draws each label turned about its centre, under its tick, in the
+    middle of that height, which pic and MetaPost draw alike.
+21. **Each bar shows its own value.** With `showDataLabel`, Mermaid
+    labels the bars of every bar plot with the first plot's values.
+    pomermaid labels each bar with its own.
 
 ## Later
 
@@ -1502,3 +1606,29 @@ an error. Mermaid's two pie examples (`docs/syntax/pie.md`) were read
 and written as pic, mp and SVG without an error, and looked at.
 `make test` passes, 330 of 330 under both models, on FreeBSD (alerik,
 rackhir), NetBSD (artos, yishana) and OpenBSD (jherek, cymoril).
+
+Phase 21, quadrant charts, is done, 2026-11-23, on Mermaid 12.3.0.
+`PmQuadrant` reads `quadrantChart` (the title, `accTitle`/`accDescr`,
+`x-axis` and `y-axis` with one text or two, `quadrant-1` to
+`quadrant-4`, `classDef`, the points with `:::class` and their
+styles, checked as Mermaid checks them, and `config.quadrantChart`).
+`PmQuadrantLayout` lays it out on `quadrantBuilder.ts`'s pixels at
+the labels' size, the axes' texts at the bottom or top and the left
+or right as Mermaid places them, the y axis's rotated; the drawing
+grows for texts that do not fit (decision 18). `PmQuadrantPic` draws
+it in pic (rotated text with `PmPic.Rotated`), SVG coming from that
+through groff; `PmQuadrantMp` writes the MetaPost. The colours are
+the default theme's, changed by themeVariables
+(`PmStyle.QuadrantColours`). `make test` passes under `-O2` and
+`-OC`: 362 case tests, with `quadrant-basic` (dump, pic, mp,
+svg-ms; its layout dropped, as i386 rounds a point's y in the last
+digit), `quadrant-styles`, `quadrant-config`, `quadrant-empty` (dump,
+layout, pic, mp, svg-ms),
+`quadrant-syntax` (dump, layout, pic), `quadrant-wide` (layout, pic,
+mp) and seven error cases. The cases and Mermaid's three quadrant
+examples (`docs/syntax/quadrantChart.md`) were drawn through groff,
+through ConTeXt and as SVG, and looked at; ConTeXt's font has no ❤.
+`make test` passes on FreeBSD (alerik, rackhir), NetBSD (artos,
+yishana) and OpenBSD (jherek, cymoril) under both models: 362 of 362
+on yishana and cymoril (i386), and 363 of 363 on the others, which
+ran before `quadrant-basic`'s layout was dropped.

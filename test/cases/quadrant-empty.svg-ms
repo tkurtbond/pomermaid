@@ -1,0 +1,31 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p328.5p,316.5p
+.pl 328.5p
+.po 2p
+.ll 312.5p
+.sp 2p
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-f1f1ff rgb #f1f1ff
+.defcolor pm-f6f6ff rgb #f6f6ff
+.defcolor pm-fbfbff rgb #fbfbff
+.defcolor pm-c7c7f1 rgb #c7c7f1
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 4.34 ht 4.34 at (2.17, -2.17)
+box wid 2.127 ht 2.127 at (3.234, -1.107) shaded "pm-ececff" outlined "pm-ececff" thickness 0
+box wid 2.127 ht 2.127 at (1.107, -1.107) shaded "pm-f1f1ff" outlined "pm-f1f1ff" thickness 0
+box wid 2.127 ht 2.127 at (1.107, -3.234) shaded "pm-f6f6ff" outlined "pm-f6f6ff" thickness 0
+box wid 2.127 ht 2.127 at (3.234, -3.234) shaded "pm-fbfbff" outlined "pm-fbfbff" thickness 0
+line from (0.035, -0.043) to (4.306, -0.043) outlined "pm-c7c7f1" thickness 1.25
+line from (4.297, -0.052) to (4.297, -4.288) outlined "pm-c7c7f1" thickness 1.25
+line from (0.035, -4.297) to (4.306, -4.297) outlined "pm-c7c7f1" thickness 1.25
+line from (0.043, -0.052) to (0.043, -4.288) outlined "pm-c7c7f1" thickness 1.25
+line from (2.17, -0.052) to (2.17, -4.288) outlined "pm-c7c7f1" thickness 0.625
+line from (0.052, -2.17) to (4.288, -2.17) outlined "pm-c7c7f1" thickness 0.625
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

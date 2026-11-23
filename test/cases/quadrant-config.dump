@@ -1,0 +1,22 @@
+title text="Effort and value"
+config config.quadrantChart.chartWidth="400"
+config config.quadrantChart.chartHeight="360"
+config config.quadrantChart.xAxisPosition="bottom"
+config config.quadrantChart.yAxisPosition="right"
+config config.quadrantChart.pointRadius="8"
+config config.quadrantChart.titleFontSize="24"
+config config.themeVariables.quadrant1Fill="#e0f0e0"
+config config.themeVariables.quadrant1TextFill="#ff0000"
+config config.themeVariables.quadrantPointFill="#3060c0"
+config config.themeVariables.quadrantTitleFill="#202080"
+config config.themeVariables.quadrantExternalBorderStrokeFill="#404040"
+quadrantChart width=400 height=360 xAxis=bottom yAxis=right
+sizes titlePadding=10 titleFontSize=24 quadrantPadding=5 quadrantTextTopPadding=5 quadrantLabelFontSize=16 xAxisLabelPadding=5 yAxisLabelPadding=5 xAxisLabelFontSize=16 yAxisLabelFontSize=16 pointTextPadding=5 pointLabelFontSize=12 pointRadius=8 internalBorder=1 externalBorder=2
+quadrant 1 text="Plan"
+quadrant 2 text="Do"
+quadrant 3 text="Drop"
+quadrant 4 text="Delegate"
+x-axis from="Low effort" to="High effort"
+y-axis from="Low value" to="High value"
+point text="Docs" at=(0.7,0.3) strokeWidth=2
+point text="Tests" at=(0.2,0.8)

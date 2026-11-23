@@ -1,0 +1,12 @@
+title text="A title; with %% all of it"
+quadrantChart width=500 height=500 xAxis=top yAxis=left
+sizes titlePadding=10 titleFontSize=20 quadrantPadding=5 quadrantTextTopPadding=5 quadrantLabelFontSize=16 xAxisLabelPadding=5 yAxisLabelPadding=5 xAxisLabelFontSize=16 yAxisLabelFontSize=16 pointTextPadding=5 pointLabelFontSize=12 pointRadius=5 internalBorder=1 externalBorder=2
+quadrant 2 text="Two"
+quadrant 3 text="Mark **down**"
+x-axis from="Urgent ( x ) ⟶"
+y-axis from="Low"
+classDef c2 color=invalid
+classDef c1 color=#aabbcc strokeWidth=3
+point text="p2" at=(0,1) class=c2
+point text="point one" at=(1,0)
+point text="A b c" at=(0.1,0.2) class=c1 radius=7 stroke=#123456

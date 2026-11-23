@@ -1,0 +1,2 @@
+quadrantChart width=500 height=500 xAxis=top yAxis=left
+sizes titlePadding=10 titleFontSize=20 quadrantPadding=5 quadrantTextTopPadding=5 quadrantLabelFontSize=16 xAxisLabelPadding=5 yAxisLabelPadding=5 xAxisLabelFontSize=16 yAxisLabelFontSize=16 pointTextPadding=5 pointLabelFontSize=12 pointRadius=5 internalBorder=1 externalBorder=2

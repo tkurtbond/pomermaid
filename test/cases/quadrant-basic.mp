@@ -1,0 +1,42 @@
+\startMPcode
+numeric pmqx[]; picture pmqp;
+pmqx0 := 0; pmqx1 := -312.5pt; pmqx2 := 312.5pt; pmqx3 := 0;
+def pmqtext(expr p, q, a, c) =
+  pmqp := p shifted (q - (if (a = 0): xpart llcorner p else: xpart center p fi, if (a = 2): ypart llcorner p else: ypart center p fi));
+  draw pmqp withcolor c;
+  pmqx0 := min(pmqx0, xpart llcorner pmqp); pmqx1 := min(pmqx1, ypart llcorner pmqp);
+  pmqx2 := max(pmqx2, xpart urcorner pmqp); pmqx3 := max(pmqx3, ypart urcorner pmqp);
+enddef;
+fill unitsquare xscaled 145pt yscaled 132.5pt shifted (164.375pt, -160.625pt) withcolor (0.9255,0.9255,1);
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "We should expand" & "}") scaled 1, (236.875pt, -36.25pt), 1, (0.0745,0.0745,0));
+fill unitsquare xscaled 145pt yscaled 132.5pt shifted (19.375pt, -160.625pt) withcolor (0.9451,0.9451,1);
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Need to promote" & "}") scaled 1, (91.875pt, -36.25pt), 1, (0.0549,0.0549,0));
+fill unitsquare xscaled 145pt yscaled 132.5pt shifted (19.375pt, -293.125pt) withcolor (0.9647,0.9647,1);
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Re-evaluate" & "}") scaled 1, (91.875pt, -168.75pt), 1, (0.0353,0.0353,0));
+fill unitsquare xscaled 145pt yscaled 132.5pt shifted (164.375pt, -293.125pt) withcolor (0.9843,0.9843,1);
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "May be improved" & "}") scaled 1, (236.875pt, -168.75pt), 1, (0.0157,0.0157,0));
+draw (18.75pt, -28.125pt) -- (310pt, -28.125pt) withcolor (0.7804,0.7804,0.9451) withpen pencircle scaled 1.25pt;
+draw (309.375pt, -28.75pt) -- (309.375pt, -292.5pt) withcolor (0.7804,0.7804,0.9451) withpen pencircle scaled 1.25pt;
+draw (18.75pt, -293.125pt) -- (310pt, -293.125pt) withcolor (0.7804,0.7804,0.9451) withpen pencircle scaled 1.25pt;
+draw (19.375pt, -28.75pt) -- (19.375pt, -292.5pt) withcolor (0.7804,0.7804,0.9451) withpen pencircle scaled 1.25pt;
+draw (164.375pt, -28.75pt) -- (164.375pt, -292.5pt) withcolor (0.7804,0.7804,0.9451) withpen pencircle scaled 0.625pt;
+draw (20pt, -160.625pt) -- (308.75pt, -160.625pt) withcolor (0.7804,0.7804,0.9451) withpen pencircle scaled 0.625pt;
+fill fullcircle scaled 6.25pt shifted (120.875pt, -86.425pt) withcolor (0.2,0.2,0.2);
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Campaign F" & "}") scaled 0.75, (120.875pt, -93.3pt), 1, (0.0745,0.0745,0));
+fill fullcircle scaled 6.25pt shifted (135.375pt, -203.025pt) withcolor (0.2,0.2,0.2);
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Campaign E" & "}") scaled 0.75, (135.375pt, -209.9pt), 1, (0.0745,0.0745,0));
+fill fullcircle scaled 6.25pt shifted (245.575pt, -203.025pt) withcolor (0.2,0.2,0.2);
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Campaign D" & "}") scaled 0.75, (245.575pt, -209.9pt), 1, (0.0745,0.0745,0));
+fill fullcircle scaled 6.25pt shifted (184.675pt, -110.275pt) withcolor (0.2,0.2,0.2);
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Campaign C" & "}") scaled 0.75, (184.675pt, -117.15pt), 1, (0.0745,0.0745,0));
+fill fullcircle scaled 6.25pt shifted (149.875pt, -232.175pt) withcolor (0.2,0.2,0.2);
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Campaign B" & "}") scaled 0.75, (149.875pt, -239.05pt), 1, (0.0745,0.0745,0));
+fill fullcircle scaled 6.25pt shifted (106.375pt, -134.125pt) withcolor (0.2,0.2,0.2);
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Campaign A" & "}") scaled 0.75, (106.375pt, -141pt), 1, (0.0745,0.0745,0));
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Low Reach" & "}") scaled 1, (91.875pt, -304.375pt), 1, (0.0745,0.0745,0));
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "High Reach" & "}") scaled 1, (236.875pt, -304.375pt), 1, (0.0745,0.0745,0));
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Low Engagement" & "}") scaled 1 rotated 90, (8.125pt, -226.875pt), 3, (0.0745,0.0745,0));
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "High Engagement" & "}") scaled 1 rotated 90, (8.125pt, -94.375pt), 3, (0.0745,0.0745,0));
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Reach and engagement of campaigns" & "}") scaled 1.25, (156.25pt, -12.5pt), 1, (0.0745,0.0745,0));
+setbounds currentpicture to (pmqx0, pmqx1) -- (pmqx2, pmqx1) -- (pmqx2, pmqx3) -- (pmqx0, pmqx3) -- cycle;
+\stopMPcode

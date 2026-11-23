@@ -142,6 +142,31 @@ BEGIN
   END
 END Runs;
 
+(* The line of text line, quoted, in colour c, at size points, or the
+   current size for 0 *)
+PROCEDURE LineString(line: F.Line; c: INTEGER; size: REAL);
+BEGIN
+  W('"');
+  IF size > 0 THEN W("\s["); PmIO.WriteReal(size, 2); W("]") END;
+  IF line.style = NIL THEN W("\f["); W(fontName); W("]") END;
+  IF c # NoColour THEN W("\m[pm-"); Hex(S.Rgb(c), 6); W("]") END;
+  IF line.style = NIL THEN Escaped(line.text^) ELSE Runs(line) END;
+  IF c # NoColour THEN W("\m[]") END;
+  IF line.style = NIL THEN W("\f[]") END;
+  IF size > 0 THEN W("\s[0]") END;
+  W('"')
+END LineString;
+
+(* The first line of lab, in colour c, at size points, turned to read
+   upward, centred at (x, (y1 + y2) / 2), y1 below y2: its middle on the
+   vertical line from (x, y1) to (x, y2) *)
+PROCEDURE Rotated*(lab: F.Label; x, y1, y2: REAL; c: INTEGER; size: REAL);
+BEGIN
+  IF (lab = NIL) OR (lab.n = 0) THEN RETURN END;
+  W("line invis from "); Pt(x, y1); W(" to "); Pt(x, y2); W(" ");
+  LineString(lab.lines, c, size); W(" aligned"); PmIO.WriteLn
+END Rotated;
+
 (* The text of lab, in colour c, at (x, y), at size points, or the
    current size for 0; each line starting there for anchor Left,
    centred there for Centre, or ending there for Right *)
@@ -151,17 +176,9 @@ BEGIN
   IF (lab = NIL) OR (lab.n = 0) THEN RETURN END;
   line := lab.lines;
   WHILE line # NIL DO
-    W('"');
-    IF size > 0 THEN W("\s["); PmIO.WriteReal(size, 2); W("]") END;
-    IF line.style = NIL THEN W("\f["); W(fontName); W("]") END;
-    IF c # NoColour THEN W("\m[pm-"); Hex(S.Rgb(c), 6); W("]") END;
-    IF line.style = NIL THEN Escaped(line.text^) ELSE Runs(line) END;
-    IF c # NoColour THEN W("\m[]") END;
-    IF line.style = NIL THEN W("\f[]") END;
-    IF size > 0 THEN W("\s[0]") END;
-    IF anchor = Left THEN W('" ljust ')
-    ELSIF anchor = Right THEN W('" rjust ')
-    ELSE W('" ')
+    LineString(line, c, size); W(" ");
+    IF anchor = Left THEN W("ljust ")
+    ELSIF anchor = Right THEN W("rjust ")
     END;
     line := line.next
   END;

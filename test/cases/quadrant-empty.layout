@@ -1,0 +1,11 @@
+layout width=312.5 height=312.5
+quadrant 1 at=(156.25,3.13) w=153.13 h=153.13 fill=#ececff
+quadrant 2 at=(3.13,3.13) w=153.13 h=153.13 fill=#f1f1ff
+quadrant 3 at=(3.13,156.25) w=153.13 h=153.13 fill=#f6f6ff
+quadrant 4 at=(156.25,156.25) w=153.13 h=153.13 fill=#fbfbff
+border from=(2.5,3.13) to=(310,3.13) width=1.25 colour=#c7c7f1
+border from=(309.38,3.75) to=(309.38,308.75) width=1.25 colour=#c7c7f1
+border from=(2.5,309.38) to=(310,309.38) width=1.25 colour=#c7c7f1
+border from=(3.13,3.75) to=(3.13,308.75) width=1.25 colour=#c7c7f1
+border from=(156.25,3.75) to=(156.25,308.75) width=0.63 colour=#c7c7f1
+border from=(3.75,156.25) to=(308.75,156.25) width=0.63 colour=#c7c7f1

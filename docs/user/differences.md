@@ -257,6 +257,20 @@ differences:
   blank, as SVG draws white space.
 - **Hovering** over a slice does nothing.
 
+## Quadrant charts
+
+- **Text the chart cannot hold,** a title wider than the chart, or a
+  point's text, or an axis's, past its edge, widens or heightens the
+  drawing, which is moved for it (decision 18); Mermaid's is cut off.
+- **Points' colours.** Mermaid's default theme gives the points an
+  invalid colour, so SVG draws them in the text's colour, `#333`, and
+  without an outline; pomermaid draws them so too. A colour without
+  `#`, in a style, is drawn in the text's colour too.
+- **Markdown strings** are drawn as they are written, `**` and all,
+  as Mermaid draws them.
+- **Text heights.** A text set "hanging" in Mermaid's SVG, its top at
+  its place, is set with its middle half its size below that.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

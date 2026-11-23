@@ -66,8 +66,10 @@ journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
 `PmTimelineMp`, left to right and top down) and 19 (Gantt charts:
 `PmGantt`, with its dates in `PmGanttTime` and its axis in
 `PmGanttScale`, `PmGanttLayout`, `PmGanttPic` and `PmGanttMp`) and
-20 (pie charts: `PmPie`, `PmPieLayout`, `PmPiePic` and `PmPieMp`) are
-done. See
+20 (pie charts: `PmPie`, `PmPieLayout`, `PmPiePic` and `PmPieMp`) and
+21 (quadrant charts: `PmQuadrant`, `PmQuadrantLayout`,
+`PmQuadrantPic`, with `PmPic.Rotated` for turned text, and
+`PmQuadrantMp`) are done. See
 PLAN.md's State.
 
 ## Reference material

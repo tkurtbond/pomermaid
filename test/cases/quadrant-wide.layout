@@ -1,0 +1,17 @@
+layout width=398.14 height=320.75
+quadrant 1 at=(202.81,28.13) w=145 h=140.63 fill=#ececff
+quadrant 2 at=(57.81,28.13) w=145 h=140.63 fill=#f1f1ff
+quadrant 3 at=(57.81,168.75) w=145 h=140.63 fill=#f6f6ff
+quadrant 4 at=(202.81,168.75) w=145 h=140.63 fill=#fbfbff
+border from=(57.19,28.13) to=(348.44,28.13) width=1.25 colour=#c7c7f1
+border from=(347.81,28.75) to=(347.81,308.75) width=1.25 colour=#c7c7f1
+border from=(57.19,309.38) to=(348.44,309.38) width=1.25 colour=#c7c7f1
+border from=(57.81,28.75) to=(57.81,308.75) width=1.25 colour=#c7c7f1
+border from=(202.81,28.75) to=(202.81,308.75) width=0.63 colour=#c7c7f1
+border from=(58.44,168.75) to=(347.19,168.75) width=0.63 colour=#c7c7f1
+point at=(347.81,28.13) r=3.13 fill=#333333 stroke=none strokeWidth=0
+  text at=(347.81,35) size=7.5 w=100.65 centre colour=#131300 text="Another long text at the right"
+point at=(57.81,309.38) r=3.13 fill=#333333 stroke=none strokeWidth=0
+  text at=(57.81,316.25) size=7.5 w=89.85 centre colour=#131300 text="Edge point with a long text"
+y-axis bottom at=(46.56,309.38) size=10 w=52.2 start rotated colour=#131300 text="Bottom only"
+title at=(194.69,12.5) size=12.5 w=389.38 centre colour=#131300 text="A very long title, much wider than the chart itself, that goes on and on"

@@ -63,6 +63,7 @@ CONST
   Timeline* = 7;
   Gantt* = 8;
   Pie* = 9;
+  Quadrant* = 10;
 
   (* the kinds of cluster: a flowchart's subgraph, a composite state,
      a composite state's concurrent region *)

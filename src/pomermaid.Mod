@@ -2,7 +2,7 @@ MODULE pomermaid;
 (* pomermaid: Mermaid diagrams drawn in pic, for groff, and MetaPost,
    for ConTeXt, and SVG made from the pic through groff. The command line is PmOptions'. See PLAN.md. *)
 
-IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmGantt, PmGanttDump, GL := PmGanttLayout, PmGanttPic, PmGanttMp, PmPie, PmPieDump, PL := PmPieLayout, PmPiePic, PmPieMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
+IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmGantt, PmGanttDump, GL := PmGanttLayout, PmGanttPic, PmGanttMp, PmPie, PmPieDump, PL := PmPieLayout, PmPiePic, PmPieMp, PmQuadrant, PmQuadrantDump, QL := PmQuadrantLayout, PmQuadrantPic, PmQuadrantMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
 
 VAR
   text: PmIO.Text;
@@ -14,6 +14,7 @@ VAR
   tim: PmTimeline.Diagram;
   gan: PmGantt.Diagram;
   pie: PmPie.Diagram;
+  quad: PmQuadrant.Diagram;
   font: M.Font;
   lay: FL.Layout;
   slay: SL.Layout;
@@ -21,6 +22,7 @@ VAR
   tlay: TL.Layout;
   glay: GL.Layout;
   play: PL.Layout;
+  qlay: QL.Layout;
 
 BEGIN
   O.Parse;
@@ -40,8 +42,9 @@ BEGIN
     ELSIF PmTimeline.IsTimeline(sc) THEN PmTimeline.Read(sc, tim)
     ELSIF PmGantt.IsGantt(sc) THEN PmGantt.Read(sc, gan)
     ELSIF PmPie.IsPie(sc) THEN PmPie.Read(sc, pie)
+    ELSIF PmQuadrant.IsQuadrant(sc) THEN PmQuadrant.Read(sc, quad)
     ELSIF PmFlow.IsFlowchart(sc) THEN PmFlow.Read(sc, g)
-    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey, timeline, gantt and pie")
+    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey, timeline, gantt, pie and quadrantChart")
     END;
     IF O.to # "dump" THEN
       IF O.fontPath # "" THEN M.SetPath(O.fontPath) END;
@@ -50,7 +53,19 @@ BEGIN
       END;
       M.LoadStyles(font)
     END;
-    IF (pie # NIL) & (O.to = "svg") THEN
+    IF (quad # NIL) & (O.to = "svg") THEN
+      QL.Fit(quad, font, O.size, O.width, qlay);
+      PmSvg.WriteQuadrant(qlay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
+    ELSIF quad # NIL THEN
+      PmIO.OpenOutput(O.output);
+      IF O.to = "dump" THEN PmQuadrantDump.Write(quad)
+      ELSIF O.to = "layout" THEN QL.Fit(quad, font, O.size, O.width, qlay); PmQuadrantDump.WriteLayout(qlay)
+      ELSIF O.to = "pic" THEN QL.Fit(quad, font, O.size, O.width, qlay); PmQuadrantPic.Write(qlay, O.font)
+      ELSIF O.to = "svg-ms" THEN QL.Fit(quad, font, O.size, O.width, qlay); PmSvg.WriteQuadrantDocument(qlay, O.font)
+      ELSIF O.to = "mp" THEN QL.Fit(quad, font, O.size, O.width, qlay); PmQuadrantMp.Write(qlay)
+      ELSE PmIO.Fail("", "no writer for this format yet", PmIO.UnknownWriter)
+      END
+    ELSIF (pie # NIL) & (O.to = "svg") THEN
       PL.Fit(pie, font, O.size, O.width, play);
       PmSvg.WritePie(play, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSIF pie # NIL THEN
@@ -114,7 +129,7 @@ BEGIN
       PmSvg.Write(lay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSE PmIO.OpenOutput(O.output)
     END;
-    IF (seq # NIL) OR (jour # NIL) OR (tim # NIL) OR (gan # NIL) OR (pie # NIL) OR (O.to = "svg") THEN
+    IF (seq # NIL) OR (jour # NIL) OR (tim # NIL) OR (gan # NIL) OR (pie # NIL) OR (quad # NIL) OR (O.to = "svg") THEN
     ELSIF O.to = "svg-ms" THEN FL.Fit(g, font, O.size, O.width, lay); PmSvg.WriteDocument(lay, O.font)
     ELSIF O.to = "dump" THEN PmDump.Write(g)
     ELSIF O.to = "layout" THEN FL.Fit(g, font, O.size, O.width, lay); PmDump.WriteLayout(lay)

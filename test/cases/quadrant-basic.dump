@@ -1,0 +1,15 @@
+title text="Reach and engagement of campaigns"
+quadrantChart width=500 height=500 xAxis=top yAxis=left
+sizes titlePadding=10 titleFontSize=20 quadrantPadding=5 quadrantTextTopPadding=5 quadrantLabelFontSize=16 xAxisLabelPadding=5 yAxisLabelPadding=5 xAxisLabelFontSize=16 yAxisLabelFontSize=16 pointTextPadding=5 pointLabelFontSize=12 pointRadius=5 internalBorder=1 externalBorder=2
+quadrant 1 text="We should expand"
+quadrant 2 text="Need to promote"
+quadrant 3 text="Re-evaluate"
+quadrant 4 text="May be improved"
+x-axis from="Low Reach" to="High Reach"
+y-axis from="Low Engagement" to="High Engagement"
+point text="Campaign F" at=(0.35,0.78)
+point text="Campaign E" at=(0.4,0.34)
+point text="Campaign D" at=(0.78,0.34)
+point text="Campaign C" at=(0.57,0.69)
+point text="Campaign B" at=(0.45,0.23)
+point text="Campaign A" at=(0.3,0.6)

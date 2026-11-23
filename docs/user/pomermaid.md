@@ -17,7 +17,8 @@ It reads flowcharts (`flowchart` and `graph`), state diagrams
 diagrams (`erDiagram`), requirement diagrams
 (`requirementDiagram`), sequence diagrams (`sequenceDiagram`),
 user journeys (`journey`), timelines (`timeline`), Gantt
-charts (`gantt`) and pie charts (`pie`).
+charts (`gantt`), pie charts (`pie`) and quadrant charts
+(`quadrantChart`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -571,6 +572,63 @@ section's label for each; and the title above the pie.
   (0.7).
 - **In MetaPost,** the legend's place, and the drawing's width, are
   worked out from ConTeXt's widths of its text and of the title.
+- **Comments:** `%%` comments.
+
+Read and ignored: `accTitle` and `accDescr`.
+
+### Quadrant charts
+
+pomermaid reads Mermaid's quadrant charts (`quadrantChart`), as
+Mermaid 12.3.0 reads them, and draws them as Mermaid does: a square
+of four quadrants, 500 pixels across, each with its text; the points,
+each a circle with its text below it; the axes' texts; and the title
+above.
+
+- **Keywords** are read in any case. A statement ends at the end of
+  the line or at `;`.
+- **The title:** `title text`; the rest of the line, `;` and `%%`
+  too, is the title.
+- **Axes:** `x-axis left --> right`, or `x-axis left`, or
+  `x-axis left -->`, which draws `left ⟶`; `y-axis bottom --> top`
+  likewise, its texts turned to read upward. The arrow is two or more
+  `-` and a `>`. An axis with both texts has them in the middle of its
+  halves; with one, the text starts at the quadrants' corner. The x
+  axis is at the top, or at the bottom when there are points.
+- **Quadrants:** `quadrant-1 text` to `quadrant-4 text`: 1 is the top
+  right, 2 the top left, 3 the bottom left, 4 the bottom right. Their
+  texts are in the middle of the quadrants, or at their top when there
+  are points.
+- **Points:** `text: [x, y]`, x and y from 0 to 1 (`1`, or `0` or
+  `0.` and digits), across the quadrants from the bottom left; or
+  `text:::class: [x, y]`; then styles, if any: `radius: 10`,
+  `color: #ff3300`, `stroke-color: #10f0f0` and `stroke-width: 5px`,
+  separated by commas. A colour without `#` is drawn in the default.
+  A point's own styles override its class's.
+- **Classes:** `classDef name styles`, the same styles; a later
+  `classDef` of a name replaces an earlier one.
+- **Texts** are words, digits, blanks and punctuation, but not
+  `:`, `;`, `( ) [ ] < > { } | @ ~ ^`, an arrow or a keyword, and do
+  not start with `-`. A text may start with a string in quotation
+  marks, `"..."`, or a markdown string, `` "`...`" ``, drawn as it is
+  written.
+- **Configuration:** `quadrantChart`'s `chartWidth`, `chartHeight`,
+  `titlePadding`, `titleFontSize`, `quadrantPadding`,
+  `quadrantTextTopPadding`, `quadrantLabelFontSize`,
+  `xAxisLabelPadding`, `yAxisLabelPadding`, `xAxisLabelFontSize`,
+  `yAxisLabelFontSize`, `pointTextPadding`, `pointLabelFontSize`,
+  `pointRadius`, `quadrantInternalBorderStrokeWidth`,
+  `quadrantExternalBorderStrokeWidth`, all in pixels, the quadrants'
+  text 16 of them to `--size`; `xAxisPosition` (`top` or `bottom`) and
+  `yAxisPosition` (`left` or `right`).
+- **Colours:** the default theme's, each changed by its theme
+  variable: `quadrant1Fill` to `quadrant4Fill`, `quadrant1TextFill` to
+  `quadrant4TextFill`, `quadrantPointFill` (the points' fill and
+  outline), `quadrantPointTextFill`, `quadrantXAxisTextFill`,
+  `quadrantYAxisTextFill`, `quadrantTitleFill`,
+  `quadrantInternalBorderStrokeFill` and
+  `quadrantExternalBorderStrokeFill`.
+- **Text the chart cannot hold,** a long title or a point's text at
+  its edge, widens the drawing (decision 18).
 - **Comments:** `%%` comments.
 
 Read and ignored: `accTitle` and `accDescr`.

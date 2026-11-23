@@ -1,0 +1,59 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-131300 rgb #131300
+.defcolor pm-f1f1ff rgb #f1f1ff
+.defcolor pm-0e0e00 rgb #0e0e00
+.defcolor pm-f6f6ff rgb #f6f6ff
+.defcolor pm-090900 rgb #090900
+.defcolor pm-fbfbff rgb #fbfbff
+.defcolor pm-040400 rgb #040400
+.defcolor pm-c7c7f1 rgb #c7c7f1
+.defcolor pm-0000ff rgb #0000ff
+.defcolor pm-908342 rgb #908342
+.defcolor pm-310085 rgb #310085
+.defcolor pm-ff33f0 rgb #ff33f0
+.defcolor pm-00ff0f rgb #00ff0f
+.defcolor pm-00ff33 rgb #00ff33
+.defcolor pm-ff3300 rgb #ff3300
+.defcolor pm-333333 rgb #333333
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 4.34 ht 4.34 at (2.17, -2.17)
+box wid 2.014 ht 1.84 at (3.29, -1.311) shaded "pm-ececff" outlined "pm-ececff" thickness 0
+"\s[10]\f[TS]\m[pm-131300]We should expand\m[]\f[]\s[0]"  at (3.29, -0.503)
+box wid 2.014 ht 1.84 at (1.276, -1.311) shaded "pm-f1f1ff" outlined "pm-f1f1ff" thickness 0
+"\s[10]\f[TS]\m[pm-0e0e00]Need to promote\m[]\f[]\s[0]"  at (1.276, -0.503)
+box wid 2.014 ht 1.84 at (1.276, -3.151) shaded "pm-f6f6ff" outlined "pm-f6f6ff" thickness 0
+"\s[10]\f[TS]\m[pm-090900]Re-evaluate\m[]\f[]\s[0]"  at (1.276, -2.344)
+box wid 2.014 ht 1.84 at (3.29, -3.151) shaded "pm-fbfbff" outlined "pm-fbfbff" thickness 0
+"\s[10]\f[TS]\m[pm-040400]May be improved\m[]\f[]\s[0]"  at (3.29, -2.344)
+line from (0.26, -0.391) to (4.306, -0.391) outlined "pm-c7c7f1" thickness 1.25
+line from (4.297, -0.399) to (4.297, -4.063) outlined "pm-c7c7f1" thickness 1.25
+line from (0.26, -4.071) to (4.306, -4.071) outlined "pm-c7c7f1" thickness 1.25
+line from (0.269, -0.399) to (0.269, -4.063) outlined "pm-c7c7f1" thickness 1.25
+line from (2.283, -0.399) to (2.283, -4.063) outlined "pm-c7c7f1" thickness 0.625
+line from (0.278, -2.231) to (4.288, -2.231) outlined "pm-c7c7f1" thickness 0.625
+circle rad 0.087 at (1.88, -2.231) shaded "pm-0000ff" outlined "pm-0000ff" thickness 0
+"\s[7.5]\f[TS]\m[pm-131300]Campaign F\m[]\f[]\s[0]"  at (1.88, -2.326)
+circle rad 0.087 at (2.283, -2.599) shaded "pm-908342" outlined "pm-310085" thickness 6.25
+"\s[7.5]\f[TS]\m[pm-131300]Campaign E\m[]\f[]\s[0]"  at (2.283, -2.694)
+circle rad 0.13 at (2.686, -2.967) shaded "pm-ff33f0" outlined "pm-00ff0f" thickness 3.125
+"\s[7.5]\f[TS]\m[pm-131300]Campaign D\m[]\f[]\s[0]"  at (2.686, -3.063)
+circle rad 0.217 at (3.089, -3.335) shaded "pm-00ff33" outlined "pm-00ff33" thickness 0
+"\s[7.5]\f[TS]\m[pm-131300]Campaign C\m[]\f[]\s[0]"  at (3.089, -3.431)
+circle rad 0.087 at (3.491, -3.703) shaded "pm-ff3300" outlined "pm-ff3300" thickness 0
+"\s[7.5]\f[TS]\m[pm-131300]Campaign B\m[]\f[]\s[0]"  at (3.491, -3.799)
+circle rad 0.104 at (3.894, -4.071) shaded "pm-333333" outlined "pm-333333" thickness 0
+"\s[7.5]\f[TS]\m[pm-131300]Campaign A\m[]\f[]\s[0]"  at (3.894, -4.167)
+"\s[10]\f[TS]\m[pm-131300]Low Reach\m[]\f[]\s[0]"  at (1.276, -4.227)
+"\s[10]\f[TS]\m[pm-131300]High Reach\m[]\f[]\s[0]"  at (3.29, -4.227)
+line invis from (0.113, -3.625) to (0.113, -2.677) "\s[10]\f[TS]\m[pm-131300]Low Engagement\m[]\f[]\s[0]" aligned
+line invis from (0.113, -1.818) to (0.113, -0.803) "\s[10]\f[TS]\m[pm-131300]High Engagement\m[]\f[]\s[0]" aligned
+"\s[12.5]\f[TS]\m[pm-131300]Reach and engagement of campaigns\m[]\f[]\s[0]"  at (2.17, -0.174)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

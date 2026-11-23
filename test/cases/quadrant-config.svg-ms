@@ -1,0 +1,52 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p241p,254p
+.pl 241p
+.po 2p
+.ll 250p
+.sp 2p
+.defcolor pm-e0f0e0 rgb #e0f0e0
+.defcolor pm-ff0000 rgb #ff0000
+.defcolor pm-f1f1ff rgb #f1f1ff
+.defcolor pm-0e0e00 rgb #0e0e00
+.defcolor pm-f6f6ff rgb #f6f6ff
+.defcolor pm-090900 rgb #090900
+.defcolor pm-fbfbff rgb #fbfbff
+.defcolor pm-040400 rgb #040400
+.defcolor pm-404040 rgb #404040
+.defcolor pm-c7c7f1 rgb #c7c7f1
+.defcolor pm-3060c0 rgb #3060c0
+.defcolor pm-131300 rgb #131300
+.defcolor pm-202080 rgb #202080
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 3.472 ht 3.125 at (1.736, -1.563)
+box wid 1.58 ht 1.215 at (2.413, -1.033) shaded "pm-e0f0e0" outlined "pm-e0f0e0" thickness 0
+"\s[10]\f[TS]\m[pm-ff0000]Plan\m[]\f[]\s[0]"  at (2.413, -0.538)
+box wid 1.58 ht 1.215 at (0.833, -1.033) shaded "pm-f1f1ff" outlined "pm-f1f1ff" thickness 0
+"\s[10]\f[TS]\m[pm-0e0e00]Do\m[]\f[]\s[0]"  at (0.833, -0.538)
+box wid 1.58 ht 1.215 at (0.833, -2.248) shaded "pm-f6f6ff" outlined "pm-f6f6ff" thickness 0
+"\s[10]\f[TS]\m[pm-090900]Drop\m[]\f[]\s[0]"  at (0.833, -1.753)
+box wid 1.58 ht 1.215 at (2.413, -2.248) shaded "pm-fbfbff" outlined "pm-fbfbff" thickness 0
+"\s[10]\f[TS]\m[pm-040400]Delegate\m[]\f[]\s[0]"  at (2.413, -1.753)
+line from (0.035, -0.425) to (3.212, -0.425) outlined "pm-404040" thickness 1.25
+line from (3.203, -0.434) to (3.203, -2.847) outlined "pm-404040" thickness 1.25
+line from (0.035, -2.856) to (3.212, -2.856) outlined "pm-404040" thickness 1.25
+line from (0.043, -0.434) to (0.043, -2.847) outlined "pm-404040" thickness 1.25
+line from (1.623, -0.434) to (1.623, -2.847) outlined "pm-c7c7f1" thickness 0.625
+line from (0.052, -1.641) to (3.194, -1.641) outlined "pm-c7c7f1" thickness 0.625
+circle rad 0.069 at (2.255, -2.127) shaded "pm-3060c0" outlined "pm-3060c0" thickness 1.25
+"\s[7.5]\f[TS]\m[pm-131300]Docs\m[]\f[]\s[0]"  at (2.255, -2.222)
+circle rad 0.069 at (0.675, -0.911) shaded "pm-3060c0" outlined "pm-3060c0" thickness 0
+"\s[7.5]\f[TS]\m[pm-131300]Tests\m[]\f[]\s[0]"  at (0.675, -1.007)
+"\s[10]\f[TS]\m[pm-131300]Low effort\m[]\f[]\s[0]"  at (0.833, -3.012)
+"\s[10]\f[TS]\m[pm-131300]High effort\m[]\f[]\s[0]"  at (2.413, -3.012)
+line invis from (3.359, -2.544) to (3.359, -1.952) "\s[10]\f[TS]\m[pm-131300]Low value\m[]\f[]\s[0]" aligned
+line invis from (3.359, -1.362) to (3.359, -0.704) "\s[10]\f[TS]\m[pm-131300]High value\m[]\f[]\s[0]" aligned
+"\s[15]\f[TS]\m[pm-202080]Effort and value\m[]\f[]\s[0]"  at (1.736, -0.191)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u
