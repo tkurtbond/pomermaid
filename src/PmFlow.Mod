@@ -62,6 +62,7 @@ CONST
   Flowchart* = 0; State* = 1; Class* = 2; Er* = 3; Req* = 4; Seq* = 5; Journey* = 6;
   Timeline* = 7;
   Gantt* = 8;
+  Pie* = 9;
 
   (* the kinds of cluster: a flowchart's subgraph, a composite state,
      a composite state's concurrent region *)
@@ -228,6 +229,7 @@ VAR
   defaultCurve: INTEGER;  (* linkStyle default interpolate *)
   buf: L.Str;            (* text being decoded *)
   bufLen: LONGINT;
+  breaks: BOOLEAN;       (* "<br>" breaks a line in what is decoded *)
 
 (* Text *)
 
@@ -380,7 +382,7 @@ BEGIN
   NEW(lab); lab.lines := NIL; lab.n := 0; lab.markdown := markdown;
   bufLen := 0; i := start;
   WHILE i < end DO
-    n := Br(t, i, end);
+    IF breaks THEN n := Br(t, i, end) ELSE n := 0 END;
     IF n > 0 THEN AddLine(lab); INC(i, n)
     ELSIF t[i] = 0AX THEN
       IF lab.markdown THEN AddLine(lab) ELSE PutByte(" ") END;
@@ -413,6 +415,17 @@ PROCEDURE MarkdownLabel*(VAR t: ARRAY OF CHAR; start, end: LONGINT): Label;
 BEGIN
   RETURN Decode(t, start, end, TRUE)
 END MarkdownLabel;
+
+(* The label of t[start .. end-1], decoded, but for "<br>", which is
+   text: one line, as d3's text() writes it *)
+PROCEDURE TextLabel*(VAR t: ARRAY OF CHAR; start, end: LONGINT): Label;
+  VAR lab: Label;
+BEGIN
+  breaks := FALSE;
+  lab := Decode(t, start, end, FALSE);
+  breaks := TRUE;
+  RETURN lab
+END TextLabel;
 
 (* A label of one line, s *)
 PROCEDURE PlainLabel*(s: Str): Label;
@@ -1586,5 +1599,5 @@ BEGIN
 END Read;
 
 BEGIN
-  NEW(buf, 256); bufLen := 0
+  NEW(buf, 256); bufLen := 0; breaks := TRUE
 END PmFlow.

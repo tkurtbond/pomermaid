@@ -1,0 +1,5 @@
+layout width=322.08 height=264.71
+pie centre=(132.35,132.35) r=108.82 hole=54.41
+slice from=0 to=360 colour=0 text=(132.35,210.97) percent="100%"
+legend colour=0 box=(259.41,119.41) text=(272.35,124.65) text="All"
+legend colour=1 box=(259.41,132.35) text=(272.35,137.59) text="Zero"

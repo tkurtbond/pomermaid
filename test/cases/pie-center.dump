@@ -1,0 +1,6 @@
+config config.pie.legendPosition="center"
+config config.pie.donutHole="0.6"
+config config.pie.highlightSlice="Cats"
+pie textPosition=0.75 donutHole=0.6 legend=center highlight="Cats"
+section 0 value=386 text="Dogs"
+section 1 value=85 text="Cats"

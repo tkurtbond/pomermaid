@@ -1,0 +1,8 @@
+config config.pie.donutHole="0.5"
+config config.themeVariables.pie1="#ff0000"
+config config.themeVariables.pieStrokeColor="#0000ff"
+config config.themeVariables.pieOuterStrokeWidth="0"
+config config.themeVariables.pieOpacity="1"
+pie textPosition=0.75 donutHole=0.5 legend=right
+section 0 value=3 text="All"
+section 1 value=0 text="Zero"

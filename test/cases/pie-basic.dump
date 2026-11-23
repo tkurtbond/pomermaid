@@ -1,0 +1,5 @@
+title text="Pets adopted by volunteers"
+pie textPosition=0.75 donutHole=0 legend=right
+section 0 value=386 text="Dogs"
+section 1 value=85 text="Cats"
+section 2 value=15 text="Rats"

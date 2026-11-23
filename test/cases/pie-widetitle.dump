@@ -1,0 +1,4 @@
+title text="A title much wider than the pie and its legend together, so that it widens the drawing"
+pie textPosition=0.75 donutHole=0 legend=right
+section 0 value=1 text="A"
+section 1 value=1 text="B"

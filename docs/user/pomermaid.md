@@ -16,8 +16,8 @@ It reads flowcharts (`flowchart` and `graph`), state diagrams
 (`classDiagram` and `classDiagram-v2`), entity relationship
 diagrams (`erDiagram`), requirement diagrams
 (`requirementDiagram`), sequence diagrams (`sequenceDiagram`),
-user journeys (`journey`), timelines (`timeline`) and Gantt
-charts (`gantt`).
+user journeys (`journey`), timelines (`timeline`), Gantt
+charts (`gantt`) and pie charts (`pie`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -532,6 +532,46 @@ The chart is `--width` wide, 1200 pixels if it is not given;
   where it does not fit, as Mermaid places it. In MetaPost, the place
   is chosen from ConTeXt's width of the text.
 - **Comments:** `%%` comments, and `#` ends a task's data.
+
+Read and ignored: `accTitle` and `accDescr`.
+
+### Pie charts
+
+pomermaid reads Mermaid's pie charts, as Mermaid 12.3.0 reads them,
+and draws them as Mermaid does: a circle 185 pixels in radius, each
+section a slice, clockwise from the top, in the order given, with its
+percentage of the whole in it; the legend, a coloured square and the
+section's label for each; and the title above the pie.
+
+- **The first line:** `pie`, then `showData`, which puts each value in
+  the legend after its label, in brackets. Front matter and directives
+  are read as for a flowchart.
+- **The title:** `title text`, on the first line or a line of its own.
+- **Sections:** `"label" : value`, the label in double or single
+  quotation marks, the value a whole number or a decimal (`42`,
+  `42.5`; not `-1`, `.5`, `1e3` or `05`), one to a line. A negative
+  value is an error. A label given again is ignored, as Mermaid
+  ignores it. In a label, `\` escapes the next character; `\n`,
+  `\t` and the other control characters' escapes are drawn as a blank.
+- **Slices:** a section of less than 1% of the sum is in the legend
+  but has no slice, and the others fill the circle. Each slice's
+  percentage, of the sum of all the sections, is rounded to a whole
+  number.
+- **Configuration:** `pie`'s `textPosition` (where the percentages
+  are, from 0 at the centre to 1 at the edge; 0.75 by default),
+  `donutHole` (a hole in the middle, that part of the radius, up to
+  0.9), `legendPosition` (`right`, the default, `left`, `top`,
+  `bottom` or `center`) and `highlightSlice` (the label of a slice
+  drawn larger and opaque).
+- **Colours:** the default theme's, each changed by its theme
+  variable: `pie1` to `pie12` (the sections', in turn),
+  `pieStrokeColor`, `pieOuterStrokeColor`, `pieTitleTextColor`,
+  `pieSectionTextColor` and `pieLegendTextColor`; `pieStrokeWidth`
+  and `pieOuterStrokeWidth`, in pixels; `pieOpacity`, the slices'
+  (0.7).
+- **In MetaPost,** the legend's place, and the drawing's width, are
+  worked out from ConTeXt's widths of its text and of the title.
+- **Comments:** `%%` comments.
 
 Read and ignored: `accTitle` and `accDescr`.
 

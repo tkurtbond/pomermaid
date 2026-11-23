@@ -65,7 +65,8 @@ journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
 18 (timelines: `PmTimeline`, `PmTimelineLayout`, `PmTimelinePic` and
 `PmTimelineMp`, left to right and top down) and 19 (Gantt charts:
 `PmGantt`, with its dates in `PmGanttTime` and its axis in
-`PmGanttScale`, `PmGanttLayout`, `PmGanttPic` and `PmGanttMp`) are
+`PmGanttScale`, `PmGanttLayout`, `PmGanttPic` and `PmGanttMp`) and
+20 (pie charts: `PmPie`, `PmPieLayout`, `PmPiePic` and `PmPieMp`) are
 done. See
 PLAN.md's State.
 

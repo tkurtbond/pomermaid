@@ -1,0 +1,6 @@
+layout width=288.24 height=290.59
+pie centre=(132.35,171.18) r=108.82 hole=43.53
+slice from=0 to=295.03 colour=0 text=(176.19,237.02) percent="82%"
+slice from=295.03 to=360 colour=1 text=(88.52,99.33) percent="18%"
+legend colour=0 box=(108.96,23.53) text=(121.9,28.76) text="Dogs"
+legend colour=1 box=(108.96,36.47) text=(121.9,41.71) text="Cats"

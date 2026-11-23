@@ -233,6 +233,30 @@ differences:
   `todayMarker`'s `opacity`.
 - **Links** exist only in SVG.
 
+## Pie charts
+
+- **The title** is centred over the pie. Mermaid centres it at 225
+  pixels, the pie's centre when the legend is not on the left; with
+  the legend on the left, Mermaid's title is left of the pie
+  (decision 17). A title wider than the drawing widens it, on both
+  sides; Mermaid's is cut off.
+- **Values** are shown, with `showData`, as they are written, without
+  leading zeros and with the trailing zeros of a decimal dropped
+  (`005.00` as `5`); Mermaid shows JavaScript's number, which can
+  differ for very long numbers.
+- **See-through colours.** pic has no transparency, so the slices are
+  drawn in the colour `pieOpacity` gives them over white, their
+  outlines too.
+- **Colours** come from `pie1` ... `pie12` only; Mermaid's themes work
+  them out from `primaryColor` and the others, which pomermaid does
+  not.
+- **Text sizes** are the labels', `--size`, and the title's 25/17 of
+  that; Mermaid's `pieTitleTextSize`, `pieSectionTextSize` and
+  `pieLegendTextSize` are ignored.
+- **Escapes** in a label, `\n`, `\t` and the others, are drawn as a
+  blank, as SVG draws white space.
+- **Hovering** over a slice does nothing.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

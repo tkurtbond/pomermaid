@@ -1,0 +1,1 @@
+pomermaid: pie-negative.mmd:2:8: "a" has invalid value: -1.5. Negative values are not allowed in pie charts. All slice values must be >= 0.

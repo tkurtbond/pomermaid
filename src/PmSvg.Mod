@@ -21,7 +21,8 @@ MODULE PmSvg;
 
 IMPORT PmIO, F := PmFlow, FL := PmFlowLayout, L := PmLayout, PmPic, R := PmRun,
   SL := PmSeqLayout, PmSeqPic, JL := PmJourneyLayout, PmJourneyPic,
-  TL := PmTimelineLayout, PmTimelinePic, GL := PmGanttLayout, PmGanttPic;
+  TL := PmTimelineLayout, PmTimelinePic, GL := PmGanttLayout, PmGanttPic,
+  PL := PmPieLayout, PmPiePic;
 
 CONST
   MinMargin = 2; (* points round the drawing, at least, for lines' widths *)
@@ -33,7 +34,7 @@ VAR
   vs, margin, pageW, pageH: REAL; (* pic's line space, the margin, and the
                                      page's size, in points *)
   flow: FL.Layout; seq: SL.Layout; journey: JL.Layout; timeline: TL.Layout;
-  gantt: GL.Layout;      (* what Write draws: one of them *)
+  gantt: GL.Layout; pie: PL.Layout;   (* what Write draws: one of them *)
 
 (* The page's size for a drawing w by h points, pic's line space
    lvs, its widest line widest points wide, rounded as it is written *)
@@ -95,6 +96,13 @@ BEGIN
   Header(l.size * 1.2, PmGanttPic.Widest(l), l.width, l.height);
   PmGanttPic.Write(l, font)
 END WriteGanttDocument;
+
+(* Writes the pie chart l as WriteDocument does a flowchart *)
+PROCEDURE WritePieDocument*(l: PL.Layout; font: ARRAY OF CHAR);
+BEGIN
+  Header(l.vs, PmPiePic.Widest(l), l.width, l.height);
+  PmPiePic.Write(l, font)
+END WritePieDocument;
 
 (* Crop *)
 
@@ -372,6 +380,7 @@ BEGIN
   ELSIF journey # NIL THEN WriteJourneyDocument(journey, font)
   ELSIF timeline # NIL THEN WriteTimelineDocument(timeline, font)
   ELSIF gantt # NIL THEN WriteGanttDocument(gantt, font)
+  ELSIF pie # NIL THEN WritePieDocument(pie, font)
   ELSE WriteDocument(flow, font) END;
   PmIO.CloseOutput;
   c := R.New(); R.AddText(c, "groff -p -Tpdf");
@@ -404,28 +413,28 @@ END Run;
 PROCEDURE Write*(l: FL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := l; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; Run(font, fontPath, output, outline, engine)
+  flow := l; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL; Run(font, fontPath, output, outline, engine)
 END Write;
 
 (* Writes the sequence diagram l as SVG, as Write does a flowchart *)
 PROCEDURE WriteSeq*(l: SL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := l; journey := NIL; timeline := NIL; gantt := NIL; Run(font, fontPath, output, outline, engine)
+  flow := NIL; seq := l; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL; Run(font, fontPath, output, outline, engine)
 END WriteSeq;
 
 (* Writes the user journey l as SVG, as Write does a flowchart *)
 PROCEDURE WriteJourney*(l: JL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := l; timeline := NIL; gantt := NIL; Run(font, fontPath, output, outline, engine)
+  flow := NIL; seq := NIL; journey := l; timeline := NIL; gantt := NIL; pie := NIL; Run(font, fontPath, output, outline, engine)
 END WriteJourney;
 
 (* Writes the timeline l as SVG, as Write does a flowchart *)
 PROCEDURE WriteTimeline*(l: TL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := l; gantt := NIL;
+  flow := NIL; seq := NIL; journey := NIL; timeline := l; gantt := NIL; pie := NIL;
   Run(font, fontPath, output, outline, engine)
 END WriteTimeline;
 
@@ -433,8 +442,16 @@ END WriteTimeline;
 PROCEDURE WriteGantt*(l: GL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := l;
+  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := l; pie := NIL;
   Run(font, fontPath, output, outline, engine)
 END WriteGantt;
+
+(* Writes the pie chart l as SVG, as Write does a flowchart *)
+PROCEDURE WritePie*(l: PL.Layout; font, fontPath, output: ARRAY OF CHAR;
+  outline: BOOLEAN; engine: INTEGER);
+BEGIN
+  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := l;
+  Run(font, fontPath, output, outline, engine)
+END WritePie;
 
 END PmSvg.

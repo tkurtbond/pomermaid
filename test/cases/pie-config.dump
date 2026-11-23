@@ -1,0 +1,8 @@
+title text="Overridden"
+config config.pie.textPosition="0.5"
+config config.pie.donutHole="0.4"
+config config.pie.legendPosition="bottom"
+config config.pie.highlightSlice="B"
+pie textPosition=0.5 donutHole=0.4 legend=bottom highlight="B"
+section 0 value=1 text="A"
+section 1 value=2 text="B"

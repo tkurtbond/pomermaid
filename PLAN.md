@@ -802,6 +802,43 @@ intervals, `tickStep`, `timeFormat`). In steps:
   ConTeXt's text widths (decision 3).
 - **19.6:** Mermaid's examples; the documentation.
 
+### Phase 20: pie charts [done]
+
+**Change:** `pie`, read by a new module, `PmPie`, into a model of its
+own (the title, `showData`, the sections with their values, the
+configuration), laid out by `PmPieLayout` on Mermaid's geometry, and
+drawn in pic, SVG and MetaPost.
+
+**Check:** case tests for each construct and error, and for each
+legend position; Mermaid's own pie examples read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/pie.md`,
+`parser/src/language/pie/pie.langium` and `common.langium`,
+`diagrams/pie/pieDb.ts`, `pieRenderer.ts`, `pieStyles.ts` and the
+default theme. In steps:
+
+- **20.1, the model and the reader:** `pie`, `showData`, `title`,
+  `accTitle` and `accDescr`, the sections (`"label" : value`, the
+  label in double or single quotation marks with its escapes, the
+  value an integer or a decimal), comments, front matter and
+  directives; keywords in Mermaid's case; a negative value an error,
+  a label given again ignored; `pie.textPosition`, `pie.donutHole`,
+  `pie.legendPosition` and `pie.highlightSlice`; the dump.
+- **20.2, the layout:** Mermaid's pixels at the labels' size, the
+  legend's 17 pixels to the size: the circle, 185 pixels in radius;
+  the slices, clockwise from the top, those under 1% left out, each
+  with its percentage; the title; the legend, right, left, top,
+  bottom or centre, its widths measured; the layout dump.
+- **20.3, pic and SVG:** the outer circle, the slices in `pie1` ...
+  `pie12`, 0.7 opaque (blended over white, as pic has no
+  transparency), the highlighted slice larger and opaque, the
+  percentages, the title and the legend; the colours, widths, sizes
+  and opacity changed by themeVariables.
+- **20.4, MetaPost:** the same drawing written directly, the legend's
+  place and the drawing's width worked out in MetaPost from ConTeXt's
+  text widths (decision 3).
+- **20.5:** Mermaid's examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -923,6 +960,15 @@ None at present.
     local time zone, through poDateTime's `TimeZones.Local` (the C
     library's, so `TZ` is honoured), with its daylight-saving rules.
     The case tests set `TZ`.
+
+2026-11-23, in Phase 20, under decision 2:
+
+17. **A pie chart's title is centred over the pie.** Mermaid centres
+    it at 225 pixels, the pie's centre unless the legend is on the
+    left, which moves the pie right and leaves the title over the
+    legend. pomermaid centres it over the pie wherever the legend is,
+    and a title wider than the drawing widens it on both sides,
+    where Mermaid's is cut off.
 
 ## Later
 
@@ -1427,3 +1473,32 @@ hosts, and `gmake` and `gmake test` pass, 266 case tests under both
 models, on FreeBSD 15.1 (alerik, rackhir), NetBSD 11.0 (artos,
 yishana) and OpenBSD 7.9 (jherek, cymoril), from clean copies,
 2026-11-23.
+
+Phase 20, pie charts, is done, 2026-11-23, on Mermaid 12.3.0. `PmPie`
+reads `pie` (`showData`, `title`, `accTitle`/`accDescr`, the sections
+with their quoted labels, escapes and values as `pie.langium` reads
+them, a negative value an error, a label given again ignored) and
+`pie`'s `textPosition`, `donutHole`, `legendPosition` and
+`highlightSlice`. `PmPieLayout` lays it out on `pieRenderer.ts`'s
+pixels at the labels' size: the slices clockwise from the top, those
+under 1% left out, each with its rounded percentage, and the legend
+right, left, top, bottom or centre; the title centred over the pie
+(decision 17). `PmPiePic` draws it in pic, the slices' opacity taken
+over white, and SVG comes from that through groff; `PmPieMp` writes
+the MetaPost directly, the legend's place and the drawing's width
+worked out from ConTeXt's text widths (decision 3). The colours,
+widths and opacity are the default theme's, changed by themeVariables
+(`PmStyle.PieColours`). The front matter's YAML reader lost the key
+after a nested mapping, a block scalar or a sequence (`config:` with
+`pie:` and then `themeVariables:`, as in Mermaid's own example); that
+is fixed, with the case `yaml-dedent`. `make test` passes under `-O2`
+and `-OC`: 330 case tests, with `pie-basic`, `pie-config`,
+`pie-showdata`, `pie-left`, `pie-top`, `pie-center`, `pie-widetitle`,
+`pie-allzero`, `pie-small`, `pie-many` and `pie-whole` (dump, layout,
+pic, mp, svg-ms), `pie-dup` (dump) and seven error cases; `notFlow`
+now uses `zenuml`. The cases were drawn through groff and through
+ConTeXt and looked at, and `make render` ran on every case without
+an error. Mermaid's two pie examples (`docs/syntax/pie.md`) were read
+and written as pic, mp and SVG without an error, and looked at.
+`make test` passes, 330 of 330 under both models, on FreeBSD (alerik,
+rackhir), NetBSD (artos, yishana) and OpenBSD (jherek, cymoril).

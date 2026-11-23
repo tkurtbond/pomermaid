@@ -1,0 +1,4 @@
+config config.pie.textPosition="0.5"
+config config.theme="base"
+pie textPosition=0.5 donutHole=0 legend=right
+section 0 value=1 text="a"

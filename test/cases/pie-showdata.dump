@@ -1,0 +1,6 @@
+title text="Key elements in Product X"
+pie showData textPosition=0.75 donutHole=0 legend=right
+section 0 value=42.96 text="Calcium"
+section 1 value=50.05 text="Potassium"
+section 2 value=10.01 text="Magnesium"
+section 3 value=5 text="Iron"

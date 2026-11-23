@@ -1,0 +1,5 @@
+config config.pie.legendPosition="top"
+config config.pie.donutHole="0.4"
+pie textPosition=0.75 donutHole=0.4 legend=top
+section 0 value=386 text="Dogs"
+section 1 value=85 text="Cats"

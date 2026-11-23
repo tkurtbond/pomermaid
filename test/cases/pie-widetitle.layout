@@ -1,0 +1,7 @@
+layout width=431.19 height=206.47
+pie centre=(215.6,103.24) r=84.88 hole=0
+slice from=0 to=180 colour=0 text=(279.26,100.9) percent="50%"
+slice from=180 to=360 colour=1 text=(151.93,100.9) percent="50%"
+legend colour=0 box=(314.7,93.14) text=(324.8,97.22) text="A"
+legend colour=1 box=(314.7,103.24) text=(324.8,107.32) text="B"
+title at=(215.6,8.03) w=431.19 size=11.47

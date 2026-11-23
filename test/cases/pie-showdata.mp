@@ -1,0 +1,60 @@
+\startMPcode
+numeric pmqL, pmqox, pmqw, pmqa, pmqbx; pair pmqc; path pmqs; picture pmqt;
+vardef pmqwd(expr p) = (xpart urcorner p - xpart llcorner p) enddef;
+vardef pmqarc(expr r, b, c) = save n; n := max(2, ceiling(abs(c - b) / 5));
+  (r * sind(b), r * cosd(b)) for i = 1 upto n:
+    .. (r * sind(b + (c - b) * i / n), r * cosd(b + (c - b) * i / n)) endfor
+enddef;
+def pmqtext(expr p, q, a, c) =
+  draw p shifted (q - (if a = 0: xpart llcorner p else: xpart center p fi, ypart center p)) withcolor c;
+enddef;
+pmqL := 0;
+pmqL := max(pmqL, pmqwd(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Calcium [42.96]" & "}") scaled 1));
+pmqL := max(pmqL, pmqwd(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Potassium [50.05]" & "}") scaled 1));
+pmqL := max(pmqL, pmqwd(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Magnesium [10.01]" & "}") scaled 1));
+pmqL := max(pmqL, pmqwd(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Iron [5]" & "}") scaled 1));
+pmqox := 0;
+pmqw := 288.235pt + 12.941pt + pmqL;
+pmqbx := 259.412pt;
+pmqc := (132.353pt + pmqox, -132.353pt);
+draw fullcircle scaled 218.824pt shifted pmqc withcolor (0,0,0) withpen pencircle scaled 1.176pt;
+pmqs := (pmqarc(108.824pt, 0, 143.173) -- (0, 0) -- cycle) shifted pmqc;
+fill pmqs withcolor (0.949,0.949,1);
+draw pmqs withcolor (0.302,0.302,0.302) withpen pencircle scaled 1.176pt;
+pmqs := (pmqarc(108.824pt, 143.173, 309.976) -- (0, 0) -- cycle) shifted pmqc;
+fill pmqs withcolor (1,1,0.9098);
+draw pmqs withcolor (0.302,0.302,0.302) withpen pencircle scaled 1.176pt;
+pmqs := (pmqarc(108.824pt, 309.976, 343.336) -- (0, 0) -- cycle) shifted pmqc;
+fill pmqs withcolor (0.7961,1,0.3882);
+draw pmqs withcolor (0.302,0.302,0.302) withpen pencircle scaled 1.176pt;
+pmqs := (pmqarc(108.824pt, 343.336, 360) -- (0, 0) -- cycle) shifted pmqc;
+fill pmqs withcolor (0.8078,0.8078,1);
+draw pmqs withcolor (0.302,0.302,0.302) withpen pencircle scaled 1.176pt;
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "40{\char37}" & "}") scaled 1, pmqc + (77.439pt, 28.78pt), 1, (0.2,0.2,0.2));
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "46{\char37}" & "}") scaled 1, pmqc + (-59.277pt, -53.105pt), 1, (0.2,0.2,0.2));
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "9{\char37}" & "}") scaled 1, pmqc + (-44.862pt, 71.182pt), 1, (0.2,0.2,0.2));
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "5{\char37}" & "}") scaled 1, pmqc + (-11.827pt, 83.756pt), 1, (0.2,0.2,0.2));
+pmqs := unitsquare scaled 10.588pt shifted (pmqbx, -117.059pt);
+fill pmqs withcolor (0.9255,0.9255,1);
+draw pmqs withcolor (0.9255,0.9255,1) withpen pencircle scaled 0.588pt;
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Calcium [42.96]" & "}") scaled 1, (pmqbx, 0) + (12.941pt, -111.706pt), 0, (0,0,0));
+pmqs := unitsquare scaled 10.588pt shifted (pmqbx, -130pt);
+fill pmqs withcolor (1,1,0.8706);
+draw pmqs withcolor (1,1,0.8706) withpen pencircle scaled 0.588pt;
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Potassium [50.05]" & "}") scaled 1, (pmqbx, 0) + (12.941pt, -124.647pt), 0, (0,0,0));
+pmqs := unitsquare scaled 10.588pt shifted (pmqbx, -142.941pt);
+fill pmqs withcolor (0.7098,1,0.1255);
+draw pmqs withcolor (0.7098,1,0.1255) withpen pencircle scaled 0.588pt;
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Magnesium [10.01]" & "}") scaled 1, (pmqbx, 0) + (12.941pt, -137.588pt), 0, (0,0,0));
+pmqs := unitsquare scaled 10.588pt shifted (pmqbx, -155.882pt);
+fill pmqs withcolor (0.7255,0.7255,1);
+draw pmqs withcolor (0.7255,0.7255,1) withpen pencircle scaled 0.588pt;
+pmqtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Iron [5]" & "}") scaled 1, (pmqbx, 0) + (12.941pt, -150.529pt), 0, (0,0,0));
+pmqa := 0;
+pmqt := textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Key elements in Product X" & "}") scaled 1.4706;
+pmqtext(pmqt, (xpart pmqc, -10.294pt), 1, (0,0,0));
+pmqa := max(0, pmqwd(pmqt) / 2 - xpart pmqc);
+pmqw := max(pmqw + pmqa, xpart pmqc + pmqa + pmqwd(pmqt) / 2);
+currentpicture := currentpicture shifted (pmqa, 0);
+setbounds currentpicture to (0, 0) -- (pmqw, 0) -- (pmqw, -264.706pt) -- (0, -264.706pt) -- cycle;
+\stopMPcode

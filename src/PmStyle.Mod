@@ -65,6 +65,15 @@ TYPE
     taskText*, outsideText*, darkText*, linkText*, title*, text*: LONGINT
   END;
 
+  (* A pie chart's colours, as 0RRGGBBH, or -1 for none, and its
+     lengths, in points *)
+  PieTheme* = RECORD
+    pie*: ARRAY 12 OF LONGINT;   (* the slices', pie1 .. pie12 *)
+    stroke*, outerStroke*, title*, section*, legend*: LONGINT;
+    strokeWidth*, outerWidth*: REAL;
+    opacity*: REAL               (* the slices', from 0 to 1 *)
+  END;
+
   Style* = RECORD
     fill*, line*, text*: INTEGER;  (* indexes into the colours, or NoColour *)
     inner*: INTEGER;               (* a composite state's body's fill, below
@@ -310,6 +319,46 @@ BEGIN
   RETURN FALSE
 END Var;
 
+(* The text of the themeVariable name, cleaned, in v, if the graph
+   themed sets it *)
+PROCEDURE VarText(name: ARRAY OF CHAR; VAR v: ARRAY OF CHAR): BOOLEAN;
+  VAR q: Y.Pair; key: ARRAY 64 OF CHAR; i, j: INTEGER;
+BEGIN
+  IF (themed = NIL) OR (themed.config = NIL) THEN RETURN FALSE END;
+  key := "config.themeVariables."; i := 0;
+  WHILE key[i] # 0X DO INC(i) END;
+  j := 0;
+  WHILE name[j] # 0X DO key[i] := name[j]; INC(i); INC(j) END;
+  key[i] := 0X;
+  q := Y.Find(themed.config, key);
+  IF q = NIL THEN RETURN FALSE END;
+  Clean(q.value, v);
+  RETURN TRUE
+END VarText;
+
+(* x, the themeVariable name's length, in points, if the graph themed
+   sets it to one, in pixels or points *)
+PROCEDURE VarLength(name: ARRAY OF CHAR; VAR x: REAL): BOOLEAN;
+  VAR v: ARRAY 128 OF CHAR; y: REAL;
+BEGIN
+  IF ~VarText(name, v) THEN RETURN FALSE END;
+  IF ParseLength(v, y) THEN x := y; RETURN TRUE END;
+  PmIO.Message3("ignoring the length ", v, ", which pomermaid does not know");
+  RETURN FALSE
+END VarLength;
+
+(* x, the themeVariable name's number, if the graph themed sets it to
+   one *)
+PROCEDURE VarNumber(name: ARRAY OF CHAR; VAR x: REAL): BOOLEAN;
+  VAR v: ARRAY 128 OF CHAR; i: INTEGER; y: REAL;
+BEGIN
+  IF ~VarText(name, v) THEN RETURN FALSE END;
+  i := 0;
+  IF Number(v, i, y) & (v[i] = 0X) THEN x := y; RETURN TRUE END;
+  PmIO.Message3("ignoring the number ", v, ", which pomermaid does not know");
+  RETURN FALSE
+END VarNumber;
+
 (* The theme's colours: Mermaid's default theme's, changed by g's
    themeVariables, a variable the flowchart uses (mainBkg, nodeBorder,
    ...) after those it is made from (border1, ...), as Mermaid does *)
@@ -470,6 +519,38 @@ BEGIN
   t.linkText := 03163H; set := Var("taskTextClickableColor", t.linkText);
   t.title := titleColour; t.text := textColour
 END GanttColours;
+
+(* t, a pie chart's colours and lengths: the default theme's, each
+   changed by its themeVariable: pie1 to pie12, pieStrokeColor,
+   pieOuterStrokeColor, pieTitleTextColor, pieSectionTextColor (else
+   textColor), pieLegendTextColor, pieStrokeWidth, pieOuterStrokeWidth
+   and pieOpacity *)
+PROCEDURE PieColours*(VAR t: PieTheme);
+  VAR set: BOOLEAN; k: INTEGER; name: ARRAY 8 OF CHAR;
+BEGIN
+  t.pie[0] := 0ECECFFH; t.pie[1] := 0FFFFDEH; t.pie[2] := 0B5FF20H;
+  t.pie[3] := 0B9B9FFH; t.pie[4] := 0FFFF45H; t.pie[5] := 0D7FF86H;
+  t.pie[6] := 0FF86FFH; t.pie[7] := 020FFFFH; t.pie[8] := 0FF2020H;
+  t.pie[9] := 0FF20FFH; t.pie[10] := 020FF90H; t.pie[11] := 0FF5353H;
+  name := "pie";
+  FOR k := 0 TO 11 DO
+    IF k < 9 THEN name[3] := CHR(ORD("1") + k); name[4] := 0X
+    ELSE name[3] := "1"; name[4] := CHR(ORD("0") + k - 9); name[5] := 0X
+    END;
+    set := Var(name, t.pie[k])
+  END;
+  t.stroke := 0; set := Var("pieStrokeColor", t.stroke);
+  t.outerStroke := 0; set := Var("pieOuterStrokeColor", t.outerStroke);
+  t.title := 0; set := Var("pieTitleTextColor", t.title);
+  t.section := textColour; set := Var("pieSectionTextColor", t.section);
+  t.legend := 0; set := Var("pieLegendTextColor", t.legend);
+  t.strokeWidth := 2 * px; set := VarLength("pieStrokeWidth", t.strokeWidth);
+  t.outerWidth := 2 * px; set := VarLength("pieOuterStrokeWidth", t.outerWidth);
+  t.opacity := 0.7;
+  IF VarNumber("pieOpacity", t.opacity) THEN
+    IF t.opacity < 0 THEN t.opacity := 0 ELSIF t.opacity > 1 THEN t.opacity := 1 END
+  END
+END PieColours;
 
 (* Applies the classDefs named name *)
 PROCEDURE ApplyClass(g: F.Graph; VAR st: Style; name: ARRAY OF CHAR);

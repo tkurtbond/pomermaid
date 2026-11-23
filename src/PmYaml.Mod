@@ -265,10 +265,25 @@ BEGIN
   END
 END SkipDeeper;
 
+(* Skips a sequence whose items are at indent, from the start of its
+   first item's line, and what is indented more *)
+PROCEDURE SkipSequence(indent: LONGINT);
+  VAR save, ind: LONGINT;
+BEGIN
+  LOOP
+    NextLine;
+    IF p >= end THEN EXIT END;
+    save := p; ind := Indent();
+    IF (ind < indent) OR (ind = indent) & (Ch() # "-") THEN p := save; EXIT END;
+    WHILE (p < end) & (t[p] # LF) DO INC(p) END;
+    IF p < end THEN INC(p) END
+  END
+END SkipSequence;
+
 (* A block mapping whose keys are indented more than outer, from the
    start of a line *)
 PROCEDURE BlockMap(prefix: ARRAY OF CHAR; outer: LONGINT);
-  VAR save, at, ind, indent: LONGINT; key, full: L.Str;
+  VAR save, at, ind, indent: LONGINT; key, full: L.Str; done: BOOLEAN;
 BEGIN
   indent := -1;
   LOOP
@@ -287,28 +302,31 @@ BEGIN
     ELSE
       key := Key(FALSE);
       SkipBlanks;
-      at := p;
+      at := p; done := FALSE;  (* done: p is at a line's start *)
       IF (Ch() = LF) OR (Ch() = "#") OR (p >= end) THEN
         WHILE (p < end) & (t[p] # LF) DO INC(p) END;
         IF p < end THEN INC(p) END;
         (* a sequence may stand at the key's own indentation *)
         NextLine; save := p;
-        IF (p < end) & (Indent() = ind) & (Ch() = "-") THEN p := save; SkipDeeper(ind - 1)
+        IF (p < end) & (Indent() = ind) & (Ch() = "-") THEN p := save; SkipSequence(ind)
         ELSE p := save; full := Join(prefix, key); BlockMap(full^, ind)
-        END
+        END;
+        done := TRUE
       ELSIF Ch() = "{" THEN INC(p); full := Join(prefix, key); FlowItems(full^, TRUE)
       ELSIF Ch() = "[" THEN SkipFlow
       ELSIF (Ch() = "|") OR (Ch() = ">") THEN
         WHILE (p < end) & (t[p] # LF) DO INC(p) END;
-        SkipDeeper(ind)
+        SkipDeeper(ind); done := TRUE
       ELSE
         IF (Ch() = 22X) OR (Ch() = "'") THEN Quoted ELSE Plain(FALSE) END;
         Add(prefix, key, at)
       END;
-      SkipBlanks;
-      IF Ch() = "#" THEN WHILE (p < end) & (t[p] # LF) DO INC(p) END END;
-      IF (p < end) & (t[p] # LF) THEN sc.ErrorAt(p, "unexpected text after a value") END;
-      IF p < end THEN INC(p) END
+      IF ~done THEN
+        SkipBlanks;
+        IF Ch() = "#" THEN WHILE (p < end) & (t[p] # LF) DO INC(p) END END;
+        IF (p < end) & (t[p] # LF) THEN sc.ErrorAt(p, "unexpected text after a value") END;
+        IF p < end THEN INC(p) END
+      END
     END
   END
 END BlockMap;
