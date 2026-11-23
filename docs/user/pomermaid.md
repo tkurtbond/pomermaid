@@ -13,8 +13,9 @@ and ConTeXt measures them itself for MetaPost.
 
 It reads flowcharts (`flowchart` and `graph`), state diagrams
 (`stateDiagram-v2` and `stateDiagram`), class diagrams
-(`classDiagram` and `classDiagram-v2`) and entity relationship
-diagrams (`erDiagram`). Mermaid's other diagram types are planned, one
+(`classDiagram` and `classDiagram-v2`), entity relationship
+diagrams (`erDiagram`) and requirement diagrams
+(`requirementDiagram`). Mermaid's other diagram types are planned, one
 after another.
 
 ## What it needs
@@ -315,6 +316,36 @@ pomermaid reads Mermaid's entity relationship diagrams, as Mermaid
   lavender, Mermaid's `rowOdd` and `rowEven` theme variables; an
   entity filled in another colour has every other row in that colour.
 - **Comments:** `%%` comments.
+
+Read and ignored: `accTitle` and `accDescr`.
+
+### Requirement diagrams
+
+pomermaid reads Mermaid's requirement diagrams, as Mermaid 12.3.0
+reads them, and lays them out as it does flowcharts:
+
+- **The first line:** `requirementDiagram`. A diagram is drawn top to
+  bottom unless a `direction TB`, `BT`, `LR` or `RL` says otherwise.
+  Front matter and directives are read as for a flowchart.
+- **Requirements:** `requirement`, `functionalRequirement`,
+  `interfaceRequirement`, `performanceRequirement`,
+  `physicalRequirement` or `designConstraint`, a name, which may be in
+  quotation marks, and `{`, then one field to a line: `id:`, `text:`,
+  `risk:` (`low`, `medium` or `high`) and `verifymethod:` (`analysis`,
+  `demonstration`, `inspection` or `test`), any of them left out, and
+  `}`.
+- **Elements:** `element`, a name and `{`, then `type:` and `docref:`,
+  and `}`.
+- **Relationships:** `a - satisfies -> b` or `b <- satisfies - a`,
+  with `contains`, `copies`, `derives`, `satisfies`, `verifies`,
+  `refines` or `traces`. `contains` is drawn as a solid line with a
+  circled cross at the container; the others as dashed arrows.
+- **Styles:** `classDef`, `class a,b name`, `a:::name`, also after a
+  definition's name, and `style`.
+- **Comments:** `%%` comments, and `#` comments on lines of their own.
+
+Each box shows its kind, `<<Requirement>>`, its name in bold, and
+its fields below a line, one to a line; values are read as markdown.
 
 Read and ignored: `accTitle` and `accDescr`.
 Mermaid's other diagram types are not read yet.

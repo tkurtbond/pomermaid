@@ -53,10 +53,13 @@ CONST
   (* an entity relationship diagram's (PmEr): an entity's box, its name
      and its attributes' table *)
   ErBox* = 58;
-  NShapes* = 59;
+  (* a requirement diagram's (PmReq): a requirement's or element's box,
+     its type, name and fields *)
+  ReqBox* = 59;
+  NShapes* = 60;
 
   (* the kinds of diagram *)
-  Flowchart* = 0; State* = 1; Class* = 2; Er* = 3;
+  Flowchart* = 0; State* = 1; Class* = 2; Er* = 3; Req* = 4;
 
   (* the kinds of cluster: a flowchart's subgraph, a composite state,
      a composite state's concurrent region *)
@@ -74,6 +77,9 @@ CONST
   Lollipop* = 8;
   (* an entity relationship diagram's (PmEr): crow's foot notation *)
   OnlyOne* = 9; ZeroOrOne* = 10; OneOrMore* = 11; ZeroOrMore* = 12;
+  (* a requirement diagram's (PmReq): contains, a circle with a cross,
+     and the open arrow of the others *)
+  ReqContains* = 13; ReqArrow* = 14;
 
   (* edge lines *)
   Normal* = 0; Thick* = 1; Dotted* = 2; Invisible* = 3;
@@ -500,6 +506,15 @@ BEGIN
   END;
   RETURN n
 END GetNode;
+
+(* Makes first, a list of the graph's nodes linked by their next, the
+   graph's nodes, numbered in that order *)
+PROCEDURE SetNodes*(first: Node);
+  VAR n: Node;
+BEGIN
+  g.nodes := first; g.lastNode := NIL; g.nNodes := 0; n := first;
+  WHILE n # NIL DO n.index := g.nNodes; INC(g.nNodes); g.lastNode := n; n := n.next END
+END SetNodes;
 
 (* Records that the statement being read in a subgraph mentions n *)
 PROCEDURE Mention(n: Node);

@@ -1,0 +1,9 @@
+direction TB
+node test_req shape=reqbox label=md:"test_req"=11111111 annotation=md:"<<Requirement>>" members=md:"ID: 1"/"Text: the test text."/"Risk: High"/"Verification: Test"
+node test_req2 shape=reqbox label=md:"test_req2"=111111111 annotation=md:"<<Functional Requirement>>" members=md:"ID: 1.1"/"Text: the second test text."/"Risk: Low"/"Verification: Inspection"
+node test_entity shape=reqbox label=md:"test_entity"=11111111111 annotation=md:"<<Element>>" members=md:"Type: simulation"
+node test_entity2 shape=reqbox label=md:"test_entity2"=111111111111 annotation=md:"<<Element>>" members=md:"Type: word doc"/"Doc Ref: reqs/test_entity"
+edge test_entity -> test_req2 head=req-arrow tail=none line=dotted len=1 label=md:"<<satisfies>>"
+edge test_req -> test_req2 head=req-arrow tail=none line=dotted len=1 label=md:"<<traces>>"
+edge test_req -> test_req2 head=none tail=contains line=normal len=1 label=md:"<<contains>>"
+edge test_entity2 -> test_req head=req-arrow tail=none line=dotted len=1 label=md:"<<verifies>>"

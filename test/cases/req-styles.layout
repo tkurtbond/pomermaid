@@ -1,0 +1,6 @@
+layout direction TB width=79 height=269.5
+node a rank=0 order=0 x=39.5 y=30.5 w=79 h=61
+node c rank=4 order=0 x=39.5 y=239 w=79 h=61
+node b rank=2 order=0 x=39.5 y=134.75 w=62.9 h=61
+edge a -> b points=(39.5,61) (39.5,82.63) (39.5,104.25) label=(39.5,82.63)
+edge b -> c points=(39.5,165.25) (39.5,186.88) (39.5,208.5) label=(39.5,186.88)

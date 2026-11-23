@@ -1,0 +1,16 @@
+requirementDiagram
+requirement a:::hot {
+  id: 1
+}
+element b {
+  type: thing
+}
+requirement c {
+  text: plain
+}
+classDef hot fill:#f96,stroke:#900
+classDef cool fill:#9cf
+class b,c cool
+style c stroke:#060,stroke-width:3px
+a - satisfies -> b
+b - contains -> c

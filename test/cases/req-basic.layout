@@ -1,0 +1,9 @@
+layout direction TB width=235.38 height=353.5
+node test_req rank=2 order=0 x=62.95 y=164.75 w=99.7 h=97
+node test_req2 rank=4 order=0 x=94.5 y=305 w=131.2 h=97
+node test_entity rank=2 order=1 x=191.93 y=164.75 w=86.9 h=61
+node test_entity2 rank=0 order=0 x=62.95 y=36.5 w=125.9 h=73
+edge test_entity -> test_req2 points=(191.93,195.25) (191.93,213.25) (191.93,213.25) (191.93,234.88) (160.1,256.5) label=(191.93,234.88)
+edge test_req -> test_req2 points=(41.13,213.25) (31.4,234.88) (50.86,256.5) label=(31.4,234.88)
+edge test_req -> test_req2 points=(84.77,213.25) (94.5,234.88) (94.5,256.5) label=(94.5,234.88)
+edge test_entity2 -> test_req points=(62.95,73) (62.95,94.63) (62.95,116.25) label=(62.95,94.63)

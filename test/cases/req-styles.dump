@@ -1,0 +1,8 @@
+direction TB
+node a shape=reqbox label=md:"a"=1 annotation=md:"<<Requirement>>" members=md:"ID: 1" class=hot
+node c shape=reqbox label=md:"c"=1 annotation=md:"<<Requirement>>" members=md:"Text: plain" class=cool style=stroke:"#060",stroke-width:"3px"
+node b shape=reqbox label=md:"b"=1 annotation=md:"<<Element>>" members=md:"Type: thing" class=cool
+edge a -> b head=req-arrow tail=none line=dotted len=1 label=md:"<<satisfies>>"
+edge b -> c head=none tail=contains line=normal len=1 label=md:"<<contains>>"
+classDef hot props=fill:"#f96",stroke:"#900"
+classDef cool props=fill:"#9cf"

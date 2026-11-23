@@ -379,6 +379,41 @@ BEGIN
   END
 END ErMarker;
 
+(* A requirement diagram's marker, kind, at the end p[n-1] of a path,
+   as Mermaid's requirement_contains and requirement_arrow: a circle of
+   radius 9 pixels, 10 along the path from its end, with a cross in it;
+   an open arrowhead, its arms 20 pixels back and 10 to each side *)
+PROCEDURE ReqMarker(kind: INTEGER; VAR p: ARRAY OF G.Point; n: INTEGER; VAR st: Style);
+  VAR ux, uy, vx, vy, ex, ey: REAL; s: Style;
+
+  PROCEDURE X(along, side: REAL): REAL;
+  BEGIN RETURN ex - ux * along * px + vx * side * px
+  END X;
+
+  PROCEDURE Y(along, side: REAL): REAL;
+  BEGIN RETURN ey - uy * along * px + vy * side * px
+  END Y;
+
+  PROCEDURE Seg(a1, s1, a2, s2: REAL);
+  BEGIN
+    W("line from "); Pt(X(a1, s1), Y(a1, s1)); W(" to "); Pt(X(a2, s2), Y(a2, s2));
+    Stroke(s); PmIO.WriteLn
+  END Seg;
+
+BEGIN
+  IF ((kind # F.ReqContains) & (kind # F.ReqArrow)) OR (st.line = NoColour) THEN RETURN END;
+  EndDirection(p, n, ux, uy); vx := -uy; vy := ux;
+  ex := p[n - 1].x; ey := p[n - 1].y;
+  s := st; s.dash := 0; s.fill := NoColour;
+  IF kind = F.ReqContains THEN
+    W("circle rad "); In(9 * px); At(X(10, 0), Y(10, 0)); Paint(s, FALSE); PmIO.WriteLn;
+    Seg(1, 0, 19, 0); Seg(10, -9, 10, 9)
+  ELSE
+    W("line from "); Pt(X(20, 10), Y(20, 10)); W(" to "); Pt(ex, ey);
+    W(" then to "); Pt(X(20, -10), Y(20, -10)); Stroke(s); PmIO.WriteLn
+  END
+END ReqMarker;
+
 (* The polyline s[0 .. ns-1] dashed: dashes of st.dash points with gaps
    as long, each a line of its own. groff dashes each piece of a line
    separately, so a line of many short pieces would come out solid. *)
@@ -482,10 +517,12 @@ BEGIN
     Path(p^, n); Stroke(st); PmIO.WriteLn
   END;
   Marker(e.head, op^, on, st); ClassMarker(e.head, op^, on, st); ErMarker(e.head, op^, on, st);
+  ReqMarker(e.head, op^, on, st);
   IF e.tail # F.None THEN
     (* the start, as the end of the points reversed *)
     s := Reversed(op, on);
-    Marker(e.tail, s^, on, st); ClassMarker(e.tail, s^, on, st); ErMarker(e.tail, s^, on, st)
+    Marker(e.tail, s^, on, st); ClassMarker(e.tail, s^, on, st); ErMarker(e.tail, s^, on, st);
+    ReqMarker(e.tail, s^, on, st)
   END
 END DrawEdge;
 
@@ -551,6 +588,22 @@ BEGIN
   LeftText(l, n.members, xl + pt.pad, top + pt.memY, st.text, st);
   LeftText(l, n.methods, xl + pt.pad, top + pt.metY, st.text, st)
 END DrawClass;
+
+(* Requirement box n, at (x, y), w by h: its type and name centred,
+   and its fields, if it has any, flush left below a divider *)
+PROCEDURE DrawReq(l: FL.Layout; n: F.Node; x, y, w, h: REAL; VAR st: Style);
+  VAR top, xl: REAL; pt: FL.ClassPart;
+BEGIN
+  pt := l.parts[n.index]; top := y - h / 2; xl := x - w / 2;
+  W("box wid "); In(w); W(" ht "); In(h); At(x, y); Paint(st, TRUE); PmIO.WriteLn;
+  IF (n.members # NIL) & (st.line # NoColour) THEN
+    W("line from "); Pt(xl, top + pt.d1); W(" to "); Pt(xl + w, top + pt.d1);
+    Paint(st, FALSE); PmIO.WriteLn
+  END;
+  Text(n.annotation, x, top + pt.annY, st.text);
+  Text(l.nodeLabel[n.index], x, top + pt.titleY, st.text);
+  LeftText(l, n.members, xl + pt.pad, top + pt.memY, st.text, st)
+END DrawReq;
 
 (* Entity box n, at (x, y), w by h: its name centred; with attributes,
    in a row of its own above a row for each, its cells left aligned in
@@ -622,6 +675,7 @@ BEGIN
   ln := l.g.node[n.index]; x := ln.x; y := ln.y; w := ln.w; h := ln.h;
   IF n.shape = F.ClassBox THEN DrawClass(l, n, x, y, w, h, st); RETURN END;
   IF n.shape = F.ErBox THEN DrawEr(l, n, x, y, w, h, st); RETURN END;
+  IF n.shape = F.ReqBox THEN DrawReq(l, n, x, y, w, h, st); RETURN END;
   CASE n.shape OF
     F.Rect, F.Round, F.Stadium, F.Subroutine, F.Interface:
       W("box wid "); In(w); W(" ht "); In(h); At(x, y);

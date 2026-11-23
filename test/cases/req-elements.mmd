@@ -1,0 +1,36 @@
+requirementDiagram
+direction LR
+
+requirement "quoted name" {
+  id: R1
+  text: "a requirement, quoted"
+  risk: Medium
+  verifyMethod: Analysis
+}
+interfaceRequirement iface {
+  id: 2
+}
+performanceRequirement perf {
+  id: 3
+  risk: low
+}
+physicalRequirement phys {
+  text: weight
+  verifymethod: demonstration
+}
+designConstraint dc {
+  text: *only* Oberon
+}
+element sim {
+  type: simulation
+}
+element bare {
+}
+# relationships both ways, every verb
+"quoted name" - contains -> iface
+perf <- derives - "quoted name"
+iface - copies -> phys
+phys - refines -> dc
+sim - verifies -> perf
+bare - satisfies -> dc
+dc - traces -> perf

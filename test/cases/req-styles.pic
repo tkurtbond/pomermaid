@@ -1,0 +1,50 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.defcolor pm-ff9966 rgb #ff9966
+.defcolor pm-990000 rgb #990000
+.defcolor pm-99ccff rgb #99ccff
+.defcolor pm-006600 rgb #006600
+.defcolor pm-e8e8e8 rgb #e8e8e8
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+line from (0.549, -0.847) to (0.549, -0.853) to (0.549, -0.86) to (0.549, -0.866) \
+  to (0.549, -0.872) to (0.549, -0.879) to (0.549, -0.885) to (0.549, -0.891) \
+  to (0.549, -0.897) to (0.549, -0.918) to (0.549, -0.934) outlined "pm-333333" thickness 0.625
+line from (0.549, -1.021) to (0.549, -1.038) to (0.549, -1.073) to (0.549, -1.108) outlined "pm-333333" thickness 0.625
+line from (0.549, -1.194) to (0.549, -1.222) to (0.549, -1.258) to (0.549, -1.281) outlined "pm-333333" thickness 0.625
+line from (0.549, -1.368) to (0.549, -1.377) to (0.549, -1.398) to (0.549, -1.404) \
+  to (0.549, -1.41) to (0.549, -1.417) to (0.549, -1.423) to (0.549, -1.429) \
+  to (0.549, -1.435) to (0.549, -1.442) to (0.549, -1.448) outlined "pm-333333" thickness 0.625
+line from (0.462, -1.274) to (0.549, -1.448) then to (0.635, -1.274) outlined "pm-333333" thickness 0.625
+spline from (0.549, -2.295) to (0.549, -2.595) to (0.549, -2.896) outlined "pm-333333" thickness 0.625
+circle rad 0.078 at (0.549, -2.382) outlined "pm-333333" thickness 0.625
+line from (0.549, -2.304) to (0.549, -2.46) outlined "pm-333333" thickness 0.625
+line from (0.47, -2.382) to (0.627, -2.382) outlined "pm-333333" thickness 0.625
+box wid 0.836 ht 0.167 at (0.549, -1.148) shaded "pm-e8e8e8" outlined "pm-e8e8e8" thickness 0
+"\f[TS]\m[pm-333333]<<satisfies>>\m[]\f[]"  at (0.549, -1.148)
+box wid 0.769 ht 0.167 at (0.549, -2.595) shaded "pm-e8e8e8" outlined "pm-e8e8e8" thickness 0
+"\f[TS]\m[pm-333333]<<contains>>\m[]\f[]"  at (0.549, -2.595)
+box wid 1.097 ht 0.847 at (0.549, -0.424) shaded "pm-ff9966" outlined "pm-990000" thickness 0.625
+line from (0, -0.507) to (1.097, -0.507) outlined "pm-990000" thickness 0.625
+"\f[TS]\m[pm-333333]<<Requirement>>\m[]\f[]"  at (0.549, -0.17)
+"\m[pm-333333]\f[TS]a\f[]\m[]"  at (0.549, -0.337)
+"\f[TS]\m[pm-333333]ID: 1\m[]\f[]" ljust  at (0.087, -0.677)
+box wid 1.097 ht 0.847 at (0.549, -3.319) shaded "pm-99ccff" outlined "pm-006600" thickness 1.875
+line from (0, -3.403) to (1.097, -3.403) outlined "pm-006600" thickness 1.875
+"\f[TS]\m[pm-333333]<<Requirement>>\m[]\f[]"  at (0.549, -3.066)
+"\m[pm-333333]\f[TS]c\f[]\m[]"  at (0.549, -3.233)
+"\f[TS]\m[pm-333333]Text: plain\m[]\f[]" ljust  at (0.087, -3.573)
+box wid 0.874 ht 0.847 at (0.549, -1.872) shaded "pm-99ccff" outlined "pm-9370db" thickness 0.625
+line from (0.112, -1.955) to (0.985, -1.955) outlined "pm-9370db" thickness 0.625
+"\f[TS]\m[pm-333333]<<Element>>\m[]\f[]"  at (0.549, -1.618)
+"\m[pm-333333]\f[TS]b\f[]\m[]"  at (0.549, -1.785)
+"\f[TS]\m[pm-333333]Type: thing\m[]\f[]" ljust  at (0.199, -2.125)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

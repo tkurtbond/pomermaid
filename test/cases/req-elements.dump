@@ -1,0 +1,15 @@
+direction LR
+node quoted name shape=reqbox label=md:"quoted name"=11111111111 annotation=md:"<<Requirement>>" members=md:"ID: R1"/"Text: a requirement, quoted"/"Risk: Medium"/"Verification: Analysis"
+node iface shape=reqbox label=md:"iface"=11111 annotation=md:"<<Interface Requirement>>" members=md:"ID: 2"
+node perf shape=reqbox label=md:"perf"=1111 annotation=md:"<<Performance Requirement>>" members=md:"ID: 3"/"Risk: Low"
+node phys shape=reqbox label=md:"phys"=1111 annotation=md:"<<Physical Requirement>>" members=md:"Text: weight"/"Verification: Demonstration"
+node dc shape=reqbox label=md:"dc"=11 annotation=md:"<<Design Constraint>>" members=md:"Text: only Oberon"=00000022220000000
+node sim shape=reqbox label=md:"sim"=111 annotation=md:"<<Element>>" members=md:"Type: simulation"
+node bare shape=reqbox label=md:"bare"=1111 annotation=md:"<<Element>>"
+edge quoted name -> iface head=none tail=contains line=normal len=1 label=md:"<<contains>>"
+edge quoted name -> perf head=req-arrow tail=none line=dotted len=1 label=md:"<<derives>>"
+edge iface -> phys head=req-arrow tail=none line=dotted len=1 label=md:"<<copies>>"
+edge phys -> dc head=req-arrow tail=none line=dotted len=1 label=md:"<<refines>>"
+edge sim -> perf head=req-arrow tail=none line=dotted len=1 label=md:"<<verifies>>"
+edge bare -> dc head=req-arrow tail=none line=dotted len=1 label=md:"<<satisfies>>"
+edge dc -> perf head=req-arrow tail=none line=dotted len=1 label=md:"<<traces>>"

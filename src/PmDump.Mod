@@ -125,6 +125,7 @@ BEGIN
   | F.ClassBox: PmIO.WriteString("class")
   | F.Interface: PmIO.WriteString("interface")
   | F.ErBox: PmIO.WriteString("erbox")
+  | F.ReqBox: PmIO.WriteString("reqbox")
   ELSE PmIO.WriteString("?")
   END
 END Shape;
@@ -181,6 +182,8 @@ BEGIN
   | F.ZeroOrOne: PmIO.WriteString("zero-or-one")
   | F.OneOrMore: PmIO.WriteString("one-or-more")
   | F.ZeroOrMore: PmIO.WriteString("zero-or-more")
+  | F.ReqContains: PmIO.WriteString("contains")
+  | F.ReqArrow: PmIO.WriteString("req-arrow")
   END
 END End;
 

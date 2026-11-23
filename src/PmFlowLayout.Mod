@@ -384,6 +384,31 @@ BEGIN
   WHILE a # NIL DO h := h + part.rowH; a := a.next END
 END ErSize;
 
+(* The size w by h of requirement box n, its labels set in font at size
+   points with line spacing vs, and its parts, as Mermaid's
+   requirementBox lays them out: P, 10 pixels, above its type, its
+   name below it, and P below them, then, if it has fields, a divider
+   (d1), and the fields P below it and P above the bottom; 2 P wider
+   than its widest line. d2 and metY are not used. *)
+PROCEDURE ReqSize(font: M.Font; n: F.Node; size, vs: REAL; VAR part: ClassPart;
+  VAR w, h: REAL);
+  VAR p, aw, ah, tw, th, mw, mh: REAL;
+BEGIN
+  p := 10 * size / MermaidSize; part.pad := p;
+  M.LabelSize(font, n.annotation, size, vs, aw, ah);
+  M.LabelSize(font, n.label, size, vs, tw, th);
+  mw := 0; mh := 0;
+  IF n.members # NIL THEN M.LabelSize(font, n.members, size, vs, mw, mh) END;
+  part.annY := p + ah / 2; part.titleY := p + ah + th / 2;
+  part.d1 := p + ah + th + p; part.d2 := 0; part.metY := 0;
+  part.memY := part.d1 + p + mh / 2;
+  IF n.members # NIL THEN h := part.d1 + 2 * p + mh ELSE h := part.d1 END;
+  w := aw;
+  IF tw > w THEN w := tw END;
+  IF mw > w THEN w := mw END;
+  w := w + 2 * p
+END ReqSize;
+
 (* Where edge e's cardinality at its start (at its end, if ~start) is
    centred, (x, y), as Mermaid's calcTerminalLabelPosition puts it: 25
    pixels along the edge's points from that end, and 10 more if the
@@ -547,13 +572,14 @@ BEGIN
   n := graph.nodes;
   WHILE n # NIL DO
     nodes[n.index] := n;
-    IF (n.shape = F.ClassBox) OR (n.shape = F.ErBox) THEN l.nodeLabel[n.index] := n.label
+    IF (n.shape = F.ClassBox) OR (n.shape = F.ErBox) OR (n.shape = F.ReqBox) THEN l.nodeLabel[n.index] := n.label
     ELSE l.nodeLabel[n.index] := Wrap(font, n.label, size, WrapWidth * scale)
     END;
     M.LabelSize(font, l.nodeLabel[n.index], size, l.vs, tw, th);
     l.textW[n.index] := tw; l.textH[n.index] := th; shape[n.index] := n.shape;
     IF n.shape = F.ClassBox THEN ClassSize(font, n, size, l.vs, l.parts[n.index], w, h)
     ELSIF n.shape = F.ErBox THEN ErSize(font, n, size, l.vs, l.er[n.index], w, h)
+    ELSIF n.shape = F.ReqBox THEN ReqSize(font, n, size, l.vs, l.parts[n.index], w, h)
     ELSIF n.shape = F.Interface THEN M.ShapeSize(F.Rect, tw, th, size, w, h)
     ELSIF Shp.Has(n.shape) THEN Shp.Size(n.shape, graph.dir, tw, th, size, w, h)
     ELSE M.ShapeSize(n.shape, tw, th, size, w, h)

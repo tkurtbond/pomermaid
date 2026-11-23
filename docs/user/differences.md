@@ -130,6 +130,20 @@ differences:
   entity with an alias, `p[Person]`, cannot begin a relationship on
   the same line; write `p[Person]` alone, then `p ||--o{ ...`.
 
+## Requirement diagrams
+
+- **Layout.** A requirement diagram is laid out as a flowchart is,
+  with 50 pixels between boxes in a rank and between ranks.
+- **Values.** A value not in quotation marks is the rest of its line,
+  trimmed. Mermaid reads a word that cannot hold `:`, `,` or some
+  other characters, and cannot be a keyword.
+- **Names.** A relationship naming a requirement or element that is
+  not defined is an error. Mermaid draws the edge to nothing.
+- **Names defined twice.** The first definition is kept, even when
+  one is a requirement and the other an element.
+- **`title`** is an error, as Mermaid's grammar has none for this
+  diagram.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

@@ -56,7 +56,8 @@ into `PmFlow`'s model and drawn by the same layout and writers) and
 13 (class diagrams, `PmClass`: class boxes, relations with UML
 markers and cardinalities, notes and namespaces) and 14 (entity
 relationship diagrams, `PmEr`: entities with attribute tables,
-crow's-foot ends, subgraphs) are done. See PLAN.md's State.
+crow's-foot ends, subgraphs) and 15 (requirement diagrams, `PmReq`:
+requirement and element boxes, contains and arrow ends) are done. See PLAN.md's State.
 
 ## Reference material
 

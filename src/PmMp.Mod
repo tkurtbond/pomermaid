@@ -153,7 +153,7 @@ BEGIN
         W("pm_style("); I(v); C; Style(nst[i], TRUE); W(");");
         IF nodes[i].shape = F.StateDesc THEN
           PmIO.WriteLn; W("pm_lines("); I(v); C; I(l.nodeLabel[i].n); W(");")
-        ELSIF nodes[i].shape = F.ClassBox THEN
+        ELSIF (nodes[i].shape = F.ClassBox) OR (nodes[i].shape = F.ReqBox) THEN
           PmIO.WriteLn; W("pm_class("); I(v); C; Label(nodes[i].annotation); C;
           Label(nodes[i].members); C; Label(nodes[i].methods); W(");")
         ELSIF (nodes[i].shape = F.ErBox) & (nodes[i].attrs # NIL) THEN

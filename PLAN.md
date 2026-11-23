@@ -627,6 +627,31 @@ Mermaid 12.3.0 is followed: `docs/syntax/entityRelationshipDiagram.md`,
   in pic and MetaPost.
 - **14.4:** Mermaid's own examples; the documentation.
 
+### Phase 15: requirement diagrams
+
+**Change:** `requirementDiagram`, read by a new module, `PmReq`, into
+the flowchart model, with the layout and the three writers shared.
+
+**Check:** case tests for each construct; Mermaid's own requirement
+examples read without errors and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/requirementDiagram.md`,
+`diagrams/requirement/parser/requirementDiagram.jison`,
+`requirementDb.ts`, `requirementRenderer.ts`, the shape
+`requirementBox.ts` and the requirement markers of
+`rendering-elements/markers.js`. In steps:
+
+- **15.1, the model:** a graph kind `Req`; the shape `reqbox` (the
+  type in guillemets, the name in bold, then a divider and the
+  requirement's or element's fields, flush left); the ends contains
+  (a circle with a cross) and the open arrow.
+- **15.2, the reader:** the six requirement types and `element`, their
+  fields, the seven relationships in both directions, `direction`,
+  `classDef`, `class`, `:::`, `style`, comments and
+  `accTitle`/`accDescr`.
+- **15.3, drawing:** the boxes and the markers, in pic and MetaPost.
+- **15.4:** Mermaid's own examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a

@@ -424,6 +424,10 @@ BEGIN
        OR (e.tail = F.ZeroOrMore) THEN
       st.inner := Colour(0FFFFFFH)  (* a circle's fill, in the table *)
     END
+  ELSIF g.kind = F.Req THEN
+    (* relationships are 1 pixel wide; all but contains dashed *)
+    st.width := px;
+    IF e.line = F.Dotted THEN st.dash := 10 * px END
   ELSIF e.line = F.Thick THEN st.width := 3.5 * px
   ELSIF e.line = F.Dotted THEN st.dash := 3 * px
   END;
