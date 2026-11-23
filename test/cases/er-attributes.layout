@@ -1,0 +1,9 @@
+layout direction TB width=429.16 height=151.66
+node CAR rank=0 order=0 x=47.68 y=41.15 w=95.37 h=58.78
+node NAMED-DRIVER rank=2 order=0 x=140.91 y=134.03 w=109.72 h=35.27
+node PERSON rank=0 order=1 x=234.13 y=41.15 w=181.28 h=82.29
+node p rank=0 order=2 x=400.87 y=41.15 w=55.93 h=35.27
+node a rank=2 order=1 x=400.87 y=134.03 w=56.6 h=23.51
+edge CAR -> NAMED-DRIVER points=(47.68,70.54) (47.68,82.29) (47.68,82.29) (47.68,99.34) (93.51,116.39) label=(47.68,99.34)
+edge PERSON -> NAMED-DRIVER points=(234.13,82.29) (234.13,99.34) (188.31,116.39) label=(234.13,99.34)
+edge p -> a points=(400.87,58.78) (400.87,82.29) (400.87,82.29) (400.87,99.34) (400.87,116.39) (400.87,116.39) (400.87,122.27) label=(400.87,99.34)

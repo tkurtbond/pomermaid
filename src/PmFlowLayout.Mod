@@ -23,6 +23,7 @@ IMPORT Math, F := PmFlow, M := PmMetrics, G := PmGeom, L := PmLayout, Lx := PmLe
 
 CONST
   Spacing = 50;    (* Mermaid's nodeSpacing and rankSpacing, in pixels *)
+  ErNodeSpacing = 140; ErRankSpacing = 80; (* an ER diagram's, in pixels *)
   EdgeSpacing = 20; (* dagre's edgesep *)
   MermaidSize* = 16; (* Mermaid's font size, in pixels *)
   WrapWidth = 200;  (* Mermaid's wrappingWidth: wider labels wrap, in pixels *)
@@ -46,6 +47,17 @@ TYPE
     annY-, titleY-, d1-, memY-, d2-, metY-, pad-: REAL
   END;
   ClassParts* = POINTER TO ARRAY OF ClassPart;
+
+  (* An ER diagram's entity box's parts, in points: the height of its
+     name's row; the widths of its table's columns, type, name, keys and
+     comment, 0 for the keys' or the comment's if no attribute has them;
+     each row's height; and the padding, 10 pixels, from a column's left
+     side to its text *)
+  ErPart* = RECORD
+    nameH-, rowH-, pad-: REAL;
+    col-: ARRAY 4 OF REAL
+  END;
+  ErParts* = POINTER TO ARRAY OF ErPart;
 
   (* A layout of one scope: the whole flowchart, or an isolated
      subgraph *)
@@ -79,6 +91,7 @@ TYPE
     stands-: L.Ints; (* for each node, the cluster it
                               stands for, or -1 *)
     parts-: ClassParts;    (* each node's, if it is a class box *)
+    er-: ErParts;          (* each node's, if it is an entity box *)
     size-, vs-: REAL;      (* the labels' size and line spacing *)
     title-: F.Label;       (* the diagram's title, or NIL *)
     titleSize-, titleW-, titleH-: REAL; (* its size, and its width and height *)
@@ -315,6 +328,62 @@ BEGIN
   w := w + 2 * p
 END ClassSize;
 
+(* The size w by h of entity box n, its labels set in font at size
+   points with line spacing vs, and its parts, as Mermaid's erBox lays
+   them out: with no attributes, its name and 20 pixels on each side, at
+   least 100 pixels wide, and 30 pixels above and below; with them, a
+   row for its name, 7.5 pixels above and below, then a row for each
+   attribute, its cells 7.5 pixels above and below and 10 pixels on each
+   side, its columns widened alike, if need be, to be as wide as its
+   name and 20 pixels on each side. *)
+PROCEDURE ErSize(font: M.Font; n: F.Node; size, vs: REAL; VAR part: ErPart; VAR w, h: REAL);
+  VAR p, tw, th, sum, extra: REAL; a: F.Attr; i, k: INTEGER;
+
+  PROCEDURE Max(VAR c: REAL; s: F.Str);
+    VAR x: REAL;
+  BEGIN
+    IF s # NIL THEN
+      x := M.Width(font, s^, 0, Lx.Length(s^), size) + 2 * p;
+      IF x > c THEN c := x END
+    END
+  END Max;
+
+BEGIN
+  p := 10 * size / MermaidSize; part.pad := p;
+  M.LabelSize(font, n.label, size, vs, tw, th);
+  FOR i := 0 TO 3 DO part.col[i] := 0 END;
+  IF n.attrs = NIL THEN
+    part.nameH := 0; part.rowH := 0;
+    w := tw + 4 * p;
+    IF w < 10 * p THEN w := 10 * p END;
+    h := th + 6 * p;
+    RETURN
+  END;
+  part.nameH := th + 1.5 * p; part.rowH := vs + 1.5 * p;
+  part.col[0] := 2 * p; part.col[1] := 2 * p;
+  a := n.attrs; k := 0;
+  WHILE a # NIL DO
+    Max(part.col[0], a.type); Max(part.col[1], a.name);
+    Max(part.col[2], a.keys); Max(part.col[3], a.comment);
+    INC(k); a := a.next
+  END;
+  sum := 0; i := 0;
+  FOR k := 0 TO 3 DO
+    IF part.col[k] > 0 THEN sum := sum + part.col[k]; INC(i) END
+  END;
+  IF tw + 4 * p > sum THEN
+    extra := (tw + 4 * p - sum) / i;
+    FOR k := 0 TO 3 DO
+      IF part.col[k] > 0 THEN part.col[k] := part.col[k] + extra END
+    END;
+    sum := tw + 4 * p
+  END;
+  w := sum;
+  h := part.nameH;
+  a := n.attrs;
+  WHILE a # NIL DO h := h + part.rowH; a := a.next END
+END ErSize;
+
 (* Where edge e's cardinality at its start (at its end, if ~start) is
    centred, (x, y), as Mermaid's calcTerminalLabelPosition puts it: 25
    pixels along the edge's points from that end, and 10 more if the
@@ -394,7 +463,7 @@ PROCEDURE Make*(graph: F.Graph; font: M.Font; size: REAL; VAR l: Layout);
     k, j, v, i, nC, nN, nE, a, b, s, from, to, fc, tc: INTEGER;
     shape, rep, par, col, item, anchor, nodeCl, sdir, eFrom, eTo, eFc, eTc,
     locN, locB, locC, boxNode, eOwn: L.Ints;
-    nw, nh, ctw, cth, sw, sh, srs, ox, oy: POINTER TO ARRAY OF REAL;
+    nw, nh, ctw, cth, sw, sh, srs, ox, oy: POINTER TO ARRAY OF REAL; ns, rs: REAL;
     hidN, cmap, hidC, group, ext, iso, drop: Flags;
     nodes: POINTER TO ARRAY OF F.Node; edges: POINTER TO ARRAY OF F.Edge;
     clus: POINTER TO ARRAY OF F.Cluster;
@@ -462,6 +531,9 @@ PROCEDURE Make*(graph: F.Graph; font: M.Font; size: REAL; VAR l: Layout);
 BEGIN
   NEW(l); l.graph := graph; l.font := font; l.size := size; l.vs := size * 1.2;
   scale := size / MermaidSize;
+  IF graph.kind = F.Er THEN ns := ErNodeSpacing * scale; rs := ErRankSpacing * scale
+  ELSE ns := Spacing * scale; rs := ns
+  END;
   nN := graph.nNodes; nE := graph.nEdges; nC := graph.nClusters;
   (* the title, at Mermaid's 18 pixels, not wrapped *)
   l.title := graph.title; l.titleSize := size * TitleSize / MermaidSize;
@@ -471,16 +543,17 @@ BEGIN
   END;
   NEW(l.textW, nN + 1); NEW(l.textH, nN + 1);
   shape := Ints(nN); nodeCl := Ints(nN); NEW(nw, nN + 1); NEW(nh, nN + 1); NEW(nodes, nN + 1);
-  NEW(l.nodeLabel, nN + 1); NEW(l.edgeLabel, nE + 1); NEW(l.parts, nN + 1);
+  NEW(l.nodeLabel, nN + 1); NEW(l.edgeLabel, nE + 1); NEW(l.parts, nN + 1); NEW(l.er, nN + 1);
   n := graph.nodes;
   WHILE n # NIL DO
     nodes[n.index] := n;
-    IF n.shape = F.ClassBox THEN l.nodeLabel[n.index] := n.label
+    IF (n.shape = F.ClassBox) OR (n.shape = F.ErBox) THEN l.nodeLabel[n.index] := n.label
     ELSE l.nodeLabel[n.index] := Wrap(font, n.label, size, WrapWidth * scale)
     END;
     M.LabelSize(font, l.nodeLabel[n.index], size, l.vs, tw, th);
     l.textW[n.index] := tw; l.textH[n.index] := th; shape[n.index] := n.shape;
     IF n.shape = F.ClassBox THEN ClassSize(font, n, size, l.vs, l.parts[n.index], w, h)
+    ELSIF n.shape = F.ErBox THEN ErSize(font, n, size, l.vs, l.er[n.index], w, h)
     ELSIF n.shape = F.Interface THEN M.ShapeSize(F.Rect, tw, th, size, w, h)
     ELSIF Shp.Has(n.shape) THEN Shp.Size(n.shape, graph.dir, tw, th, size, w, h)
     ELSE M.ShapeSize(n.shape, tw, th, size, w, h)
@@ -604,7 +677,7 @@ BEGIN
   (* each scope's direction and rank spacing, the outer first *)
   sdir := Ints(nC); NEW(srs, nC + 1); NEW(sw, nC + 1); NEW(sh, nC + 1);
   NEW(ox, nC + 1); NEW(oy, nC + 1);
-  sdir[nC] := Dir(graph.dir); srs[nC] := Spacing * scale;
+  sdir[nC] := Dir(graph.dir); srs[nC] := rs;
   FOR k := nC - 1 TO 0 BY -1 DO
     IF iso[k] THEN
       s := ScopeOf(-1 - k);
@@ -621,7 +694,7 @@ BEGIN
   pad := size / 4;
   FOR s := 0 TO nC DO
     IF (s = nC) OR iso[s] THEN
-      sg := L.New(sdir[s], Spacing * scale, EdgeSpacing * scale, srs[s]);
+      sg := L.New(sdir[s], ns, EdgeSpacing * scale, srs[s]);
       NEW(sc); sc.g := sg; sc.next := NIL; sc.x := 0; sc.y := 0;
       IF s = nC THEN sc.cluster := -1 ELSE sc.cluster := s END;
       sc.node := Ints(nN + nC); sc.edge := Ints(nE); sc.clus := Ints(nC);
@@ -712,7 +785,7 @@ BEGIN
     END
   END;
   (* the parts of every scope, where they are in the drawing *)
-  hg := L.New(Dir(graph.dir), Spacing * scale, EdgeSpacing * scale, Spacing * scale);
+  hg := L.New(Dir(graph.dir), ns, EdgeSpacing * scale, rs);
   FOR i := 0 TO nN - 1 DO v := L.AddNode(hg, nw[i], nh[i]) END;
   FOR k := 0 TO nC - 1 DO v := L.AddCluster(hg, ctw[k], cth[k]) END;
   FOR k := 0 TO nC - 1 DO

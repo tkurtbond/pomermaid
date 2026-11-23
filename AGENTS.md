@@ -54,7 +54,9 @@ subgraphs, and isolated subgraphs laid out alone with their own
 x86-64, i386 and arm64) and 12 (state diagrams, `PmState`, read
 into `PmFlow`'s model and drawn by the same layout and writers) and
 13 (class diagrams, `PmClass`: class boxes, relations with UML
-markers and cardinalities, notes and namespaces) are done. See PLAN.md's State.
+markers and cardinalities, notes and namespaces) and 14 (entity
+relationship diagrams, `PmEr`: entities with attribute tables,
+crow's-foot ends, subgraphs) are done. See PLAN.md's State.
 
 ## Reference material
 

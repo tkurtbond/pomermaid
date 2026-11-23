@@ -114,6 +114,22 @@ differences:
 - **Comments.** `%%` starts a comment anywhere on a line. Mermaid
   takes one only at the start of a line.
 
+## Entity relationship diagrams
+
+- **Layout.** An entity relationship diagram is laid out as a
+  flowchart is, with Mermaid's 140 pixels between entities in a rank
+  and 80 between ranks.
+- **Text sizes.** A relationship's role is drawn at the size of the
+  other labels. Mermaid draws it at 14 pixels.
+- **Keywords.** The words of a cardinality, `to` and `optionally to`
+  are taken only as whole words: `A one to manyB` is an error, not a
+  relationship to `B`. Mermaid takes them as prefixes.
+- **Names** are letters, digits and `_`, `-`, `*` and `.`, or anything
+  in quotation marks.
+- **Relationships after an alias.** As in Mermaid's grammar, an
+  entity with an alias, `p[Person]`, cannot begin a relationship on
+  the same line; write `p[Person]` alone, then `p ||--o{ ...`.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,
@@ -142,3 +158,10 @@ that into SVG. So the SVG looks as the printed diagram does, but:
   `--svg-text=outline`, where Mermaid's are HTML in `foreignObject`;
 - it has no CSS classes or ids for the nodes and edges, so a page's
   stylesheet cannot restyle them.
+
+`mutool` places each glyph of a `<text>` with a list of x positions.
+Browsers follow them. `rsvg-convert` (librsvg) does not: it sets the
+text in its own font from the first position, so a label can run into
+the next one on its line, most visibly in the cells of an entity's
+attributes. Look at such SVG in a browser, or use
+`--svg-text=outline`.

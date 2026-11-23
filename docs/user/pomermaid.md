@@ -12,9 +12,10 @@ document's own fonts: groff's font files measure them for pic and SVG,
 and ConTeXt measures them itself for MetaPost.
 
 It reads flowcharts (`flowchart` and `graph`), state diagrams
-(`stateDiagram-v2` and `stateDiagram`) and class diagrams
-(`classDiagram` and `classDiagram-v2`). Mermaid's other diagram types
-are planned, one after another.
+(`stateDiagram-v2` and `stateDiagram`), class diagrams
+(`classDiagram` and `classDiagram-v2`) and entity relationship
+diagrams (`erDiagram`). Mermaid's other diagram types are planned, one
+after another.
 
 ## What it needs
 
@@ -279,6 +280,43 @@ them, and lays them out as it does flowcharts:
 
 Read and ignored: `accTitle`, `accDescr`, and `callback` and `click
 ... call`, which call functions; a tooltip is kept.
+
+### Entity relationship diagrams
+
+pomermaid reads Mermaid's entity relationship diagrams, as Mermaid
+12.3.0 reads them, and lays them out as it does flowcharts:
+
+- **The first line:** `erDiagram`. A diagram is drawn top to bottom
+  unless a `direction TB`, `BT`, `LR` or `RL` says otherwise. Front
+  matter and directives are read as for a flowchart.
+- **Entities:** a name, `CUSTOMER`, or one in quotation marks,
+  `"Line item"`, with an alias drawn in its place, `p[Person]` or
+  `a["Customer Account"]`. An entity is made, too, by its first use
+  in a relationship.
+- **Attributes:** in braces after the entity, one to a line: a type,
+  a name, keys (`PK`, `FK` and `UK`, separated by commas) and a
+  comment in quotation marks, the last two optional, drawn as the rows
+  of a table. Generics are written with tildes, `List~int~`, drawn
+  `List<int>`, and a name may be in backquotes.
+- **Relationships:** `A ||--o{ B : places`, with `|o` or `o|` (zero or
+  one), `||` (exactly one), `}o` or `o{` (zero or more) and `}|` or
+  `|{` (one or more) at the ends, drawn as crow's feet, bars and
+  circles; `--` for a solid (identifying) line and `..`, `.-` or `-.`
+  for a dashed one. The ends may be words instead: `one or zero`,
+  `zero or one`, `only one`, `one`, `1`, `zero or more`, `zero or
+  many`, `many`, `many(0)`, `0+`, `one or more`, `one or many`,
+  `many(1)`, `1+`, joined by `to` (solid) or `optionally to` (dashed),
+  as in `A only one to zero or more B : has`. The role, after the
+  colon, is required; `""` draws none.
+- **Subgraphs:** `subgraph id [title]` ... `end`, listing entities,
+  nested, with their own `direction`.
+- **Styles:** `classDef`, `class A,B name`, `A:::name` and `style`, on
+  entities and on subgraphs. An entity's rows are white and pale
+  lavender, Mermaid's `rowOdd` and `rowEven` theme variables; an
+  entity filled in another colour has every other row in that colour.
+- **Comments:** `%%` comments.
+
+Read and ignored: `accTitle` and `accDescr`.
 Mermaid's other diagram types are not read yet.
 
 ## Using the output

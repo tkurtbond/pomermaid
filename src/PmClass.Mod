@@ -98,7 +98,7 @@ VAR
 (* Text *)
 
 (* a + b *)
-PROCEDURE Cat(a: Str; b: ARRAY OF CHAR): Str;
+PROCEDURE Cat*(a: Str; b: ARRAY OF CHAR): Str;
   VAR r: Str; i, k: LONGINT;
 BEGIN
   NEW(r, L.Length(a^) + L.Length(b) + 1);
@@ -109,7 +109,7 @@ BEGIN
 END Cat;
 
 (* a + b *)
-PROCEDURE CatS(a, b: Str): Str;
+PROCEDURE CatS*(a, b: Str): Str;
 BEGIN RETURN Cat(a, b^)
 END CatS;
 
@@ -177,7 +177,7 @@ END ProcessSet;
 
 (* Mermaid's parseGenericTypes: "List~int~" is "List<int>", and
    "Map~K, V~" "Map<K, V>" *)
-PROCEDURE Generic(s: Str): Str;
+PROCEDURE Generic*(s: Str): Str;
   VAR sets, out: Strs; n, m, i, start, len: LONGINT; this, r: Str;
 BEGIN
   len := L.Length(s^);

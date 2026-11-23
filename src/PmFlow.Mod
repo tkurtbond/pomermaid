@@ -50,10 +50,13 @@ CONST
   (* a class diagram's (PmClass): a class's box, its title, members and
      methods, and a lollipop's interface, its label alone *)
   ClassBox* = 56; Interface* = 57;
-  NShapes* = 58;
+  (* an entity relationship diagram's (PmEr): an entity's box, its name
+     and its attributes' table *)
+  ErBox* = 58;
+  NShapes* = 59;
 
   (* the kinds of diagram *)
-  Flowchart* = 0; State* = 1; Class* = 2;
+  Flowchart* = 0; State* = 1; Class* = 2; Er* = 3;
 
   (* the kinds of cluster: a flowchart's subgraph, a composite state,
      a composite state's concurrent region *)
@@ -69,6 +72,8 @@ CONST
   (* a class diagram's relations' ends *)
   Extension* = 4; Composition* = 5; Aggregation* = 6; Dependency* = 7;
   Lollipop* = 8;
+  (* an entity relationship diagram's (PmEr): crow's foot notation *)
+  OnlyOne* = 9; ZeroOrOne* = 10; OneOrMore* = 11; ZeroOrMore* = 12;
 
   (* edge lines *)
   Normal* = 0; Thick* = 1; Dotted* = 2; Invisible* = 3;
@@ -118,6 +123,14 @@ TYPE
 
   Cluster* = POINTER TO ClusterDesc;
 
+  (* An entity's attribute, a row of its table: its type, name, keys
+     ("PK,FK"; NIL if none) and comment (NIL if none) *)
+  Attr* = POINTER TO AttrDesc;
+  AttrDesc* = RECORD
+    type*, name*, keys*, comment*: Str;
+    next*: Attr
+  END;
+
   Node* = POINTER TO NodeDesc;
   NodeDesc* = RECORD
     id*: Str;
@@ -131,6 +144,7 @@ TYPE
     assetW*, assetH*: REAL; (* "@{ w: , h: }", or 0 *)
     constraint*: BOOLEAN; (* "@{ constraint: on }" *)
     annotation*, members*, methods*: Label; (* a ClassBox's, or NIL *)
+    attrs*: Attr;       (* an ErBox's, in order, or NIL *)
     cluster*: Cluster;  (* the innermost subgraph holding it, or NIL *)
     index*: INTEGER;    (* from 0, in order of first mention *)
     next*: Node
@@ -478,7 +492,7 @@ BEGIN
     n.style := NIL; n.link := NIL; n.linkTarget := NIL; n.tooltip := NIL;
     n.icon := NIL; n.img := NIL; n.form := NIL; n.pos := NIL;
     n.assetW := 0; n.assetH := 0; n.constraint := FALSE;
-    n.annotation := NIL; n.members := NIL; n.methods := NIL;
+    n.annotation := NIL; n.members := NIL; n.methods := NIL; n.attrs := NIL;
     n.cluster := NIL; n.index := g.nNodes; n.next := NIL;
     INC(g.nNodes);
     IF g.nodes = NIL THEN g.nodes := n ELSE g.lastNode.next := n END;

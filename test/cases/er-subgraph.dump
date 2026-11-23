@@ -1,0 +1,9 @@
+direction TB
+node CUSTOMER shape=erbox label="CUSTOMER" cluster=T
+node ORDER shape=erbox label="ORDER" cluster=S
+node LINE-ITEM shape=erbox label="LINE-ITEM" cluster=S
+edge CUSTOMER -> ORDER head=zero-or-more tail=only-one line=normal len=1 label=md:"places"
+edge ORDER -> LINE-ITEM head=one-or-more tail=only-one line=normal len=1 label=md:"contains"
+cluster S title="Sales" parent=- class=box
+cluster T title="T" parent=- direction=LR
+classDef box props=fill:"#ffe"

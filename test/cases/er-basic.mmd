@@ -1,0 +1,11 @@
+---
+title: Orders
+---
+erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    ORDER ||--|{ LINE-ITEM : contains
+    CUSTOMER }|..|{ DELIVERY-ADDRESS : uses
+    ORDER |o--o| INVOICE : "is billed by"
+    INVOICE }o..o{ PAYMENT : settles
+    PRODUCT ||--|| LINE-ITEM : ""
+    direction BT

@@ -1,0 +1,15 @@
+erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    ORDER ||--|{ LINE-ITEM : contains
+    subgraph S [Sales]
+      ORDER
+      LINE-ITEM
+    end
+    subgraph T
+      direction LR
+      CUSTOMER
+    end
+    classDef box fill:#ffe
+    class S box
+    accTitle: An ER diagram
+    accDescr: with subgraphs

@@ -29,10 +29,12 @@ pm_triangle := 39; pm_winpane := 40; pm_fcircle := 41; pm_notchpent := 42;
 pm_fliptriangle := 43; pm_slrect := 44; pm_docs := 45; pm_strect := 46; pm_bowrect := 47;
 pm_crosscircle := 48; pm_tagdoc := 49; pm_tagrect := 50; pm_flag := 51; pm_lindoc := 52;
 pm_choice := 53; pm_statebox := 54; pm_statedesc := 55; pm_classbox := 56; pm_interface := 57;
+pm_erbox := 58;
 pm_sub := 60; pm_collapsed := 61;
 pm_endnone := 0; pm_endarrow := 1; pm_endcircle := 2; pm_endcross := 3;
 pm_endextension := 4; pm_endcomposition := 5; pm_endaggregation := 6; pm_enddependency := 7;
 pm_endlollipop := 8;
+pm_endonlyone := 9; pm_endzeroorone := 10; pm_endoneormore := 11; pm_endzeroormore := 12;
 numeric pm_ranksep, pm_subof[]; picture pm_subpic[];
 def pm_begin(expr d, s, mw, nn, ne, nr, nc) =
   pm_dir := d; pm_size := s; pm_maxw := mw; pm_nn := nn; pm_ne := ne; pm_nr := nr;
@@ -54,6 +56,12 @@ def pm_lines(expr v, n) = pm_nl[v] := n; enddef;
 string pm_kann[], pm_kmem[], pm_kmet[]; picture pm_kpa[], pm_kpm[], pm_kpd[];
 numeric pm_kpad[], pm_kannY[], pm_ktitleY[], pm_kda[], pm_kmemY[], pm_kdb[], pm_kmetY[];
 def pm_class(expr v, a, m, d) = pm_kann[v] := a; pm_kmem[v] := m; pm_kmet[v] := d; enddef;
+numeric pm_en[], pm_eodd[], pm_eeven[], pm_enh[], pm_erh[], pm_epad[], pm_ecol[][];
+string pm_ecell[][][]; picture pm_ecp[][][];
+def pm_er(expr v, n, o, e) = pm_en[v] := n; pm_eodd[v] := o; pm_eeven[v] := e; enddef;
+def pm_erow(expr v, k, a, b, c, d) =
+  pm_ecell[v][k][0] := a; pm_ecell[v][k][1] := b; pm_ecell[v][k][2] := c; pm_ecell[v][k][3] := d;
+enddef;
 string pm_ecs[], pm_ece[];
 def pm_cardinality(expr j, s, e) = pm_ecs[j] := s; pm_ece[j] := e; enddef;
 def pm_colour(expr c, r, g, b) =
@@ -111,6 +119,37 @@ def pm_classsize(expr v) =
   fi
   w := max(aw, tw, mw, dw) + 2p;
   pm_w[v] := w; pm_h[v] := h;
+  endgroup
+enddef;
+def pm_ersize(expr v) =
+  begingroup save p, tw, th, sum, n, x;
+  p := 10pm_px; pm_epad[v] := p; tw := pm_tw[v]; th := pm_th[v];
+  for c = 0 upto 3: pm_ecol[v][c] := 0; endfor
+  if unknown pm_en[v]: pm_en[v] := 0; fi
+  if pm_en[v] = 0:
+    pm_enh[v] := 0; pm_erh[v] := 0;
+    pm_w[v] := max(tw + 4p, 10p); pm_h[v] := th + 6p;
+  else:
+    pm_enh[v] := th + 1.5p; pm_erh[v] := pm_vs + 1.5p;
+    pm_ecol[v][0] := 2p; pm_ecol[v][1] := 2p;
+    for k = 0 upto pm_en[v] - 1:
+      for c = 0 upto 3:
+        if pm_ecell[v][k][c] <> "":
+          pm_ecp[v][k][c] := pm_textextl(pm_ecell[v][k][c]);
+          x := pm_picw(pm_ecp[v][k][c]) + 2p;
+          if x > pm_ecol[v][c]: pm_ecol[v][c] := x; fi
+        fi
+      endfor
+    endfor
+    sum := 0; n := 0;
+    for c = 0 upto 3: if pm_ecol[v][c] > 0: sum := sum + pm_ecol[v][c]; n := n + 1; fi endfor
+    if tw + 4p > sum:
+      x := (tw + 4p - sum) / n;
+      for c = 0 upto 3: if pm_ecol[v][c] > 0: pm_ecol[v][c] := pm_ecol[v][c] + x; fi endfor
+      sum := tw + 4p;
+    fi
+    pm_w[v] := sum; pm_h[v] := pm_enh[v] + pm_en[v] * pm_erh[v];
+  fi
   endgroup
 enddef;
 def pm_shapesize(expr v) =
@@ -186,7 +225,9 @@ def pm_sizes =
       pm_pic[v] := pm_textext(pm_lab[v]);
       pm_tw[v] := xpart urcorner pm_pic[v] - xpart llcorner pm_pic[v];
       pm_th[v] := ypart urcorner pm_pic[v] - ypart llcorner pm_pic[v];
-      if pm_shape[v] = pm_classbox: pm_classsize(v); else: pm_shapesize(v); fi
+      if pm_shape[v] = pm_classbox: pm_classsize(v);
+      elseif pm_shape[v] = pm_erbox: pm_ersize(v);
+      else: pm_shapesize(v); fi
     elseif (if (pm_kind[v] = 2) or (pm_kind[v] = 3): pm_elabel[pm_ofedge[v]] else: "" fi) <> "":
       pm_pic[v] := pm_textext(pm_elabel[pm_ofedge[v]]);
       pm_tw[v] := xpart urcorner pm_pic[v] - xpart llcorner pm_pic[v];
@@ -872,7 +913,7 @@ enddef;
 def pm_marker(expr kind, p, w, c) =
   begingroup save u, v, e, r, q; pair u, v, e; path q;
   e := point infinity of p; u := pm_enddir(p); v := u rotated 90;
-  if kind >= pm_endextension:
+  if (kind >= pm_endextension) and (kind <= pm_endlollipop):
     if kind = pm_endextension: q := e -- (e - 17pm_px * u + 6pm_px * v) -- (e - 17pm_px * u - 6pm_px * v) -- cycle;
     elseif kind = pm_enddependency:
       q := e -- (e - 9pm_px * u + 6pm_px * v) -- (e - 4pm_px * u) -- (e - 9pm_px * u - 6pm_px * v) -- cycle;
@@ -889,6 +930,26 @@ def pm_marker(expr kind, p, w, c) =
     r := 0.7r;
     draw (e + (-r, -r)) -- (e + (r, r)) withpen pencircle scaled w withcolor c;
     draw (e + (-r, r)) -- (e + (r, -r)) withpen pencircle scaled w withcolor c;
+  fi
+  if kind >= pm_endonlyone: pm_ermarker(kind, p, w, c); fi
+  endgroup
+enddef;
+def pm_ermarker(expr kind, p, w, c) =
+  begingroup save u, v, e; pair u, v, e;
+  e := point infinity of p; u := pm_enddir(p) * pm_px; v := u rotated 90;
+  def pm_bar(expr a) = draw (e - a * u - 9v) -- (e - a * u + 9v) withpen pencircle scaled w withcolor c; enddef;
+  def pm_ring(expr a) =
+    fill fullcircle scaled 12pm_px shifted (e - a * u) withcolor white;
+    draw fullcircle scaled 12pm_px shifted (e - a * u) withpen pencircle scaled w withcolor c;
+  enddef;
+  def pm_foot(expr s) =
+    draw (e - 18u) .. controls (e - 12u + (2/3 * s) * v) and (e - 6u + s * v) .. (e + s * v)
+      withpen pencircle scaled w withcolor c;
+  enddef;
+  if kind = pm_endonlyone: pm_bar(9); pm_bar(15);
+  elseif kind = pm_endzeroorone: pm_bar(9); pm_ring(21);
+  elseif kind = pm_endoneormore: pm_bar(24); pm_foot(9); pm_foot(-9);
+  elseif kind = pm_endzeroormore: pm_foot(9); pm_foot(-9); pm_ring(30);
   fi
   endgroup
 enddef;
@@ -1150,6 +1211,9 @@ def pm_drawnode(expr v) =
       draw pm_kpd[v] shifted ((xpart c - w / 2 + pm_kpad[v], d - pm_kmetY[v])
         - (xpart llcorner pm_kpd[v], ypart center pm_kpd[v])) withcolor pm_col(pm_text[v]);
     fi
+  elseif sh = pm_erbox:
+    pm_drawer(v, c, w, h);
+    if pm_en[v] > 0: z := (xpart c, ypart c + h / 2 - pm_enh[v] / 2); fi
   elseif sh >= pm_datastore:
     pm_shapedraw(v);
     for k = 0 upto pm_sn - 1: pm_drawpart(pm_sp[k] yscaled -1, pm_sk[k], v); endfor
@@ -1158,8 +1222,49 @@ def pm_drawnode(expr v) =
     pm_paint(pm_outline(v) yscaled -1, v, true);
   fi
   if (pm_lab[v] <> "") and ((sh < pm_datastore) or (sh = pm_collapsed) or (sh = pm_classbox)
-      or (sh = pm_interface) or pm_slab):
+      or (sh = pm_interface) or (sh = pm_erbox) or pm_slab):
     draw pm_pic[v] shifted (z - center pm_pic[v]) withcolor pm_col(pm_text[v]);
+  fi
+  endgroup
+enddef;
+def pm_drawer(expr v, c, w, h) =
+  begingroup save top, xl, ry, cx, lw; numeric top, xl, ry, cx, lw;
+  pm_paint(unitsquare shifted (-1/2, -1/2) xscaled w yscaled h shifted c, v, true);
+  if pm_en[v] > 0:
+    top := ypart c + h / 2; xl := xpart c - w / 2; lw := pm_lw[v] * pm_em / pm_size;
+    ry := top - pm_enh[v];
+    for k = 0 upto pm_en[v] - 1:
+      fill unitsquare xscaled w yscaled pm_erh[v] shifted (xl, ry - pm_erh[v])
+        withcolor pm_col(if odd k: pm_eeven[v] else: pm_eodd[v] fi);
+      cx := xl;
+      for i = 0 upto 3:
+        if pm_ecol[v][i] > 0:
+          if pm_ecell[v][k][i] <> "":
+            draw pm_ecp[v][k][i] shifted ((cx + pm_epad[v], ry - pm_erh[v] / 2)
+              - (xpart llcorner pm_ecp[v][k][i], ypart center pm_ecp[v][k][i]))
+              withcolor pm_col(pm_text[v]);
+          fi
+          cx := cx + pm_ecol[v][i];
+        fi
+      endfor
+      ry := ry - pm_erh[v];
+    endfor
+    if pm_line[v] >= 0:
+      draw unitsquare shifted (-1/2, -1/2) xscaled w yscaled h shifted c
+        withpen pencircle scaled lw withcolor pm_c[pm_line[v]];
+      for k = 1 upto pm_en[v]:
+        draw (xl, top - pm_enh[v] - (k - 1) * pm_erh[v]) -- (xl + w, top - pm_enh[v] - (k - 1) * pm_erh[v])
+          withpen pencircle scaled lw withcolor pm_c[pm_line[v]];
+      endfor
+      cx := xl;
+      for i = 0 upto 2:
+        cx := cx + pm_ecol[v][i];
+        if (pm_ecol[v][i] > 0) and ((pm_ecol[v][i + 1] > 0) or ((i = 1) and (pm_ecol[v][3] > 0))):
+          draw (cx, top - pm_enh[v]) -- (cx, top - h)
+            withpen pencircle scaled lw withcolor pm_c[pm_line[v]];
+        fi
+      endfor
+    fi
   fi
   endgroup
 enddef;
@@ -1206,6 +1311,7 @@ enddef;
 def pm_layout =
   pm_em := xpart urcorner textext("\hbox to 1em{}") - xpart llcorner textext("\hbox to 1em{}");
   pm_px := pm_em / 16;
+  pm_vs := pm_pich(textext("\strut"));
   pm_sizes;
   pm_depths;
   pm_positiony;

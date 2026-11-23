@@ -326,6 +326,59 @@ BEGIN
   IF k > 0 THEN Polygon(q, k, s) END
 END ClassMarker;
 
+(* An ER diagram's marker at an edge's end p[n-1], as Mermaid's: bars
+   across the line for one, a circle for zero, a crow's foot for many;
+   in st's line colour, the circles white *)
+PROCEDURE ErMarker(kind: INTEGER; VAR p: ARRAY OF G.Point; n: INTEGER; VAR st: Style);
+  CONST Steps = 8;
+  VAR ux, uy, vx, vy, ex, ey: REAL; s, w: Style;
+
+  PROCEDURE X(along, side: REAL): REAL;
+  BEGIN RETURN ex - ux * along * px + vx * side * px
+  END X;
+
+  PROCEDURE Y(along, side: REAL): REAL;
+  BEGIN RETURN ey - uy * along * px + vy * side * px
+  END Y;
+
+  PROCEDURE Bar(along: REAL);
+  BEGIN
+    W("line from "); Pt(X(along, -9), Y(along, -9)); W(" to "); Pt(X(along, 9), Y(along, 9));
+    Stroke(s); PmIO.WriteLn
+  END Bar;
+
+  PROCEDURE Circle(along: REAL);
+  BEGIN
+    W("circle rad "); In(6 * px); At(X(along, 0), Y(along, 0)); Paint(w, TRUE); PmIO.WriteLn
+  END Circle;
+
+  (* a quadratic from (18, 0) through (9, side) to (0, side), sampled *)
+  PROCEDURE Foot(side: REAL);
+    VAR q: ARRAY Steps + 1 OF G.Point; i: INTEGER; t, a, b: REAL;
+  BEGIN
+    FOR i := 0 TO Steps DO
+      t := i / Steps;
+      a := (1 - t) * (1 - t) * 18 + 2 * t * (1 - t) * 9;
+      b := 2 * t * (1 - t) * side + t * t * side;
+      G.Set(q[i], X(a, b), Y(a, b))
+    END;
+    W("line"); Path(q, Steps + 1); Stroke(s); PmIO.WriteLn
+  END Foot;
+
+BEGIN
+  IF (kind < F.OnlyOne) OR (kind > F.ZeroOrMore) OR (st.line = NoColour) THEN RETURN END;
+  EndDirection(p, n, ux, uy); vx := -uy; vy := ux;
+  ex := p[n - 1].x; ey := p[n - 1].y;
+  s := st; s.dash := 0; s.fill := NoColour;
+  w := s; w.fill := S.Colour(0FFFFFFH);  (* in the table: see S.EdgeStyle *)
+  CASE kind OF
+    F.OnlyOne: Bar(9); Bar(15)
+  | F.ZeroOrOne: Bar(9); Circle(21)
+  | F.OneOrMore: Bar(24); Foot(9); Foot(-9)
+  | F.ZeroOrMore: Foot(9); Foot(-9); Circle(30)
+  END
+END ErMarker;
+
 (* The polyline s[0 .. ns-1] dashed: dashes of st.dash points with gaps
    as long, each a line of its own. groff dashes each piece of a line
    separately, so a line of many short pieces would come out solid. *)
@@ -428,11 +481,11 @@ BEGIN
     END;
     Path(p^, n); Stroke(st); PmIO.WriteLn
   END;
-  Marker(e.head, op^, on, st); ClassMarker(e.head, op^, on, st);
+  Marker(e.head, op^, on, st); ClassMarker(e.head, op^, on, st); ErMarker(e.head, op^, on, st);
   IF e.tail # F.None THEN
     (* the start, as the end of the points reversed *)
     s := Reversed(op, on);
-    Marker(e.tail, s^, on, st); ClassMarker(e.tail, s^, on, st)
+    Marker(e.tail, s^, on, st); ClassMarker(e.tail, s^, on, st); ErMarker(e.tail, s^, on, st)
   END
 END DrawEdge;
 
@@ -499,6 +552,51 @@ BEGIN
   LeftText(l, n.methods, xl + pt.pad, top + pt.metY, st.text, st)
 END DrawClass;
 
+(* Entity box n, at (x, y), w by h: its name centred; with attributes,
+   in a row of its own above a row for each, its cells left aligned in
+   columns, the rows' fills alternating, lines between the rows and
+   the columns *)
+PROCEDURE DrawEr(l: FL.Layout; n: F.Node; x, y, w, h: REAL; VAR st: Style);
+  VAR top, xl, ry, cx: REAL; pt: FL.ErPart; a: F.Attr; i, k: INTEGER; odd, even, row, ln: Style;
+
+  PROCEDURE Cell(s: F.Str; x: REAL);
+  BEGIN
+    IF s # NIL THEN LeftText(l, F.PlainLabel(s), x + pt.pad, ry + pt.rowH / 2, st.text, ln) END
+  END Cell;
+
+BEGIN
+  pt := l.er[n.index]; top := y - h / 2; xl := x - w / 2;
+  W("box wid "); In(w); W(" ht "); In(h); At(x, y); Paint(st, TRUE); PmIO.WriteLn;
+  IF n.attrs = NIL THEN Text(l.nodeLabel[n.index], x, y, st.text); RETURN END;
+  Text(l.nodeLabel[n.index], x, top + pt.nameH / 2, st.text);
+  S.RowStyles(st, odd, even);
+  ln := st; ln.dash := 0;
+  a := n.attrs; i := 0; ry := top + pt.nameH;
+  WHILE a # NIL DO
+    IF ODD(i) THEN row := even ELSE row := odd END;
+    W("box wid "); In(w); W(" ht "); In(pt.rowH); At(x, ry + pt.rowH / 2); Paint(row, TRUE);
+    PmIO.WriteLn;
+    cx := xl;
+    Cell(a.type, cx); cx := cx + pt.col[0];
+    Cell(a.name, cx); cx := cx + pt.col[1];
+    IF pt.col[2] > 0 THEN Cell(a.keys, cx); cx := cx + pt.col[2] END;
+    IF pt.col[3] > 0 THEN Cell(a.comment, cx) END;
+    ry := ry + pt.rowH; a := a.next; INC(i)
+  END;
+  IF st.line # NoColour THEN
+    W("line from "); Pt(xl, top + pt.nameH); W(" to "); Pt(xl + w, top + pt.nameH);
+    Paint(ln, FALSE); PmIO.WriteLn;
+    cx := xl;
+    FOR k := 0 TO 2 DO
+      cx := cx + pt.col[k];
+      IF (pt.col[k] > 0) & ((pt.col[k + 1] > 0) OR (k = 1) & (pt.col[3] > 0)) THEN
+        W("line from "); Pt(cx, top + pt.nameH); W(" to "); Pt(cx, top + h);
+        Paint(ln, FALSE); PmIO.WriteLn
+      END
+    END
+  END
+END DrawEr;
+
 (* A part of a drawing of PmShapes's, in st *)
 PROCEDURE DrawPart(VAR pt: Shp.Part; VAR st: Style);
   VAR s: Style;
@@ -523,6 +621,7 @@ PROCEDURE DrawNode(l: FL.Layout; n: F.Node; VAR st: Style);
 BEGIN
   ln := l.g.node[n.index]; x := ln.x; y := ln.y; w := ln.w; h := ln.h;
   IF n.shape = F.ClassBox THEN DrawClass(l, n, x, y, w, h, st); RETURN END;
+  IF n.shape = F.ErBox THEN DrawEr(l, n, x, y, w, h, st); RETURN END;
   CASE n.shape OF
     F.Rect, F.Round, F.Stadium, F.Subroutine, F.Interface:
       W("box wid "); In(w); W(" ht "); In(h); At(x, y);

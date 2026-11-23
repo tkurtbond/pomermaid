@@ -1,0 +1,8 @@
+layout direction TB width=176.88 height=343.38
+node CUSTOMER rank=0 order=1 x=88.44 y=50.81 w=77 h=49.5
+node ORDER rank=2 order=1 x=88.44 y=197.75 w=62.5 h=49.5
+node LINE-ITEM rank=4 order=1 x=88.44 y=309.25 w=80 h=49.5
+edge CUSTOMER -> ORDER points=(88.44,75.56) (88.44,115.94) (88.44,173) label=(88.44,115.94)
+edge ORDER -> LINE-ITEM points=(88.44,222.5) (88.44,253.5) (88.44,284.5) label=(88.44,253.5)
+cluster S x=88.44 y=245.16 w=176.88 h=196.44 title=(88.44,157.63)
+cluster T x=88.44 y=42.47 w=173.88 h=84.94 title=(88.44,10.69)

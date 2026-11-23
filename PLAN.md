@@ -601,6 +601,32 @@ steps:
   namespaces as clusters, in pic and MetaPost.
 - **13.4:** Mermaid's own examples; the documentation.
 
+### Phase 14: entity relationship diagrams [done]
+
+**Change:** `erDiagram`, read by a new module, `PmEr`, into the
+flowchart model, with the layout and the three writers shared.
+
+**Check:** case tests for each construct; Mermaid's own ER examples
+read without errors and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/entityRelationshipDiagram.md`,
+`diagrams/er/parser/erDiagram.jison`, `erDb.ts`, `erTypes.ts`,
+`erRenderer-unified.ts`, the shape `erBox.ts` and the ER markers of
+`rendering-elements/markers.js`. In steps:
+
+- **14.1, the model:** a graph kind `Er`; the shape `erbox` (the
+  entity's name above a table of attributes: type, name, keys and
+  comment, rows in alternating colours); the ends only one, zero or
+  one, one or more and zero or more (crow's feet).
+- **14.2, the reader:** entities, aliases (`name[alias]`), attribute
+  blocks with keys and comments, relations in symbols and in words,
+  identifying and non-identifying lines, roles, `direction`,
+  `subgraph`, `classDef`, `class`, `:::`, `style`, comments and
+  `accTitle`/`accDescr`.
+- **14.3, drawing:** the entity boxes and the crow's-foot markers,
+  in pic and MetaPost.
+- **14.4:** Mermaid's own examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1024,3 +1050,34 @@ warning and were looked at in SVG; `class-basic` and
 and `gmake test` (123 case tests under both models) pass on FreeBSD
 15.1 (alerik, rackhir), NetBSD 11.0 (artos, yishana) and OpenBSD 7.9
 (jherek, cymoril), from clean copies, 2026-11-22.
+
+2026-11-22, Phase 14: entity relationship diagrams. `PmEr` reads
+`erDiagram` into `PmFlow`'s model (graph kind `Er`), following
+Mermaid 12.3.0's `erDiagram.jison` and `erDb.ts`: entities, quoted
+names, aliases, attribute blocks (types with generics and `[]`,
+backquoted names, `PK`, `FK` and `UK` keys, comments), relationships
+in symbols and in words (`to` and `optionally to`), identifying and
+non-identifying lines, roles, `direction`, `subgraph` (nested, with
+titles and their own direction), `classDef`, `class`, `:::` and
+`style` on entities and subgraphs, comments and `accTitle`/`accDescr`.
+The model has the shape `erbox`, each node's attributes and the ends
+only one, zero or one, one or more and zero or more.
+`PmFlowLayout.ErSize` sizes an entity as `erBox.ts` does (columns of
+the widest cell, spread to the name's width), with Mermaid's ER
+spacing of 140 and 80 pixels; `PmStyle` has the `rowOdd` and `rowEven`
+theme variables; `PmPic` and `pomermaid.mp` draw the tables and the
+bars, circles and crow's feet of `markers.js`. The new macros changed
+ten expected `.mp` files in their copies of the macros only, and the
+list of diagram types changed `notFlow.errors`. `make test` passes
+under `-O2` and `-OC`: 139 case tests, with the new `er-basic` and
+`er-attributes` (dump, layout, pic, mp), `er-subgraph` (dump, layout,
+mp), `er-words` (dump, pic) and three error cases. All 50 examples of
+Mermaid's `docs/syntax/entityRelationshipDiagram.md` read with no
+error or warning and make SVG; the largest were looked at in Chrome.
+`rsvg-convert` runs an entity's cells together, since it ignores
+mutool's per-glyph positions; this is noted in `differences.md`. The
+four ER cases were looked at in pic and in ConTeXt's MetaPost output,
+and `make render` ran ConTeXt on every case without an error.
+`gmake` and `gmake test` (139 case tests under both models) pass on
+FreeBSD 15.1 (alerik, rackhir), NetBSD 11.0 (artos, yishana) and
+OpenBSD 7.9 (jherek, cymoril), from clean copies, 2026-11-22.

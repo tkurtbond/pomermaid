@@ -1,0 +1,15 @@
+direction BT
+title text="Orders"
+node CUSTOMER shape=erbox label="CUSTOMER"
+node ORDER shape=erbox label="ORDER"
+node LINE-ITEM shape=erbox label="LINE-ITEM"
+node DELIVERY-ADDRESS shape=erbox label="DELIVERY-ADDRESS"
+node INVOICE shape=erbox label="INVOICE"
+node PAYMENT shape=erbox label="PAYMENT"
+node PRODUCT shape=erbox label="PRODUCT"
+edge CUSTOMER -> ORDER head=zero-or-more tail=only-one line=normal len=1 label=md:"places"
+edge ORDER -> LINE-ITEM head=one-or-more tail=only-one line=normal len=1 label=md:"contains"
+edge CUSTOMER -> DELIVERY-ADDRESS head=one-or-more tail=one-or-more line=dotted len=1 label=md:"uses"
+edge ORDER -> INVOICE head=zero-or-one tail=zero-or-one line=normal len=1 label=md:"is billed by"
+edge INVOICE -> PAYMENT head=zero-or-more tail=zero-or-more line=dotted len=1 label=md:"settles"
+edge PRODUCT -> LINE-ITEM head=only-one tail=only-one line=normal len=1

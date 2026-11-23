@@ -95,6 +95,28 @@ BEGIN
   I(st.line); C; I(st.text); C; R(st.width); C; R(st.dash)
 END Style;
 
+(* s as a MetaPost string, a line of plain text: "" for NIL *)
+PROCEDURE Cell(s: F.Str);
+BEGIN
+  IF s = NIL THEN W('""') ELSE Label(F.PlainLabel(s)) END
+END Cell;
+
+(* entity n, node v, styled st: its rows' colours and its attributes *)
+PROCEDURE Er(v: INTEGER; n: F.Node; VAR st: S.Style);
+  VAR odd, even: S.Style; a: F.Attr; k: INTEGER;
+BEGIN
+  S.RowStyles(st, odd, even);
+  k := 0; a := n.attrs;
+  WHILE a # NIL DO INC(k); a := a.next END;
+  PmIO.WriteLn; W("pm_er("); I(v); C; I(k); C; I(odd.fill); C; I(even.fill); W(");");
+  k := 0; a := n.attrs;
+  WHILE a # NIL DO
+    PmIO.WriteLn; W("pm_erow("); I(v); C; I(k); C; Cell(a.type); C; Cell(a.name); C;
+    Cell(a.keys); C; Cell(a.comment); W(");");
+    INC(k); a := a.next
+  END
+END Er;
+
 (* Writes the layout of scope sc as calls of the macros, from pm_begin
    to pm_end, or, for an isolated subgraph's, pm_endsub *)
 PROCEDURE Block(l: FL.Layout; sc: FL.Scope; maxW: REAL; VAR nst, est, cst: Styles;
@@ -134,6 +156,8 @@ BEGIN
         ELSIF nodes[i].shape = F.ClassBox THEN
           PmIO.WriteLn; W("pm_class("); I(v); C; Label(nodes[i].annotation); C;
           Label(nodes[i].members); C; Label(nodes[i].methods); W(");")
+        ELSIF (nodes[i].shape = F.ErBox) & (nodes[i].attrs # NIL) THEN
+          Er(v, nodes[i], nst[i])
         END
       ELSIF l.isolated[-1 - i] THEN
         I(Sub); C; I(ln.edge); W(', "");'); PmIO.WriteLn;

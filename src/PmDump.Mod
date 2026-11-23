@@ -124,6 +124,7 @@ BEGIN
   | F.StateDesc: PmIO.WriteString("state-desc")
   | F.ClassBox: PmIO.WriteString("class")
   | F.Interface: PmIO.WriteString("interface")
+  | F.ErBox: PmIO.WriteString("erbox")
   ELSE PmIO.WriteString("?")
   END
 END Shape;
@@ -176,6 +177,10 @@ BEGIN
   | F.Aggregation: PmIO.WriteString("aggregation")
   | F.Dependency: PmIO.WriteString("dependency")
   | F.Lollipop: PmIO.WriteString("lollipop")
+  | F.OnlyOne: PmIO.WriteString("only-one")
+  | F.ZeroOrOne: PmIO.WriteString("zero-or-one")
+  | F.OneOrMore: PmIO.WriteString("one-or-more")
+  | F.ZeroOrMore: PmIO.WriteString("zero-or-more")
   END
 END End;
 
@@ -188,6 +193,22 @@ BEGIN
   | F.Invisible: PmIO.WriteString("invisible")
   END
 END LineKind;
+
+(* Writes an ErBox's attributes, each "type name keys comment" *)
+PROCEDURE Attrs(a: F.Attr);
+BEGIN
+  IF a # NIL THEN
+    PmIO.WriteString(" attrs=[");
+    WHILE a # NIL DO
+      Quoted(a.type); PmIO.WriteChar(" "); Quoted(a.name);
+      IF a.keys # NIL THEN PmIO.WriteChar(" "); PmIO.WriteString(a.keys^) END;
+      IF a.comment # NIL THEN PmIO.WriteChar(" "); Quoted(a.comment) END;
+      IF a.next # NIL THEN PmIO.WriteString("; ") END;
+      a := a.next
+    END;
+    PmIO.WriteChar("]")
+  END
+END Attrs;
 
 PROCEDURE Num(name: ARRAY OF CHAR; x: REAL);
 BEGIN
@@ -214,6 +235,7 @@ BEGIN
     Label("label", n.label);
     Label("annotation", n.annotation); Label("members", n.members);
     Label("methods", n.methods);
+    Attrs(n.attrs);
     Names("class", n.classes);
     Props("style", n.style);
     Field("link", n.link); Field("target", n.linkTarget); Field("tooltip", n.tooltip);

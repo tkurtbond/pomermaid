@@ -1,0 +1,32 @@
+erDiagram
+    CAR ||--o{ NAMED-DRIVER : allows
+    CAR {
+        string registrationNumber PK
+        string make
+        string model
+        string[] parts
+    }
+    PERSON ||--o{ NAMED-DRIVER : is
+    PERSON {
+        string driversLicence PK "The license #"
+        string(99) firstName "Only 99 characters are allowed"
+        string lastName
+        string phone UK
+        int age
+        List~int~ scores FK, UK
+    }
+    NAMED-DRIVER {
+        string carRegistrationNumber PK, FK
+        string driverLicence PK, FK
+    }
+    p[Person] {
+        string firstName
+        *string `last name`
+    }
+    a["Customer Account"] {
+        string email
+    }
+    p ||--o| a : has
+    classDef hot fill:#f96,stroke:#333
+    class CAR hot
+    style a fill:#9cf

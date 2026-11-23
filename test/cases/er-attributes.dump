@@ -1,0 +1,10 @@
+direction TB
+node CAR shape=erbox label="CAR" attrs=["string" "registrationNumber" PK; "string" "make"; "string" "model"; "string[]" "parts"] class=hot
+node NAMED-DRIVER shape=erbox label="NAMED-DRIVER" attrs=["string" "carRegistrationNumber" PK,FK; "string" "driverLicence" PK,FK]
+node PERSON shape=erbox label="PERSON" attrs=["string" "driversLicence" PK "The license #"; "string(99)" "firstName" "Only 99 characters are allowed"; "string" "lastName"; "string" "phone" UK; "int" "age"; "List<int>" "scores" FK,UK]
+node p shape=erbox label="Person" attrs=["string" "firstName"; "*string" "last name"]
+node a shape=erbox label="Customer Account" attrs=["string" "email"] style=fill:"#9cf"
+edge CAR -> NAMED-DRIVER head=zero-or-more tail=only-one line=normal len=1 label=md:"allows"
+edge PERSON -> NAMED-DRIVER head=zero-or-more tail=only-one line=normal len=1 label=md:"is"
+edge p -> a head=zero-or-one tail=only-one line=normal len=1 label=md:"has"
+classDef hot props=fill:"#f96",stroke:"#333"

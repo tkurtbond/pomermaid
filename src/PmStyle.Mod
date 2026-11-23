@@ -23,6 +23,8 @@ CONST
   (* and its state diagrams' *)
   NoteFill = 0FFF5ADH; NoteLine = 0AAAA33H;
   CompositeBack = 0FFFFFFH; AltBack = 0F0F0F0H;
+  (* and its ER diagrams', an entity's attributes' rows *)
+  RowOdd = 0FFFFFFH; RowEven = 0F1F1FFH;
   None = -1;  (* a theme's colour that is none *)
 
 TYPE
@@ -40,7 +42,7 @@ VAR
   (* the theme's colours, as 0RRGGBBH, or None *)
   nodeFill, nodeLine, nodeText, textColour, titleColour, edgeLine,
   labelBack, clusterFill, clusterLine,
-  noteFill, noteLine, noteText, compositeBack, altBack: LONGINT;
+  noteFill, noteLine, noteText, compositeBack, altBack, rowOdd, rowEven: LONGINT;
 
 
 (* The colour of index c, as 0RRGGBBH *)
@@ -296,7 +298,10 @@ BEGIN
   set := Var("noteBorderColor", noteLine);
   set := Var("noteTextColor", noteText);
   IF ~Var("compositeBackground", compositeBack) THEN set := Var("background", compositeBack) END;
-  set := Var("altBackground", altBack)
+  set := Var("altBackground", altBack);
+  rowOdd := RowOdd; rowEven := RowEven;
+  set := Var("rowOdd", rowOdd);
+  set := Var("rowEven", rowEven)
 END Theme;
 
 (* Empties the colour table, and sets the theme's colours from g's
@@ -325,7 +330,7 @@ END ApplyClass;
    the notes' colours; in a class diagram, notes too, and an interface
    (a lollipop's) has no box *)
 PROCEDURE NodeStyle*(g: F.Graph; n: F.Node; VAR st: Style);
-  VAR c: F.Name;
+  VAR c: F.Name; k: INTEGER;
 BEGIN
   st.fill := ThemeColour(nodeFill); st.line := ThemeColour(nodeLine); st.text := ThemeColour(nodeText);
   st.width := px; st.dash := 0; st.inner := NoColour;
@@ -347,8 +352,23 @@ BEGIN
   ApplyClass(g, st, "default");
   c := n.classes;
   WHILE c # NIL DO ApplyClass(g, st, c.name^); c := c.next END;
-  Apply(st, n.style)
+  Apply(st, n.style);
+  IF n.attrs # NIL THEN
+    (* the colours of its rows, in the table before the drawing *)
+    k := ThemeColour(rowOdd); k := ThemeColour(rowEven)
+  END
 END NodeStyle;
+
+(* The styles of an entity box's rows, from node, the box's: the first,
+   third ... rows, odd, in rowOdd, the others, even, in rowEven, or in
+   the box's fill, if a class or a style statement changed it; each
+   outlined as the box *)
+PROCEDURE RowStyles*(VAR node, odd, even: Style);
+BEGIN
+  odd := node; odd.fill := ThemeColour(rowOdd);
+  even := node;
+  IF node.fill = ThemeColour(nodeFill) THEN even.fill := ThemeColour(rowEven) END
+END RowStyles;
 
 (* st, subgraph k's style: Mermaid's default theme's, then its class
    statements', as Mermaid's flowDb compiles them, then the classes and
@@ -396,6 +416,14 @@ BEGIN
     IF e.from.shape = F.Rect THEN st.dash := 2 * px
     ELSIF e.line = F.Dotted THEN st.dash := 3 * px
     END
+  ELSIF g.kind = F.Er THEN
+    (* relationships are 1 pixel wide; non-identifying ones dashed *)
+    st.width := px;
+    IF e.line = F.Dotted THEN st.dash := 8 * px END;
+    IF (e.head = F.ZeroOrOne) OR (e.head = F.ZeroOrMore) OR (e.tail = F.ZeroOrOne)
+       OR (e.tail = F.ZeroOrMore) THEN
+      st.inner := Colour(0FFFFFFH)  (* a circle's fill, in the table *)
+    END
   ELSIF e.line = F.Thick THEN st.width := 3.5 * px
   ELSIF e.line = F.Dotted THEN st.dash := 3 * px
   END;
@@ -410,5 +438,5 @@ BEGIN
   textColour := TextColour; titleColour := TextColour; edgeLine := EdgeLine;
   labelBack := LabelBack; clusterFill := ClusterFill; clusterLine := ClusterLine;
   noteFill := NoteFill; noteLine := NoteLine; noteText := TextColour;
-  compositeBack := CompositeBack; altBack := AltBack
+  compositeBack := CompositeBack; altBack := AltBack; rowOdd := RowOdd; rowEven := RowEven
 END PmStyle.
