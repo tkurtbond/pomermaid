@@ -1,0 +1,1 @@
+pomermaid: gantt-cycle.mmd:2:3: the task's start or end depends on itself, through after or until

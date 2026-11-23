@@ -25,6 +25,8 @@ IMPORT Math, PmIO, F := PmFlow, M := PmMetrics, G := PmGeom, L := PmLayout,
 CONST
   NoColour = S.NoColour;
   Samples = 8;       (* the points per curve of a dashed edge *)
+  (* where a text is, from its point *)
+  Left* = 0; Centre* = 1; Right* = 2;
 
 TYPE
   Style = S.Style;
@@ -141,9 +143,9 @@ BEGIN
 END Runs;
 
 (* The text of lab, in colour c, at (x, y), at size points, or the
-   current size for 0; each line centred there, or starting there if
-   left *)
-PROCEDURE Lines*(lab: F.Label; x, y: REAL; c: INTEGER; size: REAL; left: BOOLEAN);
+   current size for 0; each line starting there for anchor Left,
+   centred there for Centre, or ending there for Right *)
+PROCEDURE Anchored*(lab: F.Label; x, y: REAL; c: INTEGER; size: REAL; anchor: INTEGER);
   VAR line: F.Line;
 BEGIN
   IF (lab = NIL) OR (lab.n = 0) THEN RETURN END;
@@ -157,10 +159,20 @@ BEGIN
     IF c # NoColour THEN W("\m[]") END;
     IF line.style = NIL THEN W("\f[]") END;
     IF size > 0 THEN W("\s[0]") END;
-    IF left THEN W('" ljust ') ELSE W('" ') END;
+    IF anchor = Left THEN W('" ljust ')
+    ELSIF anchor = Right THEN W('" rjust ')
+    ELSE W('" ')
+    END;
     line := line.next
   END;
   At(x, y); PmIO.WriteLn
+END Anchored;
+
+(* The text of lab, as Anchored, each line centred at (x, y), or
+   starting there if left *)
+PROCEDURE Lines*(lab: F.Label; x, y: REAL; c: INTEGER; size: REAL; left: BOOLEAN);
+BEGIN
+  IF left THEN Anchored(lab, x, y, c, size, Left) ELSE Anchored(lab, x, y, c, size, Centre) END
 END Lines;
 
 PROCEDURE SizedText(lab: F.Label; x, y: REAL; c: INTEGER; size: REAL);

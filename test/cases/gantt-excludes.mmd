@@ -1,0 +1,18 @@
+---
+config:
+  gantt:
+    useWidth: 800
+    numberSectionStyles: 2
+---
+gantt
+    dateFormat YYYY-MM-DD
+    excludes weekends, 2014-01-15
+    includes 2014-01-18
+    todayMarker off
+    section First<br>part
+    Write    :a, 2014-01-06, 6d
+    Review   :after a, 3d
+    section Second
+    Publish  :crit, done, 2014-01-16, 2014-01-21
+    section Third
+    Rest     :active, 2014-01-20, 2d

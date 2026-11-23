@@ -53,6 +53,18 @@ TYPE
                                     title *)
   END;
 
+  (* A Gantt chart's colours, as 0RRGGBBH, or -1 for none *)
+  GanttTheme* = RECORD
+    section*: ARRAY 4 OF LONGINT;  (* the rows', section0 .. section3:
+                                    sectionBkgColor, altSectionBkgColor,
+                                    sectionBkgColor2, altSectionBkgColor *)
+    sectionAlpha*: REAL;         (* sectionBkgColor's alpha *)
+    exclude*, grid*, today*, vert*,
+    taskFill*, taskLine*, activeFill*, activeLine*, doneFill*, doneLine*,
+    critFill*, critLine*,
+    taskText*, outsideText*, darkText*, linkText*, title*, text*: LONGINT
+  END;
+
   Style* = RECORD
     fill*, line*, text*: INTEGER;  (* indexes into the colours, or NoColour *)
     inner*: INTEGER;               (* a composite state's body's fill, below
@@ -203,7 +215,7 @@ BEGIN
 END ParseColour;
 
 (* A length, "4px", "4" (pixels) or "3pt", in points *)
-PROCEDURE ParseLength(VAR s: ARRAY OF CHAR; VAR x: REAL): BOOLEAN;
+PROCEDURE ParseLength*(VAR s: ARRAY OF CHAR; VAR x: REAL): BOOLEAN;
   VAR i: INTEGER;
 BEGIN
   i := 0;
@@ -217,7 +229,7 @@ BEGIN
 END ParseLength;
 
 (* Changes st by the properties p *)
-PROCEDURE Apply(VAR st: Style; p: F.Prop);
+PROCEDURE Apply*(VAR st: Style; p: F.Prop);
   VAR v: ARRAY 128 OF CHAR; rgb: LONGINT; none: BOOLEAN; i: INTEGER; x: REAL;
 
   PROCEDURE SetColour(VAR c: INTEGER);
@@ -420,6 +432,44 @@ BEGIN
   END;
   t.line := 0; t.title := titleColour
 END TimelineColours;
+
+(* t, a Gantt chart's colours: the default theme's, each changed by its
+   themeVariable, sectionBkgColor, altSectionBkgColor, sectionBkgColor2,
+   excludeBkgColor, gridColor, todayLineColor, vertLineColor,
+   taskBkgColor, taskBorderColor, activeTaskBkgColor,
+   activeTaskBorderColor, doneTaskBkgColor, doneTaskBorderColor,
+   critBkgColor, critBorderColor, taskTextColor (else
+   taskTextLightColor), taskTextOutsideColor (else taskTextDarkColor),
+   taskTextDarkColor and taskTextClickableColor. sectionBkgColor's
+   alpha is the default's, 0.49, unless it is set, when it is 1. *)
+PROCEDURE GanttColours*(VAR t: GanttTheme);
+  VAR set: BOOLEAN;
+BEGIN
+  t.section[0] := 06666FFH; t.sectionAlpha := 0.49;
+  IF Var("sectionBkgColor", t.section[0]) THEN t.sectionAlpha := 1 END;
+  t.section[1] := 0FFFFFFH; set := Var("altSectionBkgColor", t.section[1]);
+  t.section[2] := 0FFF400H; set := Var("sectionBkgColor2", t.section[2]);
+  t.section[3] := t.section[1];
+  t.exclude := 0EEEEEEH; set := Var("excludeBkgColor", t.exclude);
+  t.grid := 0D3D3D3H; set := Var("gridColor", t.grid);
+  t.today := 0FF0000H; set := Var("todayLineColor", t.today);
+  t.vert := 080H; set := Var("vertLineColor", t.vert);
+  t.taskFill := 08A90DDH; set := Var("taskBkgColor", t.taskFill);
+  t.taskLine := 0534FBCH; set := Var("taskBorderColor", t.taskLine);
+  t.activeFill := 0BFC7FFH; set := Var("activeTaskBkgColor", t.activeFill);
+  t.activeLine := 0534FBCH; set := Var("activeTaskBorderColor", t.activeLine);
+  t.doneFill := 0D3D3D3H; set := Var("doneTaskBkgColor", t.doneFill);
+  t.doneLine := 0808080H; set := Var("doneTaskBorderColor", t.doneLine);
+  t.critFill := 0FF0000H; set := Var("critBkgColor", t.critFill);
+  t.critLine := 0FF8888H; set := Var("critBorderColor", t.critLine);
+  t.darkText := 0; set := Var("taskTextDarkColor", t.darkText);
+  IF ~Var("taskTextColor", t.taskText) THEN
+    t.taskText := 0FFFFFFH; set := Var("taskTextLightColor", t.taskText)
+  END;
+  IF ~Var("taskTextOutsideColor", t.outsideText) THEN t.outsideText := t.darkText END;
+  t.linkText := 03163H; set := Var("taskTextClickableColor", t.linkText);
+  t.title := titleColour; t.text := textColour
+END GanttColours;
 
 (* Applies the classDefs named name *)
 PROCEDURE ApplyClass(g: F.Graph; VAR st: Style; name: ARRAY OF CHAR);

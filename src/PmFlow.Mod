@@ -61,6 +61,7 @@ CONST
   (* the kinds of diagram *)
   Flowchart* = 0; State* = 1; Class* = 2; Er* = 3; Req* = 4; Seq* = 5; Journey* = 6;
   Timeline* = 7;
+  Gantt* = 8;
 
   (* the kinds of cluster: a flowchart's subgraph, a composite state,
      a composite state's concurrent region *)
@@ -1400,7 +1401,8 @@ BEGIN
   WHILE list # NIL DO
     q := list; list := list.next;
     IF (q.name[0] = "c") & (q.name[1] = "o") & (q.name[2] = "n") & (q.name[3] = "f")
-       & (q.name[4] = "i") & (q.name[5] = "g") & (q.name[6] = ".") THEN
+       & (q.name[4] = "i") & (q.name[5] = "g") & (q.name[6] = ".")
+       OR L.Is(q.name, "displayMode") THEN
       q.next := NIL;
       IF first = NIL THEN first := q ELSE last.next := q END;
       last := q

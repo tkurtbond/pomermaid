@@ -1,0 +1,28 @@
+layout width=432 height=200 px=0.91
+grid y1=31.82 y2=154.55 labelY=163.64 size=9.09 top y1=45.45 y2=168.18 labelY=40
+tick x=92.73 "Nov  7"
+tick x=141.82 "Nov  9"
+tick x=190.91 "Nov 11"
+tick x=240.91 "Nov 13"
+tick x=290 "Nov 15"
+tick x=339.09 "Nov 17"
+rows w=397.91 h=21.82
+row colour=0 y=109.09
+row colour=1 y=87.27
+row colour=0 y=130.91
+row colour=2 y=43.64
+row colour=2 y=65.45
+task colour=0 at=(68.18,110.91) w=98.18 h=18.18 inside text=(117.27,120.18) size=10 text="One"
+task colour=1 at=(92.73,89.09) w=148.18 h=18.18 inside text=(166.82,98.36) size=10 text="Four"
+task colour=0 at=(117.27,132.73) w=99.09 h=18.18 inside text=(166.82,142) size=10 text="Two"
+task colour=2 at=(141.82,45.45) w=49.09 h=18.18 inside text=(166.36,54.73) size=10 text="Five"
+task colour=2 at=(141.82,67.27) w=221.82 h=18.18 inside text=(252.73,76.55) size=10 text="Six"
+task colour=0 at=(190.91,110.91) w=74.55 h=18.18 inside text=(228.18,120.18) size=10 text="Three"
+milestone colour=1 at=(231.82,89.09) w=18.18 h=18.18 right text=(254.55,98.36) size=10 text="Done"=2222
+task colour=2 at=(339.09,45.45) w=24.55 h=18.18 right text=(368.18,54.73) size=10 text="Seven"
+vert colour=2 at=(290,31.82) w=1.45 h=168.18 vert text=(290,256.82) size=13.64
+section colour=2 at=(9.09,67.27) size=10 text="2"
+section colour=1 at=(9.09,100) size=10 text="10"
+section colour=0 at=(9.09,132.73) size=10 text="b"
+title at=(216,17.82) size=16.36
+today from=(282.73,22.73) to=(282.73,177.27)

@@ -27,6 +27,10 @@ mkdir -p "$outdir" || exit 2
 case $outdir in /*) ;; *) outdir=$(pwd)/$outdir ;; esac
 cd "$casedir" || exit 2
 
+# Gantt charts' dates are local and depend on today (decisions 14, 16)
+TZ=America/New_York; export TZ
+SOURCE_DATE_EPOCH=1700000000; export SOURCE_DATE_EPOCH
+
 failed=0
 total=0
 for mmd in *.mmd; do

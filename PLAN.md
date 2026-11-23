@@ -755,6 +755,53 @@ Mermaid 12.3.0 is followed: `docs/syntax/timeline.md`,
   sizes from ConTeXt's (decision 3).
 - **18.5:** Mermaid's examples; the documentation.
 
+### Phase 19: Gantt charts [done]
+
+**Change:** `gantt`, read by a new module, `PmGantt`, into a model of
+its own (the title, the sections, the tasks with their start and end
+times and tags, the excluded and included days, the axis's settings),
+its dates read and computed with poDateTime; laid out by
+`PmGanttLayout` on Mermaid's geometry and a time scale, and drawn in
+pic, SVG and MetaPost.
+
+**Check:** case tests for each construct and error, run with `TZ` and
+`SOURCE_DATE_EPOCH` set (decisions 14 and 16); Mermaid's own Gantt
+examples read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/gantt.md`,
+`diagrams/gantt/parser/gantt.jison`, `ganttDb.js`,
+`ganttRenderer.js`, `styles.js` and the default theme; and what they
+call, dayjs 1.11 (`customParseFormat`, `advancedFormat`,
+`isoWeek`, `add`) and d3 (`scaleTime`, `timeTicks`, the time
+intervals, `tickStep`, `timeFormat`). In steps:
+
+- **19.1, the model and the reader:** `gantt`, `title`, `section`,
+  tasks (`name : tags, id, start, end`), `dateFormat`, `axisFormat`,
+  `tickInterval`, `todayMarker`, `excludes`, `includes`, `weekday`,
+  `weekend`, `inclusiveEndDates`, `topAxis`, `click`, `accTitle` and
+  `accDescr`, comments, front matter (`displayMode`) and directives;
+  dates parsed as dayjs's strict `customParseFormat` parses them, or
+  as JavaScript's `Date` parses ISO forms, in local time; durations,
+  `after` and `until`; excluded days moving a task's end; today from
+  `SOURCE_DATE_EPOCH` or the clock; the dump, with each task's times.
+- **19.2, the time scale:** the scale from the first start to the last
+  end over the chart's width, rounded as d3's `rangeRound`; the ticks,
+  d3's automatic intervals or `tickInterval`'s, in local time; their
+  labels by `axisFormat`, d3's `strftime` with its English locale.
+- **19.3, the layout:** Mermaid's pixels at the labels' size, the task
+  text's 11 pixels to the size: the rows (one per task, or packed in
+  compact mode), the background rows by section, the excluded days,
+  the grid, the bars, milestones and vertical markers, the task text
+  inside or outside its bar, the section names, the title, the today
+  line; the chart --width wide (decision 15); the layout dump.
+- **19.4, pic and SVG:** the drawing in the default theme's Gantt
+  colours (`taskBkgColor`, `critBkgColor`, `sectionBkgColor` and the
+  others), changed by themeVariables.
+- **19.5, MetaPost:** the same drawing written directly, the task
+  text's place (inside or outside its bar) decided in MetaPost from
+  ConTeXt's text widths (decision 3).
+- **19.6:** Mermaid's examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -858,6 +905,24 @@ None at present.
     them. pomermaid draws the `default` theme and `classic` look for
     every type, as its flowcharts already do: consistent between types
     and good in print. The new look is in "Later".
+
+2026-11-23, before Phase 19, the user's answers:
+
+14. **Today, as Mermaid, but reproducible.** A Gantt chart's today
+    line, an `after` or `until` that names no known task, and a date
+    format without a year or a day use today's date, as Mermaid does;
+    today is taken from `SOURCE_DATE_EPOCH` (seconds since 1970, the
+    reproducible-builds convention) when it is set, else from the
+    clock.
+15. **A Gantt chart fills --width.** Mermaid's chart is as wide as its
+    container, 1200 pixels without one; pomermaid's is --width wide (6
+    inches by default), or 1200 of Mermaid's pixels at the labels'
+    size with --width 0. `gantt.useWidth` in the configuration, in
+    pixels, overrides both.
+16. **Local time, as Mermaid.** Dates are read and computed in the
+    local time zone, through poDateTime's `TimeZones.Local` (the C
+    library's, so `TZ` is honoured), with its daylight-saving rules.
+    The case tests set `TZ`.
 
 ## Later
 
@@ -1329,3 +1394,36 @@ for every diagram). `gmake` and `gmake test` pass, 234 case tests
 under both models, on FreeBSD 15.1 (alerik, rackhir), NetBSD 11.0
 (artos, yishana) and OpenBSD 7.9 (jherek, cymoril), from clean
 copies, 2026-11-23.
+
+Phase 19, Gantt charts, is done, 2026-11-23, on Mermaid 12.3.0.
+`PmGantt` reads `gantt` (tasks with their tags, ids, dates, durations,
+`after` and `until`; `dateFormat`, `axisFormat`, `tickInterval`,
+`todayMarker`, `excludes`, `includes`, `weekday`, `weekend`,
+`inclusiveEndDates`, `topAxis`, `click`, `displayMode`) and computes
+the tasks' times as ganttDb.js does, with `PmGanttTime` (dayjs's
+parsing, formatting and `add`; JavaScript's `Date`; local time) and
+today from `SOURCE_DATE_EPOCH` (decisions 14 and 16).
+`PmGanttScale` is d3's time scale, ticks and `strftime`.
+`PmGanttLayout` lays the chart out on Mermaid's pixels, --width wide
+(decision 15), packed in compact mode; `PmGanttPic` draws it in pic,
+and SVG comes from that through groff; `PmGanttMp` writes the
+MetaPost directly, with each task's text placed inside or beside its
+bar in MetaPost from ConTeXt's width (decision 3). The differences are
+in `docs/user/differences.md`. `make test` passes under `-O2` and
+`-OC`: the unit tests `PmGanttTimeTest` and `PmGanttScaleTest` and 266
+case tests, with `gantt-basic` (dump, layout, pic, mp, svg-ms),
+`gantt-compact`, `gantt-tags` and `gantt-empty` (dump, layout, pic,
+mp), `gantt-excludes` (dump, layout, pic), `gantt-settings` and
+eleven error and warning cases; all run with `TZ=America/New_York`
+and `SOURCE_DATE_EPOCH=1700000000`. The cases were drawn through
+groff and through ConTeXt and looked at, and `make render` ran on
+every case without an error. Mermaid's 22 Gantt examples
+(`docs/syntax/gantt.md`) were read and written as dump, layout, pic,
+mp and SVG without an error (two warn, as Mermaid does, of a `%%`
+inside a task's data); three were looked at in SVG and two through
+ConTeXt. The Gantt drawing cases use the test fonts (`.args`), as the
+others do, so they need no groff. poDateTime was installed on the BSD
+hosts, and `gmake` and `gmake test` pass, 266 case tests under both
+models, on FreeBSD 15.1 (alerik, rackhir), NetBSD 11.0 (artos,
+yishana) and OpenBSD 7.9 (jherek, cymoril), from clean copies,
+2026-11-23.

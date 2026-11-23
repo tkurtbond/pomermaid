@@ -1,0 +1,47 @@
+.defcolor pm-f0f0ff rgb #f0f0ff
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-dcdcdc rgb #dcdcdc
+.defcolor pm-5c5c5c rgb #5c5c5c
+.defcolor pm-8a90dd rgb #8a90dd
+.defcolor pm-534fbc rgb #534fbc
+.defcolor pm-333333 rgb #333333
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.101; arrowwid = 0.101
+box invis wid 6 ht 2.475 at (3, -1.237)
+box wid 5.527 ht 0.303 at (2.763, -0.758) shaded "pm-f0f0ff" outlined "pm-f0f0ff" thickness 0
+box wid 5.527 ht 0.303 at (2.763, -1.364) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+box wid 5.527 ht 0.303 at (2.763, -1.667) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+box wid 5.527 ht 0.303 at (2.763, -1.061) shaded "pm-f0f0ff" outlined "pm-f0f0ff" thickness 0
+line from (1.275, -0.442) to (1.275, -1.843) outlined "pm-dcdcdc" thickness 0.909
+"\s[9.09]\f[TS]\m[pm-5c5c5c]2014-01-05\m[]\f[]\s[0]"  at (1.275, -1.97)
+line from (1.856, -0.442) to (1.856, -1.843) outlined "pm-dcdcdc" thickness 0.909
+"\s[9.09]\f[TS]\m[pm-5c5c5c]2014-01-12\m[]\f[]\s[0]"  at (1.856, -1.97)
+line from (2.424, -0.442) to (2.424, -1.843) outlined "pm-dcdcdc" thickness 0.909
+"\s[9.09]\f[TS]\m[pm-5c5c5c]2014-01-19\m[]\f[]\s[0]"  at (2.424, -1.97)
+line from (3.005, -0.442) to (3.005, -1.843) outlined "pm-dcdcdc" thickness 0.909
+"\s[9.09]\f[TS]\m[pm-5c5c5c]2014-01-26\m[]\f[]\s[0]"  at (3.005, -1.97)
+line from (3.573, -0.442) to (3.573, -1.843) outlined "pm-dcdcdc" thickness 0.909
+"\s[9.09]\f[TS]\m[pm-5c5c5c]2014-02-02\m[]\f[]\s[0]"  at (3.573, -1.97)
+line from (4.154, -0.442) to (4.154, -1.843) outlined "pm-dcdcdc" thickness 0.909
+"\s[9.09]\f[TS]\m[pm-5c5c5c]2014-02-09\m[]\f[]\s[0]"  at (4.154, -1.97)
+line from (4.722, -0.442) to (4.722, -1.843) outlined "pm-dcdcdc" thickness 0.909
+"\s[9.09]\f[TS]\m[pm-5c5c5c]2014-02-16\m[]\f[]\s[0]"  at (4.722, -1.97)
+box wid 2.462 ht 0.253 at (2.178, -0.758) rad 0.038 shaded "pm-8a90dd" outlined "pm-534fbc" thickness 1.818
+box wid 0.985 ht 0.253 at (2.348, -1.364) rad 0.038 shaded "pm-8a90dd" outlined "pm-534fbc" thickness 1.818
+box wid 1.97 ht 0.253 at (3.826, -1.667) rad 0.038 shaded "pm-8a90dd" outlined "pm-534fbc" thickness 1.818
+box wid 1.641 ht 0.253 at (4.23, -1.061) rad 0.038 shaded "pm-8a90dd" outlined "pm-534fbc" thickness 1.818
+"\s[10]\f[TS]\m[pm-ffffff]A task\m[]\f[]\s[0]"  at (2.178, -0.76)
+"\s[10]\f[TS]\m[pm-ffffff]Task in Another\m[]\f[]\s[0]"  at (2.348, -1.366)
+"\s[10]\f[TS]\m[pm-ffffff]another task\m[]\f[]\s[0]"  at (3.826, -1.669)
+"\s[10]\f[TS]\m[pm-ffffff]Another task\m[]\f[]\s[0]"  at (4.23, -1.063)
+"\s[10]\f[TS]\m[pm-333333]Section\m[]\f[]\s[0]" ljust  at (0.126, -0.934)
+"\s[10]\f[TS]\m[pm-333333]Another\m[]\f[]\s[0]" ljust  at (0.126, -1.54)
+"\s[16.36]\f[TS]\m[pm-333333]A Gantt Diagram\m[]\f[]\s[0]"  at (3, -0.247)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

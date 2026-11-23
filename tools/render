@@ -19,6 +19,11 @@ outdir=$2
 casedir=${3:-test/cases}
 
 mkdir -p "$outdir" || exit 2
+
+# Gantt charts' dates are local and depend on today: as in runcases
+TZ=America/New_York; export TZ
+SOURCE_DATE_EPOCH=1700000000; export SOURCE_DATE_EPOCH
+
 ms=$outdir/cases.ms
 : > "$ms"
 first=1

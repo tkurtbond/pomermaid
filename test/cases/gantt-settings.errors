@@ -1,0 +1,3 @@
+pomermaid: [WARNING] Gantt: the "after" statement references unknown task id(s): missing. Make sure the referenced tasks exist and declare an id. Milestones need both an id and a duration, e.g. "Milestone :milestone, m1, 2023-01-01, 0d".
+pomermaid: [WARNING] Gantt: the "until" statement references unknown task id(s): nothing, other. Make sure the referenced tasks exist and declare an id. Milestones need both an id and a duration, e.g. "Milestone :milestone, m1, 2023-01-01, 0d".
+pomermaid: [WARNING] Gantt: "3x" is neither a valid date for the "YYYY-MM-DD" date format nor a valid duration (e.g. "3d"), so it is ignored and the task gets a zero duration. Milestones need a duration too, e.g. "Milestone :milestone, m1, 2023-01-01, 0d".

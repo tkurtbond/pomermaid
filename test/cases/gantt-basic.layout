@@ -1,0 +1,21 @@
+layout width=432 height=178.18 px=0.91
+grid y1=31.82 y2=132.73 labelY=141.82 size=9.09
+tick x=91.82 "2014-01-05"
+tick x=133.64 "2014-01-12"
+tick x=174.55 "2014-01-19"
+tick x=216.36 "2014-01-26"
+tick x=257.27 "2014-02-02"
+tick x=299.09 "2014-02-09"
+tick x=340 "2014-02-16"
+rows w=397.91 h=21.82
+row colour=0 y=43.64
+row colour=1 y=87.27
+row colour=1 y=109.09
+row colour=0 y=65.45
+task colour=0 at=(68.18,45.45) w=177.27 h=18.18 inside text=(156.82,54.73) size=10 text="A task"
+task colour=1 at=(133.64,89.09) w=70.91 h=18.18 inside text=(169.09,98.36) size=10 text="Task in Another"
+task colour=1 at=(204.55,110.91) w=141.82 h=18.18 inside text=(275.45,120.18) size=10 text="another task"
+task colour=0 at=(245.45,67.27) w=118.18 h=18.18 inside text=(304.55,76.55) size=10 text="Another task"
+section colour=0 at=(9.09,67.27) size=10 text="Section"
+section colour=1 at=(9.09,110.91) size=10 text="Another"
+title at=(216,17.82) size=16.36

@@ -214,6 +214,25 @@ differences:
   not worked out from `primaryColor` as Mermaid's themes do, and each
   theme variable changes only its own colour.
 
+## Gantt charts
+
+- **The width.** The chart is `--width` wide, 1200 pixels if it is
+  not given, or `gantt.useWidth`'s (decision 15); Mermaid takes the
+  width of the page it is drawn in.
+- **Text** is placed by its middle, 0.3 of its size above Mermaid's
+  baseline, and the grid's lines are at the ticks, without d3's half
+  pixel offset.
+- **Task text** is drawn as it is written; entities are not read.
+- **What Mermaid's SVG clips** is left out: the today line when it is
+  outside the chart, and, in compact mode, the part of a vertical
+  marker below the chart.
+- **See-through colours.** pic has no transparency, so the rows and
+  the grid are drawn in the colour they give over what is behind them,
+  and the grid is drawn over the rows, where Mermaid draws it under
+  them. A colour's alpha in the theme variables is ignored, and so is
+  `todayMarker`'s `opacity`.
+- **Links** exist only in SVG.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

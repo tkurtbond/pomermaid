@@ -1,0 +1,57 @@
+layout width=432 height=461.82 px=0.91
+excludes y=31.82 h=384.55
+exclude x=135.45 w=26.36
+exclude x=229.09 w=27.27
+exclude x=323.64 w=26.36
+grid y1=31.82 y2=416.36 labelY=425.45 size=9.09
+tick x=81.82 "2014-01-07"
+tick x=108.18 "2014-01-09"
+tick x=135.45 "2014-01-11"
+tick x=161.82 "2014-01-13"
+tick x=189.09 "2014-01-15"
+tick x=216.36 "2014-01-17"
+tick x=242.73 "2014-01-19"
+tick x=270 "2014-01-21"
+tick x=296.36 "2014-01-23"
+tick x=323.64 "2014-01-25"
+tick x=350 "2014-01-27"
+rows w=397.91 h=21.82
+row colour=0 y=43.64
+row colour=1 y=130.91
+row colour=1 y=152.73
+row colour=2 y=283.64
+row colour=0 y=65.45
+row colour=1 y=174.55
+row colour=2 y=305.45
+row colour=2 y=327.27
+row colour=0 y=87.27
+row colour=1 y=196.36
+row colour=3 y=349.09
+row colour=3 y=370.91
+row colour=3 y=392.73
+row colour=0 y=109.09
+row colour=1 y=218.18
+row colour=1 y=240
+row colour=1 y=261.82
+task colour=0 at=(68.18,45.45) w=27.27 h=18.18 right text=(100,54.73) size=10 text="Completed task"=11111111111111
+task colour=1 at=(68.18,132.73) w=13.64 h=18.18 right text=(86.36,142) size=10 text="Completed task in the critical line"
+task colour=1 at=(95.45,154.55) w=26.36 h=18.18 right text=(126.36,163.82) size=10 text="Implement parser and jison"
+task colour=2 at=(95.45,285.45) w=40 h=18.18 right text=(140,294.73) size=10 text="Describe gantt syntax"
+task colour=0 at=(108.18,67.27) w=67.27 h=18.18 inside text=(141.82,76.55) size=10 text="Active task"=11111111111
+task colour=1 at=(121.82,176.36) w=67.27 h=18.18 right text=(193.64,185.64) size=10 text="Create tests for parser"
+task colour=2 at=(161.82,307.27) w=11.82 h=18.18 right text=(178.18,316.55) size=10 text="Add gantt diagram to demo page"
+task colour=2 at=(161.82,329.09) w=27.27 h=18.18 right text=(193.64,338.36) size=10 text="Add another diagram to demo page"
+task colour=0 at=(175.45,89.09) w=94.55 h=18.18 inside text=(222.73,98.36) size=10 text="Future task"
+task colour=1 at=(189.09,198.18) w=94.55 h=18.18 left text=(184.55,207.45) size=10 text="Future task in critical line"
+task colour=3 at=(189.09,350.91) w=40 h=18.18 right text=(233.64,360.18) size=10 text="Describe gantt syntax"
+task colour=3 at=(256.36,372.73) w=10.91 h=18.18 left text=(251.82,382) size=10 text="Add gantt diagram to demo page"
+task colour=3 at=(267.27,394.55) w=27.27 h=18.18 left text=(262.73,403.82) size=10 text="Add another diagram to demo page"
+task colour=0 at=(270,110.91) w=93.64 h=18.18 inside text=(316.82,120.18) size=10 text="Future task2"
+task colour=1 at=(283.64,220) w=26.36 h=18.18 left text=(279.09,229.27) size=10 text="Create tests for renderer"
+task colour=1 at=(310,241.82) w=13.64 h=18.18 left text=(328.18,251.09) size=10 text="Add to mermaid"
+milestone colour=1 at=(314.55,263.64) w=18.18 h=18.18 left text=(310,272.91) size=10 text="Functionality added"=2222222222222222222
+section colour=0 at=(9.09,89.09) size=10 text="A section"
+section colour=1 at=(9.09,209.09) size=10 text="Critical tasks"
+section colour=2 at=(9.09,318.18) size=10 text="Documentation"
+section colour=3 at=(9.09,383.64) size=10 text="Last section"
+title at=(216,17.82) size=16.36

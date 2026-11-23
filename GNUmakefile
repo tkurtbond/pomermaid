@@ -84,7 +84,7 @@ $(BUILD)/%.passed: $(SRCS) test/$$(notdir $$*).Mod test/$$(notdir $$*).expected 
 	$(POC) -$(firstword $(subst /, ,$*)) $(POCFLAGS) -library-path $(POCLIBDIR) \
 	  -import-path src -import-path test -output-dir $(BUILD)/$(dir $*) \
 	  -o $(BUILD)/$* test/$(notdir $*).Mod
-	cd $(BUILD)/$(dir $*) && ./$(notdir $*) > $(notdir $*).out 2> $(notdir $*).err
+	cd $(BUILD)/$(dir $*) && TZ=America/New_York SOURCE_DATE_EPOCH=1700000000 ./$(notdir $*) > $(notdir $*).out 2> $(notdir $*).err
 	diff -u test/$(notdir $*).expected $(BUILD)/$*.out
 	diff -u $(or $(wildcard test/$(notdir $*).errors),/dev/null) $(BUILD)/$*.err
 	touch $@

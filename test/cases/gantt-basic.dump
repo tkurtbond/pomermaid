@@ -1,0 +1,9 @@
+title text="A Gantt Diagram"
+dateFormat "YYYY-MM-DD"
+weekday 0 weekend 6
+section 0 "Section"
+section 1 "Another"
+task 0 id="a1" order=0 section="Section" start=2014-01-01T00:00:00.000 end=2014-01-31T00:00:00.000 text="A task"
+task 1 id="task1" order=1 section="Section" start=2014-01-31T00:00:00.000 end=2014-02-20T00:00:00.000 text="Another task"
+task 2 id="task2" order=2 section="Another" start=2014-01-12T00:00:00.000 end=2014-01-24T00:00:00.000 text="Task in Another"
+task 3 id="task3" order=3 section="Another" start=2014-01-24T00:00:00.000 end=2014-02-17T00:00:00.000 text="another task"

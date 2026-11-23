@@ -63,7 +63,10 @@ requirement and element boxes, contains and arrow ends) and 16
 journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
 `PmJourneyMp`, which writes the MetaPost directly, without macros) and
 18 (timelines: `PmTimeline`, `PmTimelineLayout`, `PmTimelinePic` and
-`PmTimelineMp`, left to right and top down) are done. See
+`PmTimelineMp`, left to right and top down) and 19 (Gantt charts:
+`PmGantt`, with its dates in `PmGanttTime` and its axis in
+`PmGanttScale`, `PmGanttLayout`, `PmGanttPic` and `PmGanttMp`) are
+done. See
 PLAN.md's State.
 
 ## Reference material
@@ -110,7 +113,7 @@ specific files you need; do not list private directories wholesale.
 | ArgParser | the command line |
 | pounicode (`Utf8`, ...) | labels are UTF-8; widths are per code point |
 | Ropes | output, if it helps (podoc uses it for all output) |
-| poDateTime (`TimeStrings`, ...) | Gantt dates (Phase 19) |
+| poDateTime (`Calendar`, `Instants`, `TimeZones`) | Gantt dates and local time (Phase 19) |
 
 They are installed under both models in `~/.local/lib/poc`; a missing
 one is installed from its checkout under `~/Repos/Oberon`, as podoc's

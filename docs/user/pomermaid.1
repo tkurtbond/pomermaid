@@ -48,8 +48,10 @@ sequence diagrams,
 .Ql sequenceDiagram ,
 user journeys,
 .Ql journey ,
-and timelines,
-.Ql timeline .
+timelines,
+.Ql timeline ,
+and Gantt charts,
+.Ql gantt .
 .Pp
 The labels are set in the document's own fonts.
 For pic and SVG they are measured with groff's font description files;
@@ -179,6 +181,11 @@ then in
 .Pa /usr/share/groff_font ,
 .Nx Ap s own groff's, and
 .Pa /usr/lib/font .
+.It Ev SOURCE_DATE_EPOCH
+Today's date for a Gantt chart's today line, in seconds since
+1970-01-01 UTC; the clock's when it is not set.
+.It Ev TZ
+The time zone a Gantt chart's dates are read and drawn in.
 .It Ev TMPDIR
 Where
 .Cm svg
@@ -277,7 +284,7 @@ draws differently from Mermaid.
 .An T. Kurt Bond
 .Sh BUGS
 Only flowcharts, state diagrams, class diagrams, entity relationship
-diagrams, requirement diagrams, sequence diagrams, user journeys and
-timelines are read.
+diagrams, requirement diagrams, sequence diagrams, user journeys,
+timelines and Gantt charts are read.
 Links and tooltips are drawn only in SVG.
 Mermaid's named themes, icons, images and animations are not drawn.

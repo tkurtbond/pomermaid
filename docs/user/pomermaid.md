@@ -16,7 +16,8 @@ It reads flowcharts (`flowchart` and `graph`), state diagrams
 (`classDiagram` and `classDiagram-v2`), entity relationship
 diagrams (`erDiagram`), requirement diagrams
 (`requirementDiagram`), sequence diagrams (`sequenceDiagram`),
-user journeys (`journey`) and timelines (`timeline`).
+user journeys (`journey`), timelines (`timeline`) and Gantt
+charts (`gantt`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -25,8 +26,8 @@ after another.
 To build it:
 
 - the Peaseblossom Oberon Compiler, `poc`;
-- the poc libraries ArgParser and pounicode, installed under both size
-  models;
+- the poc libraries ArgParser, pounicode and poDateTime, installed
+  under both size models;
 - GNU make (`gmake` on the BSDs).
 
 It builds and passes its tests on Linux, FreeBSD, NetBSD and OpenBSD,
@@ -461,6 +462,76 @@ lines from it.
   `cScaleLabel0` to `cScaleLabel11` (text) and `cScaleInv0` to
   `cScaleInv11` (the line along a box's bottom) change them.
 - **Comments:** `%%` comments and `#` comments.
+
+Read and ignored: `accTitle` and `accDescr`.
+
+### Gantt charts
+
+pomermaid reads Mermaid's Gantt charts, as Mermaid 12.3.0 reads them,
+and draws them as Mermaid does: a row for each task, a bar from its
+start to its end on a time axis, the rows' backgrounds in bands by
+section, each section's name at the left, the grid and the axis's
+labels below (or above too, with `topAxis`), and the title at the top.
+The chart is `--width` wide, 1200 pixels if it is not given;
+`gantt.useWidth` in the configuration sets it instead.
+
+- **The first line:** `gantt`. Front matter and directives are read as
+  for a flowchart; `displayMode: compact` packs the tasks of a section
+  into as few rows as do not overlap. Keywords are read in any case.
+- **The title:** `title text`. **Sections:** `section name`.
+- **Tasks:** `name : data`, the data up to a `#`, `;` or the end of
+  the line: first any of the tags `active`, `done`, `crit`,
+  `milestone` and `vert`, then the end; the start and the end; or an
+  id, the start and the end. A task with only its end starts where the
+  task before it ends.
+  - A start is a date, read with `dateFormat`, or `after id ...`, the
+    latest end of those tasks.
+  - An end is a date, a duration (`3d`, `1.5w`, `2M`, `30m`, `10ms`;
+    `y`, `M`, `w`, `d`, `h`, `m`, `s` and `ms`), or `until id ...`,
+    the earliest start of those tasks.
+  - A milestone is drawn as a diamond at its start, a `vert` task as a
+    vertical line across the chart, labelled below it.
+- **Dates:** `dateFormat`, dayjs's tokens (`YYYY-MM-DD`, the default;
+  `x` and `X` for Unix times; `MMM`, `Do`, `HH:mm` and the others),
+  read strictly, in local time; a start that does not fit is read as
+  JavaScript's `Date` reads it, and one it cannot read is an error.
+  An end that is neither a date nor a duration is a zero duration,
+  with a warning. `inclusiveEndDates` makes a date given as an end
+  include its day.
+- **Excluded days:** `excludes`, dates, weekday names, `weekends`;
+  `includes`, dates that are not excluded; `weekend friday` or
+  `weekend saturday`. A task's end moves past the excluded days it
+  covers, and they are shaded in the chart.
+- **The axis:** `axisFormat`, d3's `strftime` formats (`%Y-%m-%d`, the
+  default); `tickInterval`, a number and `millisecond`, `second`,
+  `minute`, `hour`, `day`, `week` or `month` (else the ticks are
+  d3's); `weekday monday` ... `weekday sunday`, the weeks' first day
+  for `week`; `topAxis`.
+- **Today:** a red line at today's date, if it is in the chart; today
+  is from `SOURCE_DATE_EPOCH`, else the clock. `todayMarker off`
+  leaves it out; `todayMarker` with a style (`stroke-width:5px,
+  stroke:#0f0`) changes it.
+- **Links:** `click id href "link"` links the task, in SVG; `click id
+  call name()` is read and has no link. A task named by a `click` has
+  its text in `taskTextClickableColor`.
+- **Configuration:** `gantt`'s `barHeight`, `barGap`, `topPadding`,
+  `leftPadding`, `rightPadding`, `gridLineStartPadding`, `fontSize`,
+  `sectionFontSize`, `titleTopMargin`, `numberSectionStyles`,
+  `axisFormat`, `tickInterval`, `topAxis` and `useWidth`, in Mermaid's
+  pixels, scaled as the other diagrams' are.
+- **Colours:** the default theme's, each changed by its theme
+  variable: `sectionBkgColor`, `altSectionBkgColor`,
+  `sectionBkgColor2`, `excludeBkgColor`, `gridColor`,
+  `todayLineColor`, `vertLineColor`, `taskBkgColor`,
+  `taskBorderColor`, `activeTaskBkgColor`, `activeTaskBorderColor`,
+  `doneTaskBkgColor`, `doneTaskBorderColor`, `critBkgColor`,
+  `critBorderColor`, `taskTextColor`, `taskTextLightColor`,
+  `taskTextOutsideColor`, `taskTextDarkColor` and
+  `taskTextClickableColor`.
+- **Task text** is drawn in its bar, or beside it, right or left,
+  where it does not fit, as Mermaid places it. In MetaPost, the place
+  is chosen from ConTeXt's width of the text.
+- **Comments:** `%%` comments, and `#` ends a task's data.
 
 Read and ignored: `accTitle` and `accDescr`.
 
