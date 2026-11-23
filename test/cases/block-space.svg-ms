@@ -1,0 +1,27 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p98.25p,94.65p
+.pl 98.25p
+.po 2p
+.ll 90.65p
+.sp 2p
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-333333 rgb #333333
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 1.259 ht 1.142 at (0.63, -0.571)
+box wid 0.344 ht 0.306 at (0.216, -0.196) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\s[10]\f[TS]\m[pm-333333]a\m[]\f[]\s[0]"  at (0.216, -0.196)
+box wid 0.344 ht 0.306 at (1.043, -0.196) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\s[10]\f[TS]\m[pm-333333]b\m[]\f[]\s[0]"  at (1.043, -0.196)
+box wid 0.344 ht 0.306 at (1.043, -0.571) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\s[10]\f[TS]\m[pm-333333]c\m[]\f[]\s[0]"  at (1.043, -0.571)
+box wid 0.344 ht 0.306 at (0.216, -0.946) shaded "pm-ececff" outlined "pm-9370db" thickness 0.625
+"\s[10]\f[TS]\m[pm-333333]d\m[]\f[]\s[0]"  at (0.216, -0.946)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

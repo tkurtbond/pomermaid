@@ -1,0 +1,30 @@
+layout width=90.65 height=82.25
+rect at=(3.13,3.13) w=24.8 h=22 fill=#ececff line=#9370db width=0.63
+text at=(15.53,14.13) size=10 w=4.8 line=#333333 text="a"
+rect at=(62.72,3.13) w=24.8 h=22 fill=#ececff line=#9370db width=0.63
+text at=(75.13,14.13) size=10 w=4.8 line=#333333 text="b"
+rect at=(32.93,30.13) w=24.8 h=22 fill=#ececff line=#9370db width=0.63
+text at=(45.32,41.13) size=10 w=4.8 line=#333333 text="c"
+rect at=(3.13,57.13) w=24.8 h=22 fill=#ececff line=#9370db width=0.63
+text at=(15.53,68.13) size=10 w=4.8 line=#333333 text="d"
+rect at=(62.72,57.13) w=24.8 h=22 fill=#ececff line=#9370db width=0.63
+text at=(75.13,68.13) size=10 w=4.8 line=#333333 text="e"
+poly (62.72,14.13) (57.72,16.63) (57.72,11.63) fill=#333333 line=#333333
+line (27.93,14.13) (60.22,14.13) fill=none line=#333333 width=1.25
+poly (33.18,30.13) (27.8,28.62) (31.16,24.92) fill=#333333 line=#333333
+line (27.67,25.13) (31.33,28.45) fill=none line=#333333 width=1.25
+rect at=(18.43,21.63) w=24 h=12 fill=#e8e8e8 line=none
+text at=(30.43,27.63) size=10 w=24 line=#333333 text="label"
+poly (57.47,30.13) (59.49,24.92) (62.85,28.62) fill=#333333 line=#333333
+line (62.98,25.13) (59.32,28.45) fill=none line=#333333 width=2.19
+poly (27.67,57.13) (29.69,51.92) (33.05,55.62) fill=#333333 line=#333333
+line (33.18,52.13) (29.52,55.45) dash=1.88 fill=none line=#333333 width=1.25
+line (56.88,65.72) (61.69,70.53) fill=none line=#333333 width=1.25
+line (56.88,70.53) (61.69,65.72) fill=none line=#333333 width=1.25
+line (27.93,68.13) (59.29,68.13) fill=none line=#333333 width=1.25
+circle at=(30.21,27.43) r=3.44 fill=#333333 line=#333333
+line (62.98,57.13) (30.21,27.43) fill=none line=#333333 width=1.25
+line (15.53,25.13) (15.53,57.13) fill=none line=#333333 width=1.25
+poly (75.13,57.13) (72.63,52.13) (77.63,52.13) fill=#333333 line=#333333
+poly (75.13,25.13) (77.63,30.13) (72.63,30.13) fill=#333333 line=#333333
+line (75.13,27.63) (75.13,54.63) fill=none line=#333333 width=1.25

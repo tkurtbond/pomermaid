@@ -1,0 +1,10 @@
+layout width=227.95 height=48.25
+rect at=(3.13,3.13) w=49.8 h=42 fill=#ff9966 line=#333333 width=2.5
+text at=(28.03,24.13) size=10 w=4.8 line=#ffffff text="a"
+rect at=(60.43,3.13) w=49.8 h=42 fill=#99ccff line=#9370db width=0.63
+text at=(85.32,24.13) size=10 w=4.8 line=#333333 text="b"
+rect at=(117.72,3.13) w=49.8 h=42 fill=#ffff00 line=#ff0000 width=0.63
+text at=(142.63,24.13) size=10 w=4.8 line=#333333 text="c"
+rect at=(175.03,3.13) w=49.8 h=42 fill=#eeeeee line=#eeeed6 width=0.63
+rect at=(182.53,10.63) w=34.8 h=27 fill=#99ccff line=#9370db width=0.63
+text at=(199.93,24.13) size=10 w=4.8 line=#333333 text="d"

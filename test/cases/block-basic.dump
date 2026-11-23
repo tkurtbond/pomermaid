@@ -1,0 +1,6 @@
+block padding=8 blocks=3 edges=2 columns=auto
+  na id="a" label="a"
+  na id="b" label="b"
+  na id="c" label="c"
+edge id="1-a-b" from="a" to="b" end=arrow
+edge id="1-b-c" from="b" to="c" end=arrow

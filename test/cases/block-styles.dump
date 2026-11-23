@@ -1,0 +1,9 @@
+config config.block.padding="12"
+classDef "hot" props=["fill":"#f96" "stroke":"#333" "stroke-width":"4px" "color":"#fff"]
+classDef "cool" props=["fill":"#9cf"]
+block padding=12 blocks=5 edges=0 columns=auto
+  na id="a" label="a" classes="hot"
+  na id="b" label="b" classes="cool"
+  na id="c" label="c" style=["fill":"#ff0" "stroke":"#f00"]
+  composite id="grp" label="" columns=auto style=["fill":"#eee"]
+    na id="d" label="d" classes="cool"

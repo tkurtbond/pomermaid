@@ -392,6 +392,27 @@ differences:
   a changed `cScale` colour for its peer, and pomermaid does not
   (decision 42), as for timelines.
 
+## Block diagrams
+
+- **Errors.** A chain of links (`a --> b --> c`), a link in a
+  composite block's header, `style` for a block that does not exist, a width of 0 and `columns 0` are errors; Mermaid's
+  parser accepts some of them and draws something unexpected or
+  nothing (decision 44).
+- **Blocks that are not drawn.** Mermaid keeps a block defined a
+  second time, and the blocks in a composite block defined a second
+  time, in its database but does not draw them; pomermaid warns of
+  them, and leaves out links to them (decision 45).
+- **Class names** are split at blanks; a `class` id with blanks
+  before it, which Mermaid looks up with the blanks, is ignored with
+  a warning (decision 46).
+- **Labels** are measured with pomermaid's metrics and not wrapped
+  (decision 47).
+- **Outlines.** Edges are cut where they leave the drawn outline of
+  each block. A stadium is a box with round ends and a cylinder a
+  polygon, its arcs taken at 16 points; block outlines are never
+  dashed; arrowheads, circles and crosses at the ends of links are
+  drawn about as Mermaid draws its markers (decision 48).
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

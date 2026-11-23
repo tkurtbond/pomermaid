@@ -1,0 +1,12 @@
+block padding=8 blocks=9 edges=2 columns=3
+  square id="top" label="Top" width=3
+  composite id="left" label="" columns=1
+    na id="l1" label="l1"
+    na id="l2" label="l2"
+    na id="l3" label="l3"
+  composite id="mid" label="" width=2 columns=auto
+    square id="m1" label="A wider label"
+    na id="m2" label="m2"
+  na id="bottom" label="bottom" width=3
+edge id="1-top-left" from="top" to="left" end=arrow
+edge id="1-left-mid" from="left" to="mid" end=arrow

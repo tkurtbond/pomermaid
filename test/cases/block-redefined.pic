@@ -1,0 +1,15 @@
+.defcolor pm-ffffef rgb #ffffef
+.defcolor pm-eeeed6 rgb #eeeed6
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 0.226 ht 0.226 at (0.113, -0.113)
+box wid 0.139 ht 0.139 at (0.113, -0.113) shaded "pm-ffffef" outlined "pm-eeeed6" thickness 0.625
+box wid 0 ht 0 at (0.113, -0.113) shaded "pm-ffffef" outlined "pm-eeeed6" thickness 0.625
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

@@ -1,0 +1,11 @@
+layout width=90.65 height=28.25
+rect at=(3.13,3.13) w=24.8 h=22 fill=#ececff line=#9370db width=0.63
+text at=(15.53,14.13) size=10 w=4.8 line=#333333 text="a"
+rect at=(32.93,3.13) w=24.8 h=22 fill=#ececff line=#9370db width=0.63
+text at=(45.32,14.13) size=10 w=4.8 line=#333333 text="b"
+rect at=(62.72,3.13) w=24.8 h=22 fill=#ececff line=#9370db width=0.63
+text at=(75.13,14.13) size=10 w=4.8 line=#333333 text="c"
+poly (32.93,14.13) (27.93,16.63) (27.93,11.63) fill=#333333 line=#333333
+line (27.93,14.13) (30.43,14.13) fill=none line=#333333 width=1.25
+poly (62.72,14.13) (57.72,16.63) (57.72,11.63) fill=#333333 line=#333333
+line (57.72,14.13) (60.22,14.13) fill=none line=#333333 width=1.25

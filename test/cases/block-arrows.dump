@@ -1,0 +1,14 @@
+block padding=8 blocks=13 edges=0 columns=4
+  block_arrow id="r" label="right" dirs=r
+  block_arrow id="l" label="left" dirs=l
+  block_arrow id="u" label="up" dirs=u
+  block_arrow id="d" label="down" dirs=d
+  block_arrow id="x" label="x" dirs=rl
+  block_arrow id="y" label="y" dirs=ud
+  block_arrow id="rd" label="rd" dirs=rd
+  block_arrow id="lu" label="lu" dirs=lu
+  block_arrow id="rlu" label="rlu" dirs=rlu
+  block_arrow id="rld" label="rld" dirs=rld
+  block_arrow id="all" label="all" dirs=rlud
+  block_arrow id="wide" label="wide" dirs=r
+  block_arrow id="span" label="spans two" width=2 dirs=r

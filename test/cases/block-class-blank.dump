@@ -1,0 +1,3 @@
+block padding=8 blocks=2 edges=0 columns=auto
+  na id="a" label="a" classes="foo"
+  na id="b" label="b"

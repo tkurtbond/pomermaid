@@ -1,0 +1,29 @@
+.defcolor pm-ff9966 rgb #ff9966
+.defcolor pm-333333 rgb #333333
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-99ccff rgb #99ccff
+.defcolor pm-9370db rgb #9370db
+.defcolor pm-ffff00 rgb #ffff00
+.defcolor pm-ff0000 rgb #ff0000
+.defcolor pm-eeeeee rgb #eeeeee
+.defcolor pm-eeeed6 rgb #eeeed6
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 3.166 ht 0.67 at (1.583, -0.335)
+box wid 0.692 ht 0.583 at (0.389, -0.335) shaded "pm-ff9966" outlined "pm-333333" thickness 2.5
+"\s[10]\f[TS]\m[pm-ffffff]a\m[]\f[]\s[0]"  at (0.389, -0.335)
+box wid 0.692 ht 0.583 at (1.185, -0.335) shaded "pm-99ccff" outlined "pm-9370db" thickness 0.625
+"\s[10]\f[TS]\m[pm-333333]b\m[]\f[]\s[0]"  at (1.185, -0.335)
+box wid 0.692 ht 0.583 at (1.981, -0.335) shaded "pm-ffff00" outlined "pm-ff0000" thickness 0.625
+"\s[10]\f[TS]\m[pm-333333]c\m[]\f[]\s[0]"  at (1.981, -0.335)
+box wid 0.692 ht 0.583 at (2.777, -0.335) shaded "pm-eeeeee" outlined "pm-eeeed6" thickness 0.625
+box wid 0.483 ht 0.375 at (2.777, -0.335) shaded "pm-99ccff" outlined "pm-9370db" thickness 0.625
+"\s[10]\f[TS]\m[pm-333333]d\m[]\f[]\s[0]"  at (2.777, -0.335)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

@@ -20,7 +20,8 @@ user journeys (`journey`), timelines (`timeline`), Gantt
 charts (`gantt`), pie charts (`pie`), quadrant charts
 (`quadrantChart`), XY charts (`xychart`), radar charts
 (`radar-beta`), sankey diagrams (`sankey-beta`), git graphs
-(`gitGraph`), mindmaps (`mindmap`) and treemaps (`treemap-beta`).
+(`gitGraph`), mindmaps (`mindmap`), treemaps (`treemap-beta`) and
+block diagrams (`block-beta`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -882,6 +883,38 @@ Mermaid fits them.
 
 In ConTeXt, a treemap's labels are set in the document's font, but no
 wider than pomermaid measured them, as the boxes do not grow.
+
+### Block diagrams
+
+pomermaid reads Mermaid's block diagrams (`block-beta` or `block`), as
+Mermaid 12.3.0 reads them, and lays them out as Mermaid does: each
+block's size is its shape's round its label, every block in a row of
+columns is made as wide as the widest and as high as the highest, and
+blocks are placed in rows, left to right.
+
+- **The first line:** `block-beta` or `block`.
+- **Blocks:** ids, with an optional label and shape, several to a
+  line: `a["A label"] b(("circle"))`. The shapes are flowcharts':
+  `[...]`, `(...)`, `([...])`, `[[...]]`, `[(...)]`, `((...))`,
+  `(((...)))`, `>...]`, `{...}`, `{{...}}`, `[/.../]`, `[\...\]`,
+  `[/...\]` and `[\.../]`. `:n` after a block makes it n columns
+  wide.
+- **Block arrows:** `id<["label"]>(right)`, with `left`, `up`, `down`,
+  `x` (left and right) and `y` (up and down), or a list of them.
+- **`columns n`** or **`columns auto`** (all in one row, the default).
+- **`space`** and **`space:n`:** empty cells.
+- **Composite blocks:** `block:id` (or `block:id:n`, n columns wide,
+  or `block` alone), its blocks, and `end`; it may have its own
+  `columns`.
+- **Links:** `a --> b`, `a --- b`, `a ==> b` (thick), `a -.-> b`
+  (dotted), `a --x b`, `a --o b`, `a <--> b`, and a label: `a --
+  "label" --> b`. One link to a statement.
+- **Styles:** `classDef`, `class a,b name` and `style a fill:#f00`;
+  `fill`, `stroke`, `stroke-width` and `color` are drawn; outlines
+  are not dashed.
+- **Configuration:** `block`'s `padding` (8, between and round
+  blocks).
+- **`accTitle`,** `accDescr` (read and ignored), and `%%` comments.
 
 Mermaid's other diagram types are not read yet.
 

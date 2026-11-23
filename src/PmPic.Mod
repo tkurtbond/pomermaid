@@ -103,14 +103,16 @@ BEGIN
 END Paint;
 
 (* A line of text, s[0 ..], escaped for groff: "\" as \e, '"' as \(dq,
-   anything outside ASCII as \[uXXXX] *)
+   a no-break space as "\ ", anything else outside ASCII as \[uXXXX] *)
 PROCEDURE EscapedPart(VAR s: ARRAY OF CHAR; i, end: LONGINT);
   VAR c: LONGINT;
 BEGIN
   WHILE i < end DO
     IF s[i] >= 80X THEN
       c := M.Decode(s, i, end);
-      W("\[u"); IF c > 0FFFFH THEN HexCase(c, 5, TRUE) ELSE HexCase(c, 4, TRUE) END; W("]")
+      IF c = 0A0H THEN W("\ ")  (* groff has no u00A0 *)
+      ELSE W("\[u"); IF c > 0FFFFH THEN HexCase(c, 5, TRUE) ELSE HexCase(c, 4, TRUE) END; W("]")
+      END
     ELSE
       IF s[i] = "\" THEN W("\e")
       ELSIF s[i] = '"' THEN W("\(dq")

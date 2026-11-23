@@ -1089,6 +1089,41 @@ steps:
   pomermaid measured them (decision 43).
 - **27.5:** Mermaid's examples; the documentation.
 
+### Phase 28: block diagrams [done]
+
+**Change:** `block-beta` and `block`, read by a new module,
+`PmBlock`, into a tree of blocks (each with its shape, label, width
+in columns, block-arrow directions, classes and style), composite
+blocks with their columns, spaces, and the links between blocks;
+`PmBlockDump` writes the model for `-t dump`. `PmBlockLayout` sizes
+and places the blocks as Mermaid does (`setBlockSizes` and
+`layoutBlocks`: the widest child sets the column width, spans add
+the padding between them, rows take their tallest block), draws each
+shape from Mermaid's formulas, and cuts each link at the outlines of
+its two blocks; `PmDrawPic`, `PmSvg` and `PmDrawMp` draw it.
+`PmStyle` gives the blocks' and links' colours (`BlockStyle`,
+`BlockEdgeStyle`).
+
+**Check:** case tests for columns, spans, composite blocks, every
+shape, block arrows, spaces, links with their markers and labels,
+classes and styles, the warnings and the errors; Mermaid's own block
+examples read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/block.md` and
+`diagrams/block/` (`parser/block.jison`, `blockDB.ts`, `layout.ts`,
+`renderHelpers.ts`, `blockRenderer.ts`), the shapes it draws with
+(`rendering-util/rendering-elements/shapes/`) and `blockArrow.ts`.
+In steps:
+
+- **28.1, the model and the reader:** the jison lexer's tokens, with
+  its word boundaries; composite blocks, columns, widths, spaces,
+  links, classes and styles; the dump.
+- **28.2, the layout:** sizes, positions and the filled-columns rule;
+  the shapes and the block arrows.
+- **28.3, pic, SVG and MetaPost:** the drawing, links cut at the
+  outlines, their markers and labels.
+- **28.4:** Mermaid's examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1362,6 +1397,30 @@ None at present.
     and size, relative to the body font; a treemap's boxes are fixed
     and do not grow around them, so each label is shrunk, if it must
     be, to the width pomermaid measured, and stays in its box.
+44. **Block diagrams: what Mermaid accepts but cannot draw is an
+    error** (2026-11-23): a chain of links (`a --> b --> c`), a link
+    in a composite block's header, `style` for a block that does not
+    exist, a width of 0 and `columns 0`. A `class` for an unknown id
+    is ignored, as in Mermaid.
+45. **Blocks Mermaid keeps but does not draw are warned of**
+    (2026-11-23): a block defined a second time, the blocks of a
+    composite block defined a second time, a block named by `class`
+    before it is defined, and a block whose id is `root`. Links to
+    them are left out. Generated ids (`id-1`, ...) are numbered in
+    order, so the output does not change from run to run.
+46. **Block class names are split at blanks** (2026-11-23); a
+    `class` id with blanks before it, which Mermaid looks up with the
+    blanks, is ignored with a warning. `classDef` and `style` are read
+    as the flowcharts' are (`PmFlow.Props`); in `style`, `;` ends a
+    declaration as `,` does, as in the CSS Mermaid puts it in.
+47. **Block labels are measured with pomermaid's metrics and not
+    wrapped** (2026-11-23).
+48. **Block outlines are approximated** (2026-11-23): links are cut
+    where they leave the drawn outline of each block; a stadium is a
+    box with round ends; a cylinder is a polygon, its arcs taken at 16
+    points; outlines are never dashed; the arrowheads, circles and
+    crosses at the ends of links are drawn about as Mermaid's markers
+    are.
 
 ## Later
 
@@ -2100,5 +2159,24 @@ and drawn as SVG and looked at; the cases were drawn through groff and
 ConTeXt (at 12 and 8 points) and looked at. Mermaid itself was not
 run.
 On 2026-11-23, `make test` passes, 596 of 596 under both models, on
+FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
+(jherek, cymoril).
+
+2026-11-23, Phase 28: block diagrams. `PmBlock` reads `block-beta`
+and `block` (`PmBlockDump` writes its model for `-t dump`),
+`PmBlockLayout` lays it out as Mermaid does in a `PmDraw.Drawing`,
+and `PmDrawPic`, `PmSvg` and `PmDrawMp` draw it. `make test` passes
+under `-O2` and `-OC`: 656 case tests, with `block-basic`,
+`block-columns`, `block-composite`, `block-shapes`, `block-arrows`,
+`block-space`, `block-edges`, `block-styles` and
+`block-style-semicolon` (dump, layout, pic, mp and svg-ms), two
+warning cases (`block-redefined`, `block-class-blank`) and five error
+cases (`block-chain`, `block-header-link`, `block-style-unknown`,
+`block-width-zero`, `block-columns-zero`). All 60 of Mermaid's block
+examples (`docs/syntax/block.md`) were read and drawn as SVG and
+looked at; the cases were drawn through groff and ConTeXt and looked
+at. Mermaid itself was not run. pic now writes a no-break space as
+`\ `, as groff has no `u00A0`.
+On 2026-11-23, `make test` passes, 656 of 656 under both models, on
 FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
 (jherek, cymoril).

@@ -855,6 +855,49 @@ BEGIN
   END
 END ClusterStyle;
 
+(* rgb at opacity a over white, rounded, or None *)
+PROCEDURE Fade(rgb: LONGINT; a: LONGREAL): LONGINT;
+  VAR k, c, r, m: LONGINT;
+BEGIN
+  IF rgb = None THEN RETURN None END;
+  r := 0; m := 1;
+  FOR k := 0 TO 2 DO
+    c := rgb DIV m MOD 100H;
+    r := r + ENTIER(c * a + 255 * (1 - a) + 0.5D0) * m;
+    m := m * 100H
+  END;
+  RETURN r
+END Fade;
+
+(* st, a block's style in a block diagram: a composite block's is the
+   clusters' colours, its fill at 0.5 and its outline at 0.2 over
+   white, any other's the nodes'; then classDef default, if it has no
+   classes, or its classes', then its style statement's *)
+PROCEDURE BlockStyle*(g: F.Graph; composite: BOOLEAN; classes: F.Name; style: F.Prop; VAR st: Style);
+BEGIN
+  IF composite THEN
+    st.fill := ThemeColour(Fade(clusterFill, 0.5D0)); st.line := ThemeColour(Fade(clusterLine, 0.2D0))
+  ELSE st.fill := ThemeColour(nodeFill); st.line := ThemeColour(nodeLine)
+  END;
+  st.text := ThemeColour(nodeText); st.width := px; st.dash := 0; st.inner := NoColour;
+  IF classes = NIL THEN ApplyClass(g, st, "default")
+  ELSE
+    WHILE classes # NIL DO ApplyClass(g, st, classes.name^); classes := classes.next END
+  END;
+  Apply(st, style)
+END BlockStyle;
+
+(* st, an edge's style in a block diagram: the line colour, 2 pixels
+   wide, 3.5 if thick, dashed 3 if dotted; its label in the text
+   colour *)
+PROCEDURE BlockEdgeStyle*(thick, dotted: BOOLEAN; VAR st: Style);
+BEGIN
+  st.fill := NoColour; st.line := ThemeColour(edgeLine); st.text := ThemeColour(textColour);
+  st.width := 2 * px; st.dash := 0; st.inner := NoColour;
+  IF thick THEN st.width := 3.5 * px END;
+  IF dotted THEN st.dash := 3 * px END
+END BlockEdgeStyle;
+
 (* st, edge e's style: Mermaid's default theme for its kind of line
    and diagram, then its class statements', then its linkStyle *)
 PROCEDURE EdgeStyle*(g: F.Graph; e: F.Edge; VAR st: Style);

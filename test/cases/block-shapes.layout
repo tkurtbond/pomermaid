@@ -1,0 +1,35 @@
+layout width=335.1 height=243.65
+rect at=(19.82,3.13) w=70.4 h=55.6 fill=#ececff line=#9370db width=0.63
+text at=(55.02,30.92) size=10 w=28.8 line=#333333 text="square"
+rect at=(95.22,3.13) w=70.4 h=55.6 r=3.13 fill=#ececff line=#9370db width=0.63
+text at=(130.42,30.92) size=10 w=24 line=#333333 text="round"
+rect at=(184.04,22.42) w=43.57 h=17 r=8.5 fill=#ececff line=#9370db width=0.63
+text at=(205.82,30.92) size=10 w=33.6 line=#333333 text="stadium"
+rect at=(246.02,3.13) w=70.4 h=55.6 fill=#ececff line=#9370db width=0.63
+line (251.02,3.13) (251.02,58.72) fill=none line=#9370db width=0.63
+line (311.42,3.13) (311.42,58.72) fill=none line=#9370db width=0.63
+text at=(281.22,30.92) size=10 w=48 line=#333333 text="subroutine"
+poly (19.82,71.13) (19.82,111.92) (20.5,113.36) (22.5,114.75) (25.76,116.03) (30.13,117.16) (35.47,118.08) (41.55,118.76) (48.16,119.18) (55.02,119.32) (61.89,119.18) (68.5,118.76) (74.58,118.08) (79.92,117.16) (84.29,116.03) (87.55,114.75) (89.55,113.36) (90.22,111.92) (90.22,71.13) (89.55,69.69) (87.55,68.3) (84.29,67.02) (79.92,65.89) (74.58,64.97) (68.5,64.29) (61.89,63.87) (55.02,63.72) (48.16,63.87) (41.55,64.29) (35.47,64.97) (30.13,65.89) (25.76,67.02) (22.5,68.3) (20.5,69.69) (19.82,71.13) fill=#ececff line=#9370db width=0.63
+curve (19.82,71.13) (19.82,75.22) (35.58,78.54) (55.02,78.54) (74.47,78.54) (90.22,75.22) (90.22,71.13) fill=none line=#9370db width=0.63
+text at=(55.02,94.86) size=10 w=38.4 line=#333333 text="cylinder"
+circle at=(130.42,91.52) r=18.1 fill=#ececff line=#9370db width=0.63
+text at=(130.42,91.52) size=10 w=28.8 line=#333333 text="circle"
+circle at=(205.82,91.52) r=43.32 fill=#ececff line=#9370db width=0.63
+circle at=(205.82,91.52) r=40.2 fill=#ececff line=#9370db width=0.63
+text at=(205.82,91.52) size=10 w=28.8 line=#333333 text="double"
+poly (246.02,63.72) (259.92,91.52) (246.02,119.32) (316.42,119.32) (316.42,63.72) fill=#ececff line=#9370db width=0.63
+text at=(288.17,91.52) size=10 w=19.2 line=#333333 text="flag"
+poly (55.34,179.92) (83.14,152.13) (55.34,124.32) (27.54,152.13) fill=#ececff line=#9370db width=0.63
+text at=(55.02,152.13) size=10 w=33.6 line=#333333 text="diamond"
+poly (109.13,179.92) (151.72,179.92) (165.63,152.13) (151.72,124.32) (109.13,124.32) (95.22,152.13) fill=#ececff line=#9370db width=0.63
+text at=(130.42,152.13) size=10 w=33.6 line=#333333 text="hexagon"
+poly (152.67,179.92) (231.17,179.92) (258.97,124.32) (180.47,124.32) fill=#ececff line=#9370db width=0.63
+text at=(205.82,152.13) size=10 w=45.7 line=#333333 text="lean right"
+poly (258.27,179.92) (331.97,179.92) (304.17,124.32) (230.47,124.32) fill=#ececff line=#9370db width=0.63
+text at=(281.22,152.13) size=10 w=40.9 line=#333333 text="lean left"
+poly (3.13,240.52) (106.92,240.52) (79.13,184.92) (30.92,184.92) fill=#ececff line=#9370db width=0.63
+text at=(55.02,212.72) size=10 w=43.2 line=#333333 text="trapezoid"
+poly (106.22,240.52) (154.63,240.52) (182.42,184.92) (78.42,184.92) fill=#ececff line=#9370db width=0.63
+text at=(130.42,212.72) size=10 w=38.4 line=#333333 text="inverted"
+rect at=(170.63,184.92) w=70.4 h=55.6 fill=#ececff line=#9370db width=0.63
+text at=(205.82,212.72) size=10 w=9.6 line=#333333 text="na"

@@ -1,0 +1,3 @@
+block padding=8 blocks=2 edges=0 columns=auto
+  composite id="g" label="" columns=auto
+    composite id="a" label="" columns=auto

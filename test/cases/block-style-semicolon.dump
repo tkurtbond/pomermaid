@@ -1,0 +1,3 @@
+block padding=8 blocks=2 edges=0 columns=2
+  na id="a" label="a" style=["fill":"#969"]
+  na id="b" label="b" style=["fill":"#ff0" "stroke":"#f00" "stroke-width":"2px"]
