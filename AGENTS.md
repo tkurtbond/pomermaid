@@ -59,7 +59,10 @@ relationship diagrams, `PmEr`: entities with attribute tables,
 crow's-foot ends, subgraphs) and 15 (requirement diagrams, `PmReq`:
 requirement and element boxes, contains and arrow ends) and 16
 (sequence diagrams: `PmSeq`, `PmSeqLayout`, `PmSeqPic`, and
-`PmSeqMp` with its own macros, `mp/pomermaid-seq.mp`) are done. See
+`PmSeqMp` with its own macros, `mp/pomermaid-seq.mp`) and 17 (user
+journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
+`PmJourneyMp`, which writes the MetaPost directly, without macros) are
+done. See
 PLAN.md's State.
 
 ## Reference material

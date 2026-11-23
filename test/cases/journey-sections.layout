@@ -1,0 +1,14 @@
+layout width=430.78 height=153.04 left=75.34 top=2.94
+actor 0 circle=(5.88,5.88) name=(14.69,5.88) lines=1
+actor 1 circle=(5.88,11.75) name=(14.69,11.75) lines=1
+section 0 at=(134.09,2.94) w=102.81 h=14.69 text="Morning"
+section 1 at=(251.59,2.94) w=44.06 h=14.69 text="Evening"
+section 2 at=(310.34,2.94) w=102.81 h=14.69 text="Morning"
+task 0 at=(75.34,20.56) w=44.06 h=31.14 face=(97.37,110.45) text="Before any section"
+task 1 at=(134.09,20.56) w=44.06 h=31.14 face=(156.12,136.89) text="Wake"
+task 2 at=(192.84,20.56) w=44.06 h=31.14 face=(214.87,75.2) text="Breakfast with a"/"very long"/"description that"/"has to wrap in its"/"box"
+task 3 at=(251.59,20.56) w=44.06 h=31.14 face=(273.62,114.86) text="Supper"
+task 4 at=(310.34,20.56) w=44.06 h=31.14 face=(332.37,145.7) text="A second morning"
+task 5 at=(369.09,20.56) w=44.06 h=31.14 face=(391.12,136.89) text="Blank score"
+lines from=20.56 to=136.89
+activity from=(75.34,63.45) to=(427.84,63.45)

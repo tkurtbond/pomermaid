@@ -1,0 +1,13 @@
+layout width=424.79 height=159.43 left=77.6 top=18.49
+title at=(77.6,8.39) w=53.05
+actor 0 circle=(6.88,21.93) name=(17.19,21.93) lines=1
+actor 1 circle=(6.88,28.81) name=(17.19,28.81) lines=1
+section 0 at=(77.6,18.49) w=189.06 h=17.19 text="Go to work"
+section 1 at=(283.85,18.49) w=120.31 h=17.19 text="Go home"
+task 0 at=(77.6,39.12) w=51.56 h=17.19 face=(103.39,104.43) text="Make tea"
+task 1 at=(146.35,39.12) w=51.56 h=17.19 face=(172.14,125.06) text="Go upstairs"
+task 2 at=(215.1,39.12) w=51.56 h=17.19 face=(240.89,145.68) text="Do work"
+task 3 at=(283.85,39.12) w=51.56 h=17.19 face=(309.64,104.43) text="Go downstairs"
+task 4 at=(352.6,39.12) w=51.56 h=17.19 face=(378.39,104.43) text="Sit down"
+lines from=39.12 to=155.99
+activity from=(77.6,70.06) to=(421.35,70.06)

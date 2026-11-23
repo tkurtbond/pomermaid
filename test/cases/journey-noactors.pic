@@ -1,0 +1,55 @@
+.defcolor pm-ececff rgb #ececff
+.defcolor pm-666666 rgb #666666
+.defcolor pm-ffffde rgb #ffffde
+.defcolor pm-ffecfe rgb #ffecfe
+.defcolor pm-deffe0 rgb #deffe0
+.defcolor pm-ecfffe rgb #ecfffe
+.defcolor pm-ffdee0 rgb #ffdee0
+.defcolor pm-ffefec rgb #ffefec
+.defcolor pm-defbff rgb #defbff
+.defcolor pm-000000 rgb #000000
+.defcolor pm-fff8dc rgb #fff8dc
+.defcolor pm-999999 rgb #999999
+.defcolor pm-333333 rgb #333333
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 3.993 ht 3.646 at (1.997, -1.823)
+box wid 3.038 ht 0.434 at (1.953, -0.304) rad 0.026 shaded "pm-ececff" outlined "pm-666666" thickness 0.625
+"\f[TS]\m[pm-333333]Only\m[]\f[]"  at (1.953, -0.304)
+line from (1.085, -0.608) to (1.085, -3.559) outlined "pm-333333" thickness 0.625 dashed 0.035
+circle rad 0.13 at (1.085, -2.257) shaded "pm-fff8dc" outlined "pm-999999" thickness 1.25
+circle rad 0.022 at (1.042, -2.214) shaded "pm-666666" outlined "pm-666666" thickness 0
+circle rad 0.022 at (1.128, -2.214) shaded "pm-666666" outlined "pm-666666" thickness 0
+line from (1.024, -2.274) to (1.025, -2.282) to (1.026, -2.29) to (1.029, -2.298) \
+  to (1.032, -2.305) to (1.037, -2.311) to (1.042, -2.317) to (1.048, -2.323) \
+  to (1.055, -2.327) to (1.062, -2.33) to (1.069, -2.333) to (1.077, -2.335) \
+  to (1.085, -2.335) to (1.093, -2.335) to (1.101, -2.333) to (1.108, -2.33) \
+  to (1.115, -2.327) to (1.122, -2.323) to (1.128, -2.317) to (1.133, -2.311) \
+  to (1.138, -2.305) to (1.141, -2.298) to (1.144, -2.29) to (1.145, -2.282) \
+  to (1.146, -2.274) outlined "pm-666666" thickness 0.938
+box wid 1.302 ht 0.434 at (1.085, -0.825) rad 0.026 shaded "pm-ececff" outlined "pm-666666" thickness 0.625
+"\f[TS]\m[pm-333333]One\m[]\f[]"  at (1.085, -0.825)
+line from (2.821, -0.608) to (2.821, -3.559) outlined "pm-333333" thickness 0.625 dashed 0.035
+circle rad 0.13 at (2.821, -3.299) shaded "pm-fff8dc" outlined "pm-999999" thickness 1.25
+circle rad 0.022 at (2.778, -3.255) shaded "pm-666666" outlined "pm-666666" thickness 0
+circle rad 0.022 at (2.865, -3.255) shaded "pm-666666" outlined "pm-666666" thickness 0
+line from (2.882, -3.359) to (2.881, -3.351) to (2.88, -3.344) to (2.877, -3.336) \
+  to (2.874, -3.329) to (2.869, -3.322) to (2.864, -3.316) to (2.858, -3.311) \
+  to (2.852, -3.307) to (2.844, -3.303) to (2.837, -3.301) to (2.829, -3.299) \
+  to (2.821, -3.299) to (2.813, -3.299) to (2.805, -3.301) to (2.798, -3.303) \
+  to (2.791, -3.307) to (2.784, -3.311) to (2.778, -3.316) to (2.773, -3.322) \
+  to (2.769, -3.329) to (2.765, -3.336) to (2.762, -3.344) to (2.761, -3.351) \
+  to (2.76, -3.359) outlined "pm-666666" thickness 0.938
+box wid 1.302 ht 0.434 at (2.821, -0.825) rad 0.026 shaded "pm-ececff" outlined "pm-666666" thickness 0.625
+"\f[TS]\m[pm-333333]Two\m[]\f[]"  at (2.821, -0.825)
+line from (0.434, -1.389) to (3.698, -1.389) outlined "pm-333333" thickness 2.5
+"\M[pm-333333]\v'-0.22m'\D'P 0.208i 0.07i -0.208i 0.069i'\M[]" ljust at (3.698, -1.319)
+line from (3.698, -1.319) to (3.906, -1.389) to (3.698, -1.458) to (3.698, -1.319) outlined "pm-333333" thickness 0.625
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

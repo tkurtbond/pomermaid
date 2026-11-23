@@ -15,7 +15,8 @@ It reads flowcharts (`flowchart` and `graph`), state diagrams
 (`stateDiagram-v2` and `stateDiagram`), class diagrams
 (`classDiagram` and `classDiagram-v2`), entity relationship
 diagrams (`erDiagram`), requirement diagrams
-(`requirementDiagram`) and sequence diagrams (`sequenceDiagram`).
+(`requirementDiagram`), sequence diagrams (`sequenceDiagram`) and
+user journeys (`journey`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -391,6 +392,39 @@ them, and lays them out in its own simpler way, from the top down:
 
 Read and ignored: `accTitle`, `accDescr`, `links`, `link`,
 `properties` and `details`.
+
+### User journeys
+
+pomermaid reads Mermaid's user journeys, as Mermaid 12.3.0 reads them,
+and draws them as Mermaid does: the actors' legend at the left, the
+sections above their tasks, the activity line, and below it each
+task's face, higher for a higher score, on a dashed line from the
+task.
+
+- **The first line:** `journey`. Front matter and directives are read
+  as for a flowchart.
+- **Statements** end at a line's end or `;`. Keywords are read in any
+  case.
+- **The title:** `title text`. It is drawn in bold, above the
+  sections.
+- **Sections:** `section name`. The tasks after it are in it, until
+  the next. Tasks before the first section are in none; a section
+  named again after another is drawn again.
+- **Tasks:** `name: score: person, person`. The score is a number,
+  read as JavaScript reads one, so `: :` is 0; 5 is the best and 1
+  the worst. The people may be left out, with their `:`; each person
+  is an actor, shown in the legend once, in the order of their names'
+  bytes.
+- **Text:** a task's or a section's text is wrapped to its box, and
+  the boxes grow to hold the longest; an actor's name is wrapped at
+  360 pixels. Entities such as `#35;` are read as in flowcharts.
+- **Colours:** Mermaid's: each section, and its tasks, in the fill for
+  its number, and the actors in turn in six colours. The theme
+  variables `fillType0` to `fillType7`, `actor0` to `actor5` and
+  `faceColor` change them.
+- **Comments:** `%%` comments and `#` comments.
+
+Read and ignored: `accTitle` and `accDescr`.
 
 Mermaid's other diagram types are not read yet.
 

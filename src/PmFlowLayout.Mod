@@ -162,7 +162,7 @@ END Clip;
    Mermaid wraps a label wider than its wrappingWidth: each line as many
    words as fit, a word wider than maxW on a line of its own. lab itself
    when no line is too wide. *)
-PROCEDURE Wrap(font: M.Font; lab: F.Label; size, maxW: REAL): F.Label;
+PROCEDURE Wrap*(font: M.Font; lab: F.Label; size, maxW: REAL): F.Label;
   VAR
     r: F.Label; line, last: F.Line; t: Lx.Str; len, start, end, brk, k: LONGINT;
     wide: BOOLEAN;

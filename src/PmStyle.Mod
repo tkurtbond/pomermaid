@@ -37,6 +37,13 @@ TYPE
     barFill*, barLine*, number*, numberText*, title*: LONGINT
   END;
 
+  (* A user journey's colours, as 0RRGGBBH, or -1 for none *)
+  JourneyTheme* = RECORD
+    fill*: ARRAY 8 OF LONGINT;   (* the sections' and tasks', fillType0..7 *)
+    actor*: ARRAY 6 OF LONGINT;  (* the actors' circles, actor0..5 *)
+    face*, faceLine*, mouth*, line*, text*, boxLine*, boxText*, title*: LONGINT
+  END;
+
   Style* = RECORD
     fill*, line*, text*: INTEGER;  (* indexes into the colours, or NoColour *)
     inner*: INTEGER;               (* a composite state's body's fill, below
@@ -348,6 +355,29 @@ BEGIN
   t.numberText := 0FFFFFFH; set := Var("sequenceNumberColor", t.numberText);
   t.title := titleColour
 END SeqColours;
+
+(* t, a user journey's colours: the default theme's and Mermaid's
+   journey's (sectionFills, actorColours and its styles), changed by
+   the themeVariables fillType0 to fillType7, actor0 to actor5,
+   faceColor, textColor and titleColor *)
+PROCEDURE JourneyColours*(VAR t: JourneyTheme);
+  VAR set: BOOLEAN; k: INTEGER; name: ARRAY 16 OF CHAR;
+BEGIN
+  t.fill[0] := 0ECECFFH; t.fill[1] := 0FFFFDEH; t.fill[2] := 0FFECFEH;
+  t.fill[3] := 0DEFFE0H; t.fill[4] := 0ECFFFEH; t.fill[5] := 0FFDEE0H;
+  t.fill[6] := 0FFEFECH; t.fill[7] := 0DEFBFFH;
+  t.actor[0] := 08FBC8FH; t.actor[1] := 07CFC00H; t.actor[2] := 000FFFFH;
+  t.actor[3] := 020B2AAH; t.actor[4] := 0B0E0E6H; t.actor[5] := 0FFFFE0H;
+  name := "fillType0";
+  FOR k := 0 TO 7 DO name[8] := CHR(ORD("0") + k); set := Var(name, t.fill[k]) END;
+  name := "actor0";
+  FOR k := 0 TO 5 DO name[5] := CHR(ORD("0") + k); set := Var(name, t.actor[k]) END;
+  t.face := 0FFF8DCH; set := Var("faceColor", t.face);
+  t.faceLine := 0999999H; t.mouth := 0666666H;
+  t.line := textColour; t.text := textColour;
+  t.boxLine := 0666666H; t.boxText := 0333333H;
+  t.title := titleColour
+END JourneyColours;
 
 (* Applies the classDefs named name *)
 PROCEDURE ApplyClass(g: F.Graph; VAR st: Style; name: ARRAY OF CHAR);

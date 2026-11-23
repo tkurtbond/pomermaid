@@ -1,0 +1,11 @@
+layout width=428.56 height=165.23 left=194.83 top=19.17
+title at=(194.83,8.69) w=230.17
+actor 0 circle=(7.13,22.73) name=(17.81,29.57) lines=3
+actor 1 circle=(7.13,44.1) name=(17.81,44.1) lines=1
+actor 2 circle=(7.13,51.23) name=(17.81,51.23) lines=1
+section 0 at=(194.83,19.17) w=53.44 h=17.81 text="First"
+section 1 at=(266.08,19.17) w=53.44 h=17.81 text="Second"
+task 0 at=(194.83,40.54) w=53.44 h=17.81 face=(221.54,118.92) text="Start"
+task 1 at=(266.08,40.54) w=53.44 h=17.81 face=(292.79,140.29) text="Finish"
+lines from=40.54 to=161.67
+activity from=(194.83,72.6) to=(337.33,72.6)

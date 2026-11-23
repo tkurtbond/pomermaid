@@ -2,7 +2,7 @@ MODULE pomermaid;
 (* pomermaid: Mermaid diagrams drawn in pic, for groff, and MetaPost,
    for ConTeXt, and SVG made from the pic through groff. The command line is PmOptions'. See PLAN.md. *)
 
-IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
+IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
 
 VAR
   text: PmIO.Text;
@@ -10,9 +10,11 @@ VAR
   sc: L.Scanner;
   g: PmFlow.Graph;
   seq: PmSeq.Diagram;
+  jour: PmJourney.Diagram;
   font: M.Font;
   lay: FL.Layout;
   slay: SL.Layout;
+  jlay: JL.Layout;
 
 BEGIN
   O.Parse;
@@ -28,8 +30,9 @@ BEGIN
     ELSIF PmEr.IsEr(sc) THEN PmEr.Read(sc, g)
     ELSIF PmReq.IsReq(sc) THEN PmReq.Read(sc, g)
     ELSIF PmSeq.IsSeq(sc) THEN PmSeq.Read(sc, seq)
+    ELSIF PmJourney.IsJourney(sc) THEN PmJourney.Read(sc, jour)
     ELSIF PmFlow.IsFlowchart(sc) THEN PmFlow.Read(sc, g)
-    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram and sequenceDiagram")
+    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram and journey")
     END;
     IF O.to # "dump" THEN
       IF O.fontPath # "" THEN M.SetPath(O.fontPath) END;
@@ -38,7 +41,19 @@ BEGIN
       END;
       M.LoadStyles(font)
     END;
-    IF (seq # NIL) & (O.to = "svg") THEN
+    IF (jour # NIL) & (O.to = "svg") THEN
+      JL.Fit(jour, font, O.size, O.width, jlay);
+      PmSvg.WriteJourney(jlay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
+    ELSIF jour # NIL THEN
+      PmIO.OpenOutput(O.output);
+      IF O.to = "dump" THEN PmJourneyDump.Write(jour)
+      ELSIF O.to = "layout" THEN JL.Fit(jour, font, O.size, O.width, jlay); PmJourneyDump.WriteLayout(jlay)
+      ELSIF O.to = "pic" THEN JL.Fit(jour, font, O.size, O.width, jlay); PmJourneyPic.Write(jlay, O.font)
+      ELSIF O.to = "svg-ms" THEN JL.Fit(jour, font, O.size, O.width, jlay); PmSvg.WriteJourneyDocument(jlay, O.font)
+      ELSIF O.to = "mp" THEN PmJourneyMp.Write(jour, O.size, O.width)
+      ELSE PmIO.Fail("", "no writer for this format yet", PmIO.UnknownWriter)
+      END
+    ELSIF (seq # NIL) & (O.to = "svg") THEN
       SL.Fit(seq, font, O.size, O.width, slay);
       PmSvg.WriteSeq(slay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSIF seq # NIL THEN
@@ -55,7 +70,7 @@ BEGIN
       PmSvg.Write(lay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSE PmIO.OpenOutput(O.output)
     END;
-    IF (seq # NIL) OR (O.to = "svg") THEN
+    IF (seq # NIL) OR (jour # NIL) OR (O.to = "svg") THEN
     ELSIF O.to = "svg-ms" THEN FL.Fit(g, font, O.size, O.width, lay); PmSvg.WriteDocument(lay, O.font)
     ELSIF O.to = "dump" THEN PmDump.Write(g)
     ELSIF O.to = "layout" THEN FL.Fit(g, font, O.size, O.width, lay); PmDump.WriteLayout(lay)

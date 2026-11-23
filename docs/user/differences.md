@@ -175,6 +175,26 @@ differences:
   are left as they are. A character the font lacks, such as Latin Modern's `♥`,
   is not drawn.
 
+## User journeys
+
+- **The title** is drawn above the sections, at 1.5 times the
+  labels' size, where Mermaid draws it over the top of the first
+  section.
+- **The left margin.** The tasks start 150 pixels to the right of the
+  widest actor's name, or 50 pixels in when there are no actors.
+  Mermaid works it out from the names' lengths in characters.
+- **Text in boxes** is wrapped to its box, and the sections' and the
+  tasks' boxes grow to hold the longest, moving the activity line and
+  the faces down. Mermaid wraps the text but keeps the boxes 50
+  pixels high.
+- **Scores far out of 1 to 5** put a face above the top of the
+  drawing in Mermaid; pomermaid moves the drawing down to make room.
+- **Colours.** The sections' fills are Mermaid's defaults, or the
+  `fillType0` to `fillType7` theme variables; they are not worked out
+  from `primaryColor` as Mermaid's themes do. The `journey`
+  configuration's `actorColours` is not read; the theme variables
+  `actor0` to `actor5` are.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

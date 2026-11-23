@@ -1,0 +1,6 @@
+layout width=287.5 height=262.5 left=31.25 top=6.25
+section 0 at=(31.25,6.25) w=218.75 h=31.25 text="Only"
+task 0 at=(31.25,43.75) w=93.75 h=31.25 face=(78.13,162.5) text="One"
+task 1 at=(156.25,43.75) w=93.75 h=31.25 face=(203.13,237.5) text="Two"
+lines from=43.75 to=256.25
+activity from=(31.25,100) to=(281.25,100)

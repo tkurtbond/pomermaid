@@ -682,6 +682,41 @@ theme. In steps:
   text (decision 3).
 - **16.5:** Mermaid's own examples; the documentation.
 
+### Phase 17: user journeys [done]
+
+**Change:** `journey`, read by a new module, `PmJourney`, into a model
+of its own (the title, the sections, the tasks with their scores and
+people, the actors), laid out by `PmJourneyLayout` on Mermaid's fixed
+geometry, and drawn in pic, SVG and MetaPost.
+
+**Check:** case tests for each construct and error; Mermaid's own
+journey example read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/userJourney.md`,
+`diagrams/user-journey/parser/journey.jison`, `journeyDb.js`,
+`journeyRenderer.ts`, `svgDraw.js`, `styles.js` and the default
+theme. In steps:
+
+- **17.1, the model and the reader:** `title`, `section`, tasks
+  (`name: score: person, person`), `accTitle`/`accDescr`, comments,
+  front matter and directives, keywords in any case; the actors, the
+  people of all tasks, each once, sorted; the dump.
+- **17.2, the layout:** Mermaid's pixels at the labels' size: the
+  legend (a circle and the name of each actor, wrapped at 360
+  pixels), the left margin from its widest name, sections and tasks
+  150 by 50 pixels 50 apart, the task lines, the faces by score, the
+  activity line with its arrow; task and section text wrapped to their
+  boxes, with PmMetrics' text widths, the sections' and the tasks'
+  boxes as high as the highest, and what is below moved down by as
+  much; the layout dump.
+- **17.3, pic and SVG:** the drawing; the colours of the default
+  theme (fillType0 ... 6 for sections, the actors' colours, faceColor,
+  textColor), changed by themeVariables.
+- **17.4, MetaPost:** the same drawing written directly, its text
+  widths from ConTeXt's (decision 3): the legend's names set the left
+  margin, task and section text is wrapped by `\framed`.
+- **17.5:** Mermaid's example; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1194,3 +1229,30 @@ clean copies: on the x86-64 hosts with 184 case tests, before
 dropped, as i386 (yishana, cymoril) rounds a few of their numbers
 differently in the last digit; after that, 181 case tests under both
 models on yishana and cymoril, 2026-11-22.
+
+2026-11-22, Phase 17: user journeys. `PmJourney` reads `journey`
+into a model of its own, following Mermaid 12.3.0's `journey.jison`,
+`journeyDb.js` and `journeyRenderer.ts`: `title`, `section`, tasks
+with scores (JavaScript's `Number`) and people, `accTitle`/`accDescr`,
+`%%` and `#` comments, front matter and directives; the actors are
+the people, each once, sorted by bytes. `PmJourneyLayout` lays it out
+on Mermaid's pixels at the labels' size, with the differences in
+`docs/user/differences.md` (the title above the sections, the left
+margin from the widest name, boxes that grow for wrapped text, room
+for faces far out of 1 to 5); `PmJourneyPic` draws it in pic, and SVG
+comes from that through groff; `PmJourneyMp` writes the MetaPost
+directly, with no macros, measuring the text with `textext` and
+`\framed` (decision 3). The colours are Mermaid's defaults, changed
+by `fillType0`..`7`, `actor0`..`5` and `faceColor`
+(`PmStyle.JourneyColours`). `make test` passes under `-O2` and `-OC`:
+202 case tests, with `journey-basic` (Mermaid's example; dump,
+layout, pic, mp, svg-ms), `journey-sections`, `journey-noactors` and
+`journey-theme` (dump, layout, pic, mp), and four error cases
+(`journeyBadScore`, `journeyColonOnly`, `journeyNoScore`,
+`journeySectionColon`); the list of diagram types changed `notFlow`.
+The four cases were drawn through groff (SVG, looked at) and through
+ConTeXt from `-t mp` (looked at), and `make render` ran on every case
+without an error. `gmake` and `gmake test` pass, 202 case tests under
+both models, on FreeBSD 15.1 (alerik, rackhir), NetBSD 11.0 (artos,
+yishana) and OpenBSD 7.9 (jherek, cymoril), from clean copies,
+2026-11-22.
