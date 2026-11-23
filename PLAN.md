@@ -2472,11 +2472,27 @@ with `zen-async`, `zen-types`, `zen-alias`, `zen-sync`, `zen-new`,
 `zen-assign`, `zen-return`, `zen-comment`, `zen-if`, `zen-try`,
 `zen-frags` (ZenUML's examples in Mermaid's documentation),
 `zen-order` (every construct) and `zen-empty` (dump, layout, pic, mp
-and svg-ms; `zen-assign`'s layout dropped, as i386 rounds a few of
-its numbers in the last digit) and four error cases (`zen-err-*`); `notFlow` now uses
+and svg-ms; `zen-assign`'s layout was dropped at first, as i386
+rounds a few of its numbers in the last digit, and restored below) and four error cases (`zen-err-*`); `notFlow` now uses
 `notADiagram`. The diagrams were drawn as SVG and looked at; this
 narrowed a comment's note from its whole block to its message.
 ZenUML itself was not run.
 On 2026-11-23, `make test` passes, 923 of 923 under both models, on
 FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
 (jherek, cymoril).
+
+2026-11-23: numbers within 0.01 in the case tests. Instead of dropping
+an expected `.layout` or `.pic` that i386 (yishana, cymoril) rounds a
+digit apart, `tools/runcases` now accepts one whose text matches and
+whose numbers are each within 0.01 of those expected, through the new
+`tools/numcmp`, when the exact `diff` fails. The seven files dropped
+in Phases 15, 16, 18, 21 and 33 are restored, made again from `-OC`'s
+output (`-O2`'s is the same): `req-elements.layout`,
+`seq-basic.layout`, `seq-basic.pic`, `seq-boxes.layout`,
+`timeline-nomulti.layout`, `quadrant-basic.layout` and
+`zen-assign.layout`. `numcmp` was tried on its own (equal, a number
+0.01 and 0.02 apart, other text, lines missing or added, an extra
+number, a sign changed, empty files). `make test` passes, 930 case
+tests under both models. On 2026-11-23, `make test` passes, 930 of 930
+under both models, on FreeBSD (alerik, rackhir), NetBSD (artos,
+yishana) and OpenBSD (jherek, cymoril), the i386 hosts included.

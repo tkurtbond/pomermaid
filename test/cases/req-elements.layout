@@ -1,0 +1,15 @@
+layout direction LR width=424.02 height=109.49
+node quoted name rank=0 order=0 x=28.66 y=45.45 w=57.32 h=41.71
+node iface rank=2 order=0 x=121.75 y=15.69 w=54.35 h=26.23
+node perf rank=8 order=0 x=394.78 y=73.85 w=58.48 h=31.39
+node phys rank=4 order=0 x=212.46 y=15.69 w=60.8 h=31.39
+node dc rank=6 order=0 x=305.24 y=34.18 w=46.1 h=26.23
+node sim rank=6 order=2 x=305.24 y=96.37 w=37.37 h=26.23
+node bare rank=4 order=1 x=212.46 y=52.67 w=25.71 h=15.7
+edge quoted name -> iface points=(57.32,27.42) (75.95,15.69) (94.58,15.69) label=(75.95,15.69)
+edge quoted name -> perf points=(57.32,62.66) (75.95,73.85) (121.75,73.85) (165.5,73.85) (212.46,73.85) (262.53,73.85) (305.24,73.85) (346.91,73.85) (365.54,73.85) label=(212.46,73.85)
+edge iface -> phys points=(148.93,15.69) (165.5,15.69) (182.06,15.69) label=(165.5,15.69)
+edge phys -> dc points=(242.86,15.69) (262.53,15.69) (282.19,24.21) label=(262.53,15.69)
+edge sim -> perf points=(323.92,96.37) (328.28,96.37) (328.28,96.37) (346.91,96.37) (365.54,87.61) label=(346.91,96.37)
+edge bare -> dc points=(225.32,52.67) (242.86,52.67) (242.86,52.67) (262.53,52.67) (282.19,44.16) label=(262.53,52.67)
+edge dc -> perf points=(328.28,34.18) (346.91,34.18) (365.54,58.16) label=(346.91,34.18)

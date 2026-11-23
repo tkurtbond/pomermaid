@@ -1,0 +1,19 @@
+layout width=430 height=167.49 actor-height=19.94
+box 0 from=(0,0) to=(99.44,167.49) title=(49.72,4.6)
+box 1 from=(112.88,0) to=(212.31,167.49) title=(162.59,4.6)
+participant "U" x=22.84 w=40.31 top=9.19 label-y=23.86 life=26.44 to=144.86 footer=144.86
+participant "W" x=76.59 w=40.31 top=9.19 label-y=23.86 life=26.44 to=144.86 footer=144.86
+participant "S" x=135.72 w=40.31 top=9.19 label-y=23.86 life=26.44 to=144.86 footer=144.86
+participant "D" x=189.47 w=40.31 top=9.19 label-y=19.16 life=29.13 to=144.86 footer=144.86
+participant "Q" x=248.59 w=40.31 top=9.19 label-y=19.16 life=29.13 to=144.86 footer=144.86
+participant "E" x=302.34 w=40.31 top=9.19 label-y=23.86 life=26.44 to=144.86 footer=144.86
+participant "L" x=356.09 w=40.31 top=9.19 label-y=19.16 life=29.13 to=144.86 footer=144.86
+participant "T" x=409.84 w=40.31 top=58.8 label-y=68.77 life=78.74 to=103.04
+0 message from=(22.84,41.28) to=(76.59,41.28) text=(49.72,37.09)
+1 message from=(76.59,53.43) to=(135.72,53.43) text=(106.16,49.23)
+2 message from=(135.72,68.77) to=(389.69,68.77) text=(262.7,64.58)
+3 message from=(135.72,90.89) to=(189.47,90.89) text=(162.59,86.7)
+4 message from=(409.84,103.04) to=(135.72,103.04) text=(272.78,98.85)
+5 message from=(135.72,115.19) to=(248.59,115.19) text=(192.16,110.99)
+6 message from=(248.59,127.33) to=(302.34,127.33) text=(275.47,123.14)
+7 message from=(302.34,139.48) to=(356.09,139.48) text=(329.22,135.29)

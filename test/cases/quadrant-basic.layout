@@ -1,0 +1,32 @@
+layout width=312.5 height=312.5
+quadrant 1 at=(164.38,28.13) w=145 h=132.5 fill=#ececff
+  text at=(236.88,36.25) size=10 w=73.9 centre colour=#131300 text="We should expand"
+quadrant 2 at=(19.38,28.13) w=145 h=132.5 fill=#f1f1ff
+  text at=(91.88,36.25) size=10 w=69.1 centre colour=#0e0e00 text="Need to promote"
+quadrant 3 at=(19.38,160.63) w=145 h=132.5 fill=#f6f6ff
+  text at=(91.88,168.75) size=10 w=52.7 centre colour=#090900 text="Re-evaluate"
+quadrant 4 at=(164.38,160.63) w=145 h=132.5 fill=#fbfbff
+  text at=(236.88,168.75) size=10 w=69.1 centre colour=#040400 text="May be improved"
+border from=(18.75,28.13) to=(310,28.13) width=1.25 colour=#c7c7f1
+border from=(309.38,28.75) to=(309.38,292.5) width=1.25 colour=#c7c7f1
+border from=(18.75,293.13) to=(310,293.13) width=1.25 colour=#c7c7f1
+border from=(19.38,28.75) to=(19.38,292.5) width=1.25 colour=#c7c7f1
+border from=(164.38,28.75) to=(164.38,292.5) width=0.63 colour=#c7c7f1
+border from=(20,160.63) to=(308.75,160.63) width=0.63 colour=#c7c7f1
+point at=(120.88,86.43) r=3.13 fill=#333333 stroke=none strokeWidth=0
+  text at=(120.88,93.3) size=7.5 w=36.83 centre colour=#131300 text="Campaign F"
+point at=(135.38,203.02) r=3.13 fill=#333333 stroke=none strokeWidth=0
+  text at=(135.38,209.9) size=7.5 w=36.83 centre colour=#131300 text="Campaign E"
+point at=(245.57,203.02) r=3.13 fill=#333333 stroke=none strokeWidth=0
+  text at=(245.57,209.9) size=7.5 w=36.83 centre colour=#131300 text="Campaign D"
+point at=(184.68,110.28) r=3.13 fill=#333333 stroke=none strokeWidth=0
+  text at=(184.68,117.15) size=7.5 w=36.83 centre colour=#131300 text="Campaign C"
+point at=(149.88,232.17) r=3.13 fill=#333333 stroke=none strokeWidth=0
+  text at=(149.88,239.05) size=7.5 w=36.83 centre colour=#131300 text="Campaign B"
+point at=(106.38,134.13) r=3.13 fill=#333333 stroke=none strokeWidth=0
+  text at=(106.38,141) size=7.5 w=36.83 centre colour=#131300 text="Campaign A"
+x-axis left at=(91.88,304.38) size=10 w=44.3 centre colour=#131300 text="Low Reach"
+x-axis right at=(236.88,304.38) size=10 w=49.1 centre colour=#131300 text="High Reach"
+y-axis bottom at=(8.13,226.88) size=10 w=68.3 centre rotated colour=#131300 text="Low Engagement"
+y-axis top at=(8.13,94.38) size=10 w=73.1 centre rotated colour=#131300 text="High Engagement"
+title at=(156.25,12.5) size=12.5 w=188.63 centre colour=#131300 text="Reach and engagement of campaigns"

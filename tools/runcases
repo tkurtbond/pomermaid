@@ -11,6 +11,8 @@
 # <name>.<ext>, its standard error with <name>.<ext>.errors, or
 # <name>.errors, or with nothing if there is neither, and its exit status
 # with the number in <name>.status, or with 0 if there is no such file.
+# A .layout or .pic matches if its numbers are within 0.01 of those
+# expected (tools/numcmp), as i386 rounds some the other way.
 # Results go in OUTDIR. Prints an "ok   - " or "FAIL - " line for each,
 # and exits 1 if any failed.
 
@@ -23,6 +25,7 @@ outdir=$2
 casedir=${3:-test/cases}
 
 case $prog in /*) ;; *) prog=$(pwd)/$prog ;; esac
+tools=$(cd "$(dirname "$0")" && pwd)
 mkdir -p "$outdir" || exit 2
 case $outdir in /*) ;; *) outdir=$(pwd)/$outdir ;; esac
 cd "$casedir" || exit 2
@@ -55,8 +58,15 @@ for mmd in *.mmd; do
     fi
     want=0
     [ -f "$name.status" ] && want=$(cat "$name.status")
-    if [ "$status" -eq "$want" ] &&
-       diff -u "$name.$ext" "$outdir/$name.$ext" > "$outdir/$name.$ext.diff" &&
+    # a .layout's and a .pic's numbers may differ by 0.01 (numcmp)
+    same=false
+    if diff -u "$name.$ext" "$outdir/$name.$ext" > "$outdir/$name.$ext.diff"; then
+      same=true
+    elif { [ "$ext" = layout ] || [ "$ext" = pic ]; } &&
+         "$tools/numcmp" "$name.$ext" "$outdir/$name.$ext"; then
+      same=true
+    fi
+    if [ "$status" -eq "$want" ] && $same &&
        diff -u "$errors" "$outdir/$name.$ext.err" >> "$outdir/$name.$ext.diff"; then
       echo "ok   - $name.$ext"
     else

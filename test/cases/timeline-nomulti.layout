@@ -1,0 +1,13 @@
+layout width=430.44 height=241.29
+period colour=0 at=(36.38,6.06) w=115.19 h=41.22 text="2020"
+event colour=0 at=(36.38,127.31) w=115.19 h=30.31 text="One"
+period colour=0 at=(157.63,6.06) w=115.19 h=41.22 text="2021"
+event colour=0 at=(157.63,127.31) w=115.19 h=30.31 text="Two & \"three\""
+event colour=0 at=(157.63,163.69) w=115.19 h=30.31 text="Four"
+period colour=0 at=(278.88,6.06) w=115.19 h=41.22 text="2022"
+event colour=0 at=(278.88,127.31) w=115.19 h=30.31 text="a:b, a"
+event colour=0 at=(278.88,163.69) w=115.19 h=30.31 text="c"
+line from=(93.97,47.29) to=(93.97,235.23)
+line from=(215.22,47.29) to=(215.22,235.23)
+line from=(336.47,47.29) to=(336.47,235.23)
+activity from=(6.06,77.6) to=(424.38,77.6)

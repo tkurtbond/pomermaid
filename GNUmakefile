@@ -89,7 +89,7 @@ $(BUILD)/%.passed: $(SRCS) test/$$(notdir $$*).Mod test/$$(notdir $$*).expected 
 	diff -u $(or $(wildcard test/$(notdir $*).errors),/dev/null) $(BUILD)/$*.err
 	touch $@
 
-$(BUILD)/%/cases.passed: $(BUILD)/%/pomermaid $(CASES) tools/runcases
+$(BUILD)/%/cases.passed: $(BUILD)/%/pomermaid $(CASES) tools/runcases tools/numcmp
 	tools/runcases $(BUILD)/$*/pomermaid $(BUILD)/$*/cases
 	touch $@
 

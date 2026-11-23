@@ -1,0 +1,17 @@
+layout width=431.25 height=398.82 actor-height=42.67
+title at=(215.63,9.32)
+participant "C" x=43.13 w=86.25 top=23.69 label-y=55.08 life=60.6 to=356.15 footer=356.15
+participant "W" x=158.13 w=86.25 top=23.69 label-y=45.02 life=66.35 to=356.15 footer=356.15
+participant "A" x=273.13 w=86.25 top=23.69 label-y=45.02 life=66.35 to=356.15 footer=356.15
+participant "Bank" x=388.13 w=86.25 top=23.69 label-y=45.02 life=66.35 to=356.15 footer=356.15
+0 message from=(43.13,92.35) to=(158.13,92.35) text=(100.63,83.38)
+1 message from=(158.13,118.33) to=(270.25,118.33) text=(214.19,109.37)
+3 message from=(276,144.32) to=(388.13,144.32) text=(332.06,135.35)
+4 message from=(388.13,170.31) to=(276,170.31) text=(332.06,161.34)
+5 note from=(258.75,176.06) to=(402.5,198.6) text=(330.63,187.33)
+6 message from=(270.25,224.59) to=(158.13,224.59) text=(214.19,215.62)
+8 note from=(163.88,230.34) to=(247.78,252.88) text=(205.83,241.61)
+9 message from=(158.13,278.87) to=(43.13,278.87) text=(100.63,269.9)
+10 note from=(2.23,284.62) to=(37.38,307.16) text=(19.8,295.89)
+11 self from=(43.13,333.15) out=60.38 back=43.13 down=344.65 text=(60.03,324.18)
+bar "A" from=(270.25,118.33) to=(276,224.59)

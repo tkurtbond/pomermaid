@@ -1,0 +1,51 @@
+#!/bin/sh
+# numcmp EXPECTED ACTUAL
+#
+# Compares two files line by line, as runcases compares a .layout or
+# .pic: the text between numbers must be the same, and each number
+# within 0.01 of the other's. The writers round to two decimal places,
+# and i386's x87 arithmetic, which keeps more precision, rounds a
+# number that falls on a .005 boundary the other way (PLAN.md's State,
+# Phases 15, 16, 18, 21 and 33). Exits 0 if they match, 1 if not, and
+# 2 if a file cannot be read.
+
+if [ $# -ne 2 ]; then
+  echo "usage: numcmp EXPECTED ACTUAL" >&2
+  exit 2
+fi
+for f in "$1" "$2"; do
+  [ -r "$f" ] || { echo "numcmp: cannot read $f" >&2; exit 2; }
+done
+# awk would read an empty EXPECTED as if it were ACTUAL
+[ -s "$1" ] || { cmp -s "$1" "$2"; exit $?; }
+
+awk '
+# Splits line s into its text, with each number replaced by "#", in
+# skel, and its numbers, in nums[1..n]; returns n
+function split_nums(s, nums,    n, out) {
+  n = 0; out = ""
+  while (match(s, /-?[0-9]+(\.[0-9]+)?/)) {
+    out = out substr(s, 1, RSTART - 1) "#"
+    nums[++n] = substr(s, RSTART, RLENGTH) + 0
+    s = substr(s, RSTART + RLENGTH)
+  }
+  skel = out s
+  return n
+}
+function abs(x) { return x < 0 ? -x : x }
+NR == FNR { want[FNR] = $0; nwant = FNR; next }
+{
+  ngot = FNR
+  if (FNR > nwant) { bad = 1; exit }
+  if ($0 == want[FNR]) next
+  na = split_nums(want[FNR], a); sa = skel
+  nb = split_nums($0, b); sb = skel
+  if (na != nb || sa != sb) { bad = 1; exit }
+  for (i = 1; i <= na; i++)
+    if (abs(a[i] - b[i]) > 0.0100001) { bad = 1; exit }
+}
+END {
+  if (bad || ngot != nwant) exit 1
+  exit 0
+}
+' "$1" "$2"

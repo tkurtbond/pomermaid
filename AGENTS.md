@@ -148,7 +148,10 @@ AGENTS.md describes.
   and the case tests (`test/cases/<name>.mmd`, with optional
   `<name>.args`, and `<name>.<ext>.args` for one format, against the expected `<name>.dump`, `<name>.layout`,
   `<name>.pic`, `<name>.mp` and, for SVG, the groff document
-  `<name>.svg.ms` beside it), under both models. It
+  `<name>.svg.ms` beside it), under both models. A `.layout` or
+  `.pic` that differs only in numbers within 0.01 of those expected
+  passes (`tools/numcmp`), as i386's x87 arithmetic rounds a number on
+  a .005 boundary the other way. It
   must not need groff, ConTeXt or Mermaid's tools: the tests' fonts
   are made up, `test/fonts/devpdf/TT` and `TS`.
 - `make check-groff` (where groff is installed) compares the widths
