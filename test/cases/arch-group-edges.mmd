@@ -1,0 +1,9 @@
+architecture-beta
+    group left[Left]
+    group right[Right]
+    service a(server)[A] in left
+    service b(server)[B] in right
+    service c(database)[C] in left
+    a{group}:R --> L:b{group}
+    a:B -- T:c
+    c{group}:R -- B:b{group}

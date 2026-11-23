@@ -1,0 +1,16 @@
+---
+config:
+  architecture:
+    iconSize: 60
+    fontSize: 12
+    padding: 20
+  themeVariables:
+    archEdgeColor: "#aa3300"
+    archEdgeArrowColor: "#0000ff"
+    archGroupBorderColor: "#00aa00"
+---
+architecture-beta
+    group g(cloud)[Themed]
+    service a(server)[Small A] in g
+    service b(database)[Small B] in g
+    a:R --> L:b

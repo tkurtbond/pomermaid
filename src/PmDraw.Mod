@@ -214,6 +214,12 @@ BEGIN
   FOR k := 0 TO nq - 1 DO G.Set(it.p[k], P(d, qx[k]), P(d, qy[k])) END
 END AddPath;
 
+(* The last item made dashed, its dashes dash pixels long *)
+PROCEDURE Dash*(d: Drawing; dash: LONGREAL);
+BEGIN
+  d.last.dash := P(d, dash)
+END Dash;
+
 (* Bounds *)
 
 PROCEDURE Bound(x0, y0, x1, y1: LONGREAL);

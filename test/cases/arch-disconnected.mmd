@@ -1,0 +1,8 @@
+architecture-beta
+    service a(server)[A]
+    service b(server)[B]
+    service c(cloud)[Alone]
+    service d(disk)[D]
+    service e(disk)[E]
+    a:B -- T:b
+    d:L -- R:e

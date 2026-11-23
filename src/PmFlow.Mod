@@ -69,7 +69,7 @@ CONST
   Sankey* = 13;
   Git* = 14;
   Mindmap* = 15;
-  Treemap* = 16; Block* = 17; Packet* = 18; Kanban* = 19;
+  Treemap* = 16; Block* = 17; Packet* = 18; Kanban* = 19; Architecture* = 20;
 
   (* the kinds of cluster: a flowchart's subgraph, a composite state,
      a composite state's concurrent region *)

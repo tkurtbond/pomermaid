@@ -116,6 +116,13 @@ TYPE
                                     nodeBorder and textColor *)
   END;
 
+  (* An architecture diagram's colours, as 0RRGGBBH *)
+  ArchTheme* = RECORD
+    edge*, arrow*, groupLine*, text*: LONGINT  (* archEdgeColor,
+                                    archEdgeArrowColor, archGroupBorderColor
+                                    and the text's *)
+  END;
+
   (* A git graph's colours, as 0RRGGBBH, or -1 for none, and its
      sizes, in Mermaid's pixels *)
   GitTheme* = RECORD
@@ -835,6 +842,18 @@ BEGIN
   t.itemFill := 0FFFFFFH; set := Var("background", t.itemFill);
   t.itemLine := nodeLine; t.text := textColour
 END KanbanColours;
+
+(* t, an architecture diagram's colours: lineColor for the edges and
+   their arrows, 09370DB for the groups' outlines and textColor, changed
+   by archEdgeColor, archEdgeArrowColor and archGroupBorderColor *)
+PROCEDURE ArchColours*(VAR t: ArchTheme);
+  VAR set: BOOLEAN;
+BEGIN
+  t.edge := edgeLine; set := Var("archEdgeColor", t.edge);
+  t.arrow := edgeLine; set := Var("archEdgeArrowColor", t.arrow);
+  t.groupLine := 09370DBH; set := Var("archGroupBorderColor", t.groupLine);
+  t.text := textColour
+END ArchColours;
 
 (* t, a git graph's colours and sizes: the default theme's, changed by
    themeVariables: git0 to git7, gitInv0 to gitInv7, gitBranchLabel0

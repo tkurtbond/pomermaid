@@ -1,0 +1,22 @@
+architecture-beta
+    service s1(database)[database]
+    service s2(server)[server]
+    service s3(disk)[disk]
+    service s4(internet)[internet]
+    service s5(cloud)[cloud]
+    service s6(blank)[blank]
+    service s7(logos:aws-lambda)[unknown]
+    service s8(mermaid-architecture:cloud)[prefixed]
+    service s9 "Text in place of\tan icon, rather long, cut short" [iconText]
+    service s10[none]
+    service s11
+    s1:R -- L:s2
+    s2:R -- L:s3
+    s3:R -- L:s4
+    s4:B -- T:s5
+    s5:L -- R:s6
+    s6:L -- R:s7
+    s7:L -- R:s8
+    s8:B -- T:s9
+    s9:R -- L:s10
+    s10:R -- L:s11

@@ -1,0 +1,1 @@
+pomermaid: arch-err-edgemissing.mmd:3:5: The right-hand id [b] does not yet exist. Please create the service/group before declaring an edge to it.

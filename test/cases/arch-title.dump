@@ -1,0 +1,6 @@
+config config.architecture.iconSize="70"
+architecture padding=40 iconSize=70 fontSize=16 groups=0 nodes=2 edges=1 maps=1 title="A title, not drawn" accTitle="Accessible title" accDescr="A longer
+ description"
+service index=0 id="a" icon="server" title=md:"Quoted \"title\"" map=0 x=0 y=0
+service index=1 id="b" icon="cloud" title=md:"single quoted" map=0 x=1 y=0
+edge lhs="a" lhsDir=R rhs="b" rhsDir=L title=md:"quoted edge"

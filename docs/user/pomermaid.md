@@ -21,8 +21,9 @@ charts (`gantt`), pie charts (`pie`), quadrant charts
 (`quadrantChart`), XY charts (`xychart`), radar charts
 (`radar-beta`), sankey diagrams (`sankey-beta`), git graphs
 (`gitGraph`), mindmaps (`mindmap`), treemaps (`treemap-beta`),
-block diagrams (`block-beta`), packet diagrams (`packet-beta`) and
-kanban boards (`kanban`).
+block diagrams (`block-beta`), packet diagrams (`packet-beta`),
+kanban boards (`kanban`) and architecture diagrams
+(`architecture-beta`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -967,6 +968,48 @@ below it, one under another.
   `cScaleLabel2` to `cScaleLabel11` for the first ten sections (past
   the tenth, their colours are used again, decision 53), and `background`,
   `nodeBorder` and `textColor` for the items.
+
+### Architecture diagrams
+
+pomermaid reads Mermaid's architecture diagrams
+(`architecture-beta`), as Mermaid 12.3.0 reads them. Mermaid places
+the services with a force layout (fcose); pomermaid places them on a
+grid of its own, from the sides the edges join (decision 55), so the
+picture keeps Mermaid's directions but not its exact places.
+
+- **The first line:** `architecture-beta`.
+- **Groups:** `group id(icon)[Title]`, optionally `in parent`.
+- **Services:** `service id(icon)[Title]`, optionally `in group`; in
+  place of `(icon)`, `"text"` draws the text in the icon's box
+  (`iconText`). A service with neither is drawn as a dashed outline.
+- **Junctions:** `junction id`, optionally `in group`: a point four
+  edges may meet at.
+- **Edges:** `a:R -- L:b`, a side (`L`, `R`, `T` or `B`) at each end;
+  `<` before or `>` after a side puts an arrowhead there; `{group}`
+  after an id joins the edge to the id's group's border; `-[label]-`
+  labels the edge. Each edge places its ends next to each other on
+  the grid, in its sides' directions.
+- **Alignment:** `align row a b ...` and `align column a b ...` put
+  the services in one row or column.
+- **Icons:** Mermaid's `database`, `server`, `disk`, `internet`,
+  `cloud` and `blank`, with or without the `mermaid-architecture:`
+  prefix. Another icon, as from an icon pack, is drawn as a `?`, with
+  a warning.
+- **Titles and accessibility:** `title`, `accTitle` and `accDescr`
+  are read; as in Mermaid, the title is not drawn.
+- **Configuration:** `architecture`'s `padding` (40), `iconSize` (80)
+  and `fontSize` (16).
+- **Theme variables:** `archEdgeColor`, `archEdgeArrowColor` and
+  `archGroupBorderColor`, and `textColor`.
+- **Errors,** with Mermaid's messages: an id used twice, a group
+  placed within itself, a parent that is not a group or does not
+  exist, an edge to an id that does not exist, a group's border
+  (`{group}`) on an edge that does not leave the group, and an
+  `align` that lists an id twice or a group. An edge to a group's own
+  id is an error too (Mermaid fails there, decision 56).
+- **Ids:** as in Mermaid, a capital `L`, `R`, `T` or `B` is read as a
+  side, and `title` as a title, even at the start of an id, so
+  `Router` and `titlebar` are not ids; pomermaid's message says so.
 
 Mermaid's other diagram types are not read yet.
 

@@ -1,0 +1,23 @@
+layout width=220.68 height=117.75
+curve (68.75,46.88) (68.75,46.88) (106.25,46.88) (106.25,46.88) (106.25,46.88) (143.75,46.88) (143.75,46.88) fill=none line=#333333 width=1.88
+text at=(106.25,52.88) size=10 w=50.5 line=#333333 text=md:"quoted edge"
+rect at=(25,25) w=43.75 h=43.75 fill=#087ebf line=none
+rect at=(34.57,34.57) w=24.61 h=24.61 r=1.09 fill=none line=#ffffff width=1.09
+line (34.57,42.77) (59.18,42.77) fill=none line=#ffffff width=1.09
+line (34.57,50.98) (59.18,50.98) fill=none line=#ffffff width=1.09
+rect at=(48.93,38.13) w=6.84 h=1.09 r=0.55 fill=#ffffff line=none
+circle at=(42.77,38.67) r=0.41 fill=#ffffff line=#ffffff width=0.55
+circle at=(40.04,38.67) r=0.41 fill=#ffffff line=#ffffff width=0.55
+circle at=(37.3,38.67) r=0.41 fill=#ffffff line=#ffffff width=0.55
+rect at=(48.93,46.33) w=6.84 h=1.09 r=0.55 fill=#ffffff line=none
+circle at=(42.77,46.88) r=0.41 fill=#ffffff line=#ffffff width=0.55
+circle at=(40.04,46.88) r=0.41 fill=#ffffff line=#ffffff width=0.55
+circle at=(37.3,46.88) r=0.41 fill=#ffffff line=#ffffff width=0.55
+rect at=(48.93,54.53) w=6.84 h=1.09 r=0.55 fill=#ffffff line=none
+circle at=(42.77,55.08) r=0.41 fill=#ffffff line=#ffffff width=0.55
+circle at=(40.04,55.08) r=0.41 fill=#ffffff line=#ffffff width=0.55
+circle at=(37.3,55.08) r=0.41 fill=#ffffff line=#ffffff width=0.55
+text at=(46.88,80.75) size=10 w=34 line=#333333 text=md:"Quoted"/"\"title\""
+rect at=(143.75,25) w=43.75 h=43.75 fill=#087ebf line=none
+curve (179.3,50.98) (179.3,52.49) (178.07,53.71) (176.56,53.71) (176.56,53.71) (154.69,53.71) (154.69,53.71) (153.18,53.71) (151.95,52.49) (151.95,50.98) (151.95,49.95) (152.52,49.06) (153.35,48.59) (153.33,48.48) (153.32,48.36) (153.32,48.24) (153.32,46.82) (154.68,45.65) (156.41,45.52) (157.31,43.06) (159.88,41.28) (162.89,41.28) (163.36,41.28) (163.81,41.32) (164.26,41.41) (165.4,40.55) (166.82,40.04) (168.36,40.04) (171.7,40.04) (174.48,42.43) (175.07,45.6) (176.25,45.91) (177.11,46.97) (177.11,48.24) (177.11,48.26) (177.11,48.28) (177.1,48.3) (178.36,48.55) (179.3,49.65) (179.3,50.98) (179.3,50.98) (179.3,50.98) (179.3,50.98) fill=none line=#ffffff width=1.09
+text at=(165.63,74.75) size=10 w=60.1 line=#333333 text=md:"single quoted"

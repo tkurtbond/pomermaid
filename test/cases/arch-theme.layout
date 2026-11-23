@@ -1,0 +1,32 @@
+layout width=162.5 height=96.5
+curve (62.5,43.75) (62.5,43.75) (81.25,43.75) (81.25,43.75) (81.25,43.75) (100,43.75) (100,43.75) fill=none line=#aa3300 width=1.88
+poly (101.25,43.75) (95,46.88) (95,40.63) fill=#0000ff line=none
+rect at=(25,25) w=37.5 h=37.5 fill=#087ebf line=none
+rect at=(33.2,33.2) w=21.09 h=21.09 r=0.94 fill=none line=#ffffff width=0.94
+line (33.2,40.23) (54.3,40.23) fill=none line=#ffffff width=0.94
+line (33.2,47.27) (54.3,47.27) fill=none line=#ffffff width=0.94
+rect at=(45.51,36.25) w=5.86 h=0.94 r=0.47 fill=#ffffff line=none
+circle at=(40.23,36.72) r=0.35 fill=#ffffff line=#ffffff width=0.47
+circle at=(37.89,36.72) r=0.35 fill=#ffffff line=#ffffff width=0.47
+circle at=(35.55,36.72) r=0.35 fill=#ffffff line=#ffffff width=0.47
+rect at=(45.51,43.28) w=5.86 h=0.94 r=0.47 fill=#ffffff line=none
+circle at=(40.23,43.75) r=0.35 fill=#ffffff line=#ffffff width=0.47
+circle at=(37.89,43.75) r=0.35 fill=#ffffff line=#ffffff width=0.47
+circle at=(35.55,43.75) r=0.35 fill=#ffffff line=#ffffff width=0.47
+rect at=(45.51,50.31) w=5.86 h=0.94 r=0.47 fill=#ffffff line=none
+circle at=(40.23,50.78) r=0.35 fill=#ffffff line=#ffffff width=0.47
+circle at=(37.89,50.78) r=0.35 fill=#ffffff line=#ffffff width=0.47
+circle at=(35.55,50.78) r=0.35 fill=#ffffff line=#ffffff width=0.47
+text at=(43.75,67) size=7.5 w=26.02 line=#333333 text=md:"Small A"
+rect at=(100,25) w=37.5 h=37.5 fill=#087ebf line=none
+curve (109.38,52.12) (109.38,53.97) (113.57,55.47) (118.75,55.47) (123.93,55.47) (128.13,53.97) (128.13,52.12) fill=none line=#ffffff width=0.94
+curve (109.38,46.54) (109.38,48.39) (113.57,49.89) (118.75,49.89) (123.93,49.89) (128.13,48.39) (128.13,46.54) fill=none line=#ffffff width=0.94
+curve (109.38,40.96) (109.38,42.81) (113.57,44.31) (118.75,44.31) (123.93,44.31) (128.13,42.81) (128.13,40.96) fill=none line=#ffffff width=0.94
+curve (128.13,35.38) (128.13,37.23) (123.93,38.72) (118.75,38.72) (113.57,38.72) (109.38,37.23) (109.38,35.38) (109.38,33.53) (113.57,32.03) (118.75,32.03) (123.93,32.03) (128.13,33.53) (128.13,35.38) fill=none line=#ffffff width=0.94
+line (109.38,52.12) (109.38,35.38) fill=none line=#ffffff width=0.94
+line (128.13,52.12) (128.13,35.38) fill=none line=#ffffff width=0.94
+text at=(118.75,67) size=7.5 w=26.02 line=#333333 text=md:"Small B"
+curve (12.5,12.5) (12.5,12.5) (150,12.5) (150,12.5) (150,12.5) (150,84) (150,84) (150,84) (12.5,84) (12.5,84) (12.5,84) (12.5,12.5) (12.5,12.5) dash=5 fill=none line=#00aa00 width=1.25
+rect at=(13.13,13.13) w=18.75 h=18.75 fill=#087ebf line=none
+curve (28.36,24.26) (28.36,24.9) (27.83,25.43) (27.19,25.43) (27.19,25.43) (17.81,25.43) (17.81,25.43) (17.17,25.43) (16.64,24.9) (16.64,24.26) (16.64,23.82) (16.88,23.44) (17.24,23.24) (17.23,23.19) (17.23,23.14) (17.23,23.09) (17.23,22.48) (17.81,21.97) (18.55,21.92) (18.94,20.86) (20.04,20.1) (21.33,20.1) (21.53,20.1) (21.72,20.12) (21.91,20.16) (22.4,19.79) (23.01,19.57) (23.67,19.57) (25.1,19.57) (26.29,20.6) (26.55,21.95) (27.05,22.09) (27.42,22.54) (27.42,23.09) (27.42,23.09) (27.42,23.1) (27.42,23.11) (27.96,23.22) (28.36,23.69) (28.36,24.26) (28.36,24.26) (28.36,24.26) (28.36,24.26) fill=none line=#ffffff width=0.47
+text at=(45.19,21.38) size=7.5 w=22.88 line=#333333 text=md:"Themed"

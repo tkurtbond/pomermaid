@@ -1,0 +1,36 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p128p,104p
+.pl 128p
+.po 2p
+.ll 100p
+.sp 2p
+.defcolor pm-087ebf rgb #087ebf
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-333333 rgb #333333
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 1.389 ht 1.556 at (0.694, -0.778)
+box wid 0.694 ht 0.694 at (0.694, -0.694) shaded "pm-087ebf" outlined "pm-087ebf" thickness 0
+box wid 0.391 ht 0.391 rad 0.017 at (0.694, -0.694) outlined "pm-ffffff" thickness 1.25
+line from (0.499, -0.629) to (0.89, -0.629) outlined "pm-ffffff" thickness 1.25
+line from (0.499, -0.76) to (0.89, -0.76) outlined "pm-ffffff" thickness 1.25
+box wid 0.109 ht 0.017 rad 0.009 at (0.781, -0.564) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.05
+circle rad 0.007 at (0.629, -0.564) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.625
+circle rad 0.007 at (0.586, -0.564) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.625
+circle rad 0.007 at (0.543, -0.564) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.625
+box wid 0.109 ht 0.017 rad 0.009 at (0.781, -0.694) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.05
+circle rad 0.007 at (0.629, -0.694) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.625
+circle rad 0.007 at (0.586, -0.694) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.625
+circle rad 0.007 at (0.543, -0.694) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.625
+box wid 0.109 ht 0.017 rad 0.009 at (0.781, -0.825) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.05
+circle rad 0.007 at (0.629, -0.825) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.625
+circle rad 0.007 at (0.586, -0.825) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.625
+circle rad 0.007 at (0.543, -0.825) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.625
+"\s[10]\f[TS]\m[pm-333333]A\m[]\f[]\s[0]"  at (0.694, -1.125)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

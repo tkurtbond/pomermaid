@@ -1,0 +1,14 @@
+architecture padding=40 iconSize=80 fontSize=16 groups=0 nodes=7 edges=6 maps=1
+service index=0 id="hub" icon="server" title=md:"Hub" map=0 x=0 y=0
+service index=1 id="n" icon="cloud" title=md:"North" map=0 x=0 y=1
+service index=2 id="s" icon="cloud" title=md:"South" map=0 x=0 y=-1
+service index=3 id="e" icon="cloud" title=md:"East" map=0 x=1 y=0
+service index=4 id="w" icon="cloud" title=md:"West" map=0 x=-1 y=0
+service index=5 id="ne" icon="disk" title=md:"NE" map=0 x=1 y=0
+service index=6 id="sw" icon="disk" title=md:"SW" map=0 x=-1 y=0
+edge lhs="hub" lhsDir=T rhs="n" rhsDir=B rhsInto
+edge lhs="hub" lhsDir=B lhsInto rhs="s" rhsDir=T rhsInto title=md:"down"
+edge lhs="hub" lhsDir=R rhs="e" rhsDir=L title=md:"a rather long edge title"
+edge lhs="w" lhsDir=R lhsInto rhs="hub" rhsDir=L
+edge lhs="n" lhsDir=R rhs="ne" rhsDir=B rhsInto title=md:"bend"
+edge lhs="s" lhsDir=L rhs="sw" rhsDir=T title=md:"turn"

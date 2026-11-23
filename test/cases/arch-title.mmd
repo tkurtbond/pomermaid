@@ -1,0 +1,11 @@
+%%{init: {"architecture": {"iconSize": 70}}}%%
+architecture-beta
+    title    A   title, not drawn
+    accTitle: Accessible   title
+    accDescr {
+      A longer
+      description
+    }
+    service a(server)[ "Quoted \"title\"" ] %% a comment
+    service b(cloud)['single quoted']
+    a:R -[ "quoted edge" ]- L:b

@@ -1,0 +1,12 @@
+architecture padding=40 iconSize=80 fontSize=16 groups=4 nodes=4 edges=3 maps=1
+group index=0 depth=0 id="outer" icon="cloud" title=md:"Outer group"
+group index=1 depth=1 id="inner" icon="server" title=md:"Inner" in="outer"
+group index=2 depth=2 id="deep" title=md:"Deepest" in="inner"
+group index=3 depth=0 id="other" title=md:"Other side"
+service index=0 id="a" icon="internet" title=md:"Gateway" in="outer" map=0 x=0 y=0
+service index=1 id="b" icon="server" title=md:"App" in="inner" map=0 x=1 y=0
+service index=2 id="c" icon="database" title=md:"Store" in="deep" map=0 x=1 y=-1
+service index=3 id="d" icon="disk" title=md:"Backup" in="other" map=0 x=2 y=-1
+edge lhs="a" lhsDir=R rhs="b" rhsDir=L
+edge lhs="b" lhsDir=B rhs="c" rhsDir=T
+edge lhs="c" lhsDir=R rhs="d" rhsDir=L

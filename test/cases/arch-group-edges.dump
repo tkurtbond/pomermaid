@@ -1,0 +1,9 @@
+architecture padding=40 iconSize=80 fontSize=16 groups=2 nodes=3 edges=3 maps=1
+group index=0 depth=0 id="left" title=md:"Left"
+group index=1 depth=0 id="right" title=md:"Right"
+service index=0 id="a" icon="server" title=md:"A" in="left" map=0 x=0 y=0
+service index=1 id="b" icon="server" title=md:"B" in="right" map=0 x=1 y=0
+service index=2 id="c" icon="database" title=md:"C" in="left" map=0 x=0 y=-1
+edge lhs="a" lhsDir=R lhsGroup rhs="b" rhsDir=L rhsInto rhsGroup
+edge lhs="a" lhsDir=B rhs="c" rhsDir=T
+edge lhs="c" lhsDir=R lhsGroup rhs="b" rhsDir=B rhsGroup

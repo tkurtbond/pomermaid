@@ -1,0 +1,10 @@
+architecture-beta
+    service a(server)[A]
+    service b(server)[B]
+    service c(server)[C]
+    service d(disk)[D]
+    service e(disk)[E]
+    service f(cloud)[F]
+    a:R -- L:b
+    align row a c
+    align column d e f

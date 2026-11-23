@@ -1,0 +1,9 @@
+architecture padding=40 iconSize=80 fontSize=16 groups=1 nodes=4 edges=3 maps=1
+group index=0 depth=0 id="api" icon="cloud" title=md:"API"
+service index=0 id="db" icon="database" title=md:"Database" in="api" map=0 x=0 y=0
+service index=1 id="disk1" icon="disk" title=md:"Storage" in="api" map=0 x=-1 y=-1
+service index=2 id="disk2" icon="disk" title=md:"Storage" in="api" map=0 x=0 y=-1
+service index=3 id="server" icon="server" title=md:"Server" in="api" map=0 x=-1 y=0
+edge lhs="db" lhsDir=L rhs="server" rhsDir=R
+edge lhs="disk1" lhsDir=T rhs="server" rhsDir=B
+edge lhs="disk2" lhsDir=T rhs="db" rhsDir=B

@@ -1,0 +1,1 @@
+pomermaid: arch-err-titlebar.mmd:2:5: expected a group, a service, a junction, an edge, 'align', a title or the end of the line, not 'title': Mermaid reads 'title' as a title, even at the start of an id

@@ -1,0 +1,60 @@
+layout width=427.5 height=224.1
+curve (45,67.5) (45,67.5) (45,106.65) (45,106.65) (45,106.65) (45,145.8) (45,145.8) fill=none line=#333333 width=1.69
+curve (360,45) (360,45) (326.25,45) (326.25,45) (326.25,45) (292.5,45) (292.5,45) fill=none line=#333333 width=1.69
+rect at=(22.5,22.5) w=45 h=45 fill=#087ebf line=none
+rect at=(32.34,32.34) w=25.31 h=25.31 r=1.13 fill=none line=#ffffff width=1.13
+line (32.34,40.78) (57.66,40.78) fill=none line=#ffffff width=1.13
+line (32.34,49.22) (57.66,49.22) fill=none line=#ffffff width=1.13
+rect at=(47.11,36) w=7.03 h=1.13 r=0.56 fill=#ffffff line=none
+circle at=(40.78,36.56) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(37.97,36.56) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(35.16,36.56) r=0.42 fill=#ffffff line=#ffffff width=0.56
+rect at=(47.11,44.44) w=7.03 h=1.13 r=0.56 fill=#ffffff line=none
+circle at=(40.78,45) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(37.97,45) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(35.16,45) r=0.42 fill=#ffffff line=#ffffff width=0.56
+rect at=(47.11,52.88) w=7.03 h=1.13 r=0.56 fill=#ffffff line=none
+circle at=(40.78,53.44) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(37.97,53.44) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(35.16,53.44) r=0.42 fill=#ffffff line=#ffffff width=0.56
+text at=(45,72.9) size=9 w=5.85 line=#333333 text=md:"A"
+rect at=(22.5,145.8) w=45 h=45 fill=#087ebf line=none
+rect at=(32.34,155.64) w=25.31 h=25.31 r=1.13 fill=none line=#ffffff width=1.13
+line (32.34,164.08) (57.66,164.08) fill=none line=#ffffff width=1.13
+line (32.34,172.52) (57.66,172.52) fill=none line=#ffffff width=1.13
+rect at=(47.11,159.3) w=7.03 h=1.13 r=0.56 fill=#ffffff line=none
+circle at=(40.78,159.86) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(37.97,159.86) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(35.16,159.86) r=0.42 fill=#ffffff line=#ffffff width=0.56
+rect at=(47.11,167.74) w=7.03 h=1.13 r=0.56 fill=#ffffff line=none
+circle at=(40.78,168.3) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(37.97,168.3) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(35.16,168.3) r=0.42 fill=#ffffff line=#ffffff width=0.56
+rect at=(47.11,176.18) w=7.03 h=1.13 r=0.56 fill=#ffffff line=none
+circle at=(40.78,176.74) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(37.97,176.74) r=0.42 fill=#ffffff line=#ffffff width=0.56
+circle at=(35.16,176.74) r=0.42 fill=#ffffff line=#ffffff width=0.56
+text at=(45,196.2) size=9 w=5.85 line=#333333 text=md:"B"
+rect at=(135,22.5) w=45 h=45 fill=#087ebf line=none
+curve (171.56,49.22) (171.56,50.77) (170.3,52.03) (168.75,52.03) (168.75,52.03) (146.25,52.03) (146.25,52.03) (144.7,52.03) (143.44,50.77) (143.44,49.22) (143.44,48.17) (144.02,47.24) (144.88,46.77) (144.85,46.65) (144.84,46.53) (144.84,46.41) (144.84,44.94) (146.24,43.74) (148.02,43.61) (148.95,41.07) (151.59,39.25) (154.69,39.25) (155.17,39.25) (155.64,39.29) (156.09,39.38) (157.27,38.49) (158.73,37.97) (160.31,37.97) (163.74,37.97) (166.61,40.43) (167.22,43.69) (168.42,44) (169.31,45.1) (169.31,46.41) (169.31,46.42) (169.31,46.45) (169.31,46.46) (170.59,46.72) (171.56,47.86) (171.56,49.22) (171.56,49.22) (171.56,49.22) (171.56,49.22) fill=none line=#ffffff width=1.13
+text at=(157.5,72.9) size=9 w=23.13 line=#333333 text=md:"Alone"
+rect at=(360,22.5) w=45 h=45 fill=#087ebf line=none
+rect at=(371.25,30.94) w=22.5 h=28.13 r=0.56 fill=none line=#ffffff width=1.13
+circle at=(373.5,33.28) r=0.45 fill=none line=#ffffff width=1.13
+circle at=(391.5,33.28) r=0.45 fill=none line=#ffffff width=1.13
+circle at=(373.5,56.72) r=0.45 fill=none line=#ffffff width=1.13
+circle at=(391.5,56.72) r=0.45 fill=none line=#ffffff width=1.13
+curve (390.38,41.48) (390.38,46.01) (386.85,49.69) (382.5,49.69) (378.15,49.69) (374.63,46.01) (374.63,41.48) (374.63,36.95) (378.15,33.28) (382.5,33.28) (386.85,33.28) (390.38,36.95) (390.38,41.48) fill=none line=#ffffff width=1.13
+circle at=(382.5,41.48) r=2.3 fill=#ffffff line=none
+poly (381.1,46.42) (378.38,53.85) (378.31,53.99) (378.22,54.11) (378.1,54.2) (377.97,54.26) (377.83,54.3) (377.68,54.3) (377.54,54.28) (377.39,54.21) (375.04,52.85) (374.92,52.76) (374.82,52.65) (374.75,52.52) (374.71,52.38) (374.7,52.23) (374.72,52.09) (374.77,51.95) (374.86,51.82) (379.92,45.74) (380.13,45.57) (380.35,45.5) (380.58,45.51) (380.8,45.59) (380.97,45.73) (381.1,45.93) (381.15,46.16) (381.1,46.42) (381.1,46.42) fill=#ffffff line=none
+text at=(382.5,72.9) size=9 w=5.85 line=#333333 text=md:"D"
+rect at=(247.5,22.5) w=45 h=45 fill=#087ebf line=none
+rect at=(258.75,30.94) w=22.5 h=28.13 r=0.56 fill=none line=#ffffff width=1.13
+circle at=(261,33.28) r=0.45 fill=none line=#ffffff width=1.13
+circle at=(279,33.28) r=0.45 fill=none line=#ffffff width=1.13
+circle at=(261,56.72) r=0.45 fill=none line=#ffffff width=1.13
+circle at=(279,56.72) r=0.45 fill=none line=#ffffff width=1.13
+curve (277.88,41.48) (277.88,46.01) (274.35,49.69) (270,49.69) (265.65,49.69) (262.13,46.01) (262.13,41.48) (262.13,36.95) (265.65,33.28) (270,33.28) (274.35,33.28) (277.88,36.95) (277.88,41.48) fill=none line=#ffffff width=1.13
+circle at=(270,41.48) r=2.3 fill=#ffffff line=none
+poly (268.6,46.42) (265.88,53.85) (265.81,53.99) (265.72,54.11) (265.6,54.2) (265.47,54.26) (265.33,54.3) (265.18,54.3) (265.04,54.28) (264.89,54.21) (262.54,52.85) (262.42,52.76) (262.32,52.65) (262.25,52.52) (262.21,52.38) (262.2,52.23) (262.22,52.09) (262.27,51.95) (262.36,51.82) (267.42,45.74) (267.63,45.57) (267.85,45.5) (268.08,45.51) (268.3,45.59) (268.47,45.73) (268.6,45.93) (268.65,46.16) (268.6,46.42) (268.6,46.42) fill=#ffffff line=none
+text at=(270,72.9) size=9 w=5.85 line=#333333 text=md:"E"

@@ -1,0 +1,1 @@
+pomermaid: arch-err-boundary.mmd:5:5: The right-hand id [b] is modified to traverse the group boundary, but the edge does not pass through two groups.

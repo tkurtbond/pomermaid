@@ -1,0 +1,11 @@
+config config.architecture.iconSize="60"
+config config.architecture.fontSize="12"
+config config.architecture.padding="20"
+config config.themeVariables.archEdgeColor="#aa3300"
+config config.themeVariables.archEdgeArrowColor="#0000ff"
+config config.themeVariables.archGroupBorderColor="#00aa00"
+architecture padding=20 iconSize=60 fontSize=12 groups=1 nodes=2 edges=1 maps=1
+group index=0 depth=0 id="g" icon="cloud" title=md:"Themed"
+service index=0 id="a" icon="server" title=md:"Small A" in="g" map=0 x=0 y=0
+service index=1 id="b" icon="database" title=md:"Small B" in="g" map=0 x=1 y=0
+edge lhs="a" lhsDir=R rhs="b" rhsDir=L rhsInto

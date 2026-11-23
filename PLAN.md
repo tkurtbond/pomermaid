@@ -1168,6 +1168,32 @@ Mermaid 12.3.0 is followed: `docs/syntax/kanban.md`,
 `kanbanRenderer.ts`, `styles.ts`) and the kanban item shape,
 `rendering-util/rendering-elements/shapes/kanbanItem.ts`.
 
+### Phase 31: architecture diagrams [done]
+
+**Change:** `architecture-beta`, read by a new module, `PmArch`, with
+a lexer after Mermaid's Langium grammar: groups, services, junctions,
+edges with sides, arrows, `{group}` ends and labels, `align`, and
+Mermaid's checks and messages; it gives each node its place on
+Mermaid's grid (each edge's sides put its ends in neighbouring
+cells, one grid for each connected part). `PmArchDump` writes the
+model for `-t dump`. `PmArchLayout` draws it in a `PmDraw.Drawing`
+on a grid of pomermaid's own (decision 55): the parts side by side,
+the gaps widened for each group border crossed, group boxes around
+their members, edges straight or bent once, Mermaid's six icons
+read from their SVG paths, `iconText`, and labels.
+`PmStyle.ArchColours` gives the colours.
+
+**Check:** case tests for Mermaid's documentation example, nested
+groups, edges and arrows, `{group}` ends, junctions, `align`, icons,
+theme variables, unconnected parts, titles, an empty group and
+Mermaid's errors; the diagrams drawn as SVG and looked at.
+
+Mermaid 12.3.0 is followed: `docs/syntax/architecture.md`,
+`diagrams/architecture/` (`architectureDb.ts`,
+`architectureRenderer.ts`, `architectureIcons.ts`, `svgDraw.ts`,
+`architectureTypes.ts`, `architectureStyles.ts`) and
+`parser/src/language/architecture/architecture.langium`.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1483,6 +1509,22 @@ None at present.
 54. **Kanban tickets are not links** (2026-11-23): `ticketBaseUrl`
     is read, but no output makes a ticket a link; a board with both
     gets a warning.
+55. **Architecture diagrams are placed on a grid** (2026-11-23):
+    Mermaid starts fcose, a force layout, from the grid its edges'
+    sides give and lets the forces move the services; pomermaid draws
+    that grid itself. Each connected part keeps Mermaid's grid; the
+    parts are set side by side, their tops level; `align` moves its
+    later members into the first one's row or column; a service whose
+    cell is taken moves right. The gaps between columns and rows are
+    widened for each group border between them, and the rows for
+    service titles. fcose is not ported: it is large (cytoscape and
+    its constraint solver), and its result depends on a seeded
+    `Math.random` sequence, which pomermaid could match only by porting
+    all of it.
+56. **An architecture edge to a group's id is an error** (2026-11-23):
+    Mermaid accepts it and then fails while drawing; pomermaid stops
+    with a message. `{group}` on a service's id is how an edge joins a
+    group's border.
 
 ## Later
 
@@ -2274,4 +2316,19 @@ layout, pic, mp and svg-ms) and six error cases (`kanban-err-caret`,
 and looked at. Mermaid itself was not run.
 On 2026-11-23, `make test` passes, 745 of 745 under both models,
 on FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
+(jherek, cymoril).
+
+2026-11-23, Phase 31: architecture diagrams. `PmArch` reads
+`architecture-beta` (`PmArchDump` writes its model for `-t dump`),
+and `PmArchLayout` draws it on a grid in a `PmDraw.Drawing`
+(decision 55). `make test` passes under `-O2` and `-OC`: 815 case
+tests, with `arch-docs` (Mermaid's documentation example),
+`arch-groups`, `arch-edges`, `arch-group-edges`, `arch-junction`,
+`arch-align`, `arch-icons`, `arch-theme`, `arch-disconnected`,
+`arch-title` and `arch-empty-group` (with its warning) (dump, layout,
+pic, mp and svg-ms) and 15 error cases (`arch-err-*`). The diagrams
+were drawn as SVG and looked at; this found and fixed `align` placing
+a column in another part's cells. Mermaid itself was not run.
+On 2026-11-23, `make test` passes, 815 of 815 under both models, on
+FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
 (jherek, cymoril).

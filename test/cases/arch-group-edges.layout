@@ -1,0 +1,51 @@
+layout width=275 height=299
+curve (127.5,75) (127.5,75) (137.5,75) (137.5,75) (137.5,75) (147.5,75) (147.5,75) fill=none line=#333333 width=1.88
+poly (148.75,75) (140.42,79.17) (140.42,70.83) fill=#333333 line=none
+curve (75,100) (75,100) (75,143.5) (75,143.5) (75,143.5) (75,187) (75,187) fill=none line=#333333 width=1.88
+curve (127.5,212) (127.5,212) (200,212) (200,212) (200,212) (200,138.75) (200,138.75) fill=none line=#333333 width=1.88
+rect at=(50,50) w=50 h=50 fill=#087ebf line=none
+rect at=(60.94,60.94) w=28.13 h=28.13 r=1.25 fill=none line=#ffffff width=1.25
+line (60.94,70.31) (89.06,70.31) fill=none line=#ffffff width=1.25
+line (60.94,79.69) (89.06,79.69) fill=none line=#ffffff width=1.25
+rect at=(77.34,65) w=7.81 h=1.25 r=0.63 fill=#ffffff line=none
+circle at=(70.31,65.63) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(67.19,65.63) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(64.06,65.63) r=0.47 fill=#ffffff line=#ffffff width=0.63
+rect at=(77.34,74.38) w=7.81 h=1.25 r=0.63 fill=#ffffff line=none
+circle at=(70.31,75) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(67.19,75) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(64.06,75) r=0.47 fill=#ffffff line=#ffffff width=0.63
+rect at=(77.34,83.75) w=7.81 h=1.25 r=0.63 fill=#ffffff line=none
+circle at=(70.31,84.38) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(67.19,84.38) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(64.06,84.38) r=0.47 fill=#ffffff line=#ffffff width=0.63
+text at=(75,106) size=10 w=6.5 line=#333333 text=md:"A"
+rect at=(175,50) w=50 h=50 fill=#087ebf line=none
+rect at=(185.94,60.94) w=28.13 h=28.13 r=1.25 fill=none line=#ffffff width=1.25
+line (185.94,70.31) (214.06,70.31) fill=none line=#ffffff width=1.25
+line (185.94,79.69) (214.06,79.69) fill=none line=#ffffff width=1.25
+rect at=(202.34,65) w=7.81 h=1.25 r=0.63 fill=#ffffff line=none
+circle at=(195.31,65.63) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(192.19,65.63) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(189.06,65.63) r=0.47 fill=#ffffff line=#ffffff width=0.63
+rect at=(202.34,74.38) w=7.81 h=1.25 r=0.63 fill=#ffffff line=none
+circle at=(195.31,75) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(192.19,75) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(189.06,75) r=0.47 fill=#ffffff line=#ffffff width=0.63
+rect at=(202.34,83.75) w=7.81 h=1.25 r=0.63 fill=#ffffff line=none
+circle at=(195.31,84.38) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(192.19,84.38) r=0.47 fill=#ffffff line=#ffffff width=0.63
+circle at=(189.06,84.38) r=0.47 fill=#ffffff line=#ffffff width=0.63
+text at=(200,106) size=10 w=6.5 line=#333333 text=md:"B"
+rect at=(50,187) w=50 h=50 fill=#087ebf line=none
+curve (62.5,223.16) (62.5,225.63) (68.09,227.63) (75,227.63) (81.91,227.63) (87.5,225.63) (87.5,223.16) fill=none line=#ffffff width=1.25
+curve (62.5,215.72) (62.5,218.18) (68.09,220.18) (75,220.18) (81.91,220.18) (87.5,218.18) (87.5,215.72) fill=none line=#ffffff width=1.25
+curve (62.5,208.28) (62.5,210.74) (68.09,212.74) (75,212.74) (81.91,212.74) (87.5,210.74) (87.5,208.28) fill=none line=#ffffff width=1.25
+curve (87.5,200.84) (87.5,203.3) (81.9,205.3) (75,205.3) (68.1,205.3) (62.5,203.3) (62.5,200.84) (62.5,198.37) (68.1,196.38) (75,196.38) (81.9,196.38) (87.5,198.37) (87.5,200.84) fill=none line=#ffffff width=1.25
+line (62.5,223.16) (62.5,200.84) fill=none line=#ffffff width=1.25
+line (87.5,223.16) (87.5,200.84) fill=none line=#ffffff width=1.25
+text at=(75,243) size=10 w=6.5 line=#333333 text=md:"C"
+curve (25,25) (25,25) (125,25) (125,25) (125,25) (125,274) (125,274) (125,274) (25,274) (25,274) (25,274) (25,25) (25,25) dash=5 fill=none line=#9370db width=1.25
+text at=(37.95,32.25) size=10 w=20.9 line=#333333 text=md:"Left"
+curve (150,25) (150,25) (250,25) (250,25) (250,25) (250,137) (250,137) (250,137) (150,137) (150,137) (150,137) (150,25) (150,25) dash=5 fill=none line=#9370db width=1.25
+text at=(165.35,32.25) size=10 w=25.7 line=#333333 text=md:"Right"

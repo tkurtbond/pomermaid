@@ -1,0 +1,69 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p133.75p,224.68p
+.pl 133.75p
+.po 2p
+.ll 220.68p
+.sp 2p
+.defcolor pm-333333 rgb #333333
+.defcolor pm-087ebf rgb #087ebf
+.defcolor pm-ffffff rgb #ffffff
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 3.065 ht 1.635 at (1.532, -0.818)
+line from (0.955, -0.651) to (1.476, -0.651) to (1.997, -0.651) outlined "pm-333333" thickness 1.875
+circle rad 0.013 at (0.955, -0.651) shaded "pm-333333" outlined "pm-333333" thickness 0
+circle rad 0.013 at (1.997, -0.651) shaded "pm-333333" outlined "pm-333333" thickness 0
+"\s[10]\f[TS]\m[pm-333333]quoted edge\m[]\f[]\s[0]"  at (1.476, -0.734)
+box wid 0.608 ht 0.608 at (0.651, -0.651) shaded "pm-087ebf" outlined "pm-087ebf" thickness 0
+box wid 0.342 ht 0.342 rad 0.015 at (0.651, -0.651) outlined "pm-ffffff" thickness 1.094
+line from (0.48, -0.594) to (0.822, -0.594) outlined "pm-ffffff" thickness 1.094
+line from (0.48, -0.708) to (0.822, -0.708) outlined "pm-ffffff" thickness 1.094
+box wid 0.095 ht 0.015 rad 0.008 at (0.727, -0.537) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.05
+circle rad 0.006 at (0.594, -0.537) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.547
+circle rad 0.006 at (0.556, -0.537) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.547
+circle rad 0.006 at (0.518, -0.537) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.547
+box wid 0.095 ht 0.015 rad 0.008 at (0.727, -0.651) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.05
+circle rad 0.006 at (0.594, -0.651) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.547
+circle rad 0.006 at (0.556, -0.651) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.547
+circle rad 0.006 at (0.518, -0.651) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.547
+box wid 0.095 ht 0.015 rad 0.008 at (0.727, -0.765) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.05
+circle rad 0.006 at (0.594, -0.765) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.547
+circle rad 0.006 at (0.556, -0.765) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.547
+circle rad 0.006 at (0.518, -0.765) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.547
+"\s[10]\f[TS]\m[pm-333333]Quoted\m[]\f[]\s[0]" "\s[10]\f[TS]\m[pm-333333]\(dqtitle\(dq\m[]\f[]\s[0]"  at (0.651, -1.122)
+box wid 0.608 ht 0.608 at (2.3, -0.651) shaded "pm-087ebf" outlined "pm-087ebf" thickness 0
+line from (2.49, -0.708) to (2.489, -0.716) to (2.487, -0.723) to (2.484, -0.729) \
+  to (2.479, -0.735) to (2.473, -0.739) to (2.467, -0.743) to (2.46, -0.745) \
+  to (2.452, -0.746) to (2.148, -0.746) to (2.141, -0.745) to (2.134, -0.743) \
+  to (2.127, -0.739) to (2.122, -0.735) to (2.117, -0.729) to (2.113, -0.723) \
+  to (2.111, -0.716) to (2.11, -0.708) to (2.111, -0.703) to (2.112, -0.698) \
+  to (2.114, -0.693) to (2.116, -0.689) to (2.119, -0.684) to (2.122, -0.681) \
+  to (2.126, -0.678) to (2.13, -0.675) to (2.13, -0.674) to (2.13, -0.674) \
+  to (2.13, -0.673) to (2.13, -0.672) to (2.13, -0.672) to (2.129, -0.671) \
+  to (2.129, -0.671) to (2.129, -0.67) to (2.13, -0.663) to (2.133, -0.656) \
+  to (2.137, -0.65) to (2.142, -0.644) to (2.148, -0.64) to (2.155, -0.636) \
+  to (2.164, -0.634) to (2.172, -0.632) to (2.178, -0.62) to (2.186, -0.609) \
+  to (2.195, -0.599) to (2.206, -0.59) to (2.219, -0.583) to (2.232, -0.578) \
+  to (2.247, -0.574) to (2.262, -0.573) to (2.265, -0.573) to (2.267, -0.573) \
+  to (2.27, -0.574) to (2.272, -0.574) to (2.274, -0.574) to (2.277, -0.574) \
+  to (2.279, -0.575) to (2.281, -0.575) to (2.287, -0.571) to (2.294, -0.567) \
+  to (2.301, -0.564) to (2.308, -0.561) to (2.315, -0.559) to (2.323, -0.557) \
+  to (2.33, -0.556) to (2.338, -0.556) to (2.355, -0.558) to (2.371, -0.562) \
+  to (2.386, -0.569) to (2.399, -0.578) to (2.411, -0.59) to (2.42, -0.603) \
+  to (2.427, -0.617) to (2.432, -0.633) to (2.437, -0.635) to (2.443, -0.638) \
+  to (2.448, -0.642) to (2.452, -0.647) to (2.455, -0.652) to (2.458, -0.657) \
+  to (2.459, -0.664) to (2.46, -0.67) to (2.46, -0.67) to (2.46, -0.67) \
+  to (2.46, -0.67) to (2.46, -0.67) to (2.46, -0.671) to (2.46, -0.671) \
+  to (2.46, -0.671) to (2.46, -0.671) to (2.466, -0.673) to (2.472, -0.675) \
+  to (2.477, -0.679) to (2.482, -0.684) to (2.485, -0.689) to (2.488, -0.695) \
+  to (2.49, -0.701) to (2.49, -0.708) to (2.49, -0.708) outlined "pm-ffffff" thickness 1.094
+circle rad 0.008 at (2.49, -0.708) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+circle rad 0.008 at (2.49, -0.708) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+"\s[10]\f[TS]\m[pm-333333]single quoted\m[]\f[]\s[0]"  at (2.3, -1.038)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

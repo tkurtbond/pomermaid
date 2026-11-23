@@ -1,0 +1,16 @@
+architecture-beta
+    %% every pair of sides, with titles and arrows
+    service hub(server)[Hub]
+    service n(cloud)[North]
+    service s(cloud)[South]
+    service e(cloud)[East]
+    service w(cloud)[West]
+    service ne(disk)[NE]
+    service sw(disk)[SW]
+
+    hub:T --> B:n
+    hub:B <-[down]-> T:s
+    hub:R -[a rather long edge title]- L:e
+    w:R <-- L:hub
+    n:R -[bend]-> B:ne
+    s:L -[turn]- T:sw

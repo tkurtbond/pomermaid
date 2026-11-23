@@ -1,0 +1,219 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p290.56p,436p
+.pl 290.56p
+.po 2p
+.ll 432p
+.sp 2p
+.defcolor pm-333333 rgb #333333
+.defcolor pm-087ebf rgb #087ebf
+.defcolor pm-ffffff rgb #ffffff
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 7.2
+.vs 8.64p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.05; arrowwid = 0.05
+box invis wid 6 ht 3.86 at (3, -1.93)
+line from (1.75, -1.62) to (1.75, -1.185) to (1.75, -0.75) outlined "pm-333333" thickness 1.35
+circle rad 0.009 at (1.75, -1.62) shaded "pm-333333" outlined "pm-333333" thickness 0
+circle rad 0.009 at (1.75, -0.75) shaded "pm-333333" outlined "pm-333333" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P 0.042i 0.084i -0.084i 0i'\M[]" ljust at (1.75, -0.737)
+line from (1.75, -2.12) to (1.75, -2.555) to (1.75, -2.99) outlined "pm-333333" thickness 1.35
+circle rad 0.009 at (1.75, -2.12) shaded "pm-333333" outlined "pm-333333" thickness 0
+circle rad 0.009 at (1.75, -2.99) shaded "pm-333333" outlined "pm-333333" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P 0.042i 0.084i -0.084i 0i'\M[]" ljust at (1.75, -2.107)
+"\M[pm-333333]\v'-0.22m'\D'P 0.084i 0i -0.042i 0.084i'\M[]" ljust at (1.708, -2.919)
+line invis from (1.81, -2.651) to (1.81, -2.459) "\s[7.2]\f[TS]\m[pm-333333]down\m[]\f[]\s[0]" aligned
+line from (2, -1.87) to (2.375, -1.87) to (2.75, -1.87) outlined "pm-333333" thickness 1.35
+circle rad 0.009 at (2, -1.87) shaded "pm-333333" outlined "pm-333333" thickness 0
+circle rad 0.009 at (2.75, -1.87) shaded "pm-333333" outlined "pm-333333" thickness 0
+"\s[7.2]\f[TS]\m[pm-333333]a rather long\m[]\f[]\s[0]" "\s[7.2]\f[TS]\m[pm-333333]edge title\m[]\f[]\s[0]"  at (2.375, -1.99)
+line from (0.75, -1.87) to (1.125, -1.87) to (1.5, -1.87) outlined "pm-333333" thickness 1.35
+circle rad 0.009 at (0.75, -1.87) shaded "pm-333333" outlined "pm-333333" thickness 0
+circle rad 0.009 at (1.5, -1.87) shaded "pm-333333" outlined "pm-333333" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P 0.084i -0.042i 0i 0.084i'\M[]" ljust at (0.737, -1.87)
+line from (2, -0.5) to (4.25, -0.5) to (4.25, -2.12) outlined "pm-333333" thickness 1.35
+circle rad 0.009 at (2, -0.5) shaded "pm-333333" outlined "pm-333333" thickness 0
+circle rad 0.009 at (4.25, -2.12) shaded "pm-333333" outlined "pm-333333" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P 0.042i 0.084i -0.084i 0i'\M[]" ljust at (4.25, -2.107)
+line invis from (2.947, -1.268) to (3.083, -1.132) "\s[7.2]\f[TS]\m[pm-333333]bend\m[]\f[]\s[0]" aligned
+line from (1.5, -3.24) to (5.5, -3.24) to (5.5, -1.62) outlined "pm-333333" thickness 1.35
+circle rad 0.009 at (1.5, -3.24) shaded "pm-333333" outlined "pm-333333" thickness 0
+circle rad 0.009 at (5.5, -1.62) shaded "pm-333333" outlined "pm-333333" thickness 0
+line invis from (3.542, -2.608) to (3.678, -2.472) "\s[7.2]\f[TS]\m[pm-333333]turn\m[]\f[]\s[0]" aligned
+box wid 0.5 ht 0.5 at (1.75, -1.87) shaded "pm-087ebf" outlined "pm-087ebf" thickness 0
+box wid 0.281 ht 0.281 rad 0.013 at (1.75, -1.87) outlined "pm-ffffff" thickness 0.9
+line from (1.609, -1.823) to (1.891, -1.823) outlined "pm-ffffff" thickness 0.9
+line from (1.609, -1.917) to (1.891, -1.917) outlined "pm-ffffff" thickness 0.9
+box wid 0.078 ht 0.013 rad 0.006 at (1.813, -1.776) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.05
+circle rad 0.005 at (1.703, -1.776) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.45
+circle rad 0.005 at (1.672, -1.776) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.45
+circle rad 0.005 at (1.641, -1.776) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.45
+box wid 0.078 ht 0.013 rad 0.006 at (1.813, -1.87) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.05
+circle rad 0.005 at (1.703, -1.87) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.45
+circle rad 0.005 at (1.672, -1.87) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.45
+circle rad 0.005 at (1.641, -1.87) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.45
+box wid 0.078 ht 0.013 rad 0.006 at (1.813, -1.964) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.05
+circle rad 0.005 at (1.703, -1.964) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.45
+circle rad 0.005 at (1.672, -1.964) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.45
+circle rad 0.005 at (1.641, -1.964) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0.45
+"\s[7.2]\f[TS]\m[pm-333333]Hub\m[]\f[]\s[0]"  at (1.75, -2.18)
+box wid 0.5 ht 0.5 at (1.75, -0.5) shaded "pm-087ebf" outlined "pm-087ebf" thickness 0
+line from (1.906, -0.547) to (1.906, -0.553) to (1.904, -0.559) to (1.901, -0.564) \
+  to (1.897, -0.569) to (1.892, -0.573) to (1.887, -0.576) to (1.881, -0.577) \
+  to (1.875, -0.578) to (1.625, -0.578) to (1.619, -0.577) to (1.613, -0.576) \
+  to (1.608, -0.573) to (1.603, -0.569) to (1.599, -0.564) to (1.596, -0.559) \
+  to (1.594, -0.553) to (1.594, -0.547) to (1.594, -0.543) to (1.595, -0.538) \
+  to (1.596, -0.535) to (1.598, -0.531) to (1.6, -0.527) to (1.603, -0.524) \
+  to (1.606, -0.522) to (1.61, -0.52) to (1.61, -0.519) to (1.61, -0.519) \
+  to (1.61, -0.518) to (1.609, -0.518) to (1.609, -0.517) to (1.609, -0.517) \
+  to (1.609, -0.516) to (1.609, -0.516) to (1.61, -0.51) to (1.612, -0.504) \
+  to (1.615, -0.499) to (1.62, -0.495) to (1.625, -0.491) to (1.631, -0.488) \
+  to (1.637, -0.486) to (1.645, -0.485) to (1.649, -0.474) to (1.656, -0.465) \
+  to (1.664, -0.457) to (1.673, -0.45) to (1.683, -0.444) to (1.694, -0.44) \
+  to (1.706, -0.437) to (1.719, -0.436) to (1.721, -0.436) to (1.723, -0.436) \
+  to (1.725, -0.436) to (1.727, -0.436) to (1.729, -0.437) to (1.731, -0.437) \
+  to (1.732, -0.437) to (1.734, -0.438) to (1.739, -0.434) to (1.745, -0.431) \
+  to (1.75, -0.428) to (1.756, -0.426) to (1.762, -0.424) to (1.768, -0.423) \
+  to (1.775, -0.422) to (1.781, -0.422) to (1.795, -0.423) to (1.808, -0.427) \
+  to (1.82, -0.432) to (1.831, -0.44) to (1.841, -0.449) to (1.848, -0.46) \
+  to (1.854, -0.472) to (1.858, -0.485) to (1.863, -0.487) to (1.867, -0.49) \
+  to (1.871, -0.493) to (1.875, -0.496) to (1.877, -0.501) to (1.879, -0.505) \
+  to (1.881, -0.51) to (1.881, -0.516) to (1.881, -0.516) to (1.881, -0.516) \
+  to (1.881, -0.516) to (1.881, -0.516) to (1.881, -0.516) to (1.881, -0.516) \
+  to (1.881, -0.516) to (1.881, -0.516) to (1.886, -0.518) to (1.891, -0.52) \
+  to (1.895, -0.523) to (1.899, -0.527) to (1.902, -0.531) to (1.904, -0.536) \
+  to (1.906, -0.541) to (1.906, -0.547) to (1.906, -0.547) outlined "pm-ffffff" thickness 0.9
+circle rad 0.006 at (1.906, -0.547) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+circle rad 0.006 at (1.906, -0.547) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+"\s[7.2]\f[TS]\m[pm-333333]North\m[]\f[]\s[0]"  at (1.75, -0.81)
+box wid 0.5 ht 0.5 at (1.75, -3.24) shaded "pm-087ebf" outlined "pm-087ebf" thickness 0
+line from (1.906, -3.287) to (1.906, -3.293) to (1.904, -3.299) to (1.901, -3.304) \
+  to (1.897, -3.309) to (1.892, -3.313) to (1.887, -3.316) to (1.881, -3.317) \
+  to (1.875, -3.318) to (1.625, -3.318) to (1.619, -3.317) to (1.613, -3.316) \
+  to (1.608, -3.313) to (1.603, -3.309) to (1.599, -3.304) to (1.596, -3.299) \
+  to (1.594, -3.293) to (1.594, -3.287) to (1.594, -3.283) to (1.595, -3.278) \
+  to (1.596, -3.275) to (1.598, -3.271) to (1.6, -3.267) to (1.603, -3.264) \
+  to (1.606, -3.262) to (1.61, -3.26) to (1.61, -3.259) to (1.61, -3.259) \
+  to (1.61, -3.258) to (1.609, -3.258) to (1.609, -3.257) to (1.609, -3.257) \
+  to (1.609, -3.256) to (1.609, -3.256) to (1.61, -3.25) to (1.612, -3.244) \
+  to (1.615, -3.239) to (1.62, -3.235) to (1.625, -3.231) to (1.631, -3.228) \
+  to (1.637, -3.226) to (1.645, -3.225) to (1.649, -3.214) to (1.656, -3.205) \
+  to (1.664, -3.197) to (1.673, -3.19) to (1.683, -3.184) to (1.694, -3.18) \
+  to (1.706, -3.177) to (1.719, -3.176) to (1.721, -3.176) to (1.723, -3.176) \
+  to (1.725, -3.176) to (1.727, -3.176) to (1.729, -3.177) to (1.731, -3.177) \
+  to (1.732, -3.177) to (1.734, -3.178) to (1.739, -3.174) to (1.745, -3.171) \
+  to (1.75, -3.168) to (1.756, -3.166) to (1.762, -3.164) to (1.768, -3.163) \
+  to (1.775, -3.162) to (1.781, -3.162) to (1.795, -3.163) to (1.808, -3.167) \
+  to (1.82, -3.172) to (1.831, -3.18) to (1.841, -3.189) to (1.848, -3.2) \
+  to (1.854, -3.212) to (1.858, -3.225) to (1.863, -3.227) to (1.867, -3.23) \
+  to (1.871, -3.233) to (1.875, -3.236) to (1.877, -3.241) to (1.879, -3.245) \
+  to (1.881, -3.25) to (1.881, -3.256) to (1.881, -3.256) to (1.881, -3.256) \
+  to (1.881, -3.256) to (1.881, -3.256) to (1.881, -3.256) to (1.881, -3.256) \
+  to (1.881, -3.256) to (1.881, -3.256) to (1.886, -3.258) to (1.891, -3.26) \
+  to (1.895, -3.263) to (1.899, -3.267) to (1.902, -3.271) to (1.904, -3.276) \
+  to (1.906, -3.281) to (1.906, -3.287) to (1.906, -3.287) outlined "pm-ffffff" thickness 0.9
+circle rad 0.006 at (1.906, -3.287) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+circle rad 0.006 at (1.906, -3.287) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+"\s[7.2]\f[TS]\m[pm-333333]South\m[]\f[]\s[0]"  at (1.75, -3.55)
+box wid 0.5 ht 0.5 at (3, -1.87) shaded "pm-087ebf" outlined "pm-087ebf" thickness 0
+line from (3.156, -1.917) to (3.156, -1.923) to (3.154, -1.929) to (3.151, -1.934) \
+  to (3.147, -1.939) to (3.142, -1.943) to (3.137, -1.946) to (3.131, -1.947) \
+  to (3.125, -1.948) to (2.875, -1.948) to (2.869, -1.947) to (2.863, -1.946) \
+  to (2.858, -1.943) to (2.853, -1.939) to (2.849, -1.934) to (2.846, -1.929) \
+  to (2.844, -1.923) to (2.844, -1.917) to (2.844, -1.913) to (2.845, -1.908) \
+  to (2.846, -1.905) to (2.848, -1.901) to (2.85, -1.898) to (2.853, -1.894) \
+  to (2.856, -1.892) to (2.86, -1.89) to (2.86, -1.889) to (2.86, -1.889) \
+  to (2.86, -1.888) to (2.859, -1.888) to (2.859, -1.887) to (2.859, -1.887) \
+  to (2.859, -1.886) to (2.859, -1.886) to (2.86, -1.88) to (2.862, -1.874) \
+  to (2.865, -1.869) to (2.87, -1.865) to (2.875, -1.861) to (2.881, -1.858) \
+  to (2.887, -1.856) to (2.895, -1.855) to (2.899, -1.844) to (2.906, -1.835) \
+  to (2.914, -1.827) to (2.923, -1.82) to (2.933, -1.814) to (2.944, -1.81) \
+  to (2.956, -1.807) to (2.969, -1.806) to (2.971, -1.806) to (2.973, -1.806) \
+  to (2.975, -1.806) to (2.977, -1.806) to (2.979, -1.807) to (2.981, -1.807) \
+  to (2.982, -1.807) to (2.984, -1.808) to (2.989, -1.804) to (2.995, -1.801) \
+  to (3, -1.798) to (3.006, -1.796) to (3.012, -1.794) to (3.018, -1.793) \
+  to (3.025, -1.792) to (3.031, -1.792) to (3.045, -1.793) to (3.058, -1.797) \
+  to (3.07, -1.802) to (3.081, -1.81) to (3.091, -1.819) to (3.098, -1.83) \
+  to (3.104, -1.842) to (3.108, -1.855) to (3.113, -1.857) to (3.117, -1.86) \
+  to (3.121, -1.863) to (3.125, -1.866) to (3.127, -1.871) to (3.129, -1.875) \
+  to (3.131, -1.88) to (3.131, -1.886) to (3.131, -1.886) to (3.131, -1.886) \
+  to (3.131, -1.886) to (3.131, -1.886) to (3.131, -1.886) to (3.131, -1.886) \
+  to (3.131, -1.886) to (3.131, -1.886) to (3.136, -1.888) to (3.141, -1.89) \
+  to (3.145, -1.893) to (3.149, -1.897) to (3.152, -1.901) to (3.154, -1.906) \
+  to (3.156, -1.911) to (3.156, -1.917) to (3.156, -1.917) outlined "pm-ffffff" thickness 0.9
+circle rad 0.006 at (3.156, -1.917) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+circle rad 0.006 at (3.156, -1.917) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+"\s[7.2]\f[TS]\m[pm-333333]East\m[]\f[]\s[0]"  at (3, -2.18)
+box wid 0.5 ht 0.5 at (0.5, -1.87) shaded "pm-087ebf" outlined "pm-087ebf" thickness 0
+line from (0.656, -1.917) to (0.656, -1.923) to (0.654, -1.929) to (0.651, -1.934) \
+  to (0.647, -1.939) to (0.642, -1.943) to (0.637, -1.946) to (0.631, -1.947) \
+  to (0.625, -1.948) to (0.375, -1.948) to (0.369, -1.947) to (0.363, -1.946) \
+  to (0.358, -1.943) to (0.353, -1.939) to (0.349, -1.934) to (0.346, -1.929) \
+  to (0.344, -1.923) to (0.344, -1.917) to (0.344, -1.913) to (0.345, -1.908) \
+  to (0.346, -1.905) to (0.348, -1.901) to (0.35, -1.898) to (0.353, -1.894) \
+  to (0.356, -1.892) to (0.36, -1.89) to (0.36, -1.889) to (0.36, -1.889) \
+  to (0.36, -1.888) to (0.359, -1.888) to (0.359, -1.887) to (0.359, -1.887) \
+  to (0.359, -1.886) to (0.359, -1.886) to (0.36, -1.88) to (0.362, -1.874) \
+  to (0.365, -1.869) to (0.37, -1.865) to (0.375, -1.861) to (0.381, -1.858) \
+  to (0.387, -1.856) to (0.395, -1.855) to (0.399, -1.844) to (0.406, -1.835) \
+  to (0.414, -1.827) to (0.423, -1.82) to (0.433, -1.814) to (0.444, -1.81) \
+  to (0.456, -1.807) to (0.469, -1.806) to (0.471, -1.806) to (0.473, -1.806) \
+  to (0.475, -1.806) to (0.477, -1.806) to (0.479, -1.807) to (0.481, -1.807) \
+  to (0.482, -1.807) to (0.484, -1.808) to (0.489, -1.804) to (0.495, -1.801) \
+  to (0.5, -1.798) to (0.506, -1.796) to (0.512, -1.794) to (0.518, -1.793) \
+  to (0.525, -1.792) to (0.531, -1.792) to (0.545, -1.793) to (0.558, -1.797) \
+  to (0.57, -1.802) to (0.581, -1.81) to (0.591, -1.819) to (0.598, -1.83) \
+  to (0.604, -1.842) to (0.608, -1.855) to (0.613, -1.857) to (0.617, -1.86) \
+  to (0.621, -1.863) to (0.625, -1.866) to (0.627, -1.871) to (0.629, -1.875) \
+  to (0.631, -1.88) to (0.631, -1.886) to (0.631, -1.886) to (0.631, -1.886) \
+  to (0.631, -1.886) to (0.631, -1.886) to (0.631, -1.886) to (0.631, -1.886) \
+  to (0.631, -1.886) to (0.631, -1.886) to (0.636, -1.888) to (0.641, -1.89) \
+  to (0.645, -1.893) to (0.649, -1.897) to (0.652, -1.901) to (0.654, -1.906) \
+  to (0.656, -1.911) to (0.656, -1.917) to (0.656, -1.917) outlined "pm-ffffff" thickness 0.9
+circle rad 0.006 at (0.656, -1.917) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+circle rad 0.006 at (0.656, -1.917) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+"\s[7.2]\f[TS]\m[pm-333333]West\m[]\f[]\s[0]"  at (0.5, -2.18)
+box wid 0.5 ht 0.5 at (4.25, -1.87) shaded "pm-087ebf" outlined "pm-087ebf" thickness 0
+box wid 0.25 ht 0.313 rad 0.006 at (4.25, -1.87) outlined "pm-ffffff" thickness 0.9
+circle rad 0.005 at (4.15, -1.74) outlined "pm-ffffff" thickness 0.9
+circle rad 0.005 at (4.35, -1.74) outlined "pm-ffffff" thickness 0.9
+circle rad 0.005 at (4.15, -2) outlined "pm-ffffff" thickness 0.9
+circle rad 0.005 at (4.35, -2) outlined "pm-ffffff" thickness 0.9
+line from (4.338, -1.831) to (4.336, -1.849) to (4.331, -1.866) to (4.323, -1.882) \
+  to (4.312, -1.895) to (4.299, -1.907) to (4.284, -1.915) to (4.268, -1.92) \
+  to (4.25, -1.922) to (4.232, -1.92) to (4.216, -1.915) to (4.201, -1.907) \
+  to (4.188, -1.895) to (4.177, -1.882) to (4.169, -1.866) to (4.164, -1.849) \
+  to (4.162, -1.831) to (4.164, -1.813) to (4.169, -1.795) to (4.177, -1.78) \
+  to (4.188, -1.767) to (4.201, -1.755) to (4.216, -1.747) to (4.232, -1.742) \
+  to (4.25, -1.74) to (4.268, -1.742) to (4.284, -1.747) to (4.299, -1.755) \
+  to (4.312, -1.767) to (4.323, -1.78) to (4.331, -1.795) to (4.336, -1.813) \
+  to (4.338, -1.831) outlined "pm-ffffff" thickness 0.9
+circle rad 0.006 at (4.338, -1.831) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+circle rad 0.006 at (4.338, -1.831) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+circle rad 0.026 at (4.25, -1.831) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+"\M[pm-ffffff]\v'-0.22m'\D'P -0.03i 0.082i -0.001i 0.002i -0.001i 0.001i -0.001i 0.001i -0.001i 0.001i -0.002i 0i -0.002i 0i -0.001i 0i -0.002i -0.001i -0.026i -0.015i -0.001i -0.001i -0.001i -0.001i -0.001i -0.001i -0.001i -0.002i 0i -0.002i 0.001i -0.001i 0i -0.002i 0.001i -0.001i 0.056i -0.068i 0.003i -0.002i 0.002i 0i 0.003i 0i 0.002i 0.001i 0.002i 0.001i 0.001i 0.002i 0.001i 0.003i -0.001i 0.003i 0i 0i'\M[]" ljust at (4.234, -1.886)
+"\s[7.2]\f[TS]\m[pm-333333]NE\m[]\f[]\s[0]"  at (4.25, -2.18)
+box wid 0.5 ht 0.5 at (5.5, -1.87) shaded "pm-087ebf" outlined "pm-087ebf" thickness 0
+box wid 0.25 ht 0.313 rad 0.006 at (5.5, -1.87) outlined "pm-ffffff" thickness 0.9
+circle rad 0.005 at (5.4, -1.74) outlined "pm-ffffff" thickness 0.9
+circle rad 0.005 at (5.6, -1.74) outlined "pm-ffffff" thickness 0.9
+circle rad 0.005 at (5.4, -2) outlined "pm-ffffff" thickness 0.9
+circle rad 0.005 at (5.6, -2) outlined "pm-ffffff" thickness 0.9
+line from (5.588, -1.831) to (5.586, -1.849) to (5.581, -1.866) to (5.573, -1.882) \
+  to (5.562, -1.895) to (5.549, -1.907) to (5.534, -1.915) to (5.518, -1.92) \
+  to (5.5, -1.922) to (5.482, -1.92) to (5.466, -1.915) to (5.451, -1.907) \
+  to (5.438, -1.895) to (5.427, -1.882) to (5.419, -1.866) to (5.414, -1.849) \
+  to (5.412, -1.831) to (5.414, -1.813) to (5.419, -1.795) to (5.427, -1.78) \
+  to (5.438, -1.767) to (5.451, -1.755) to (5.466, -1.747) to (5.482, -1.742) \
+  to (5.5, -1.74) to (5.518, -1.742) to (5.534, -1.747) to (5.549, -1.755) \
+  to (5.562, -1.767) to (5.573, -1.78) to (5.581, -1.795) to (5.586, -1.813) \
+  to (5.588, -1.831) outlined "pm-ffffff" thickness 0.9
+circle rad 0.006 at (5.588, -1.831) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+circle rad 0.006 at (5.588, -1.831) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+circle rad 0.026 at (5.5, -1.831) shaded "pm-ffffff" outlined "pm-ffffff" thickness 0
+"\M[pm-ffffff]\v'-0.22m'\D'P -0.03i 0.082i -0.001i 0.002i -0.001i 0.001i -0.001i 0.001i -0.001i 0.001i -0.002i 0i -0.002i 0i -0.001i 0i -0.002i -0.001i -0.026i -0.015i -0.001i -0.001i -0.001i -0.001i -0.001i -0.001i -0.001i -0.002i 0i -0.002i 0.001i -0.001i 0i -0.002i 0.001i -0.001i 0.056i -0.068i 0.003i -0.002i 0.002i 0i 0.003i 0i 0.002i 0.001i 0.002i 0.001i 0.001i 0.002i 0.001i 0.003i -0.001i 0.003i 0i 0i'\M[]" ljust at (5.484, -1.886)
+"\s[7.2]\f[TS]\m[pm-333333]SW\m[]\f[]\s[0]"  at (5.5, -2.18)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

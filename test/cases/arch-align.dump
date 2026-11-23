@@ -1,0 +1,10 @@
+architecture padding=40 iconSize=80 fontSize=16 groups=0 nodes=6 edges=1 maps=5
+service index=0 id="a" icon="server" title=md:"A" map=0 x=0 y=0
+service index=1 id="b" icon="server" title=md:"B" map=0 x=1 y=0
+service index=2 id="c" icon="server" title=md:"C" map=1 x=0 y=0
+service index=3 id="d" icon="disk" title=md:"D" map=2 x=0 y=0
+service index=4 id="e" icon="disk" title=md:"E" map=3 x=0 y=0
+service index=5 id="f" icon="cloud" title=md:"F" map=4 x=0 y=0
+edge lhs="a" lhsDir=R rhs="b" rhsDir=L
+align row "a" "c"
+align column "d" "e" "f"

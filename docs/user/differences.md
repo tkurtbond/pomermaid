@@ -439,6 +439,29 @@ differences:
   lines centred on one another; a word longer than the item runs past
   its right side, as in Mermaid.
 
+## Architecture diagrams
+
+- **Layout.** Mermaid places the services with fcose, a force layout,
+  starting from the grid its edges' sides give. pomermaid uses that
+  grid itself (decision 55): each edge puts its ends in neighbouring
+  cells, in its sides' directions; parts of the diagram that no edge
+  joins are set side by side, their tops level; and a service whose
+  cell is taken moves right. The directions are Mermaid's; the
+  distances and the places of unconnected parts are not.
+- **Group boxes** are drawn around their members' cells, so a box may
+  enclose a service from outside the group that the grid puts among
+  them.
+- **Empty groups,** with no service or junction in them, are not
+  drawn, with a warning.
+- **`iconText`** is drawn as plain text in the icon's box, wrapped and
+  cut to fit, not as HTML.
+- **Icons** other than Mermaid's six are drawn as a `?`, with a
+  warning; icon packs are not read.
+- **The title** is read and not drawn, as in Mermaid.
+- **An edge to a group's id** is an error (decision 56); Mermaid
+  fails there without a message.
+- **`align`** with fewer than two ids is a parse error.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

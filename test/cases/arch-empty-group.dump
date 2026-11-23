@@ -1,0 +1,4 @@
+architecture padding=40 iconSize=80 fontSize=16 groups=2 nodes=1 edges=0 maps=1
+group index=0 depth=0 id="empty" title=md:"Nothing here"
+group index=1 depth=1 id="alsoEmpty" title=md:"Neither" in="empty"
+service index=0 id="a" icon="server" title=md:"A" map=0 x=0 y=0

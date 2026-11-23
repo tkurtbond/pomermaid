@@ -1,0 +1,22 @@
+architecture padding=40 iconSize=80 fontSize=16 groups=0 nodes=11 edges=10 maps=1
+service index=0 id="s1" icon="database" title=md:"database" map=0 x=0 y=0
+service index=1 id="s2" icon="server" title=md:"server" map=0 x=1 y=0
+service index=2 id="s3" icon="disk" title=md:"disk" map=0 x=2 y=0
+service index=3 id="s4" icon="internet" title=md:"internet" map=0 x=3 y=0
+service index=4 id="s5" icon="cloud" title=md:"cloud" map=0 x=3 y=-1
+service index=5 id="s6" icon="blank" title=md:"blank" map=0 x=2 y=-1
+service index=6 id="s7" icon="logos:aws-lambda" title=md:"unknown" map=0 x=1 y=-1
+service index=7 id="s8" icon="mermaid-architecture:cloud" title=md:"prefixed" map=0 x=0 y=-1
+service index=8 id="s9" iconText="Text in place of an icon, rather long, cut short" title=md:"iconText" map=0 x=0 y=-2
+service index=9 id="s10" title=md:"none" map=0 x=1 y=-2
+service index=10 id="s11" map=0 x=2 y=-2
+edge lhs="s1" lhsDir=R rhs="s2" rhsDir=L
+edge lhs="s2" lhsDir=R rhs="s3" rhsDir=L
+edge lhs="s3" lhsDir=R rhs="s4" rhsDir=L
+edge lhs="s4" lhsDir=B rhs="s5" rhsDir=T
+edge lhs="s5" lhsDir=L rhs="s6" rhsDir=R
+edge lhs="s6" lhsDir=L rhs="s7" rhsDir=R
+edge lhs="s7" lhsDir=L rhs="s8" rhsDir=R
+edge lhs="s8" lhsDir=B rhs="s9" rhsDir=T
+edge lhs="s9" lhsDir=R rhs="s10" rhsDir=L
+edge lhs="s10" lhsDir=R rhs="s11" rhsDir=L

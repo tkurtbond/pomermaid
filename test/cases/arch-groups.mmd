@@ -1,0 +1,14 @@
+architecture-beta
+    group outer(cloud)[Outer group]
+    group inner(server)[Inner] in outer
+    group deep[Deepest] in inner
+    group other[Other side]
+
+    service a(internet)[Gateway] in outer
+    service b(server)[App] in inner
+    service c(database)[Store] in deep
+    service d(disk)[Backup] in other
+
+    a:R -- L:b
+    b:B -- T:c
+    c:R -- L:d

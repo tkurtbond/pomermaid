@@ -1,0 +1,1 @@
+pomermaid: arch-err-edgegroup.mmd:4:5: The right-hand id [g] is a group: an edge must join services or junctions (Mermaid fails here)
