@@ -1,0 +1,45 @@
+.defcolor pm-b6b6ff rgb #b6b6ff
+.defcolor pm-b0b0ff rgb #b0b0ff
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-ffffae rgb #ffffae
+.defcolor pm-fcfc99 rgb #fcfc99
+.defcolor pm-000000 rgb #000000
+.defcolor pm-cae2b6 rgb #cae2b6
+.defcolor pm-b6d3a6 rgb #b6d3a6
+.defcolor pm-a8a8ff rgb #a8a8ff
+.defcolor pm-8686ff rgb #8686ff
+.defcolor pm-ceeba8 rgb #ceeba8
+.defcolor pm-d7ff86 rgb #d7ff86
+.defcolor pm-ffff9e rgb #ffff9e
+.defcolor pm-ffff78 rgb #ffff78
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 7.2
+.vs 8.64p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.05; arrowwid = 0.05
+box invis wid 5.975 ht 2.944 at (2.987, -1.472)
+box wid 4.131 ht 2.844 at (2.116, -1.472) shaded "pm-b6b6ff" outlined "pm-b0b0ff" thickness 0.9
+"\s[5.4]\m[pm-ffffff]\f[TS]Fruit\f[]\m[]\s[0]"  at (0.184, -0.128)
+box wid 1.719 ht 2.844 at (5.066, -1.472) shaded "pm-ffffae" outlined "pm-fcfc99" thickness 0.9
+"\s[5.4]\m[pm-000000]\f[TS]Vegetables\f[]\m[]\s[0]"  at (4.43, -0.128)
+box wid 3 ht 1.181 at (1.612, -2.241) shaded "pm-cae2b6" outlined "pm-b6d3a6" thickness 0.9
+"\s[5.4]\m[pm-000000]\f[TS]Citrus\f[]\m[]\s[0]"  at (0.264, -1.728)
+box wid 3 ht 1.356 at (1.612, -0.947) shaded "pm-a8a8ff" outlined "pm-8686ff" thickness 1.35
+"\s[17.1]\f[TS]\m[pm-ffffff]Apples\m[]\f[]\s[0]"  at (1.612, -0.947)
+box wid 1.631 ht 0.9 at (0.991, -2.319) shaded "pm-ceeba8" outlined "pm-d7ff86" thickness 1.35
+"\s[17.1]\f[TS]\m[pm-000000]Oranges\m[]\f[]\s[0]"  at (0.991, -2.319)
+box wid 0.8 ht 0.9 at (2.231, -2.319) shaded "pm-ceeba8" outlined "pm-d7ff86" thickness 1.35
+"\s[17.1]\f[TS]\m[pm-000000]Lemons\m[]\f[]\s[0]"  at (2.231, -2.319)
+box wid 0.394 ht 0.9 at (2.853, -2.319) shaded "pm-ceeba8" outlined "pm-d7ff86" thickness 1.35
+"\s[9.45]\f[TS]\m[pm-000000]Limes\m[]\f[]\s[0]"  at (2.853, -2.319)
+box wid 0.981 ht 2.563 at (3.628, -1.55) shaded "pm-a8a8ff" outlined "pm-8686ff" thickness 1.35
+"\s[17.1]\f[TS]\m[pm-000000]Pears\m[]\f[]\s[0]"  at (3.628, -1.55)
+box wid 1.594 ht 1.825 at (5.066, -1.181) shaded "pm-ffff9e" outlined "pm-ffff78" thickness 1.35
+"\s[17.1]\f[TS]\m[pm-000000]Carrots\m[]\f[]\s[0]"  at (5.066, -1.181)
+box wid 1.594 ht 0.713 at (5.066, -2.475) shaded "pm-ffff9e" outlined "pm-ffff78" thickness 1.35
+"\s[17.1]\f[TS]\m[pm-000000]Leeks\m[]\f[]\s[0]"  at (5.066, -2.475)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

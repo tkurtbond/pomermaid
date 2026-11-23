@@ -1,0 +1,2 @@
+treemap width=960 height=500 padding=10 diagramPadding=8 showValues=true valueFormat="," nodes=1
+leaf 0 parent=-1 level=0 name="A" label="A" value=5 shown="5"

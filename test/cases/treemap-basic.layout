@@ -1,0 +1,27 @@
+layout width=430.2 height=238.23
+text at=(215.1,7.38) size=6.3 w=19.22 line=#333333 text="Budget"
+rect at=(3.6,29.88) w=322.2 h=204.75 fill=#b6b6ff line=#b0b0ff width=0.9
+text at=(17.13,35.51) size=5.4 w=21.65 fit line=#ffffff text="Products"=11111111
+text at=(311.4,35.51) size=4.5 w=19.8 fit line=#ffffff text="$162,500.5"=2222222222
+rect at=(330.3,29.88) w=96.3 h=192.15 fill=#ffffae line=#fcfc99 width=0.9
+text at=(343.83,35.51) size=5.4 w=21.65 fit line=#000000 text="Services"=11111111
+text at=(415.13,35.51) size=4.5 w=13.95 fit line=#000000 text="$47,000"=2222222
+rect at=(243,45.63) w=78.3 h=184.5 fill=#cae2b6 line=#b6d3a6 width=0.9
+text at=(256.53,51.26) size=5.4 w=21.65 fit line=#000000 text="Software"=11111111
+text at=(308.03,51.26) size=4.5 w=17.55 fit line=#000000 text="$42,500.5"=222222222
+rect at=(8.1,45.63) w=230.4 h=184.5 fill=#a8a8ff line=#8686ff width=1.35
+text at=(123.3,137.88) size=17.1 w=68.57 fit line=#ffffff text="Hardware"
+text at=(123.3,152.51) size=10.35 w=37.26 fit line=#ffffff text="$120,000"
+rect at=(247.5,61.38) w=69.3 h=116.55 fill=#ceeba8 line=#d7ff86 width=1.35
+text at=(282.15,119.66) size=16.2 w=64.96 fit line=#000000 text="Licences"
+text at=(282.15,133.6) size=9.9 w=38.61 fit line=#000000 text="$30,500.5"
+rect at=(247.5,182.43) w=69.3 h=43.2 fill=#dacc9e line=#333333 width=1.8
+text at=(282.15,204.03) size=17.1 w=60.36 fit line=#ffffff text="Support"
+text at=(282.15,218.66) size=10.35 w=32.08 fit line=#ffffff text="$12,000"
+rect at=(334.8,45.63) w=87.3 h=145.8 fill=#ffff9e line=#ffff78 width=1.35
+text at=(378.45,118.53) size=16.65 w=82.75 fit line=#000000 text="Consulting"
+text at=(378.45,132.7) size=9.9 w=30.69 fit line=#000000 text="$40,000"
+rect at=(334.8,195.93) w=87.3 h=21.6 fill=#ffff9e line=#ffff78 width=1.35
+text at=(378.45,206.73) size=10.8 w=43.31 fit line=#000000 text="Training"
+rect at=(330.3,226.53) w=96.3 h=8.1 fill=none line=none
+text at=(378.45,230.58) size=3.6 w=9.25 fit line=#000000 text="Other"

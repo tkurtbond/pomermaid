@@ -29,7 +29,8 @@ TYPE
      a curve: Béziers, p[0], then 3 points each, its control points
      and its end, n points in all, with round caps;
      a text: lab, size points, its middle (x, y), w by h, turned
-     angle degrees, clockwise, in colour line.
+     angle degrees, clockwise, in colour line; if fit, set no wider
+     than w where the writer measures text itself (ConTeXt).
      Each is filled with fill and outlined with line width wide; -1 is
      neither *)
   Item* = POINTER TO ItemDesc;
@@ -41,6 +42,7 @@ TYPE
     width-, dash-: REAL;
     lab-: F.Label;
     size-, angle-: REAL;
+    fit-: BOOLEAN;
     next-: Item
   END;
 
@@ -90,7 +92,7 @@ BEGIN
   NEW(it); it.kind := kind; it.p := NIL; it.n := 0;
   it.fill := fill; it.line := line;
   IF line < 0 THEN it.width := 0 ELSE it.width := P(d, width) END;
-  it.dash := 0; it.lab := NIL; it.size := 0; it.angle := 0;
+  it.dash := 0; it.lab := NIL; it.size := 0; it.angle := 0; it.fit := FALSE;
   it.x := 0; it.y := 0; it.w := 0; it.h := 0; it.r := 0;
   it.next := NIL;
   IF d.last = NIL THEN d.items := it ELSE d.last.next := it END;
@@ -154,6 +156,16 @@ BEGIN
   M.LabelSize(d.font, lab, it.size, it.size * 1.2, it.w, it.h);
   it.x := P(d, x); it.y := P(d, y)
 END AddText;
+
+(* As AddText, but the text is set no wider than pomermaid measures it,
+   for a box that does not grow to fit it (the writers that measure
+   text themselves shrink it) *)
+PROCEDURE AddFittedText*(d: Drawing; lab: F.Label; x, y, size, angle: LONGREAL; colour: LONGINT);
+BEGIN
+  IF lab.n = 0 THEN RETURN END;
+  AddText(d, lab, x, y, size, angle, colour);
+  d.last.fit := TRUE
+END AddFittedText;
 
 (* Paths, in pixels *)
 

@@ -1,0 +1,53 @@
+.defcolor pm-333333 rgb #333333
+.defcolor pm-b6b6ff rgb #b6b6ff
+.defcolor pm-b0b0ff rgb #b0b0ff
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-ffffae rgb #ffffae
+.defcolor pm-fcfc99 rgb #fcfc99
+.defcolor pm-000000 rgb #000000
+.defcolor pm-cae2b6 rgb #cae2b6
+.defcolor pm-b6d3a6 rgb #b6d3a6
+.defcolor pm-a8a8ff rgb #a8a8ff
+.defcolor pm-8686ff rgb #8686ff
+.defcolor pm-ceeba8 rgb #ceeba8
+.defcolor pm-d7ff86 rgb #d7ff86
+.defcolor pm-dacc9e rgb #dacc9e
+.defcolor pm-ffff9e rgb #ffff9e
+.defcolor pm-ffff78 rgb #ffff78
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 7.2
+.vs 8.64p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.05; arrowwid = 0.05
+box invis wid 5.975 ht 3.309 at (2.987, -1.654)
+"\s[6.3]\f[TS]\m[pm-333333]Budget\m[]\f[]\s[0]"  at (2.987, -0.103)
+box wid 4.475 ht 2.844 at (2.287, -1.837) shaded "pm-b6b6ff" outlined "pm-b0b0ff" thickness 0.9
+"\s[5.4]\m[pm-ffffff]\f[TS]Products\f[]\m[]\s[0]"  at (0.238, -0.493)
+"\s[4.5]\m[pm-ffffff]\f[TS]$162,500.5\f[]\m[]\s[0]"  at (4.325, -0.493)
+box wid 1.338 ht 2.669 at (5.256, -1.749) shaded "pm-ffffae" outlined "pm-fcfc99" thickness 0.9
+"\s[5.4]\m[pm-000000]\f[TS]Services\f[]\m[]\s[0]"  at (4.775, -0.493)
+"\s[4.5]\m[pm-000000]\f[TS]$47,000\f[]\m[]\s[0]"  at (5.766, -0.493)
+box wid 1.088 ht 2.563 at (3.919, -1.915) shaded "pm-cae2b6" outlined "pm-b6d3a6" thickness 0.9
+"\s[5.4]\m[pm-000000]\f[TS]Software\f[]\m[]\s[0]"  at (3.563, -0.712)
+"\s[4.5]\m[pm-000000]\f[TS]$42,500.5\f[]\m[]\s[0]"  at (4.278, -0.712)
+box wid 3.2 ht 2.563 at (1.712, -1.915) shaded "pm-a8a8ff" outlined "pm-8686ff" thickness 1.35
+"\s[17.1]\f[TS]\m[pm-ffffff]Hardware\m[]\f[]\s[0]"  at (1.712, -1.915)
+"\s[10.35]\f[TS]\m[pm-ffffff]$120,000\m[]\f[]\s[0]"  at (1.712, -2.118)
+box wid 0.963 ht 1.619 at (3.919, -1.662) shaded "pm-ceeba8" outlined "pm-d7ff86" thickness 1.35
+"\s[16.2]\f[TS]\m[pm-000000]Licences\m[]\f[]\s[0]"  at (3.919, -1.662)
+"\s[9.9]\f[TS]\m[pm-000000]$30,500.5\m[]\f[]\s[0]"  at (3.919, -1.856)
+box wid 0.963 ht 0.6 at (3.919, -2.834) shaded "pm-dacc9e" outlined "pm-333333" thickness 1.8
+"\s[17.1]\f[TS]\m[pm-ffffff]Support\m[]\f[]\s[0]"  at (3.919, -2.834)
+"\s[10.35]\f[TS]\m[pm-ffffff]$12,000\m[]\f[]\s[0]"  at (3.919, -3.037)
+box wid 1.213 ht 2.025 at (5.256, -1.646) shaded "pm-ffff9e" outlined "pm-ffff78" thickness 1.35
+"\s[16.65]\f[TS]\m[pm-000000]Consulting\m[]\f[]\s[0]"  at (5.256, -1.646)
+"\s[9.9]\f[TS]\m[pm-000000]$40,000\m[]\f[]\s[0]"  at (5.256, -1.843)
+box wid 1.213 ht 0.3 at (5.256, -2.871) shaded "pm-ffff9e" outlined "pm-ffff78" thickness 1.35
+"\s[10.8]\f[TS]\m[pm-000000]Training\m[]\f[]\s[0]"  at (5.256, -2.871)
+box wid 1.338 ht 0.112 at (5.256, -3.203) invis
+"\s[3.6]\f[TS]\m[pm-000000]Other\m[]\f[]\s[0]"  at (5.256, -3.202)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

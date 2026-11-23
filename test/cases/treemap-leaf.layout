@@ -1,0 +1,4 @@
+layout width=430.2 height=211.95
+rect at=(3.6,3.6) w=423 h=204.75 fill=none line=none
+text at=(215.1,105.97) size=17.1 w=11.11 fit line=#ffffff text="A"
+text at=(215.1,120.6) size=10.35 w=5.18 fit line=#ffffff text="5"

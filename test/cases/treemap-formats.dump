@@ -1,0 +1,7 @@
+config config.treemap.valueFormat=".1%"
+config config.treemap.padding="6"
+treemap width=960 height=500 padding=6 diagramPadding=8 showValues=true valueFormat=".1%" nodes=4
+section 0 parent=-1 level=0 name="Shares" label="Shares"
+leaf 1 parent=0 level=4 name="Small" label="Small" value=0.125 shown="12.5%"
+leaf 2 parent=0 level=4 name="Large" label="Large" value=0.5 shown="50.0%"
+leaf 3 parent=0 level=4 name="Medium" label="Medium" value=0.375 shown="37.5%"

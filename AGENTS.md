@@ -77,7 +77,9 @@ journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
 `PmGitLayout`, Mermaid's renderer, drawn by the shared `PmDraw`,
 `PmDrawPic`, `PmDrawMp` and `PmDrawDump`) and 26 (mindmaps:
 `PmMindmap`, `PmMindmapLayout`, a two-sided tree, and
-`PmMindmapDump`) are done. See
+`PmMindmapDump`) and 27 (treemaps: `PmTreemap`, `PmTreemapLayout`,
+d3's squarified treemap, `PmTreemapDump`, and `PmFormat`, d3-format's
+number formats) are done. See
 PLAN.md's State.
 
 ## Reference material

@@ -1,0 +1,4 @@
+treemap width=960 height=500 padding=10 diagramPadding=8 showValues=true valueFormat="," nodes=3
+section 0 parent=-1 level=0 name="Section A" label="Section A" class="sec" fill="#ddeeff" stroke="#003366" strokeWidth="1px"
+leaf 1 parent=0 level=4 name="One" label="One" value=10 shown="10" class="big" fill="#ffcc00" color="#000"
+leaf 2 parent=0 level=4 name="Two" label="Two" value=3 shown="3"

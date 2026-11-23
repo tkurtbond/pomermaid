@@ -523,6 +523,24 @@ BEGIN
   t.line := 0; t.title := titleColour
 END TimelineColours;
 
+(* peer, the colour scale's peers, cScalePeer0..11, a treemap's section
+   outlines: those Mermaid's default theme makes from its cScale
+   colours, each changed by its themeVariable *)
+PROCEDURE PeerColours*(VAR peer: ARRAY OF LONGINT);
+  VAR set: BOOLEAN; k, i: INTEGER; name: ARRAY 20 OF CHAR;
+BEGIN
+  peer[0] := 03939FFH; peer[1] := 0F7F700H; peer[2] := 0B5FF20H;
+  peer[3] := 09C39FFH; peer[4] := 0FF39FFH; peer[5] := 0FF399CH;
+  peer[6] := 0FF3939H; peer[7] := 0FF9C39H; peer[8] := 09CFF39H;
+  peer[9] := 039FF9CH; peer[10] := 039FFFFH; peer[11] := 0399CFFH;
+  FOR k := 0 TO 11 DO
+    name := "cScalePeer"; i := 10;
+    IF k >= 10 THEN name[i] := "1"; INC(i) END;
+    name[i] := CHR(ORD("0") + k MOD 10); name[i + 1] := 0X;
+    set := Var(name, peer[k])
+  END
+END PeerColours;
+
 (* t, a Gantt chart's colours: the default theme's, each changed by its
    themeVariable, sectionBkgColor, altSectionBkgColor, sectionBkgColor2,
    excludeBkgColor, gridColor, todayLineColor, vertLineColor,

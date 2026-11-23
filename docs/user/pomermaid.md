@@ -20,7 +20,7 @@ user journeys (`journey`), timelines (`timeline`), Gantt
 charts (`gantt`), pie charts (`pie`), quadrant charts
 (`quadrantChart`), XY charts (`xychart`), radar charts
 (`radar-beta`), sankey diagrams (`sankey-beta`), git graphs
-(`gitGraph`) and mindmaps (`mindmap`).
+(`gitGraph`), mindmaps (`mindmap`) and treemaps (`treemap-beta`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -844,6 +844,44 @@ and differs from run to run (see differences.md).
   `cScaleLabel11` (text) and `cScaleInv0` to `cScaleInv11` (a default
   node's bottom line). An edge is as wide as Mermaid's: narrower at
   each level.
+
+### Treemaps
+
+pomermaid reads Mermaid's treemaps (`treemap-beta` or `treemap`), as
+Mermaid 12.3.0 reads them, and lays them out as Mermaid does, with
+d3's squarified treemap, its paddings and its rounding, so the boxes
+are where Mermaid puts them. Labels are fitted to their boxes as
+Mermaid fits them.
+
+- **The first line:** `treemap-beta` or `treemap`.
+- **Sections and leaves:** one to a line. A section is a name in
+  quotation marks, double or single; a leaf is a name, `:` or `,`, and
+  a number: `"Hardware": 120000`. A row's parent is the last section
+  above it that is less indented. A section's value is the sum of its
+  leaves'.
+- **Numbers:** digits with a `.` in or around them. A number with `_`
+  or `,` in it, which Mermaid reads but draws nothing sensible for,
+  is an error, and so is one too large to draw.
+- **Classes:** `classDef name styles` and `:::name` after a section or
+  a leaf (with no blank before the `:::`, as in Mermaid). `fill`,
+  `stroke`, `stroke-width` and `color` are drawn; other styles are
+  warned of. A class applies to rows above its `classDef` too.
+- **`title`,** `accTitle` and `accDescr` (read and ignored), and `%%`
+  comments.
+- **Configuration:** `treemap`'s `padding` (10, between boxes),
+  `diagramPadding` (8, around the drawing), `showValues` (true),
+  `valueFormat` (`,`: d3's number formats, such as `$,.2f`, `.1%`,
+  `.3s`, and Mermaid's `$0,0` and other `$` forms), and `nodeWidth`
+  and `nodeHeight`, the treemap's size (960 by 500 pixels by
+  default).
+- **Colours:** the default theme's, each changed by its
+  themeVariable: `cScale0` to `cScale11` (fills, at Mermaid's
+  opacities), `cScalePeer0` to `cScalePeer11` (outlines) and
+  `cScaleLabel0` to `cScaleLabel11` (text). A leaf at the top, outside
+  any section, has no fill or outline, as in Mermaid.
+
+In ConTeXt, a treemap's labels are set in the document's font, but no
+wider than pomermaid measured them, as the boxes do not grow.
 
 Mermaid's other diagram types are not read yet.
 

@@ -38,7 +38,8 @@ BEGIN
       IF it.r # 0 THEN Real("r", it.r) END
     ELSIF it.kind = D.Text THEN
       PmIO.WriteString("text"); Pt("at", it.x, it.y); Real("size", it.size); Real("w", it.w);
-      IF it.angle # 0 THEN Real("angle", it.angle) END
+      IF it.angle # 0 THEN Real("angle", it.angle) END;
+      IF it.fit THEN PmIO.WriteString(" fit") END
     ELSE
       IF it.kind = D.Poly THEN PmIO.WriteString("poly")
       ELSIF it.kind = D.Line THEN PmIO.WriteString("line")

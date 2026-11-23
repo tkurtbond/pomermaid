@@ -1,0 +1,13 @@
+layout width=430.2 height=211.95
+rect at=(3.6,3.6) w=423 h=204.75 fill=#b6b6ff line=#b0b0ff width=0.9
+text at=(14.54,9.22) size=5.4 w=16.47 fit line=#ffffff text="Shares"=111111
+text at=(416.25,9.22) size=4.5 w=11.7 fit line=#ffffff text="100.0%"=222222
+rect at=(8.1,19.35) w=205.65 h=184.5 fill=#a8a8ff line=#8686ff width=1.35
+text at=(110.92,111.6) size=17.1 w=43.95 fit line=#000000 text="Large"
+text at=(110.92,126.22) size=10.35 w=21.74 fit line=#000000 text="50.0%"
+rect at=(216.45,19.35) w=153.45 h=184.5 fill=#a8a8ff line=#8686ff width=1.35
+text at=(293.17,111.6) size=17.1 w=52.15 fit line=#000000 text="Medium"
+text at=(293.17,126.22) size=10.35 w=21.74 fit line=#000000 text="37.5%"
+rect at=(372.6,19.35) w=49.5 h=184.5 fill=#a8a8ff line=#8686ff width=1.35
+text at=(397.35,111.6) size=17.1 w=43.95 fit line=#ffffff text="Small"
+text at=(397.35,126.22) size=10.35 w=21.74 fit line=#ffffff text="12.5%"

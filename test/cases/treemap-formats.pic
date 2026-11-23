@@ -1,0 +1,29 @@
+.defcolor pm-b6b6ff rgb #b6b6ff
+.defcolor pm-b0b0ff rgb #b0b0ff
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-a8a8ff rgb #a8a8ff
+.defcolor pm-8686ff rgb #8686ff
+.defcolor pm-000000 rgb #000000
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 7.2
+.vs 8.64p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.05; arrowwid = 0.05
+box invis wid 5.975 ht 2.944 at (2.987, -1.472)
+box wid 5.875 ht 2.844 at (2.987, -1.472) shaded "pm-b6b6ff" outlined "pm-b0b0ff" thickness 0.9
+"\s[5.4]\m[pm-ffffff]\f[TS]Shares\f[]\m[]\s[0]"  at (0.202, -0.128)
+"\s[4.5]\m[pm-ffffff]\f[TS]100.0%\f[]\m[]\s[0]"  at (5.781, -0.128)
+box wid 2.856 ht 2.563 at (1.541, -1.55) shaded "pm-a8a8ff" outlined "pm-8686ff" thickness 1.35
+"\s[17.1]\f[TS]\m[pm-000000]Large\m[]\f[]\s[0]"  at (1.541, -1.55)
+"\s[10.35]\f[TS]\m[pm-000000]50.0%\m[]\f[]\s[0]"  at (1.541, -1.753)
+box wid 2.131 ht 2.563 at (4.072, -1.55) shaded "pm-a8a8ff" outlined "pm-8686ff" thickness 1.35
+"\s[17.1]\f[TS]\m[pm-000000]Medium\m[]\f[]\s[0]"  at (4.072, -1.55)
+"\s[10.35]\f[TS]\m[pm-000000]37.5%\m[]\f[]\s[0]"  at (4.072, -1.753)
+box wid 0.688 ht 2.563 at (5.519, -1.55) shaded "pm-a8a8ff" outlined "pm-8686ff" thickness 1.35
+"\s[17.1]\f[TS]\m[pm-ffffff]Small\m[]\f[]\s[0]"  at (5.519, -1.55)
+"\s[10.35]\f[TS]\m[pm-ffffff]12.5%\m[]\f[]\s[0]"  at (5.519, -1.753)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

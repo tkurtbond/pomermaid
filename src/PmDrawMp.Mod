@@ -7,7 +7,9 @@ MODULE PmDrawMp;
    textext's pictures, each centred at its middle and turned. The
    places are PmDraw's, in points; the drawing's bounds are the
    layout's, widened for any text ConTeXt sets wider than pomermaid
-   measured it (decision 18). Text is written as PmMp writes it. *)
+   measured it (decision 18), but a fitted text, in a box that does not
+   grow, is shrunk to no wider than pomermaid measured it. Text is
+   written as PmMp writes it. *)
 
 IMPORT PmIO, F := PmFlow, D := PmDraw, PmMp;
 
@@ -102,9 +104,11 @@ END Stroked;
 
 (* Writes the drawing lay as a \startMPcode block *)
 PROCEDURE Write*(lay: D.Drawing);
-  VAR it: D.Item;
+  VAR it: D.Item; fit: BOOLEAN;
 BEGIN
   l := lay;
+  fit := FALSE; it := l.items;
+  WHILE it # NIL DO fit := fit OR it.fit; it := it.next END;
   W("\startMPcode"); Ln;
   W("numeric pmxx[]; picture pmxp;"); Ln;
   W("pmxx0 := 0; pmxx1 := "); Pt(-l.height); W("; pmxx2 := "); Pt(l.width);
@@ -117,6 +121,13 @@ BEGIN
   W("  pmxx0 := min(pmxx0, xpart llcorner pmxp); pmxx1 := min(pmxx1, ypart llcorner pmxp);"); Ln;
   W("  pmxx2 := max(pmxx2, xpart urcorner pmxp); pmxx3 := max(pmxx3, ypart urcorner pmxp);"); Ln;
   W("enddef;"); Ln;
+  IF fit THEN
+    (* the picture p, shrunk to no wider than w *)
+    W("vardef pmxfit(expr p, w) ="); Ln;
+    W("  if xpart urcorner p - xpart llcorner p > w:"); Ln;
+    W("    p scaled (w / (xpart urcorner p - xpart llcorner p)) else: p fi"); Ln;
+    W("enddef;"); Ln
+  END;
   (* the box from (x, y), y down, w by h, its corners rounded to r *)
   W("vardef pmhbox(expr x, y, w, h, r) ="); Ln;
   W("  if r > 0: (x + r, -y) -- (x + w - r, -y) {right} .. {down} (x + w, -y - r)"); Ln;
@@ -131,7 +142,11 @@ BEGIN
     IF (it.kind = D.Circle) OR (it.kind = D.Rect) OR (it.kind = D.Poly) THEN Filled(it)
     ELSIF (it.kind = D.Line) OR (it.kind = D.Curve) THEN Stroked(it)
     ELSIF (it.lab # NIL) & (it.lab.n > 0) THEN
-      W("pmxtext("); Picture(it.lab, it.size); W(", "); At(it.x, it.y); W(", ");
+      W("pmxtext(");
+      IF it.fit THEN W("pmxfit("); Picture(it.lab, it.size); W(", "); Pt(it.w); W(")")
+      ELSE Picture(it.lab, it.size)
+      END;
+      W(", "); At(it.x, it.y); W(", ");
       PmIO.WriteReal(it.angle, 3); W(", "); Col(it.line); W(");"); Ln
     END;
     it := it.next

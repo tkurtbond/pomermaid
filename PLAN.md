@@ -1052,6 +1052,43 @@ and the default theme's `cScale` colours. In steps:
   `WriteDrawingDocument`, for any `PmDraw.Drawing`.
 - **26.5:** Mermaid's examples; the documentation.
 
+### Phase 27: treemaps [done]
+
+**Change:** `treemap-beta` and `treemap`, read by a new module,
+`PmTreemap`, into a tree of sections and leaves (each with its name,
+value, indentation level and class styles), laid out by
+`PmTreemapLayout` as Mermaid lays it out, with d3-hierarchy's
+squarified treemap, and drawn through `PmDraw` by `PmDrawPic`,
+`PmSvg` and `PmDrawMp`. Values are formatted by a new module,
+`PmFormat`, d3-format 3.1.0's `format`.
+
+**Check:** case tests for nesting, a title, `valueFormat`, classes,
+`showValues`, `padding`, comments and the accessibility lines, a
+lone leaf, an empty treemap and the errors; `PmFormatTest` for the
+number formats; the layout checked against an independent
+re-implementation of d3's squarify; Mermaid's own treemap examples
+read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/treemap.md`, the Langium
+grammar (`packages/parser/src/language/treemap/treemap.langium`) and
+its value converter, `diagrams/treemap/` (`parser.ts`, `db.ts`,
+`utils.ts`, `renderer.ts`, `styles.ts`), d3-hierarchy 3.1.2's
+`treemap`, `squarify`, `dice` and `slice`, d3-format 3.1.0, and
+`handDrawnShapeStyles.ts`'s `styles2String` for the classes. In
+steps:
+
+- **27.1, the model and the reader:** the grammar's tokens, in its
+  order; rows by indentation; classes; the configuration; the dump.
+- **27.2, the number formats:** `PmFormat`, d3-format's specifiers,
+  and Mermaid's `$` forms of `valueFormat`.
+- **27.3, the layout:** d3's sums, sorting, paddings, squarify and
+  rounding; the colours, blended where Mermaid's are translucent; the
+  labels sized and shortened as Mermaid's renderer does.
+- **27.4, pic, SVG and MetaPost:** the same drawing; `PmDraw`'s
+  fitted texts (`AddFittedText`), which `PmDrawMp` sets no wider than
+  pomermaid measured them (decision 43).
+- **27.5:** Mermaid's examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1280,6 +1317,51 @@ None at present.
     more than one line, a wrapped mindmap node's, are set
     `align=middle`, as Mermaid centres them; a git graph's labels, of
     one line, are unchanged in the drawing.
+
+2026-11-23, in Phase 27, under decision 2:
+
+33. **A treemap's translucent colours are blended.** Mermaid draws a
+    section's fill at an opacity of 0.6 and its outline at 0.4, and a
+    leaf's fill at 0.3; as decision 22 says, each is its colour taken
+    over the colour beneath it, the parent section's as drawn, or
+    white.
+34. **A treemap section's label that does not fit is left out.**
+    Mermaid draws it and clips it to the header; pic cannot clip, so
+    it is drawn only when it fits, 6 pixels in from each side. A
+    leaf's label is fitted as Mermaid fits it, and its last check, that
+    the label fits at all, is made for every treemap.
+35. **A treemap's classes draw `fill`, `stroke`, `stroke-width` and
+    `color`.** Mermaid passes the others to the page's CSS; pomermaid
+    warns of each, with its line.
+36. **Numbers that JavaScript writes by their shortest form are
+    written to 15 significant digits** by `PmFormat`, and a width
+    above 1000 is not accepted.
+37. **A treemap value that is not a finite number is an error.**
+    Mermaid's grammar takes digits, `_`, `.` and `,`; JavaScript's
+    `Number` makes `NaN` of most with `_` or `,`, and Mermaid draws
+    nothing sensible for them. A number too large is `Infinity`.
+    pomermaid stops with a parse error for each.
+38. **An invalid format after `$` in `valueFormat` is an error.**
+    Mermaid logs it in the browser's console and shows the number
+    unformatted.
+39. **`nodeWidth` and `nodeHeight` set the treemap's size.** Mermaid's
+    documentation says 100 each, but its code uses them as the whole
+    treemap's size, 960 by 500 by default, and so does pomermaid. A
+    value that is not positive is ignored.
+40. **Long treemap labels are shortened by characters,** code points,
+    where Mermaid's browser counts UTF-16 units.
+41. **A treemap box of no width or height is not drawn;** a value of
+    0, or a `NaN` in Mermaid's arithmetic, gives such a box.
+42. **The peer colours, `cScalePeer0` to `cScalePeer11`, are fixed
+    defaults,** the default theme's, each changed by its
+    themeVariable; Mermaid would darken a changed `cScale` colour for
+    its peer, which pomermaid does not, as with the timelines'
+    colours.
+43. **In ConTeXt, a treemap's labels are set no wider than pomermaid
+    measured them.** MetaPost's labels are set in the document's font
+    and size, relative to the body font; a treemap's boxes are fixed
+    and do not grow around them, so each label is shrunk, if it must
+    be, to the width pomermaid measured, and stays in its box.
 
 ## Later
 
@@ -1997,5 +2079,26 @@ mindmap examples (`docs/syntax/mindmap.md`) were read and laid out;
 the three drawn cases were drawn as SVG, through groff to PDF and
 through ConTeXt, and looked at. Mermaid itself was not run.
 On 2026-11-23, `make test` passes, 569 of 569 under both models, on
+FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
+(jherek, cymoril).
+
+2026-11-23, Phase 27: treemaps. `PmTreemap` reads `treemap-beta` and
+`treemap` (`PmTreemapDump` writes its model for `-t dump`),
+`PmTreemapLayout` lays it out with d3's squarified treemap in a
+`PmDraw.Drawing`, `PmFormat` formats the values as d3-format does, and
+`PmDrawPic`, `PmSvg` and `PmDrawMp` draw it; `PmDraw.AddFittedText`
+keeps a treemap's labels in their boxes in ConTeXt (decision 43).
+`make test` passes under `-O2` and `-OC`: 596 case tests, with
+`treemap-basic`, `treemap-plain`, `treemap-classes` and
+`treemap-formats` (dump, layout, pic, mp and svg-ms), `treemap-leaf`
+and `treemap-empty` (dump and layout) and three error cases
+(`treemap-bad-value`, `treemap-blank-class`, `treemap-huge`), and
+`PmFormatTest`. The layout of `treemap-basic` was checked against an
+independent re-implementation of d3's squarify: every box matched. All
+16 of Mermaid's treemap examples (`docs/syntax/treemap.md`) were read
+and drawn as SVG and looked at; the cases were drawn through groff and
+ConTeXt (at 12 and 8 points) and looked at. Mermaid itself was not
+run.
+On 2026-11-23, `make test` passes, 596 of 596 under both models, on
 FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
 (jherek, cymoril).

@@ -69,6 +69,7 @@ CONST
   Sankey* = 13;
   Git* = 14;
   Mindmap* = 15;
+  Treemap* = 16;
 
   (* the kinds of cluster: a flowchart's subgraph, a composite state,
      a composite state's concurrent region *)

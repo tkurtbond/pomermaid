@@ -365,6 +365,33 @@ differences:
 - **Themes.** The colours are the default theme's, changed by the
   themeVariables; other themes are not drawn.
 
+## Treemaps
+
+- **Opacity.** Mermaid draws sections' and leaves' fills and outlines
+  at opacities of 0.6, 0.4 and 0.3; pic has no transparency, so each
+  is its colour blended over what is beneath it (decision 33).
+- **Labels.** A section's label that would not fit its header is left
+  out, where Mermaid draws it clipped (decision 34). Long labels are
+  shortened by characters (code points), where Mermaid's browser
+  counts UTF-16 units (decision 40).
+- **Classes:** only `fill`, `stroke`, `stroke-width` and `color` are
+  drawn; other styles, which Mermaid passes to the page's CSS, are
+  warned of (decision 35).
+- **Values.** Numbers are formatted with up to 15 significant digits,
+  and a width above 1000 is an error, as is a value that is not a
+  finite number, which Mermaid draws as `NaN` (decisions 36, 37). An
+  invalid format after `$` is an error, where Mermaid writes an error
+  in the browser's console and shows the number unformatted (decision
+  38).
+- **Size.** `nodeWidth` and `nodeHeight` set the treemap's size, as
+  Mermaid's code does (960 by 500); a value that is not positive is
+  ignored (decision 39). A box of no width or height is not drawn
+  (decision 41).
+- **Peer colours.** `cScalePeer0` to `cScalePeer11` default to fixed
+  colours, Mermaid's defaults for the default theme; Mermaid darkens
+  a changed `cScale` colour for its peer, and pomermaid does not
+  (decision 42), as for timelines.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,
