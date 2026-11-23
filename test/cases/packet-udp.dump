@@ -1,0 +1,9 @@
+packet bitsPerRow=32 rowHeight=32 bitWidth=32 paddingX=5 paddingY=15 showBits=true bitOrder=ascending fields=5 rows=3 title="UDP Packet"
+row 0 blocks=2
+  block start=0 end=15 bits=16 text="Source Port" label="Source Port"
+  block start=16 end=31 bits=16 text="Destination Port" label="Destination Port"
+row 1 blocks=2
+  block start=32 end=47 bits=16 text="Length" label="Length"
+  block start=48 end=63 bits=16 text="Checksum" label="Checksum"
+row 2 blocks=1
+  block start=64 end=95 bits=32 text="Data (variable length)" label="Data (variable length)"

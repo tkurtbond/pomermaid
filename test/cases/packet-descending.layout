@@ -1,0 +1,17 @@
+layout width=321.25 height=38.75
+rect at=(0,0) w=321.25 h=38.75 fill=none line=none
+rect at=(160.63,9.38) w=156.88 h=20 fill=#efefef line=#000000 width=0.63
+text at=(239.06,19.38) size=7.5 w=19.5 line=#000000 text="DATA"
+text at=(162.19,5.94) size=6.25 w=3.13 line=#000000 text="7"
+text at=(315.94,5.94) size=6.25 w=3.13 line=#000000 text="0"
+rect at=(80.63,9.38) w=76.88 h=20 fill=#efefef line=#000000 width=0.63
+text at=(119.06,19.38) size=7.5 w=19.5 line=#000000 text="TYPE"
+text at=(83.75,5.94) size=6.25 w=6.25 line=#000000 text="11"
+text at=(155.94,5.94) size=6.25 w=3.13 line=#000000 text="8"
+rect at=(60.63,9.38) w=16.88 h=20 fill=#efefef line=#000000 width=0.63
+text at=(69.06,19.38) size=7.5 w=9.75 line=#000000 text="EN"
+text at=(69.06,5.94) size=6.25 w=6.25 line=#000000 text="12"
+rect at=(0.63,9.38) w=56.88 h=20 fill=#efefef line=#000000 width=0.63
+text at=(29.06,19.38) size=7.5 w=39 line=#000000 text="RESERVED"
+text at=(3.75,5.94) size=6.25 w=6.25 line=#000000 text="15"
+text at=(54.38,5.94) size=6.25 w=6.25 line=#000000 text="13"

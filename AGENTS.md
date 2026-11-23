@@ -80,7 +80,8 @@ journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
 `PmMindmapDump`) and 27 (treemaps: `PmTreemap`, `PmTreemapLayout`,
 d3's squarified treemap, `PmTreemapDump`, and `PmFormat`, d3-format's
 number formats) and 28 (block diagrams: `PmBlock`, `PmBlockLayout`,
-Mermaid's layout and shapes, and `PmBlockDump`) are done. See
+Mermaid's layout and shapes, and `PmBlockDump`) and 29 (packet
+diagrams: `PmPacket`, `PmPacketLayout` and `PmPacketDump`) are done. See
 PLAN.md's State.
 
 ## Reference material

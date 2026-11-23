@@ -1,0 +1,3 @@
+packet bitsPerRow=32 rowHeight=32 bitWidth=32 paddingX=5 paddingY=15 showBits=true bitOrder=ascending fields=1 rows=1
+row 0 blocks=1
+  block start=0 end=7 bits=8 text="byte" label="byte"

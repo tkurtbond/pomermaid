@@ -1,0 +1,105 @@
+\startMPcode
+numeric pmxx[]; picture pmxp;
+pmxx0 := 0; pmxx1 := -177.131pt; pmxx2 := 429.637pt; pmxx3 := 0;
+def pmxtext(expr p, q, d, c) =
+  pmxp := p shifted -center p rotated -d shifted q;
+  draw pmxp withcolor c;
+  pmxx0 := min(pmxx0, xpart llcorner pmxp); pmxx1 := min(pmxx1, ypart llcorner pmxp);
+  pmxx2 := max(pmxx2, xpart urcorner pmxp); pmxx3 := max(pmxx3, ypart urcorner pmxp);
+enddef;
+vardef pmhbox(expr x, y, w, h, r) =
+  if r > 0: (x + r, -y) -- (x + w - r, -y) {right} .. {down} (x + w, -y - r)
+    -- (x + w, -y - h + r) {down} .. {left} (x + w - r, -y - h)
+    -- (x + r, -y - h) {left} .. {up} (x, -y - h + r)
+    -- (x, -y - r) {up} .. {right} cycle
+  else: (x, -y) -- (x + w, -y) -- (x + w, -y - h) -- (x, -y - h) -- cycle fi
+enddef;
+begingroup interim linecap := butt;
+fill pmhbox(0.419pt, 6.281pt, 212.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(0.419pt, 6.281pt, 212.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Source Port" & "}") scaled 0.75, (106.572pt, -12.981pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "0" & "}") scaled 0.625, (1.466pt, -3.978pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "15" & "}") scaled 0.625, (210.631pt, -3.978pt), 0, (0,0,0));
+fill pmhbox(214.819pt, 6.281pt, 212.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(214.819pt, 6.281pt, 212.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Destination Port" & "}") scaled 0.75, (320.972pt, -12.981pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "16" & "}") scaled 0.625, (216.913pt, -3.978pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "31" & "}") scaled 0.625, (425.031pt, -3.978pt), 0, (0,0,0));
+fill pmhbox(0.419pt, 25.963pt, 426.706pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(0.419pt, 25.963pt, 426.706pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Sequence Number" & "}") scaled 0.75, (213.772pt, -32.662pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "32" & "}") scaled 0.625, (2.513pt, -23.659pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "63" & "}") scaled 0.625, (425.031pt, -23.659pt), 0, (0,0,0));
+fill pmhbox(0.419pt, 45.644pt, 426.706pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(0.419pt, 45.644pt, 426.706pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Acknowledgment Number" & "}") scaled 0.75, (213.772pt, -52.344pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "64" & "}") scaled 0.625, (2.513pt, -43.341pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "95" & "}") scaled 0.625, (425.031pt, -43.341pt), 0, (0,0,0));
+fill pmhbox(0.419pt, 65.325pt, 51.506pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(0.419pt, 65.325pt, 51.506pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Data Offset" & "}") scaled 0.75, (26.172pt, -72.025pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "96" & "}") scaled 0.625, (2.513pt, -63.022pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "99" & "}") scaled 0.625, (49.831pt, -63.022pt), 0, (0,0,0));
+fill pmhbox(54.019pt, 65.325pt, 78.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(54.019pt, 65.325pt, 78.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Reserved" & "}") scaled 0.75, (93.172pt, -72.025pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "100" & "}") scaled 0.625, (57.16pt, -63.022pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "105" & "}") scaled 0.625, (129.184pt, -63.022pt), 0, (0,0,0));
+fill pmhbox(134.419pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(134.419pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "URG" & "}") scaled 0.75, (140.072pt, -72.025pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "106" & "}") scaled 0.625, (140.072pt, -63.022pt), 0, (0,0,0));
+fill pmhbox(147.819pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(147.819pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "ACK" & "}") scaled 0.75, (153.472pt, -72.025pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "107" & "}") scaled 0.625, (153.472pt, -63.022pt), 0, (0,0,0));
+fill pmhbox(161.219pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(161.219pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "PSH" & "}") scaled 0.75, (166.872pt, -72.025pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "108" & "}") scaled 0.625, (166.872pt, -63.022pt), 0, (0,0,0));
+fill pmhbox(174.619pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(174.619pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "RST" & "}") scaled 0.75, (180.272pt, -72.025pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "109" & "}") scaled 0.625, (180.272pt, -63.022pt), 0, (0,0,0));
+fill pmhbox(188.019pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(188.019pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "SYN" & "}") scaled 0.75, (193.672pt, -72.025pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "110" & "}") scaled 0.625, (193.672pt, -63.022pt), 0, (0,0,0));
+fill pmhbox(201.419pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(201.419pt, 65.325pt, 11.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "FIN" & "}") scaled 0.75, (207.072pt, -72.025pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "111" & "}") scaled 0.625, (207.072pt, -63.022pt), 0, (0,0,0));
+fill pmhbox(214.819pt, 65.325pt, 212.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(214.819pt, 65.325pt, 212.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Window" & "}") scaled 0.75, (320.972pt, -72.025pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "112" & "}") scaled 0.625, (217.96pt, -63.022pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "127" & "}") scaled 0.625, (423.984pt, -63.022pt), 0, (0,0,0));
+fill pmhbox(0.419pt, 85.006pt, 212.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(0.419pt, 85.006pt, 212.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Checksum" & "}") scaled 0.75, (106.572pt, -91.706pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "128" & "}") scaled 0.625, (3.56pt, -82.703pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "143" & "}") scaled 0.625, (209.584pt, -82.703pt), 0, (0,0,0));
+fill pmhbox(214.819pt, 85.006pt, 212.306pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(214.819pt, 85.006pt, 212.306pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Urgent Pointer" & "}") scaled 0.75, (320.972pt, -91.706pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "144" & "}") scaled 0.625, (217.96pt, -82.703pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "159" & "}") scaled 0.625, (423.984pt, -82.703pt), 0, (0,0,0));
+fill pmhbox(0.419pt, 104.688pt, 426.706pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(0.419pt, 104.688pt, 426.706pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "(Options and Padding)" & "}") scaled 0.75, (213.772pt, -111.387pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "160" & "}") scaled 0.625, (3.56pt, -102.384pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "191" & "}") scaled 0.625, (423.984pt, -102.384pt), 0, (0,0,0));
+fill pmhbox(0.419pt, 124.369pt, 426.706pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(0.419pt, 124.369pt, 426.706pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Data (variable length)" & "}") scaled 0.75, (213.772pt, -131.069pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "192" & "}") scaled 0.625, (3.56pt, -122.066pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "223" & "}") scaled 0.625, (423.984pt, -122.066pt), 0, (0,0,0));
+fill pmhbox(0.419pt, 144.05pt, 426.706pt, 13.4pt, 0pt) withcolor (0.9373,0.9373,0.9373);
+draw pmhbox(0.419pt, 144.05pt, 426.706pt, 13.4pt, 0pt) withcolor (0,0,0) withpen pencircle scaled 0.419pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Data (variable length)" & "}") scaled 0.75, (213.772pt, -150.75pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "224" & "}") scaled 0.625, (3.56pt, -141.747pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "255" & "}") scaled 0.625, (423.984pt, -141.747pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "TCP Packet" & "}") scaled 0.875, (214.819pt, -167.291pt), 0, (0,0,0));
+endgroup;
+setbounds currentpicture to (pmxx0, pmxx1) -- (pmxx2, pmxx1) -- (pmxx2, pmxx3) -- (pmxx0, pmxx3) -- cycle;
+\stopMPcode

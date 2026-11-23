@@ -1,0 +1,9 @@
+config config.packet.showBits="true"
+config config.packet.bitOrder="descending"
+config config.packet.bitsPerRow="16"
+packet bitsPerRow=16 rowHeight=32 bitWidth=32 paddingX=5 paddingY=15 showBits=true bitOrder=descending fields=4 rows=1
+row 0 blocks=4
+  block start=0 end=7 bits=8 text="DATA" label="DATA"
+  block start=8 end=11 bits=4 text="TYPE" label="TYPE"
+  block start=12 end=12 bits=1 text="EN" label="EN"
+  block start=13 end=15 bits=3 text="RESERVED" label="RESERVED"

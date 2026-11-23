@@ -1,1 +1,1 @@
-pomermaid: notFlow.mmd:1:1: not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey, timeline, gantt, pie, quadrantChart, xychart, radar-beta, sankey-beta, gitGraph, mindmap, treemap and block
+pomermaid: notFlow.mmd:1:1: not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey, timeline, gantt, pie, quadrantChart, xychart, radar-beta, sankey-beta, gitGraph, mindmap, treemap, block and packet

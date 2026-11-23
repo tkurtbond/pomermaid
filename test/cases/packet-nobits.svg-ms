@@ -1,0 +1,27 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p53.5p,205.25p
+.pl 53.5p
+.po 2p
+.ll 201.25p
+.sp 2p
+.defcolor pm-efefef rgb #efefef
+.defcolor pm-000000 rgb #000000
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 2.795 ht 0.521 at (1.398, -0.26)
+box wid 2.795 ht 0.521 at (1.398, -0.26) invis
+box wid 1.372 ht 0.208 at (2.083, -0.139) shaded "pm-efefef" outlined "pm-000000" thickness 0.625
+"\s[7.5]\f[TS]\m[pm-000000]low\m[]\f[]\s[0]"  at (2.083, -0.139)
+box wid 1.372 ht 0.208 at (0.694, -0.139) shaded "pm-efefef" outlined "pm-000000" thickness 0.625
+"\s[7.5]\f[TS]\m[pm-000000]spans rows\m[]\f[]\s[0]"  at (0.694, -0.139)
+box wid 0.677 ht 0.208 at (2.431, -0.382) shaded "pm-efefef" outlined "pm-000000" thickness 0.625
+"\s[7.5]\f[TS]\m[pm-000000]spans rows\m[]\f[]\s[0]"  at (2.431, -0.382)
+box wid 0.677 ht 0.208 at (1.736, -0.382) shaded "pm-efefef" outlined "pm-000000" thickness 0.625
+"\s[7.5]\f[TS]\m[pm-000000]end\m[]\f[]\s[0]"  at (1.736, -0.382)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

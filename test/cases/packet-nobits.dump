@@ -1,0 +1,14 @@
+config config.packet.showBits="false"
+config config.packet.bitOrder="descending"
+config config.packet.bitsPerRow="8"
+config config.packet.bitWidth="40"
+config config.packet.rowHeight="24"
+config config.packet.paddingX="2"
+config config.packet.paddingY="4"
+packet bitsPerRow=8 rowHeight=24 bitWidth=40 paddingX=2 paddingY=4 showBits=false bitOrder=descending fields=3 rows=2
+row 0 blocks=2
+  block start=0 end=3 bits=4 text="low" label="low"
+  block start=4 end=7 bits=4 text="spans rows" label="spans rows"
+row 1 blocks=2
+  block start=8 end=9 bits=2 text="spans rows" label="spans rows"
+  block start=10 end=11 bits=2 text="end" label="end"

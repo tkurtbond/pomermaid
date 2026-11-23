@@ -1,0 +1,18 @@
+layout width=321.25 height=58.75
+rect at=(0,0) w=321.25 h=58.75 fill=none line=none
+rect at=(0.63,9.38) w=76.88 h=20 fill=#efefef line=#000000 width=0.63
+text at=(39.06,19.38) size=7.5 w=54.45 line=#000000 text="a \"quoted\" label"
+text at=(2.19,5.94) size=6.25 w=3.13 line=#000000 text="0"
+text at=(75.94,5.94) size=6.25 w=3.13 line=#000000 text="3"
+rect at=(80.63,9.38) w=76.88 h=20 fill=#efefef line=#000000 width=0.63
+text at=(119.06,19.38) size=7.5 w=66.38 line=#000000 text="single 'quotes' and \\"
+text at=(82.19,5.94) size=6.25 w=3.13 line=#000000 text="4"
+text at=(155.94,5.94) size=6.25 w=3.13 line=#000000 text="7"
+rect at=(160.63,9.38) w=16.88 h=20 fill=#efefef line=#000000 width=0.63
+text at=(169.06,19.38) size=7.5 w=14.55 line=#000000 text="a b c"
+text at=(169.06,5.94) size=6.25 w=3.13 line=#000000 text="8"
+rect at=(180.63,9.38) w=136.88 h=20 fill=#efefef line=#000000 width=0.63
+text at=(249.06,19.38) size=7.5 w=37.88 line=#000000 text="spans lines"
+text at=(182.19,5.94) size=6.25 w=3.13 line=#000000 text="9"
+text at=(314.38,5.94) size=6.25 w=6.25 line=#000000 text="15"
+text at=(160.63,44.06) size=8.75 w=37.28 line=#000000 text="The title"

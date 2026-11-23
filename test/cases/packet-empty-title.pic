@@ -1,0 +1,18 @@
+.defcolor pm-efefef rgb #efefef
+.defcolor pm-000000 rgb #000000
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 6.7
+.vs 8.04p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.047; arrowwid = 0.047
+box invis wid 5.967 ht 0.361 at (2.984, -0.18)
+box wid 5.967 ht 0.361 at (2.984, -0.18) invis
+box wid 1.46 ht 0.186 at (0.736, -0.18) shaded "pm-efefef" outlined "pm-000000" thickness 0.419
+"\s[5.02]\f[TS]\m[pm-000000]byte\m[]\f[]\s[0]"  at (0.736, -0.18)
+"\s[4.19]\f[TS]\m[pm-000000]0\m[]\f[]\s[0]"  at (0.02, -0.055)
+"\s[4.19]\f[TS]\m[pm-000000]7\m[]\f[]\s[0]"  at (1.451, -0.055)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

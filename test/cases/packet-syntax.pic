@@ -1,0 +1,30 @@
+.defcolor pm-efefef rgb #efefef
+.defcolor pm-000000 rgb #000000
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 4.462 ht 0.816 at (2.231, -0.408)
+box wid 4.462 ht 0.816 at (2.231, -0.408) invis
+box wid 1.068 ht 0.278 at (0.543, -0.269) shaded "pm-efefef" outlined "pm-000000" thickness 0.625
+"\s[7.5]\f[TS]\m[pm-000000]a \(dqquoted\(dq label\m[]\f[]\s[0]"  at (0.543, -0.269)
+"\s[6.25]\f[TS]\m[pm-000000]0\m[]\f[]\s[0]"  at (0.03, -0.082)
+"\s[6.25]\f[TS]\m[pm-000000]3\m[]\f[]\s[0]"  at (1.055, -0.082)
+box wid 1.068 ht 0.278 at (1.654, -0.269) shaded "pm-efefef" outlined "pm-000000" thickness 0.625
+"\s[7.5]\f[TS]\m[pm-000000]single 'quotes' and \e\m[]\f[]\s[0]"  at (1.654, -0.269)
+"\s[6.25]\f[TS]\m[pm-000000]4\m[]\f[]\s[0]"  at (1.141, -0.082)
+"\s[6.25]\f[TS]\m[pm-000000]7\m[]\f[]\s[0]"  at (2.166, -0.082)
+box wid 0.234 ht 0.278 at (2.348, -0.269) shaded "pm-efefef" outlined "pm-000000" thickness 0.625
+"\s[7.5]\f[TS]\m[pm-000000]a b c\m[]\f[]\s[0]"  at (2.348, -0.269)
+"\s[6.25]\f[TS]\m[pm-000000]8\m[]\f[]\s[0]"  at (2.348, -0.082)
+box wid 1.901 ht 0.278 at (3.459, -0.269) shaded "pm-efefef" outlined "pm-000000" thickness 0.625
+"\s[7.5]\f[TS]\m[pm-000000]spans lines\m[]\f[]\s[0]"  at (3.459, -0.269)
+"\s[6.25]\f[TS]\m[pm-000000]9\m[]\f[]\s[0]"  at (2.53, -0.082)
+"\s[6.25]\f[TS]\m[pm-000000]15\m[]\f[]\s[0]"  at (4.366, -0.082)
+"\s[8.75]\f[TS]\m[pm-000000]The title\m[]\f[]\s[0]"  at (2.231, -0.612)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

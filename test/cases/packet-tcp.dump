@@ -1,0 +1,27 @@
+packet bitsPerRow=32 rowHeight=32 bitWidth=32 paddingX=5 paddingY=15 showBits=true bitOrder=ascending fields=17 rows=8 title="TCP Packet"
+row 0 blocks=2
+  block start=0 end=15 bits=16 text="Source Port" label="Source Port"
+  block start=16 end=31 bits=16 text="Destination Port" label="Destination Port"
+row 1 blocks=1
+  block start=32 end=63 bits=32 text="Sequence Number" label="Sequence Number"
+row 2 blocks=1
+  block start=64 end=95 bits=32 text="Acknowledgment Number" label="Acknowledgment Number"
+row 3 blocks=9
+  block start=96 end=99 bits=4 text="Data Offset" label="Data Offset"
+  block start=100 end=105 bits=6 text="Reserved" label="Reserved"
+  block start=106 end=106 bits=1 text="URG" label="URG"
+  block start=107 end=107 bits=1 text="ACK" label="ACK"
+  block start=108 end=108 bits=1 text="PSH" label="PSH"
+  block start=109 end=109 bits=1 text="RST" label="RST"
+  block start=110 end=110 bits=1 text="SYN" label="SYN"
+  block start=111 end=111 bits=1 text="FIN" label="FIN"
+  block start=112 end=127 bits=16 text="Window" label="Window"
+row 4 blocks=2
+  block start=128 end=143 bits=16 text="Checksum" label="Checksum"
+  block start=144 end=159 bits=16 text="Urgent Pointer" label="Urgent Pointer"
+row 5 blocks=1
+  block start=160 end=191 bits=32 text="(Options and Padding)" label="(Options and Padding)"
+row 6 blocks=1
+  block start=192 end=223 bits=32 text="Data (variable length)" label="Data (variable length)"
+row 7 blocks=1
+  block start=224 end=255 bits=32 text="Data (variable length)" label="Data (variable length)"

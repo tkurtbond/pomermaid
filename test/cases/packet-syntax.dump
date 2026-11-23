@@ -1,0 +1,7 @@
+config config.packet.bitsPerRow="16"
+packet bitsPerRow=16 rowHeight=32 bitWidth=32 paddingX=5 paddingY=15 showBits=true bitOrder=ascending fields=4 rows=1 title="The title"
+row 0 blocks=4
+  block start=0 end=3 bits=4 text="a \"quoted\" label" label="a \"quoted\" label"
+  block start=4 end=7 bits=4 text="single 'quotes' and \\" label="single 'quotes' and \\"
+  block start=8 end=8 bits=1 text="a b c" label="a b c"
+  block start=9 end=15 bits=7 text="spans lines" label="spans lines"

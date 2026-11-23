@@ -1124,6 +1124,28 @@ In steps:
   outlines, their markers and labels.
 - **28.4:** Mermaid's examples; the documentation.
 
+### Phase 29: packet diagrams [done]
+
+**Change:** `packet-beta` and `packet`, read by a new module,
+`PmPacket`, into rows of fields' parts (a field longer than a row's
+rest is split at the row's end), with the title and the `packet`
+configuration; `PmPacketDump` writes the model for `-t dump`.
+`PmPacketLayout` draws it as Mermaid's renderer does, in a
+`PmDraw.Drawing`: a box for each part, its label in the middle and
+its first and last bit numbers over it, and the title below the rows.
+`PmStyle.PacketColours` gives `themeVariables`' `packet` colours and
+sizes.
+
+**Check:** case tests for `+n` fields, split fields, single bits,
+`bitOrder: descending`, `showBits: false`, the configuration, the
+theme variables, the syntax (comments, directives, `accTitle`,
+`accDescr`, escapes) and Mermaid's errors; Mermaid's own packet
+examples read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/packet.md`,
+`diagrams/packet/` (`parser.ts`, `db.ts`, `renderer.ts`, `styles.ts`)
+and the Langium grammar, `packages/parser/src/language/packet/`.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1421,6 +1443,18 @@ None at present.
     points; outlines are never dashed; the arrowheads, circles and
     crosses at the ends of links are drawn about as Mermaid's markers
     are.
+49. **Packet theme variables are drawn** (2026-11-23):
+    `themeVariables`' `packet` colours and sizes are applied, though
+    Mermaid's documentation says they do not work in Mermaid.
+50. **A packet diagram keeps Mermaid's view box** (2026-11-23): its
+    drawing is as wide and high as Mermaid's SVG, an unseen box, so
+    the bit numbers and the space below the rows are as Mermaid's.
+51. **Packet numbers above 999999999 are an error** (2026-11-23),
+    where Mermaid's would lose precision or take a long time.
+52. **`bitsPerRow` must be a whole number from 1 to 100000**
+    (2026-11-23); another is ignored with a warning, and 32 is used.
+    More than 10000 rows are left out with a warning, as Mermaid
+    leaves them out.
 
 ## Later
 
@@ -2178,5 +2212,23 @@ looked at; the cases were drawn through groff and ConTeXt and looked
 at. Mermaid itself was not run. pic now writes a no-break space as
 `\ `, as groff has no `u00A0`.
 On 2026-11-23, `make test` passes, 656 of 656 under both models, on
+FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
+(jherek, cymoril).
+
+2026-11-23, Phase 29: packet diagrams. `PmPacket` reads
+`packet-beta` and `packet` (`PmPacketDump` writes its model for `-t
+dump`), and `PmPacketLayout` draws it as Mermaid does in a
+`PmDraw.Drawing`. `make test` passes under `-O2` and `-OC`: 704 case
+tests, with `packet-tcp`, `packet-udp`, `packet-descending`,
+`packet-split`, `packet-nobits`, `packet-theme`, `packet-syntax` and
+`packet-empty-title` (dump, layout, pic, mp and svg-ms) and eight
+error cases (`packet-gap`, `packet-backwards`, `packet-zero`,
+`packet-twofields`, `packet-fraction`, `packet-noquotes`,
+`packet-leading-zero`, `packet-large`). Mermaid's four packet
+examples (`docs/syntax/packet.md`) were read and drawn as SVG and
+looked at, and the dumps of its spec's split fields match its
+snapshots. Mermaid itself was not run.
+
+On 2026-11-23, `make test` passes, 704 of 704 under both models, on
 FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
 (jherek, cymoril).

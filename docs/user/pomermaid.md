@@ -20,8 +20,8 @@ user journeys (`journey`), timelines (`timeline`), Gantt
 charts (`gantt`), pie charts (`pie`), quadrant charts
 (`quadrantChart`), XY charts (`xychart`), radar charts
 (`radar-beta`), sankey diagrams (`sankey-beta`), git graphs
-(`gitGraph`), mindmaps (`mindmap`), treemaps (`treemap-beta`) and
-block diagrams (`block-beta`).
+(`gitGraph`), mindmaps (`mindmap`), treemaps (`treemap-beta`),
+block diagrams (`block-beta`) and packet diagrams (`packet-beta`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -915,6 +915,29 @@ blocks are placed in rows, left to right.
 - **Configuration:** `block`'s `padding` (8, between and round
   blocks).
 - **`accTitle`,** `accDescr` (read and ignored), and `%%` comments.
+
+### Packet diagrams
+
+pomermaid reads Mermaid's packet diagrams (`packet-beta` or
+`packet`), as Mermaid 12.3.0 reads them, and draws them as Mermaid
+does: each row of bits is a band of boxes, one for each field's part
+in the row, with the field's first and last bit numbers over it.
+
+- **The first line:** `packet-beta` or `packet`.
+- **Fields:** `0-15: "Source Port"` (bits 0 to 15), `16: "Flag"` (one
+  bit) or `+8: "Length"` (the next 8 bits). Fields must follow one
+  another, with no gap, and a field longer than a row's rest is split
+  at the row's end.
+- **`title`,** `accTitle` and `accDescr` (read and ignored), and `%%`
+  comments.
+- **Configuration:** `packet`'s `rowHeight` (32), `bitWidth` (32),
+  `bitsPerRow` (32), `paddingX` (5), `paddingY` (5), `showBits` (true)
+  and `bitOrder` (`ascending` or `descending`, the highest bit on the
+  left).
+- **Theme variables:** `packet`'s `startByteColor`, `endByteColor`,
+  `labelColor`, `titleColor`, `blockStrokeColor`, `blockFillColor`,
+  `byteFontSize`, `labelFontSize`, `titleFontSize` and
+  `blockStrokeWidth`.
 
 Mermaid's other diagram types are not read yet.
 

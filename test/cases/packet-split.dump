@@ -1,0 +1,14 @@
+packet bitsPerRow=32 rowHeight=32 bitWidth=32 paddingX=5 paddingY=15 showBits=true bitOrder=ascending fields=5 rows=5
+row 0 blocks=2
+  block start=0 end=10 bits=11 text="test" label="test"
+  block start=11 end=31 bits=21 text="multiple" label="multiple"
+row 1 blocks=1
+  block start=32 end=63 bits=32 text="multiple" label="multiple"
+row 2 blocks=2
+  block start=64 end=90 bits=27 text="multiple" label="multiple"
+  block start=91 end=95 bits=5 text="exact" label="exact"
+row 3 blocks=1
+  block start=96 end=127 bits=32 text="exact" label="exact"
+row 4 blocks=2
+  block start=128 end=128 bits=1 text="single" label="single"
+  block start=129 end=129 bits=1 text="after" label="after"

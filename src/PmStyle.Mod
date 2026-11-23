@@ -99,6 +99,14 @@ TYPE
     curveOpacity*, graticuleOpacity*: REAL  (* from 0 to 1 *)
   END;
 
+  (* A packet diagram's colours, as 0RRGGBBH, or -1 for none, and its
+     sizes, in Mermaid's pixels *)
+  PacketTheme* = RECORD
+    startByte*, endByte*, label*, title*: LONGINT;  (* the texts' *)
+    blockLine*, blockFill*: LONGINT;
+    byteSize*, labelSize*, titleSize*, blockWidth*: REAL
+  END;
+
   (* A git graph's colours, as 0RRGGBBH, or -1 for none, and its
      sizes, in Mermaid's pixels *)
   GitTheme* = RECORD
@@ -718,6 +726,44 @@ BEGIN
   ELSIF t.graticuleOpacity > 1 THEN t.graticuleOpacity := 1
   END
 END RadarColours;
+
+(* x, the themeVariable name's length in pixels, "10px" or "10", if
+   the graph themed sets it to one *)
+PROCEDURE VarPixels(name: ARRAY OF CHAR; VAR x: REAL);
+  VAR v: ARRAY 128 OF CHAR; i: INTEGER; y: REAL;
+BEGIN
+  IF VarText(name, v) THEN
+    i := 0;
+    IF Number(v, i, y) & (y >= 0)
+      & ((v[i] = 0X) OR (v[i] = "p") & (v[i + 1] = "x") & (v[i + 2] = 0X))
+    THEN x := y
+    ELSE PmIO.Message3("ignoring the length ", v, ", which pomermaid does not know")
+    END
+  END
+END VarPixels;
+
+(* t, a packet diagram's colours and sizes: Mermaid's, for every
+   theme, changed by themeVariables' packet: startByteColor,
+   endByteColor, labelColor, titleColor, blockStrokeColor,
+   blockFillColor, byteFontSize, labelFontSize, titleFontSize and
+   blockStrokeWidth *)
+PROCEDURE PacketColours*(VAR t: PacketTheme);
+  VAR set: BOOLEAN;
+BEGIN
+  t.startByte := 0; t.endByte := 0; t.label := 0; t.title := 0;
+  t.blockLine := 0; t.blockFill := 0EFEFEFH;
+  set := Var("packet.startByteColor", t.startByte);
+  set := Var("packet.endByteColor", t.endByte);
+  set := Var("packet.labelColor", t.label);
+  set := Var("packet.titleColor", t.title);
+  set := Var("packet.blockStrokeColor", t.blockLine);
+  set := Var("packet.blockFillColor", t.blockFill);
+  t.byteSize := 10; t.labelSize := 12; t.titleSize := 14; t.blockWidth := 1;
+  VarPixels("packet.byteFontSize", t.byteSize);
+  VarPixels("packet.labelFontSize", t.labelSize);
+  VarPixels("packet.titleFontSize", t.titleSize);
+  VarPixels("packet.blockStrokeWidth", t.blockWidth)
+END PacketColours;
 
 (* t, a git graph's colours and sizes: the default theme's, changed by
    themeVariables: git0 to git7, gitInv0 to gitInv7, gitBranchLabel0

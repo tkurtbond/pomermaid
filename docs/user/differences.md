@@ -413,6 +413,19 @@ differences:
   dashed; arrowheads, circles and crosses at the ends of links are
   drawn about as Mermaid draws its markers (decision 48).
 
+## Packet diagrams
+
+- **Theme variables.** `themeVariables`' `packet` colours and sizes
+  are drawn; Mermaid's documentation says they do not work in Mermaid
+  (decision 49).
+- **Rows.** More than 10000 rows are left out, as Mermaid leaves them
+  out, with a warning.
+- **Strings.** A backslash escape in a label, `\n` and the others, is
+  a blank, as Mermaid draws it; `\x` is `x`.
+- **Numbers** above 999999999 are an error (decision 51).
+- **`bitsPerRow`** must be a whole number from 1 to 100000; another is
+  ignored with a warning, and 32 is used (decision 52).
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,
