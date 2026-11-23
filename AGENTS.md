@@ -84,7 +84,8 @@ Mermaid's layout and shapes, and `PmBlockDump`) and 29 (packet
 diagrams: `PmPacket`, `PmPacketLayout` and `PmPacketDump`) and 30
 (kanban boards: `PmKanban`, `PmKanbanLayout` and `PmKanbanDump`) and
 31 (architecture diagrams: `PmArch`, `PmArchLayout`, a grid of its
-own, and `PmArchDump`) are done. See
+own, and `PmArchDump`) and 32 (C4 diagrams: `PmC4`, `PmC4Layout`,
+Mermaid's rows, and `PmC4Dump`) are done. See
 PLAN.md's State.
 
 ## Reference material

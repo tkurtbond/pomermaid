@@ -1,0 +1,15 @@
+---
+config:
+  c4:
+    wrap: false
+    c4ShapeInRow: 2
+---
+C4Context
+title No wrapping
+Person(a, "A person with a rather long name", "A description long enough to need wrapping if it were wrapped.")
+System_Ext(b, "B", "Short.")
+Boundary(g, "A group") {
+  System(c, "C", "Another fairly long description that is not wrapped.")
+}
+Rel(a, b, "A relationship label that is long", "and its technology")
+Rel(c, a, "back")

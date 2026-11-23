@@ -1,0 +1,1 @@
+pomermaid: c4-err-self.mmd:4:12: a boundary cannot be inside itself: Mermaid would draw it inside itself

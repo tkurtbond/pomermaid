@@ -1,0 +1,107 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p223.3p,426.3p
+.pl 223.3p
+.po 2p
+.ll 422.3p
+.sp 2p
+.defcolor pm-444444 rgb #444444
+.defcolor pm-438dd5 rgb #438dd5
+.defcolor pm-3c7fc0 rgb #3c7fc0
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-c0ffee rgb #c0ffee
+.defcolor pm-000000 rgb #000000
+.defcolor pm-333333 rgb #333333
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 4.1
+.vs 4.92p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.028; arrowwid = 0.028
+box invis wid 5.865 ht 2.978 at (2.933, -1.489)
+box wid 1.125 ht 0.998 rad 0.009 at (1.096, -1.204) outlined "pm-444444" thickness 0.256
+"\s[4.1]\m[pm-444444]\f[TS]Customer's mobile device\f[]\m[]\s[0]"  at (1.096, -0.733)
+"\s[3.59]\f[TS]\m[pm-444444][Apple IOS or Android]\m[]\f[]\s[0]"  at (1.096, -0.819)
+box wid 3.495 ht 1.917 rad 0.009 at (3.584, -1.663) outlined "pm-444444" thickness 0.256
+"\s[4.1]\m[pm-444444]\f[TS]Big Bank plc\f[]\m[]\s[0]"  at (3.584, -0.733)
+"\s[3.59]\f[TS]\m[pm-444444][Big Bank plc data center]\m[]\f[]\s[0]"  at (3.584, -0.819)
+box wid 1.481 ht 1.337 rad 0.009 at (2.755, -1.583) outlined "pm-444444" thickness 0.256
+"\s[4.1]\m[pm-444444]\f[TS]bigbank-api*** x8\f[]\m[]\s[0]"  at (2.755, -0.943)
+"\s[3.59]\f[TS]\m[pm-444444][Ubuntu 16.04 LTS]\m[]\f[]\s[0]"  at (2.755, -1.029)
+box wid 1.125 ht 0.949 rad 0.009 at (2.755, -1.599) outlined "pm-444444" thickness 0.256
+"\s[4.1]\m[pm-444444]\f[TS]Apache Tomcat\f[]\m[]\s[0]"  at (2.755, -1.153)
+"\s[3.59]\f[TS]\m[pm-444444][Apache Tomcat 8.x]\m[]\f[]\s[0]"  at (2.755, -1.239)
+box wid 1.481 ht 1.529 rad 0.009 at (4.413, -1.679) outlined "pm-444444" thickness 0.256
+"\s[4.1]\m[pm-444444]\f[TS]bigbank-db01\f[]\m[]\s[0]"  at (4.413, -0.943)
+"\s[3.59]\f[TS]\m[pm-444444][Ubuntu 16.04 LTS]\m[]\f[]\s[0]"  at (4.413, -1.029)
+box wid 1.125 ht 1.141 rad 0.009 at (4.413, -1.695) outlined "pm-444444" thickness 0.256
+"\s[4.1]\m[pm-444444]\f[TS]Oracle - Primary\f[]\m[]\s[0]"  at (4.413, -1.153)
+"\s[3.59]\f[TS]\m[pm-444444][Oracle 12c]\m[]\f[]\s[0]"  at (4.413, -1.239)
+box wid 0.769 ht 0.464 rad 0.043 at (1.096, -1.293) shaded "pm-438dd5" outlined "pm-3c7fc0" thickness 0.512
+"\s[3.59]\m[pm-ffffff]\f[TS]Mobile App\f[]\m[]\s[0]"  at (1.096, -1.162)
+"\s[2.69]\f[TS]\m[pm-ffffff][Container: Xamarin]\m[]\f[]\s[0]"  at (1.096, -1.225)
+"\s[2.94]\f[TS]\m[pm-ffffff]Provides a limited subset of the\m[]\f[]\s[0]" "\s[2.94]\f[TS]\m[pm-ffffff]Internet Banking functionality\m[]\f[]\s[0]" "\s[2.94]\f[TS]\m[pm-ffffff]to customers via their mobile\m[]\f[]\s[0]" "\s[2.94]\f[TS]\m[pm-ffffff]device.\m[]\f[]\s[0]"  at (1.096, -1.356)
+box wid 0.769 ht 0.415 rad 0.043 at (2.755, -1.688) shaded "pm-438dd5" outlined "pm-3c7fc0" thickness 0.512
+"\s[3.59]\m[pm-ffffff]\f[TS]API Application\f[]\m[]\s[0]"  at (2.755, -1.582)
+"\s[2.69]\f[TS]\m[pm-ffffff][Container: Java and Spring MVC]\m[]\f[]\s[0]"  at (2.755, -1.645)
+"\s[2.94]\f[TS]\m[pm-ffffff]Provides Internet Banking\m[]\f[]\s[0]" "\s[2.94]\f[TS]\m[pm-ffffff]functionality via a JSON/HTTPS\m[]\f[]\s[0]" "\s[2.94]\f[TS]\m[pm-ffffff]API.\m[]\f[]\s[0]"  at (2.755, -1.751)
+"\M[pm-c0ffee]\v'-0.22m'\D'P 0.001i -0.004i 0.002i -0.003i 0.004i -0.004i 0.006i -0.004i 0.007i -0.003i 0.009i -0.004i 0.01i -0.003i 0.012i -0.003i 0.014i -0.003i 0.014i -0.003i 0.016i -0.003i 0.017i -0.003i 0.019i -0.002i 0.019i -0.003i 0.021i -0.002i 0.021i -0.002i 0.022i -0.002i 0.023i -0.001i 0.024i -0.001i 0.024i -0.002i 0.024i 0i 0.025i -0.001i 0.025i 0i 0.025i 0i 0.025i 0i 0.025i 0i 0.025i 0.001i 0.025i 0i 0.024i 0.002i 0.023i 0.001i 0.023i 0.001i 0.022i 0.002i 0.022i 0.002i 0.02i 0.002i 0.02i 0.003i 0.018i 0.002i 0.017i 0.003i 0.016i 0.003i 0.015i 0.003i 0.013i 0.003i 0.012i 0.003i 0.01i 0.003i 0.009i 0.004i 0.007i 0.003i 0.006i 0.004i 0.004i 0.004i 0.003i 0.003i 0.001i 0.004i 0i 0.494i -0.001i 0.004i -0.003i 0.004i -0.004i 0.003i -0.006i 0.004i -0.007i 0.004i -0.009i 0.003i -0.01i 0.003i -0.012i 0.004i -0.013i 0.003i -0.015i 0.003i -0.016i 0.003i -0.017i 0.002i -0.018i 0.003i -0.02i 0.002i -0.02i 0.002i -0.022i 0.002i -0.022i 0.002i -0.023i 0.001i -0.023i 0.002i -0.024i 0.001i -0.025i 0.001i -0.025i 0i -0.025i 0.001i -0.025i 0i -0.025i 0i -0.025i -0.001i -0.025i 0i -0.024i -0.001i -0.024i -0.001i -0.024i -0.002i -0.023i -0.001i -0.022i -0.002i -0.021i -0.002i -0.021i -0.002i -0.019i -0.002i -0.019i -0.003i -0.017i -0.002i -0.016i -0.003i -0.014i -0.003i -0.014i -0.003i -0.012i -0.004i -0.01i -0.003i -0.009i -0.003i -0.007i -0.004i -0.006i -0.004i -0.004i -0.003i -0.002i -0.004i -0.001i -0.004i'\M[]" ljust at (4.029, -1.537)
+line from (4.029, -1.537) to (4.03, -1.533) to (4.032, -1.53) to (4.036, -1.526) \
+  to (4.042, -1.522) to (4.049, -1.519) to (4.058, -1.515) to (4.068, -1.512) \
+  to (4.08, -1.509) to (4.094, -1.506) to (4.108, -1.503) to (4.124, -1.5) \
+  to (4.141, -1.497) to (4.16, -1.495) to (4.179, -1.492) to (4.2, -1.49) \
+  to (4.221, -1.488) to (4.243, -1.486) to (4.266, -1.485) to (4.29, -1.484) \
+  to (4.314, -1.482) to (4.338, -1.482) to (4.363, -1.481) to (4.388, -1.481) \
+  to (4.413, -1.481) to (4.438, -1.481) to (4.463, -1.481) to (4.488, -1.482) \
+  to (4.513, -1.482) to (4.537, -1.484) to (4.56, -1.485) to (4.583, -1.486) \
+  to (4.605, -1.488) to (4.627, -1.49) to (4.647, -1.492) to (4.667, -1.495) \
+  to (4.685, -1.497) to (4.702, -1.5) to (4.718, -1.503) to (4.733, -1.506) \
+  to (4.746, -1.509) to (4.758, -1.512) to (4.768, -1.515) to (4.777, -1.519) \
+  to (4.784, -1.522) to (4.79, -1.526) to (4.794, -1.53) to (4.797, -1.533) \
+  to (4.798, -1.537) to (4.798, -2.031) to (4.797, -2.035) to (4.794, -2.039) \
+  to (4.79, -2.042) to (4.784, -2.046) to (4.777, -2.05) to (4.768, -2.053) \
+  to (4.758, -2.056) to (4.746, -2.06) to (4.733, -2.063) to (4.718, -2.066) \
+  to (4.702, -2.069) to (4.685, -2.071) to (4.667, -2.074) to (4.647, -2.076) \
+  to (4.627, -2.078) to (4.605, -2.08) to (4.583, -2.082) to (4.56, -2.083) \
+  to (4.537, -2.085) to (4.513, -2.086) to (4.488, -2.087) to (4.463, -2.087) \
+  to (4.438, -2.088) to (4.413, -2.088) to (4.388, -2.088) to (4.363, -2.087) \
+  to (4.338, -2.087) to (4.314, -2.086) to (4.29, -2.085) to (4.266, -2.083) \
+  to (4.243, -2.082) to (4.221, -2.08) to (4.2, -2.078) to (4.179, -2.076) \
+  to (4.16, -2.074) to (4.141, -2.071) to (4.124, -2.069) to (4.108, -2.066) \
+  to (4.094, -2.063) to (4.08, -2.06) to (4.068, -2.056) to (4.058, -2.053) \
+  to (4.049, -2.05) to (4.042, -2.046) to (4.036, -2.042) to (4.032, -2.039) \
+  to (4.03, -2.035) to (4.029, -2.031) to (4.029, -1.537) outlined "pm-3c7fc0" thickness 0.512
+line from (4.029, -1.537) to (4.037, -1.548) to (4.059, -1.559) to (4.094, -1.568) \
+  to (4.141, -1.577) to (4.198, -1.584) to (4.264, -1.589) to (4.336, -1.592) \
+  to (4.413, -1.593) to (4.491, -1.592) to (4.563, -1.589) to (4.628, -1.584) \
+  to (4.685, -1.577) to (4.732, -1.568) to (4.767, -1.559) to (4.79, -1.548) \
+  to (4.798, -1.537) outlined "pm-3c7fc0" thickness 0.512
+circle rad 0.004 at (4.029, -1.537) shaded "pm-3c7fc0" outlined "pm-3c7fc0" thickness 0
+circle rad 0.004 at (4.798, -1.537) shaded "pm-3c7fc0" outlined "pm-3c7fc0" thickness 0
+"\s[3.59]\m[pm-000000]\f[TS]Database\f[]\m[]\s[0]"  at (4.413, -1.678)
+"\s[2.69]\f[TS]\m[pm-000000][Container: Relational Database\m[]\f[]\s[0]" "\s[2.69]\f[TS]\m[pm-000000]Schema]\m[]\f[]\s[0]"  at (4.413, -1.763)
+"\s[2.94]\f[TS]\m[pm-000000]Stores user registration\m[]\f[]\s[0]" "\s[2.94]\f[TS]\m[pm-000000]information, hashed\m[]\f[]\s[0]" "\s[2.94]\f[TS]\m[pm-000000]authentication credentials,\m[]\f[]\s[0]" "\s[2.94]\f[TS]\m[pm-000000]access logs, etc.\m[]\f[]\s[0]"  at (4.413, -1.917)
+line from (1.481, -1.384) to (2.37, -1.597) outlined "pm-444444" thickness 0.256
+"\M[pm-333333]\v'-0.22m'\D'P -0.039i 0.01i 0.008i -0.035i'\M[]" ljust at (2.374, -1.597)
+"\s[3.07]\f[TS]\m[pm-444444]Makes API calls to\m[]\f[]\s[0]"  at (2.11, -1.384)
+"\s[3.07]\m[pm-444444]\f[TS][json/HTTPS]\f[]\m[]\s[0]"  at (2.11, -1.444)
+line from (3.139, -1.71) to (3.202, -1.717) to (3.278, -1.723) to (3.368, -1.73) \
+  to (3.473, -1.736) to (3.591, -1.743) to (3.723, -1.749) to (3.869, -1.756) \
+  to (4.029, -1.762) outlined "pm-444444" thickness 0.256
+circle rad 0.002 at (3.139, -1.71) shaded "pm-444444" outlined "pm-444444" thickness 0
+circle rad 0.002 at (4.029, -1.762) shaded "pm-444444" outlined "pm-444444" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P -0.036i 0.016i 0.001i -0.035i'\M[]" ljust at (4.032, -1.762)
+"\s[3.07]\f[TS]\m[pm-444444]Reads from and writes to\m[]\f[]\s[0]"  at (3.814, -1.736)
+"\s[3.07]\m[pm-444444]\f[TS][JDBC]\f[]\m[]\s[0]"  at (3.814, -1.797)
+line from (4.029, -1.727) to (3.85, -1.68) to (3.631, -1.633) to (3.372, -1.586) \
+  to (3.073, -1.538) to (2.735, -1.491) to (2.357, -1.444) to (1.938, -1.397) \
+  to (1.481, -1.35) outlined "pm-444444" thickness 0.256
+circle rad 0.002 at (4.029, -1.727) shaded "pm-444444" outlined "pm-444444" thickness 0
+circle rad 0.002 at (1.481, -1.35) shaded "pm-444444" outlined "pm-444444" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P 0.037i -0.014i -0.003i 0.036i'\M[]" ljust at (1.477, -1.349)
+"\M[pm-333333]\v'-0.22m'\D'P -0.039i 0.007i 0.01i -0.034i'\M[]" ljust at (4.032, -1.728)
+"\s[3.07]\f[TS]\m[pm-444444]Syncs\m[]\f[]\s[0]"  at (2.81, -1.538)
+"\s[4.1]\f[TS]\m[pm-333333]Deployment Diagram for Internet Banking System - Live\m[]\f[]\s[0]"  at (2.745, -0.3)
+box wid 5.865 ht 2.978 at (2.933, -1.489) invis
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

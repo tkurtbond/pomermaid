@@ -462,6 +462,31 @@ differences:
   fails there without a message.
 - **`align`** with fewer than two ids is a parse error.
 
+## C4 diagrams
+
+- **Row width.** Mermaid starts a new row of elements where the next
+  would pass the browser window's width; pomermaid takes it as 1920
+  pixels (decision 57).
+- **Boundaries** are drawn beneath the elements, where Mermaid draws
+  them over them, so a boundary's `bgColor` does not hide what is in
+  it (decision 59). Dashed boundaries have square corners.
+- **Curved outlines.** Cylinders and queues are polygons, and the
+  relationships end where they meet them (decision 63).
+- **Errors where Mermaid goes wrong:** a relationship to an element
+  that does not exist or to `global`, a boundary inside itself or
+  called `global` or `""` (decision 60), and `$key` in place of an
+  alias, a label, `from` or `to` (decision 58).
+- **`$alias`, `$parentBoundary`, `$typeC4Shape`, `$from`, `$to` and
+  `$wrap`** are warned of and ignored (decision 61).
+- **A text set by `UpdateElementStyle`,** as `$descr`, is drawn
+  empty, as in Mermaid (decision 62).
+- **Incomplete relationships,** without `from`, `to` or a label, are
+  left out, as in Mermaid, with a warning.
+- **Colours** that are not colours fall back to the element's
+  default.
+- **Sprites and links** (`$sprite`, `$link`) are read; a sprite only
+  chooses a shape, and neither is drawn.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

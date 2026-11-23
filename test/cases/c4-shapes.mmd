@@ -1,0 +1,13 @@
+C4Context
+Person(p1, "Plain person")
+Person(p2, "Person as a box", $shape="RoundedBoxShape")
+System(s1, "System as a cylinder", "by its sprite", $sprite="database")
+System(s2, "System as a queue", "by its tags", $tags="fast,queue")
+System(s3, "System as a person", $shape="person")
+SystemDb(s4, "Db as a component", $shape="component")
+SystemQueue(s5, "Queue as a box", $shape="rounded")
+Component(c1, "Component, default", "Go")
+Rel(p1, s1, "first")
+Rel(p2, s2, "second")
+Rel(s3, s4, "third")
+Rel(s5, c1, "fourth")

@@ -1,0 +1,175 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p391.51p,433p
+.pl 391.51p
+.po 2p
+.ll 429p
+.sp 2p
+.defcolor pm-444444 rgb #444444
+.defcolor pm-438dd5 rgb #438dd5
+.defcolor pm-3c7fc0 rgb #3c7fc0
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-999999 rgb #999999
+.defcolor pm-8a8a8a rgb #8a8a8a
+.defcolor pm-85bbf0 rgb #85bbf0
+.defcolor pm-78a8d8 rgb #78a8d8
+.defcolor pm-cccccc rgb #cccccc
+.defcolor pm-bfbfbf rgb #bfbfbf
+.defcolor pm-333333 rgb #333333
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 5.5
+.vs 6.6p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.038; arrowwid = 0.038
+box invis wid 5.958 ht 5.29 at (2.979, -2.645)
+line from (0.716, -2.476) to (5.242, -2.476) to (5.242, -4.813) to (0.716, -4.813) \
+  to (0.716, -2.476) outlined "pm-444444" thickness 0.344 dashed 0.033
+circle rad 0.002 at (0.716, -2.476) shaded "pm-444444" outlined "pm-444444" thickness 0
+circle rad 0.002 at (0.716, -2.476) shaded "pm-444444" outlined "pm-444444" thickness 0
+"\s[5.5]\m[pm-444444]\f[TS]API Application\f[]\m[]\s[0]"  at (2.979, -2.514)
+"\s[4.81]\f[TS]\m[pm-444444][CONTAINER]\m[]\f[]\s[0]"  at (2.979, -2.63)
+box wid 1.031 ht 0.557 rad 0.057 at (1.232, -1.42) shaded "pm-438dd5" outlined "pm-3c7fc0" thickness 0.688
+"\s[4.81]\m[pm-ffffff]\f[TS]Single Page Application\f[]\m[]\s[0]"  at (1.232, -1.277)
+"\s[3.61]\f[TS]\m[pm-ffffff][Container: javascript and angular]\m[]\f[]\s[0]"  at (1.232, -1.361)
+"\s[3.95]\f[TS]\m[pm-ffffff]Provides all the internet banking\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]functionality to customers via\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]their web browser.\m[]\f[]\s[0]"  at (1.232, -1.504)
+"\M[pm-438dd5]\v'-0.22m'\D'P 0.001i -0.005i 0.003i -0.005i 0.006i -0.005i 0.007i -0.005i 0.01i -0.005i 0.012i -0.004i 0.014i -0.005i 0.016i -0.004i 0.018i -0.004i 0.019i -0.004i 0.022i -0.004i 0.023i -0.004i 0.024i -0.003i 0.027i -0.003i 0.027i -0.003i 0.029i -0.003i 0.029i -0.002i 0.031i -0.002i 0.032i -0.002i 0.032i -0.001i 0.033i -0.001i 0.033i -0.001i 0.034i -0.001i 0.033i 0i 0.034i 0i 0.034i 0.001i 0.033i 0.001i 0.033i 0.001i 0.032i 0.001i 0.032i 0.002i 0.031i 0.002i 0.029i 0.002i 0.029i 0.003i 0.027i 0.003i 0.026i 0.003i 0.025i 0.003i 0.023i 0.004i 0.022i 0.004i 0.019i 0.004i 0.018i 0.004i 0.016i 0.004i 0.014i 0.005i 0.012i 0.004i 0.01i 0.005i 0.007i 0.005i 0.006i 0.005i 0.003i 0.005i 0.001i 0.005i 0i 0.663i -0.001i 0.005i -0.003i 0.005i -0.006i 0.005i -0.007i 0.005i -0.01i 0.004i -0.012i 0.005i -0.014i 0.004i -0.016i 0.005i -0.018i 0.004i -0.019i 0.004i -0.022i 0.004i -0.023i 0.003i -0.025i 0.004i -0.026i 0.003i -0.027i 0.003i -0.029i 0.002i -0.029i 0.003i -0.031i 0.002i -0.032i 0.002i -0.032i 0.001i -0.033i 0.001i -0.033i 0.001i -0.034i 0i -0.034i 0.001i -0.033i -0.001i -0.034i 0i -0.033i -0.001i -0.033i -0.001i -0.032i -0.001i -0.032i -0.002i -0.031i -0.002i -0.029i -0.003i -0.029i -0.002i -0.027i -0.003i -0.027i -0.003i -0.024i -0.004i -0.023i -0.003i -0.022i -0.004i -0.019i -0.004i -0.018i -0.004i -0.016i -0.005i -0.014i -0.004i -0.012i -0.005i -0.01i -0.004i -0.007i -0.005i -0.006i -0.005i -0.003i -0.005i -0.001i -0.005i'\M[]" ljust at (2.225, -1.217)
+line from (2.225, -1.217) to (2.226, -1.212) to (2.229, -1.207) to (2.235, -1.202) \
+  to (2.242, -1.197) to (2.252, -1.192) to (2.264, -1.188) to (2.278, -1.183) \
+  to (2.294, -1.179) to (2.312, -1.175) to (2.331, -1.171) to (2.353, -1.167) \
+  to (2.376, -1.163) to (2.4, -1.16) to (2.427, -1.157) to (2.454, -1.154) \
+  to (2.483, -1.151) to (2.512, -1.149) to (2.543, -1.147) to (2.575, -1.145) \
+  to (2.607, -1.144) to (2.64, -1.143) to (2.673, -1.142) to (2.707, -1.141) \
+  to (2.74, -1.141) to (2.774, -1.141) to (2.808, -1.142) to (2.841, -1.143) \
+  to (2.874, -1.144) to (2.906, -1.145) to (2.938, -1.147) to (2.969, -1.149) \
+  to (2.998, -1.151) to (3.027, -1.154) to (3.054, -1.157) to (3.08, -1.16) \
+  to (3.105, -1.163) to (3.128, -1.167) to (3.15, -1.171) to (3.169, -1.175) \
+  to (3.187, -1.179) to (3.203, -1.183) to (3.217, -1.188) to (3.229, -1.192) \
+  to (3.239, -1.197) to (3.246, -1.202) to (3.252, -1.207) to (3.255, -1.212) \
+  to (3.256, -1.217) to (3.256, -1.88) to (3.255, -1.885) to (3.252, -1.89) \
+  to (3.246, -1.895) to (3.239, -1.9) to (3.229, -1.904) to (3.217, -1.909) \
+  to (3.203, -1.913) to (3.187, -1.918) to (3.169, -1.922) to (3.15, -1.926) \
+  to (3.128, -1.93) to (3.105, -1.933) to (3.08, -1.937) to (3.054, -1.94) \
+  to (3.027, -1.943) to (2.998, -1.945) to (2.969, -1.948) to (2.938, -1.95) \
+  to (2.906, -1.952) to (2.874, -1.953) to (2.841, -1.954) to (2.808, -1.955) \
+  to (2.774, -1.955) to (2.74, -1.956) to (2.707, -1.955) to (2.673, -1.955) \
+  to (2.64, -1.954) to (2.607, -1.953) to (2.575, -1.952) to (2.543, -1.95) \
+  to (2.512, -1.948) to (2.483, -1.945) to (2.454, -1.943) to (2.427, -1.94) \
+  to (2.4, -1.937) to (2.376, -1.933) to (2.353, -1.93) to (2.331, -1.926) \
+  to (2.312, -1.922) to (2.294, -1.918) to (2.278, -1.913) to (2.264, -1.909) \
+  to (2.252, -1.904) to (2.242, -1.9) to (2.235, -1.895) to (2.229, -1.89) \
+  to (2.226, -1.885) to (2.225, -1.88) to (2.225, -1.217) outlined "pm-3c7fc0" thickness 0.688
+line from (2.225, -1.217) to (2.235, -1.232) to (2.265, -1.246) to (2.313, -1.259) \
+  to (2.376, -1.27) to (2.452, -1.279) to (2.54, -1.286) to (2.637, -1.291) \
+  to (2.74, -1.292) to (2.844, -1.291) to (2.941, -1.286) to (3.029, -1.279) \
+  to (3.105, -1.27) to (3.168, -1.259) to (3.216, -1.246) to (3.246, -1.232) \
+  to (3.256, -1.217) outlined "pm-3c7fc0" thickness 0.688
+circle rad 0.005 at (2.225, -1.217) shaded "pm-3c7fc0" outlined "pm-3c7fc0" thickness 0
+circle rad 0.005 at (3.256, -1.217) shaded "pm-3c7fc0" outlined "pm-3c7fc0" thickness 0
+"\s[4.81]\m[pm-ffffff]\f[TS]Database\f[]\m[]\s[0]"  at (2.74, -1.406)
+"\s[3.61]\f[TS]\m[pm-ffffff][Container: Relational Database\m[]\f[]\s[0]" "\s[3.61]\f[TS]\m[pm-ffffff]Schema]\m[]\f[]\s[0]"  at (2.74, -1.521)
+"\s[3.95]\f[TS]\m[pm-ffffff]Stores user registration\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]information, hashed\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]authentication credentials,\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]access logs, etc.\m[]\f[]\s[0]"  at (2.74, -1.727)
+box wid 1.031 ht 0.557 rad 0.057 at (4.249, -1.42) shaded "pm-999999" outlined "pm-8a8a8a" thickness 0.688
+"\s[4.81]\m[pm-ffffff]\f[TS]Mainframe Banking System\f[]\m[]\s[0]"  at (4.249, -1.277)
+"\s[3.61]\f[TS]\m[pm-ffffff][Software System]\m[]\f[]\s[0]"  at (4.249, -1.361)
+"\s[3.95]\f[TS]\m[pm-ffffff]Stores all of the core banking\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]information about customers,\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]accounts, transactions, etc.\m[]\f[]\s[0]"  at (4.249, -1.504)
+box wid 1.031 ht 0.492 rad 0.057 at (1.47, -3.199) shaded "pm-85bbf0" outlined "pm-78a8d8" thickness 0.688
+"\s[4.81]\m[pm-ffffff]\f[TS]Sign In Controller\f[]\m[]\s[0]"  at (1.47, -3.089)
+"\s[3.61]\f[TS]\m[pm-ffffff][Component: MVC Rest Controller]\m[]\f[]\s[0]"  at (1.47, -3.174)
+"\s[3.95]\f[TS]\m[pm-ffffff]Allows users to sign in to the\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]internet banking system\m[]\f[]\s[0]"  at (1.47, -3.284)
+box wid 1.031 ht 0.572 rad 0.057 at (2.979, -3.239) shaded "pm-85bbf0" outlined "pm-78a8d8" thickness 0.688
+"\s[4.81]\m[pm-ffffff]\f[TS]Accounts Summary\f[]\m[]\s[0]" "\s[4.81]\m[pm-ffffff]\f[TS]Controller\f[]\m[]\s[0]"  at (2.979, -3.129)
+"\s[3.61]\f[TS]\m[pm-ffffff][Component: MVC Rest Controller]\m[]\f[]\s[0]"  at (2.979, -3.254)
+"\s[3.95]\f[TS]\m[pm-ffffff]Provides customers with a summary\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]of their bank accounts\m[]\f[]\s[0]"  at (2.979, -3.364)
+box wid 1.031 ht 0.557 rad 0.057 at (4.488, -3.232) shaded "pm-85bbf0" outlined "pm-78a8d8" thickness 0.688
+"\s[4.81]\m[pm-ffffff]\f[TS]Security Component\f[]\m[]\s[0]"  at (4.488, -3.089)
+"\s[3.61]\f[TS]\m[pm-ffffff][Component: Spring Bean]\m[]\f[]\s[0]"  at (4.488, -3.174)
+"\s[3.95]\f[TS]\m[pm-ffffff]Provides functionality related to\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]singing in, changing passwords,\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]etc.\m[]\f[]\s[0]"  at (4.488, -3.317)
+"\M[pm-85bbf0]\v'-0.22m'\D'P 0.001i -0.005i 0.003i -0.005i 0.006i -0.005i 0.007i -0.004i 0.01i -0.005i 0.012i -0.005i 0.014i -0.004i 0.016i -0.005i 0.018i -0.004i 0.019i -0.004i 0.022i -0.004i 0.023i -0.003i 0.025i -0.004i 0.026i -0.003i 0.027i -0.003i 0.029i -0.002i 0.029i -0.003i 0.031i -0.002i 0.032i -0.001i 0.032i -0.002i 0.033i -0.001i 0.033i -0.001i 0.034i 0i 0.033i 0i 0.034i 0i 0.034i 0i 0.033i 0.001i 0.033i 0.001i 0.032i 0.002i 0.032i 0.001i 0.031i 0.002i 0.029i 0.003i 0.029i 0.002i 0.027i 0.003i 0.026i 0.003i 0.025i 0.004i 0.023i 0.003i 0.022i 0.004i 0.019i 0.004i 0.018i 0.004i 0.016i 0.005i 0.014i 0.004i 0.012i 0.005i 0.01i 0.005i 0.007i 0.004i 0.006i 0.005i 0.003i 0.005i 0.001i 0.005i 0i 0.326i -0.001i 0.005i -0.003i 0.005i -0.006i 0.005i -0.007i 0.005i -0.01i 0.004i -0.012i 0.005i -0.014i 0.004i -0.016i 0.005i -0.018i 0.004i -0.019i 0.004i -0.022i 0.004i -0.023i 0.003i -0.025i 0.004i -0.026i 0.003i -0.027i 0.003i -0.029i 0.002i -0.029i 0.003i -0.031i 0.002i -0.032i 0.002i -0.032i 0.001i -0.033i 0.001i -0.033i 0.001i -0.034i 0i -0.034i 0.001i -0.033i -0.001i -0.034i 0i -0.033i -0.001i -0.033i -0.001i -0.032i -0.001i -0.032i -0.002i -0.031i -0.002i -0.029i -0.003i -0.029i -0.002i -0.027i -0.003i -0.026i -0.003i -0.025i -0.004i -0.023i -0.003i -0.022i -0.004i -0.019i -0.004i -0.018i -0.004i -0.016i -0.005i -0.014i -0.004i -0.012i -0.005i -0.01i -0.004i -0.007i -0.005i -0.006i -0.005i -0.003i -0.005i -0.001i -0.005i'\M[]" ljust at (0.955, -4.078)
+line from (0.955, -4.078) to (0.956, -4.073) to (0.959, -4.068) to (0.965, -4.063) \
+  to (0.972, -4.059) to (0.982, -4.054) to (0.994, -4.049) to (1.008, -4.045) \
+  to (1.024, -4.04) to (1.042, -4.036) to (1.061, -4.032) to (1.083, -4.028) \
+  to (1.106, -4.025) to (1.131, -4.021) to (1.157, -4.018) to (1.184, -4.015) \
+  to (1.213, -4.013) to (1.242, -4.01) to (1.273, -4.008) to (1.305, -4.007) \
+  to (1.337, -4.005) to (1.37, -4.004) to (1.403, -4.003) to (1.437, -4.003) \
+  to (1.47, -4.003) to (1.504, -4.003) to (1.538, -4.003) to (1.571, -4.004) \
+  to (1.604, -4.005) to (1.636, -4.007) to (1.668, -4.008) to (1.699, -4.01) \
+  to (1.728, -4.013) to (1.757, -4.015) to (1.784, -4.018) to (1.81, -4.021) \
+  to (1.835, -4.025) to (1.858, -4.028) to (1.88, -4.032) to (1.899, -4.036) \
+  to (1.917, -4.04) to (1.933, -4.045) to (1.947, -4.049) to (1.959, -4.054) \
+  to (1.969, -4.059) to (1.976, -4.063) to (1.982, -4.068) to (1.985, -4.073) \
+  to (1.986, -4.078) to (1.986, -4.404) to (1.985, -4.409) to (1.982, -4.414) \
+  to (1.976, -4.419) to (1.969, -4.424) to (1.959, -4.428) to (1.947, -4.433) \
+  to (1.933, -4.437) to (1.917, -4.442) to (1.899, -4.446) to (1.88, -4.45) \
+  to (1.858, -4.454) to (1.835, -4.457) to (1.81, -4.461) to (1.784, -4.464) \
+  to (1.757, -4.467) to (1.728, -4.469) to (1.699, -4.472) to (1.668, -4.474) \
+  to (1.636, -4.476) to (1.604, -4.477) to (1.571, -4.478) to (1.538, -4.479) \
+  to (1.504, -4.479) to (1.47, -4.48) to (1.437, -4.479) to (1.403, -4.479) \
+  to (1.37, -4.478) to (1.337, -4.477) to (1.305, -4.476) to (1.273, -4.474) \
+  to (1.242, -4.472) to (1.213, -4.469) to (1.184, -4.467) to (1.157, -4.464) \
+  to (1.131, -4.461) to (1.106, -4.457) to (1.083, -4.454) to (1.061, -4.45) \
+  to (1.042, -4.446) to (1.024, -4.442) to (1.008, -4.437) to (0.994, -4.433) \
+  to (0.982, -4.428) to (0.972, -4.424) to (0.965, -4.419) to (0.959, -4.414) \
+  to (0.956, -4.409) to (0.955, -4.404) to (0.955, -4.078) outlined "pm-78a8d8" thickness 0.688
+line from (0.955, -4.078) to (0.965, -4.093) to (0.995, -4.108) to (1.043, -4.12) \
+  to (1.106, -4.132) to (1.182, -4.141) to (1.27, -4.148) to (1.367, -4.152) \
+  to (1.47, -4.154) to (1.574, -4.152) to (1.671, -4.148) to (1.759, -4.141) \
+  to (1.835, -4.132) to (1.898, -4.12) to (1.946, -4.108) to (1.976, -4.093) \
+  to (1.986, -4.078) outlined "pm-78a8d8" thickness 0.688
+circle rad 0.005 at (0.955, -4.078) shaded "pm-78a8d8" outlined "pm-78a8d8" thickness 0
+circle rad 0.005 at (1.986, -4.078) shaded "pm-78a8d8" outlined "pm-78a8d8" thickness 0
+"\s[4.81]\m[pm-ffffff]\f[TS]Cache\f[]\m[]\s[0]"  at (1.47, -4.268)
+"\s[3.61]\f[TS]\m[pm-ffffff][Component: Redis]\m[]\f[]\s[0]"  at (1.47, -4.352)
+box wid 1.031 ht 0.346 rad 0.057 at (2.979, -4.175) shaded "pm-cccccc" outlined "pm-bfbfbf" thickness 0.688
+"\s[4.81]\m[pm-ffffff]\f[TS]Events\f[]\m[]\s[0]"  at (2.979, -4.138)
+"\s[3.61]\f[TS]\m[pm-ffffff][component queu: Kafka]\m[]\f[]\s[0]"  at (2.979, -4.223)
+box wid 1.031 ht 0.572 rad 0.057 at (4.488, -4.288) shaded "pm-cccccc" outlined "pm-bfbfbf" thickness 0.688
+"\s[4.81]\m[pm-ffffff]\f[TS]Mainframe Banking System\f[]\m[]\s[0]" "\s[4.81]\m[pm-ffffff]\f[TS]Facade\f[]\m[]\s[0]"  at (4.488, -4.178)
+"\s[3.61]\f[TS]\m[pm-ffffff][Component: Spring Bean]\m[]\f[]\s[0]"  at (4.488, -4.303)
+"\s[3.95]\f[TS]\m[pm-ffffff]A facade onto the mainframe\m[]\f[]\s[0]" "\s[3.95]\f[TS]\m[pm-ffffff]banking system.\m[]\f[]\s[0]"  at (4.488, -4.413)
+line from (1.986, -3.205) to (3.972, -3.226) outlined "pm-444444" thickness 0.344
+"\M[pm-333333]\v'-0.22m'\D'P -0.048i 0.023i 0.001i -0.048i'\M[]" ljust at (3.977, -3.227)
+"\s[4.13]\f[TS]\m[pm-444444]Uses\m[]\f[]\s[0]"  at (3.039, -3.216)
+line from (3.39, -3.525) to (3.439, -3.585) to (3.498, -3.645) to (3.567, -3.704) \
+  to (3.648, -3.764) to (3.739, -3.824) to (3.841, -3.883) to (3.953, -3.943) \
+  to (4.077, -4.003) outlined "pm-444444" thickness 0.344
+circle rad 0.002 at (3.39, -3.525) shaded "pm-444444" outlined "pm-444444" thickness 0
+circle rad 0.002 at (4.077, -4.003) shaded "pm-444444" outlined "pm-444444" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P -0.053i 0.001i 0.02i -0.043i'\M[]" ljust at (4.081, -4.005)
+"\s[4.13]\f[TS]\m[pm-444444]Uses\m[]\f[]\s[0]"  at (3.793, -3.764)
+line from (4.199, -2.953) to (4.126, -2.825) to (4.037, -2.696) to (3.932, -2.567) \
+  to (3.81, -2.438) to (3.673, -2.31) to (3.519, -2.181) to (3.349, -2.052) \
+  to (3.163, -1.923) outlined "pm-444444" thickness 0.344
+circle rad 0.002 at (4.199, -2.953) shaded "pm-444444" outlined "pm-444444" thickness 0
+circle rad 0.002 at (3.163, -1.923) shaded "pm-444444" outlined "pm-444444" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P 0.053i 0.006i -0.026i 0.04i'\M[]" ljust at (3.159, -1.921)
+"\s[4.13]\f[TS]\m[pm-444444]Read & write to\m[]\f[]\s[0]"  at (3.867, -2.438)
+"\s[4.13]\m[pm-444444]\f[TS][JDBC]\f[]\m[]\s[0]"  at (3.867, -2.52)
+line from (4.464, -4.003) to (4.451, -3.715) to (4.434, -3.427) to (4.415, -3.139) \
+  to (4.392, -2.85) to (4.367, -2.562) to (4.338, -2.274) to (4.307, -1.986) \
+  to (4.272, -1.698) outlined "pm-444444" thickness 0.344
+circle rad 0.002 at (4.464, -4.003) shaded "pm-444444" outlined "pm-444444" thickness 0
+circle rad 0.002 at (4.272, -1.698) shaded "pm-444444" outlined "pm-444444" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P 0.029i 0.044i -0.047i 0.006i'\M[]" ljust at (4.272, -1.694)
+"\s[4.13]\f[TS]\m[pm-444444]Uses\m[]\f[]\s[0]"  at (4.428, -2.85)
+"\s[4.13]\m[pm-444444]\f[TS][XML/HTTPS]\f[]\m[]\s[0]"  at (4.543, -2.932)
+line from (1.269, -1.698) to (1.281, -1.855) to (1.295, -2.012) to (1.313, -2.169) \
+  to (1.332, -2.326) to (1.355, -2.483) to (1.38, -2.64) to (1.407, -2.797) \
+  to (1.438, -2.953) outlined "pm-444444" thickness 0.344
+circle rad 0.002 at (1.269, -1.698) shaded "pm-444444" outlined "pm-444444" thickness 0
+circle rad 0.002 at (1.438, -2.953) shaded "pm-444444" outlined "pm-444444" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P 0.027i 0.046i -0.048i 0.003i'\M[]" ljust at (1.269, -1.694)
+"\s[4.13]\f[TS]\m[pm-444444]Uses\m[]\f[]\s[0]"  at (1.413, -2.326)
+"\s[4.13]\m[pm-444444]\f[TS][JSON/HTTPS]\f[]\m[]\s[0]"  at (1.547, -2.407)
+line from (1.499, -1.698) to (1.584, -1.855) to (1.688, -2.012) to (1.81, -2.169) \
+  to (1.951, -2.326) to (2.111, -2.483) to (2.29, -2.64) to (2.488, -2.797) \
+  to (2.705, -2.953) outlined "pm-444444" thickness 0.344
+circle rad 0.002 at (1.499, -1.698) shaded "pm-444444" outlined "pm-444444" thickness 0
+circle rad 0.002 at (2.705, -2.953) shaded "pm-444444" outlined "pm-444444" thickness 0
+"\M[pm-333333]\v'-0.22m'\D'P -0.053i -0.007i 0.027i -0.04i'\M[]" ljust at (2.709, -2.956)
+"\s[4.13]\f[TS]\m[pm-444444]Uses\m[]\f[]\s[0]"  at (2.162, -2.326)
+"\s[4.13]\m[pm-444444]\f[TS][JSON/HTTPS]\f[]\m[]\s[0]"  at (2.295, -2.407)
+"\s[5.5]\f[TS]\m[pm-333333]Component diagram for Internet Banking System - API Application\m[]\f[]\s[0]"  at (2.915, -0.403)
+box wid 5.958 ht 5.29 at (2.979, -2.645) invis
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

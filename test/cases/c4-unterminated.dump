@@ -1,0 +1,3 @@
+c4 type="C4Context" shapeInRow=4 boundaryInRow=2
+boundary index=0 alias="global" parent="" label="global" type="global"
+shape index=0 type=person alias="a" parent="global" label="unterminated" descr=""

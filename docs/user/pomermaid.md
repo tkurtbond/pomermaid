@@ -22,8 +22,9 @@ charts (`gantt`), pie charts (`pie`), quadrant charts
 (`radar-beta`), sankey diagrams (`sankey-beta`), git graphs
 (`gitGraph`), mindmaps (`mindmap`), treemaps (`treemap-beta`),
 block diagrams (`block-beta`), packet diagrams (`packet-beta`),
-kanban boards (`kanban`) and architecture diagrams
-(`architecture-beta`).
+kanban boards (`kanban`), architecture diagrams
+(`architecture-beta`) and C4 diagrams (`C4Context`, `C4Container`,
+`C4Component`, `C4Dynamic` and `C4Deployment`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -1010,6 +1011,55 @@ picture keeps Mermaid's directions but not its exact places.
 - **Ids:** as in Mermaid, a capital `L`, `R`, `T` or `B` is read as a
   side, and `title` as a title, even at the start of an id, so
   `Router` and `titlebar` are not ids; pomermaid's message says so.
+
+### C4 diagrams
+
+pomermaid reads Mermaid's C4 diagrams (`C4Context`, `C4Container`,
+`C4Component`, `C4Dynamic` and `C4Deployment`), as Mermaid 12.3.0
+reads them, and places them as Mermaid does: each boundary's elements
+in rows, the boundaries in rows inside their parents.
+
+- **The first line:** the diagram's type.
+- **Elements:** `Person`, `System`, `Container` and `Component`, each
+  with `_Ext`, and the systems, containers and components with `Db`
+  and `Queue` (`SystemDb_Ext`, `ContainerQueue`): `Person(alias,
+  "label", "description")`, `Container(alias, "label", "technology",
+  "description")`. An argument may be left empty, and `$key="value"`
+  sets a value by name, as `$tags`, `$sprite` or `$link`.
+- **Boundaries:** `Boundary`, `Enterprise_Boundary`,
+  `System_Boundary` and `Container_Boundary`, and the deployment nodes
+  `Deployment_Node`, `Node`, `Node_L` and `Node_R`, each followed by
+  `{`, the elements inside it, and `}`. Boundaries are dashed boxes;
+  deployment nodes are solid.
+- **Relationships:** `Rel`, `BiRel`, `Rel_Back`, `Rel_U`, `Rel_D`,
+  `Rel_L`, `Rel_R` (and `Rel_Up` and the like) and `RelIndex`:
+  `Rel(from, to, "label", "technology")`. The first is drawn
+  straight and the others curved; `Rel_Back` has its arrowhead at its
+  start and `BiRel` at both ends; in `C4Dynamic` the labels are
+  numbered.
+- **Shapes:** a person, a rounded box, a cylinder for `Db`, a cylinder
+  on its side for `Queue`; `$shape`, `$sprite` or a word in `$tags`
+  (`person`, `box`, `rounded`, `cylinder`, `database`, `db`, `queue`,
+  `pipe` or `component`) chooses another, as Mermaid's shape adapter
+  does.
+- **Styles:** `UpdateElementStyle(alias, $bgColor=..., $fontColor=...,
+  $borderColor=...)`, `UpdateRelStyle(from, to, $textColor=...,
+  $lineColor=..., $offsetX=..., $offsetY=...)` and
+  `UpdateLayoutConfig($c4ShapeInRow=..., $c4BoundaryInRow=...)`.
+- **Titles and accessibility:** `title` is drawn above the diagram;
+  `accTitle` and `accDescr` are read.
+- **Configuration:** `c4`'s `diagramMarginX` (50), `diagramMarginY`
+  (10), `c4ShapeMargin` (50), `c4ShapePadding` (20), `width` (216),
+  `wrap` (true), `c4ShapeInRow` (4), `c4BoundaryInRow` (2),
+  `nextLinePaddingX`, the font sizes (`boundaryFontSize`,
+  `messageFontSize`, `<type>FontSize`) and the colours
+  (`<type>_bg_color` and `<type>_border_color`).
+- **Errors,** with Mermaid's messages where it has them: a syntax
+  error, a relationship to an element that does not exist, a boundary
+  inside itself or called `global` (decision 60), and `$key` in place
+  of an alias, a label, `from` or `to` (decision 58).
+- **Strings:** as in Mermaid, a string runs to the next `"`, across
+  lines, so one left open takes the text after it.
 
 Mermaid's other diagram types are not read yet.
 

@@ -1,0 +1,26 @@
+layout width=430.93 height=387.5
+curve (66.56,236.99) (66.56,236.99) (247.58,236.99) (247.58,236.99) (247.58,236.99) (247.58,343.12) (247.58,343.12) (247.58,343.12) (66.56,343.12) (66.56,343.12) (66.56,343.12) (66.56,236.99) (66.56,236.99) dash=3.11 fill=none line=#444444 width=0.44
+text at=(157.07,240.54) size=7.1 w=23.43 line=#444444 text="A group"=1111111
+text at=(157.07,251.28) size=6.21 w=21.62 line=#444444 text="[system]"
+rect at=(66.56,149.05) w=157.58 h=39.57 r=17.81 fill=#08427b line=#073b6f width=0.89
+circle at=(145.35,130.91) r=24.85 fill=#08427b line=#073b6f width=0.89
+text at=(145.35,161.65) size=6.21 w=87.91 line=#ffffff text="A person with a rather long name"=11111111111111111111111111111111
+text at=(145.35,169.5) size=4.66 w=17 line=#ffffff text="[Person]"
+text at=(145.35,176.69) size=5.09 w=139.83 line=#ffffff text="A description long enough to need wrapping if it were wrapped."
+rect at=(268.52,106.06) w=95.85 h=39.57 r=5.32 fill=#999999 line=#8a8a8a width=0.89
+text at=(316.44,118.66) size=6.21 w=4.04 line=#ffffff text="B"=1
+text at=(316.44,126.51) size=4.66 w=36.85 line=#ffffff text="[Software System]"
+text at=(316.44,133.7) size=5.09 w=14.62 line=#ffffff text="Short."
+rect at=(88.75,281.36) w=136.64 h=39.57 r=5.32 fill=#1168bd line=#3c7fc0 width=0.89
+text at=(157.07,293.96) size=6.21 w=4.04 line=#ffffff text="C"=1
+text at=(157.07,301.82) size=4.66 w=36.85 line=#ffffff text="[Software System]"
+text at=(157.07,309) size=5.09 w=118.89 line=#ffffff text="Another fairly long description that is not wrapped."
+line (165.99,144.74) (268.52,131.86) fill=none line=#444444 width=0.44
+poly (268.96,131.81) (264.83,134.56) (264.28,130.16) fill=#333333 line=none
+text at=(256.82,138.3) size=5.32 w=79.13 line=#444444 text="A relationship label that is long"
+text at=(256.82,145.85) size=5.32 w=46.75 line=#444444 text="[and its technology]"=22222222222222222222
+curve (155.56,281.36) (154.39,250.45) (152.03,219.53) (148.5,188.62) fill=none line=#444444 width=0.44
+poly (148.45,188.18) (151.16,192.33) (146.75,192.84) fill=#333333 line=none
+text at=(157.14,234.99) size=5.32 w=10.22 line=#444444 text="back"
+text at=(123.06,37.45) size=7.1 w=37.06 line=#333333 text="No wrapping"
+rect at=(0,0) w=430.93 h=387.5 fill=none line=none

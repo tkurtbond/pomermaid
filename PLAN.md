@@ -1194,6 +1194,36 @@ Mermaid 12.3.0 is followed: `docs/syntax/architecture.md`,
 `architectureTypes.ts`, `architectureStyles.ts`) and
 `parser/src/language/architecture/architecture.langium`.
 
+### Phase 32: C4 diagrams [done]
+
+**Change:** `C4Context`, `C4Container`, `C4Component`, `C4Dynamic`
+and `C4Deployment`, read by a new module, `PmC4`, with Mermaid's jison
+lexer and grammar and `c4Db.ts`'s database: people, systems,
+containers, components (each with `_Db`, `_Queue` and `_Ext`),
+boundaries, deployment nodes, the relationships (`Rel`, `BiRel`,
+`Rel_U`, `Rel_Back` and the others, `RelIndex`), `UpdateElementStyle`,
+`UpdateRelStyle` and `UpdateLayoutConfig`, positional and `$key`
+arguments, and Mermaid's messages. `PmC4Dump` writes the model for
+`-t dump`. `PmC4Layout` places it as Mermaid's renderer does, in rows
+inside the boundaries (decision 57), and draws it in a
+`PmDraw.Drawing`: people, rounded boxes, cylinders, queues and
+components, chosen as Mermaid's shape adapter chooses them, dashed
+boundaries beneath the elements (decision 59), deployment nodes, and
+the relationships, the first straight and the others curved, with
+arrowheads, numbers in `C4Dynamic`, offsets and technology.
+
+**Check:** case tests for Mermaid's documentation examples of each
+type, the shape choices, wrapping turned off, element and relationship
+styles, unterminated strings (which Mermaid reads to the next `"`) and
+the errors; the diagrams drawn as SVG and looked at.
+
+Mermaid 12.3.0 is followed: `docs/syntax/c4.md`, `diagrams/c4/`
+(`parser/c4Diagram.jison`, `c4Db.ts`, `c4Renderer.ts`, `svgDraw.ts`,
+`c4ShapeAdapter.ts`, `c4Detector.ts`, `styles.js`) and the shapes in
+`rendering-util/rendering-elements/shapes/` (`person.ts`,
+`cylinder.ts`, `tiltedCylinder.ts`, `roundedRect.ts`,
+`subroutine.ts`).
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1525,6 +1555,33 @@ None at present.
     Mermaid accepts it and then fails while drawing; pomermaid stops
     with a message. `{group}` on a service's id is how an edge joins a
     group's border.
+57. **C4 rows end at 1920 pixels** (2026-11-23): Mermaid starts a new
+    row where the next element would pass the browser window's width;
+    pomermaid takes the window as 1920 pixels wide, so the rows do not
+    depend on where the diagram is drawn.
+58. **A C4 `$key` in an alias, a label, `from` or `to` is an error**
+    (2026-11-23): Mermaid stores a key and value object where the
+    text or name belongs and goes wrong with it later; pomermaid stops
+    with a message.
+59. **C4 boundaries are drawn beneath the elements** (2026-11-23):
+    Mermaid draws each boundary after its elements, so a boundary's
+    `bgColor` covers them; pomermaid draws the boundaries first.
+60. **A C4 relationship to an unknown element or to `global` is an
+    error** (2026-11-23): Mermaid fails while drawing it. So are a
+    boundary inside itself and a boundary called `global` or `""`,
+    which Mermaid recurses on until its stack is exhausted.
+61. **C4's structural keys are ignored** (2026-11-23): `$alias`,
+    `$parentBoundary`, `$typeC4Shape`, `$from`, `$to` and `$wrap`,
+    with which Mermaid would rename or move an element in its
+    database, are warned of and ignored.
+62. **C4 texts set by `UpdateElementStyle` are drawn empty**
+    (2026-11-23), as Mermaid draws them; the dump shows them as
+    `key:raw`.
+63. **C4's curved outlines are polygons** (2026-11-23): a person's
+    head is a circle, but cylinders and queues are polygons, their
+    quarter ellipses taken at 24 points, and a relationship ends where it meets
+    them; a dashed boundary has square corners, as dashes would break
+    its 2.5-pixel corners into dots.
 
 ## Later
 
@@ -2330,5 +2387,20 @@ pic, mp and svg-ms) and 15 error cases (`arch-err-*`). The diagrams
 were drawn as SVG and looked at; this found and fixed `align` placing
 a column in another part's cells. Mermaid itself was not run.
 On 2026-11-23, `make test` passes, 815 of 815 under both models, on
+FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
+(jherek, cymoril).
+
+2026-11-23, Phase 32: C4 diagrams. `PmC4` reads `C4Context`,
+`C4Container`, `C4Component`, `C4Dynamic` and `C4Deployment`
+(`PmC4Dump` writes its model for `-t dump`), and `PmC4Layout` draws it
+in a `PmDraw.Drawing` (decisions 57 to 63). `make test` passes under
+`-O2` and `-OC`: 855 case tests, with `c4-context`, `c4-container`,
+`c4-component`, `c4-dynamic`, `c4-deployment`, `c4-shapes` and
+`c4-nowrap` (dump, layout, pic, mp and svg-ms), `c4-unterminated` and
+`c4-unterminated-line` (dump) and three error cases (`c4-err-*`). The
+diagrams were drawn as SVG and looked at; this found dashed boundaries
+drawn solid, now drawn as dashed paths. The pic output of
+`c4-context` was run through `groff -p`. Mermaid itself was not run.
+On 2026-11-23, `make test` passes, 855 of 855 under both models, on
 FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
 (jherek, cymoril).
