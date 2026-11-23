@@ -1303,8 +1303,8 @@ None at present.
 4. **Output form:** a `.PS`/`.PE` block for pic and a `\startMPcode`
    block for MetaPost. One diagram per run.
 5. **podoc** runs pomermaid as a program, on each `mermaid` block; it
-   does not import pomermaid's modules. (A podoc decision and phase,
-   later.)
+   does not import pomermaid's modules. (podoc's decisions 48 to 51
+   and Phase 25, 2026-11-23.)
 6. **SVG** is in scope (Phase 8).
 7. **License:** BSD 3-Clause, as podoc's.
 8. **Edges** are curves, as Mermaid's.
@@ -1643,8 +1643,6 @@ None at present.
 
 - A whole-document mode (`-s`) for looking at one diagram alone, if
   the `make render` wrappers turn out not to be enough.
-- podoc running pomermaid on `mermaid` blocks (decision 5; to be
-  planned in podoc).
 - An SVG writer of pomermaid's own (`<svg>` with `rect`, `path`,
   `text`, Bézier edges and `marker` heads), for systems without groff
   or MuPDF, if the user wants it.
@@ -2496,3 +2494,10 @@ number, a sign changed, empty files). `make test` passes, 930 case
 tests under both models. On 2026-11-23, `make test` passes, 930 of 930
 under both models, on FreeBSD (alerik, rackhir), NetBSD (artos,
 yishana) and OpenBSD (jherek, cymoril), the i386 hosts included.
+- 2026-11-23: podoc runs pomermaid on `mermaid` blocks (decision 5;
+  podoc's decisions 48 to 51 and Phase 25): `-t pic` with `--font`
+  and `--size` for ms and mom, `-t mp` for ConTeXt, `-t svg` for the
+  other formats, the diagram on standard input. On a copy of
+  Galactic-Bounty-Hunters' one-shot, its two flowcharts drew in the
+  PDFs podoc made with `groff`, `context` and `pdfmom`, and as SVG
+  for HTML. Nothing in pomermaid changed.
