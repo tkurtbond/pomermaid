@@ -195,6 +195,25 @@ differences:
   configuration's `actorColours` is not read; the theme variables
   `actor0` to `actor5` are.
 
+## Timelines
+
+- **The title** is drawn above the drawing, at 1.5 times the labels'
+  size, its left at the first period's; Mermaid draws it at the top
+  left, over what is there.
+- **A section's text** is wrapped to its box; Mermaid wraps it at 150
+  pixels, however wide the section. The sections are all as high as
+  the highest.
+- **A section named twice** is drawn once, with all the periods under
+  that name; Mermaid draws it twice. A `:` in a section's name is an
+  error.
+- **Top down,** each section starts 20 pixels below what is above it,
+  where Mermaid's sections can overlap the periods above them, and the
+  axis and the dashed lines have their arrowheads, which Mermaid's
+  top-down drawing loses.
+- **Colours.** The defaults are Mermaid's default theme's; they are
+  not worked out from `primaryColor` as Mermaid's themes do, and each
+  theme variable changes only its own colour.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

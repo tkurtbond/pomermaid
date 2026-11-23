@@ -20,7 +20,8 @@ MODULE PmSvg;
    <title> and a rectangle over the node's bounds, filled but clear. *)
 
 IMPORT PmIO, F := PmFlow, FL := PmFlowLayout, L := PmLayout, PmPic, R := PmRun,
-  SL := PmSeqLayout, PmSeqPic, JL := PmJourneyLayout, PmJourneyPic;
+  SL := PmSeqLayout, PmSeqPic, JL := PmJourneyLayout, PmJourneyPic,
+  TL := PmTimelineLayout, PmTimelinePic;
 
 CONST
   MinMargin = 2; (* points round the drawing, at least, for lines' widths *)
@@ -31,7 +32,7 @@ CONST
 VAR
   vs, margin, pageW, pageH: REAL; (* pic's line space, the margin, and the
                                      page's size, in points *)
-  flow: FL.Layout; seq: SL.Layout; journey: JL.Layout; (* what Write draws: one of them *)
+  flow: FL.Layout; seq: SL.Layout; journey: JL.Layout; timeline: TL.Layout; (* what Write draws: one of them *)
 
 (* The page's size for a drawing w by h points, pic's line space
    lvs, its widest line widest points wide, rounded as it is written *)
@@ -79,6 +80,13 @@ BEGIN
   Header(l.vs, PmJourneyPic.Widest(l), l.width, l.height);
   PmJourneyPic.Write(l, font)
 END WriteJourneyDocument;
+
+(* Writes the timeline l as WriteDocument does a flowchart *)
+PROCEDURE WriteTimelineDocument*(l: TL.Layout; font: ARRAY OF CHAR);
+BEGIN
+  Header(l.vs, PmTimelinePic.Widest(l), l.width, l.height);
+  PmTimelinePic.Write(l, font)
+END WriteTimelineDocument;
 
 (* Crop *)
 
@@ -354,6 +362,7 @@ BEGIN
   PmIO.OpenOutput(tr);
   IF seq # NIL THEN WriteSeqDocument(seq, font)
   ELSIF journey # NIL THEN WriteJourneyDocument(journey, font)
+  ELSIF timeline # NIL THEN WriteTimelineDocument(timeline, font)
   ELSE WriteDocument(flow, font) END;
   PmIO.CloseOutput;
   c := R.New(); R.AddText(c, "groff -p -Tpdf");
@@ -386,21 +395,29 @@ END Run;
 PROCEDURE Write*(l: FL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := l; seq := NIL; journey := NIL; Run(font, fontPath, output, outline, engine)
+  flow := l; seq := NIL; journey := NIL; timeline := NIL; Run(font, fontPath, output, outline, engine)
 END Write;
 
 (* Writes the sequence diagram l as SVG, as Write does a flowchart *)
 PROCEDURE WriteSeq*(l: SL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := l; journey := NIL; Run(font, fontPath, output, outline, engine)
+  flow := NIL; seq := l; journey := NIL; timeline := NIL; Run(font, fontPath, output, outline, engine)
 END WriteSeq;
 
 (* Writes the user journey l as SVG, as Write does a flowchart *)
 PROCEDURE WriteJourney*(l: JL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := l; Run(font, fontPath, output, outline, engine)
+  flow := NIL; seq := NIL; journey := l; timeline := NIL; Run(font, fontPath, output, outline, engine)
 END WriteJourney;
+
+(* Writes the timeline l as SVG, as Write does a flowchart *)
+PROCEDURE WriteTimeline*(l: TL.Layout; font, fontPath, output: ARRAY OF CHAR;
+  outline: BOOLEAN; engine: INTEGER);
+BEGIN
+  flow := NIL; seq := NIL; journey := NIL; timeline := l;
+  Run(font, fontPath, output, outline, engine)
+END WriteTimeline;
 
 END PmSvg.

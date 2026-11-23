@@ -1,0 +1,20 @@
+layout width=381.25 height=375.5
+title at=(6.25,15.25) w=234.9
+section colour=0 at=(6.25,53.63) w=368.75 h=20.63 text="17th-20th century"
+period colour=0 at=(6.25,86.75) w=131.25 h=20.63 text="Industry 1.0"
+event colour=0 at=(181.25,86.75) w=193.75 h=32.63 text="Machinery, Water power, Steam"/"power"
+period colour=0 at=(6.25,138.13) w=131.25 h=20.63 text="Industry 2.0"
+event colour=0 at=(181.25,138.13) w=193.75 h=32.63 text="Electricity, Internal combustion engine,"/"Mass production"
+period colour=0 at=(6.25,189.5) w=131.25 h=20.63 text="Industry 3.0"
+event colour=0 at=(181.25,189.5) w=193.75 h=20.63 text="Electronics, Computers, Automation"
+section colour=1 at=(6.25,234.63) w=368.75 h=20.63 text="21st century"
+period colour=1 at=(6.25,267.75) w=131.25 h=20.63 text="Industry 4.0"
+event colour=1 at=(181.25,267.75) w=193.75 h=20.63 text="Internet, Robotics, Internet of Things"
+period colour=1 at=(6.25,319.13) w=131.25 h=20.63 text="Industry 5.0"
+event colour=1 at=(181.25,319.13) w=193.75 h=32.63 text="Artificial intelligence, Big data, 3D"/"printing"
+line from=(150,103.06) to=(181.25,103.06)
+line from=(150,154.44) to=(181.25,154.44)
+line from=(150,199.81) to=(181.25,199.81)
+line from=(150,278.06) to=(181.25,278.06)
+line from=(150,335.44) to=(181.25,335.44)
+axis from=(150,33.63) to=(150,369.25)

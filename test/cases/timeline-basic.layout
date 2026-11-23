@@ -1,0 +1,16 @@
+layout width=426.56 height=207.09
+title at=(28.13,11.44) w=170.1
+period colour=0 at=(28.13,25.22) w=89.06 h=31.88 text="2002"
+event colour=0 at=(28.13,118.97) w=89.06 h=23.44 text="LinkedIn"
+period colour=1 at=(121.88,25.22) w=89.06 h=31.88 text="2004"
+event colour=1 at=(121.88,118.97) w=89.06 h=23.44 text="Facebook"
+event colour=1 at=(121.88,147.09) w=89.06 h=23.44 text="Google"
+period colour=2 at=(215.63,25.22) w=89.06 h=31.88 text="2005"
+event colour=2 at=(215.63,118.97) w=89.06 h=23.44 text="Youtube"
+period colour=3 at=(309.38,25.22) w=89.06 h=31.88 text="2006"
+event colour=3 at=(309.38,118.97) w=89.06 h=23.44 text="Twitter"
+line from=(72.66,57.09) to=(72.66,202.41)
+line from=(166.41,57.09) to=(166.41,202.41)
+line from=(260.16,57.09) to=(260.16,202.41)
+line from=(353.91,57.09) to=(353.91,202.41)
+activity from=(4.69,80.53) to=(421.88,80.53)

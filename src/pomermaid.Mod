@@ -2,7 +2,7 @@ MODULE pomermaid;
 (* pomermaid: Mermaid diagrams drawn in pic, for groff, and MetaPost,
    for ConTeXt, and SVG made from the pic through groff. The command line is PmOptions'. See PLAN.md. *)
 
-IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
+IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
 
 VAR
   text: PmIO.Text;
@@ -11,10 +11,12 @@ VAR
   g: PmFlow.Graph;
   seq: PmSeq.Diagram;
   jour: PmJourney.Diagram;
+  tim: PmTimeline.Diagram;
   font: M.Font;
   lay: FL.Layout;
   slay: SL.Layout;
   jlay: JL.Layout;
+  tlay: TL.Layout;
 
 BEGIN
   O.Parse;
@@ -31,8 +33,9 @@ BEGIN
     ELSIF PmReq.IsReq(sc) THEN PmReq.Read(sc, g)
     ELSIF PmSeq.IsSeq(sc) THEN PmSeq.Read(sc, seq)
     ELSIF PmJourney.IsJourney(sc) THEN PmJourney.Read(sc, jour)
+    ELSIF PmTimeline.IsTimeline(sc) THEN PmTimeline.Read(sc, tim)
     ELSIF PmFlow.IsFlowchart(sc) THEN PmFlow.Read(sc, g)
-    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram and journey")
+    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey and timeline")
     END;
     IF O.to # "dump" THEN
       IF O.fontPath # "" THEN M.SetPath(O.fontPath) END;
@@ -41,7 +44,18 @@ BEGIN
       END;
       M.LoadStyles(font)
     END;
-    IF (jour # NIL) & (O.to = "svg") THEN
+    IF (tim # NIL) & (O.to = "svg") THEN
+      TL.Fit(tim, font, O.size, O.width, tlay);
+      PmSvg.WriteTimeline(tlay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
+    ELSIF tim # NIL THEN
+      PmIO.OpenOutput(O.output);
+      IF O.to = "dump" THEN PmTimelineDump.Write(tim)
+      ELSIF O.to = "layout" THEN TL.Fit(tim, font, O.size, O.width, tlay); PmTimelineDump.WriteLayout(tlay)
+      ELSIF O.to = "pic" THEN TL.Fit(tim, font, O.size, O.width, tlay); PmTimelinePic.Write(tlay, O.font)
+      ELSIF O.to = "svg-ms" THEN TL.Fit(tim, font, O.size, O.width, tlay); PmSvg.WriteTimelineDocument(tlay, O.font)
+      ELSIF O.to = "mp" THEN TL.Make(tim, font, O.size, tlay); PmTimelineMp.Write(tlay, O.width)
+      END
+    ELSIF (jour # NIL) & (O.to = "svg") THEN
       JL.Fit(jour, font, O.size, O.width, jlay);
       PmSvg.WriteJourney(jlay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSIF jour # NIL THEN
@@ -70,7 +84,7 @@ BEGIN
       PmSvg.Write(lay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSE PmIO.OpenOutput(O.output)
     END;
-    IF (seq # NIL) OR (jour # NIL) OR (O.to = "svg") THEN
+    IF (seq # NIL) OR (jour # NIL) OR (tim # NIL) OR (O.to = "svg") THEN
     ELSIF O.to = "svg-ms" THEN FL.Fit(g, font, O.size, O.width, lay); PmSvg.WriteDocument(lay, O.font)
     ELSIF O.to = "dump" THEN PmDump.Write(g)
     ELSIF O.to = "layout" THEN FL.Fit(g, font, O.size, O.width, lay); PmDump.WriteLayout(lay)

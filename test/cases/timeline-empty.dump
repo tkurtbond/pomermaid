@@ -1,0 +1,7 @@
+title text="Sections with no periods"
+direction TD
+section 0 periods=none text="Before"
+section 1 periods=0 text="During"
+section 2 periods=none text="After"
+period 0 section=1 text="Then"
+  event 0 text="something"

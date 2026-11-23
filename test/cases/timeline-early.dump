@@ -1,0 +1,6 @@
+direction LR
+section 0 periods=1 text="Later"
+period 0 text="Early"
+  event 0 text="not drawn"
+period 1 section=0 text="Late"
+  event 0 text="drawn"

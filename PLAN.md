@@ -717,6 +717,44 @@ theme. In steps:
   margin, task and section text is wrapped by `\framed`.
 - **17.5:** Mermaid's example; the documentation.
 
+### Phase 18: timelines [done]
+
+**Change:** `timeline`, read by a new module, `PmTimeline`, into a
+model of its own (the title, the direction, the sections, the periods
+with their events), laid out by `PmTimelineLayout` on Mermaid's fixed
+geometry, left to right (`timeline`, `timeline LR`) or top down
+(`timeline TD`), and drawn in pic, SVG and MetaPost.
+
+**Check:** case tests for each construct and error, in both
+directions; Mermaid's own timeline examples read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/timeline.md`,
+`diagrams/timeline/parser/timeline.jison`, `timelineDb.js`,
+`timelineRenderer.ts`, `timelineRendererVertical.ts`, `svgDraw.js`,
+`styles.js` and the default theme. In steps:
+
+- **18.1, the model and the reader:** `timeline`, `LR` and `TD`,
+  `title`, `section`, periods and their events (`period : event :
+  event`, and `: event` on the lines after), `accTitle`/`accDescr`,
+  comments, front matter and directives, keywords in any case; the
+  sections as Mermaid draws them, each name once with every period
+  under it; the dump.
+- **18.2, the layout:** Mermaid's pixels at the labels' size. Left to
+  right: sections over their periods, periods 190 pixels wide and 200
+  apart, events stacked below them, a dashed line down from each
+  period, the activity line with its arrow. Top down: sections across
+  the width, periods left of a vertical axis, their events right of
+  it on dashed lines. Text wrapped to the nodes, the nodes of a kind
+  as high as the highest; the layout dump.
+- **18.3, pic and SVG:** the nodes (rounded at the top, a line along
+  the bottom) in the default theme's `cScale0` ... `cScale11`, with
+  `cScaleLabel` and `cScaleInv`, events brighter; each period its own
+  colour without sections, unless `disableMulticolor`; the colours
+  changed by themeVariables.
+- **18.4, MetaPost:** the same drawing written directly, its text
+  sizes from ConTeXt's (decision 3).
+- **18.5:** Mermaid's examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1256,3 +1294,38 @@ without an error. `gmake` and `gmake test` pass, 202 case tests under
 both models, on FreeBSD 15.1 (alerik, rackhir), NetBSD 11.0 (artos,
 yishana) and OpenBSD 7.9 (jherek, cymoril), from clean copies,
 2026-11-22.
+
+2026-11-23, Phase 18: timelines. `PmTimeline` reads `timeline`
+(`LR`, `TD`) into a model of its own, following Mermaid 12.3.0's
+`timeline.jison`, `timelineDb.js`, `timelineRenderer.ts` and
+`timelineRendererVertical.ts`: `title`, `section`, periods with their
+events (`period : event : event`, and `: event` on the lines after),
+`accTitle`/`accDescr`, comments, front matter and directives; each
+section once, by name, with every period under it, and periods before
+the first section warned of and not drawn, as in Mermaid.
+`PmTimelineLayout` lays it out on Mermaid's pixels at the labels'
+size, left to right or top down, with the differences in
+`docs/user/differences.md` (the title, section text wrapped, the top
+down spacing and arrowheads); `PmTimelinePic` draws it in pic, and
+SVG comes from that through groff; `PmTimelineMp` writes the MetaPost
+directly, its heights from ConTeXt's text (decision 3). The colours
+are the default theme's `cScale0`..`11`, `cScaleLabel` and
+`cScaleInv`, events brighter, changed by themeVariables
+(`PmStyle.TimelineColours`), and `disableMulticolor`. `make test`
+passes under `-O2` and `-OC`: 234 case tests, with `timeline-basic`
+(dump, layout, pic, mp, svg-ms), `timeline-sections`, `timeline-td`,
+`timeline-theme`, `timeline-empty` and `timeline-early` (dump,
+layout, pic, mp), `timeline-nomulti` (dump, pic, mp; its layout
+dropped, as i386 rounds a line's end in the last digit), and four
+error cases (`timelineNoPeriod`, `timelineSectionColon`,
+`timelineEmptyEvent`, `timelineNoBlank`); the list of diagram types
+changed `notFlow`. The cases were drawn through groff (SVG, looked
+at) and through ConTeXt from `-t mp` (looked at), and `make render`
+ran on every case without an error. Mermaid's 28 timeline examples
+(`docs/syntax/timeline.md`) were read and written as dump, layout,
+pic, mp and SVG without an error; seven were looked at in SVG and two
+through ConTeXt (named themes are drawn in the default colours, as
+for every diagram). `gmake` and `gmake test` pass, 234 case tests
+under both models, on FreeBSD 15.1 (alerik, rackhir), NetBSD 11.0
+(artos, yishana) and OpenBSD 7.9 (jherek, cymoril), from clean
+copies, 2026-11-23.

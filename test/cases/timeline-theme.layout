@@ -1,0 +1,12 @@
+layout width=428.82 height=242.99
+title at=(33,13.42) w=390.32
+period colour=0 at=(33,29.59) w=104.5 h=37.4 text="2020"
+event colour=0 at=(33,139.59) w=104.5 h=27.5 text="One"
+event colour=0 at=(33,172.59) w=104.5 h=27.5 text="Two"
+period colour=1 at=(143,29.59) w=104.5 h=37.4 text="2021"
+event colour=1 at=(143,139.59) w=104.5 h=58.08 text="A long event, long"/"enough to be wrapped"/"onto three lines in"/"its box, or more"
+period colour=2 at=(253,29.59) w=104.5 h=37.4 text="2022"
+line from=(85.25,66.99) to=(85.25,237.49)
+line from=(195.25,66.99) to=(195.25,237.49)
+line from=(305.25,66.99) to=(305.25,237.49)
+activity from=(5.5,94.49) to=(385,94.49)

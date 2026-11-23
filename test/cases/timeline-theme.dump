@@ -1,0 +1,12 @@
+title text="A themed timeline with a title much wider than the drawing would be"
+config config.themeVariables.cScale0="#ff0000"
+config config.themeVariables.cScaleLabel0="#000000"
+config config.themeVariables.cScaleInv0="#0000ff"
+config config.themeVariables.cScale1="#00ff00"
+direction LR
+period 0 text="2020"
+  event 0 text="One"
+  event 1 text="Two"
+period 1 text="2021"
+  event 0 text="A long event, long enough to be wrapped onto three lines in its box, or more"
+period 2 text="2022"

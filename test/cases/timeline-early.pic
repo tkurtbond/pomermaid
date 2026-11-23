@@ -1,0 +1,33 @@
+.defcolor pm-8686ff rgb #8686ff
+.defcolor pm-ffffff rgb #ffffff
+.defcolor pm-ffffb9 rgb #ffffb9
+.defcolor pm-a1a1ff rgb #a1a1ff
+.defcolor pm-ffffde rgb #ffffde
+.defcolor pm-000000 rgb #000000
+.defcolor pm-333333 rgb #333333
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 2.691 ht 3.958 at (1.345, -1.979)
+line from (1.345, -1.701) to (1.345, -3.767) outlined "pm-000000" thickness 1.25 dashed 0.043
+"\M[pm-000000]\v'-0.22m'\D'P 0.034i 0.105i 0.035i -0.105i'\M[]" ljust at (1.311, -3.767)
+line from (1.311, -3.767) to (1.345, -3.872) to (1.38, -3.767) to (1.311, -3.767) outlined "pm-000000" thickness 0.625
+"\M[pm-8686ff]\v'-0.22m'\D'P 0i -0.547i 0.001i -0.011i 0.005i -0.01i 0.007i -0.009i 0.009i -0.007i 0.01i -0.005i 0.011i -0.001i 1.563i 0i 0.011i 0.001i 0.01i 0.005i 0.009i 0.007i 0.007i 0.009i 0.005i 0.01i 0.001i 0.011i 0i 0.547i'\M[]" ljust at (0.521, -0.677)
+line from (0.521, -0.677) to (2.17, -0.677) outlined "pm-ffffb9" thickness 1.875
+"\f[TS]\m[pm-ffffff]Later\m[]\f[]"  at (1.345, -0.382)
+"\M[pm-8686ff]\v'-0.22m'\D'P 0i -0.546i 0.001i -0.012i 0.005i -0.01i 0.007i -0.009i 0.009i -0.007i 0.01i -0.004i 0.011i -0.002i 1.563i 0i 0.011i 0.002i 0.01i 0.004i 0.009i 0.007i 0.007i 0.009i 0.005i 0.01i 0.001i 0.012i 0i 0.546i'\M[]" ljust at (0.521, -1.701)
+line from (0.521, -1.701) to (2.17, -1.701) outlined "pm-ffffb9" thickness 1.875
+"\f[TS]\m[pm-ffffff]Late\m[]\f[]"  at (1.345, -1.406)
+"\M[pm-a1a1ff]\v'-0.22m'\D'P 0i -0.39i 0.001i -0.012i 0.005i -0.01i 0.007i -0.009i 0.009i -0.007i 0.01i -0.004i 0.011i -0.002i 1.563i 0i 0.011i 0.002i 0.01i 0.004i 0.009i 0.007i 0.007i 0.009i 0.005i 0.01i 0.001i 0.012i 0i 0.39i'\M[]" ljust at (0.521, -3.281)
+line from (0.521, -3.281) to (2.17, -3.281) outlined "pm-ffffde" thickness 1.875
+"\f[TS]\m[pm-ffffff]drawn\m[]\f[]"  at (1.345, -3.064)
+line from (0.087, -2.135) to (2.396, -2.135) outlined "pm-000000" thickness 2.5
+"\M[pm-000000]\v'-0.22m'\D'P 0.208i -0.07i -0.208i -0.069i'\M[]" ljust at (2.396, -2.205)
+line from (2.396, -2.205) to (2.604, -2.135) to (2.396, -2.066) to (2.396, -2.205) outlined "pm-000000" thickness 0.625
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

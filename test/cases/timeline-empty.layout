@@ -1,0 +1,9 @@
+layout width=381.25 height=197.38
+title at=(6.25,15.25) w=165
+section colour=0 at=(6.25,53.63) w=368.75 h=20.63 text="Before"
+section colour=1 at=(6.25,86.75) w=368.75 h=20.63 text="During"
+period colour=1 at=(6.25,119.88) w=131.25 h=20.63 text="Then"
+event colour=1 at=(181.25,119.88) w=193.75 h=20.63 text="something"
+section colour=2 at=(6.25,153) w=368.75 h=20.63 text="After"
+line from=(150,130.19) to=(181.25,130.19)
+axis from=(150,33.63) to=(150,191.13)

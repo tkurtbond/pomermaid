@@ -1,0 +1,11 @@
+title text="History of Social Media Platform"
+direction LR
+period 0 text="2002"
+  event 0 text="LinkedIn"
+period 1 text="2004"
+  event 0 text="Facebook"
+  event 1 text="Google"
+period 2 text="2005"
+  event 0 text="Youtube"
+period 3 text="2006"
+  event 0 text="Twitter"

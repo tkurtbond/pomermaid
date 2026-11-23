@@ -44,6 +44,15 @@ TYPE
     face*, faceLine*, mouth*, line*, text*, boxLine*, boxText*, title*: LONGINT
   END;
 
+  (* A timeline's colours, as 0RRGGBBH *)
+  TimelineTheme* = RECORD
+    scale*, label*, inv*: ARRAY 12 OF LONGINT;  (* cScale0..11, the nodes'
+                                    fills; cScaleLabel0..11, their text;
+                                    cScaleInv0..11, their bottom lines *)
+    line*, title*: LONGINT       (* the dashed lines and activity line, the
+                                    title *)
+  END;
+
   Style* = RECORD
     fill*, line*, text*: INTEGER;  (* indexes into the colours, or NoColour *)
     inner*: INTEGER;               (* a composite state's body's fill, below
@@ -378,6 +387,39 @@ BEGIN
   t.boxLine := 0666666H; t.boxText := 0333333H;
   t.title := titleColour
 END JourneyColours;
+
+(* t, a timeline's colours: the default theme's cScale0 to cScale11,
+   cScaleLabel0 to cScaleLabel11 and cScaleInv0 to cScaleInv11, each
+   changed by its themeVariable *)
+PROCEDURE TimelineColours*(VAR t: TimelineTheme);
+  VAR set: BOOLEAN; k: INTEGER; name: ARRAY 20 OF CHAR;
+
+  PROCEDURE Name(base: ARRAY OF CHAR; k: INTEGER);
+    VAR i: INTEGER;
+  BEGIN
+    COPY(base, name); i := 0; WHILE name[i] # 0X DO INC(i) END;
+    IF k >= 10 THEN name[i] := "1"; INC(i) END;
+    name[i] := CHR(ORD("0") + k MOD 10); name[i + 1] := 0X
+  END Name;
+
+BEGIN
+  t.scale[0] := 08686FFH; t.scale[1] := 0FFFF78H; t.scale[2] := 0D7FF86H;
+  t.scale[3] := 0C286FFH; t.scale[4] := 0FF86FFH; t.scale[5] := 0FF86C3H;
+  t.scale[6] := 0FF8686H; t.scale[7] := 0FFC286H; t.scale[8] := 0C3FF86H;
+  t.scale[9] := 086FFC3H; t.scale[10] := 086FFFFH; t.scale[11] := 086C2FFH;
+  t.inv[0] := 0FFFFB9H; t.inv[1] := 0ABABFFH; t.inv[2] := 0D0B9FFH;
+  t.inv[3] := 0DCFFB9H; t.inv[4] := 0B9FFB9H; t.inv[5] := 0B9FFDCH;
+  t.inv[6] := 0B9FFFFH; t.inv[7] := 0B9DCFFH; t.inv[8] := 0DCB9FFH;
+  t.inv[9] := 0FFB9DCH; t.inv[10] := 0FFB9B9H; t.inv[11] := 0FFDCB9H;
+  FOR k := 0 TO 11 DO t.label[k] := 0 END;
+  t.label[0] := 0FFFFFFH; t.label[3] := 0FFFFFFH;
+  FOR k := 0 TO 11 DO
+    Name("cScale", k); set := Var(name, t.scale[k]);
+    Name("cScaleLabel", k); set := Var(name, t.label[k]);
+    Name("cScaleInv", k); set := Var(name, t.inv[k])
+  END;
+  t.line := 0; t.title := titleColour
+END TimelineColours;
 
 (* Applies the classDefs named name *)
 PROCEDURE ApplyClass(g: F.Graph; VAR st: Style; name: ARRAY OF CHAR);

@@ -60,6 +60,7 @@ CONST
 
   (* the kinds of diagram *)
   Flowchart* = 0; State* = 1; Class* = 2; Er* = 3; Req* = 4; Seq* = 5; Journey* = 6;
+  Timeline* = 7;
 
   (* the kinds of cluster: a flowchart's subgraph, a composite state,
      a composite state's concurrent region *)

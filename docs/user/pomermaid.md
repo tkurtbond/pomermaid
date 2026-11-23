@@ -15,8 +15,8 @@ It reads flowcharts (`flowchart` and `graph`), state diagrams
 (`stateDiagram-v2` and `stateDiagram`), class diagrams
 (`classDiagram` and `classDiagram-v2`), entity relationship
 diagrams (`erDiagram`), requirement diagrams
-(`requirementDiagram`), sequence diagrams (`sequenceDiagram`) and
-user journeys (`journey`).
+(`requirementDiagram`), sequence diagrams (`sequenceDiagram`),
+user journeys (`journey`) and timelines (`timeline`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -422,6 +422,44 @@ task.
   its number, and the actors in turn in six colours. The theme
   variables `fillType0` to `fillType7`, `actor0` to `actor5` and
   `faceColor` change them.
+- **Comments:** `%%` comments and `#` comments.
+
+Read and ignored: `accTitle` and `accDescr`.
+
+### Timelines
+
+pomermaid reads Mermaid's timelines, as Mermaid 12.3.0 reads them, and
+draws them as Mermaid does. Left to right, the default: the sections
+in a row, each over its periods; the periods in a row, 200 pixels
+apart; the activity line, an arrow, below them; and each period's
+events stacked below it, on a dashed line down from it. Top down: each
+section across the drawing, followed by its periods, left of a
+vertical axis, with each period's events right of the axis, on dashed
+lines from it.
+
+- **The first line:** `timeline`, `timeline LR` or `timeline TD` (top
+  down). Front matter and directives are read as for a flowchart.
+  Keywords are read in any case.
+- **The title:** `title text`, the rest of the line. It is drawn in
+  bold, above the drawing.
+- **Sections:** `section name`. The periods after it are in it, until
+  the next. A section's name has no `:`. With sections, periods before
+  the first are not drawn, as in Mermaid; pomermaid warns of them.
+- **Periods:** a line of text, up to a `:`, a `#` comment or the end
+  of the line.
+- **Events:** `: event`, after a period, on its line or on the lines
+  after it; each `: ` starts another event. A `:` not followed by a
+  blank is part of the event.
+- **Text** is wrapped to its box, and the boxes of a kind grow to
+  hold the highest. Entities such as `#35;` are read as in flowcharts;
+  `;` is text.
+- **Colours:** Mermaid's: each section and what is in it, or, without
+  sections, each period and its events, in the colour for its number,
+  0 to 11; events a little brighter. With the `timeline` configuration
+  `disableMulticolor: true`, periods without sections are all in the
+  first colour. The theme variables `cScale0` to `cScale11` (fills),
+  `cScaleLabel0` to `cScaleLabel11` (text) and `cScaleInv0` to
+  `cScaleInv11` (the line along a box's bottom) change them.
 - **Comments:** `%%` comments and `#` comments.
 
 Read and ignored: `accTitle` and `accDescr`.

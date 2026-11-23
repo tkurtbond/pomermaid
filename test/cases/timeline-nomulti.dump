@@ -1,0 +1,10 @@
+config config.timeline.disableMulticolor="true"
+direction LR multicolor=false
+period 0 text="2020"
+  event 0 text="One"
+period 1 text="2021"
+  event 0 text="Two & \"three\""
+  event 1 text="Four"
+period 2 text="2022"
+  event 0 text="a:b, a"
+  event 1 text="c"
