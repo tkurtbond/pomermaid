@@ -1018,6 +1018,40 @@ colours. In steps:
   layout's order.
 - **25.5:** Mermaid's examples; the documentation.
 
+### Phase 26: mindmaps [done]
+
+**Change:** `mindmap`, read by a new module, `PmMindmap`, into a tree
+of nodes (each with its id, label, shape, indentation level, depth,
+section, icon and class), laid out by `PmMindmapLayout` as a
+two-sided tree (decision 29) in a `PmDraw.Drawing`, and drawn in pic,
+SVG and MetaPost by `PmDrawPic`, `PmSvg` and `PmDrawMp`.
+
+**Check:** case tests for each shape, the branch and depth colours,
+`padding` and `maxNodeWidth`, wrapped labels, deep trees, comments,
+tabs, quoted labels, icons and classes, and the errors; Mermaid's own
+mindmap examples read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/mindmap.md`, the Jison
+grammar (`diagrams/mindmap/parser/mindmap.jison`), `mindmapDb.ts`,
+`mindmapRenderer.ts`, `styles.ts`, the shapes it draws
+(`rendering-util/rendering-elements/shapes/`: `defaultMindmapNode`,
+`cloud`, `bang`, `hexagon`, `roundedRect`, `squareRect`, `circle`)
+and the default theme's `cScale` colours. In steps:
+
+- **26.1, the model and the reader:** indentation, the shapes'
+  brackets, `::icon()` and `:::` classes, comments, the db's rules
+  (one root; a node's parent is the nearest less indented node) and
+  errors; `config.mindmap`; the dump.
+- **26.2, the layout:** each node's size, by shape, with its label
+  wrapped at `maxNodeWidth`; the root's children to its left and
+  right, by turns, each subtree in its band; the edges as curves,
+  narrowing with depth; the colours by section or by depth; the
+  layout dump.
+- **26.3, pic and SVG; 26.4, MetaPost:** the same drawing, through
+  `PmDraw`; `PmSvg`'s git-only procedures became `WriteDrawing` and
+  `WriteDrawingDocument`, for any `PmDraw.Drawing`.
+- **26.5:** Mermaid's examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1223,6 +1257,29 @@ None at present.
     browser's console and replaces the earlier commit; pomermaid
     does the same, writing the warning, with the line, to standard
     error.
+
+2026-11-23, in Phase 26, under decision 2:
+
+29. **A mindmap is laid out as a two-sided tree.** Mermaid lays it out
+    with cose-bilkent, a force-directed layout whose result depends on
+    its random start and many iterations. pomermaid places the root's
+    children to its left and right by turns, as Mermaid's results
+    mostly look, and each subtree in a band of its own height, so that
+    nothing overlaps and the output is the same each time. Node sizes,
+    shapes, colours and edge widths are Mermaid's.
+30. **A mindmap's icons and classes are read but not drawn.** Icons
+    are Font Awesome or Material Design glyphs and classes are the
+    page's CSS; pomermaid has neither. Each is read, kept in the
+    model (and the dump), and warned about, with its line, on
+    standard error.
+31. **A cloud's and a bang's arcs are polygons.** Mermaid draws these
+    outlines with SVG arcs; pomermaid samples each arc at 16 points
+    and draws the outline as a filled polygon, in pic, SVG and
+    MetaPost alike.
+32. **MetaPost centres the lines of a label.** `PmDrawMp`'s labels of
+    more than one line, a wrapped mindmap node's, are set
+    `align=middle`, as Mermaid centres them; a git graph's labels, of
+    one line, are unchanged in the drawing.
 
 ## Later
 
@@ -1926,3 +1983,19 @@ is a `PmDraw.Drawing`); `PmGitPic` and `PmGitMp` became `PmDrawPic`
 and `PmDrawMp`, and the layout dump `PmDrawDump`. The output is
 unchanged: `make test` passes, 549 of 549 under both models, on
 Fedora and on the six BSD hosts.
+
+2026-11-23, Phase 26: mindmaps. `PmMindmap` reads `mindmap`
+(`PmMindmapDump` writes its model for `-t dump`), `PmMindmapLayout`
+lays it out as a two-sided tree in a `PmDraw.Drawing`, and
+`PmDrawPic`, `PmSvg` (`WriteDrawing`, now for any drawing) and
+`PmDrawMp` draw it. `make test` passes under `-O2` and `-OC`: 569 case
+tests, with `mindmap-basic`, `mindmap-shapes` and `mindmap-depth`
+(dump, layout, pic, mp and svg-ms), `mindmap-comments` (dump), and
+four error cases (`mindmap-two-roots`, `mindmap-icon-first`,
+`mindmap-text-after`, `mindmap-unterminated`). All 15 of Mermaid's
+mindmap examples (`docs/syntax/mindmap.md`) were read and laid out;
+the three drawn cases were drawn as SVG, through groff to PDF and
+through ConTeXt, and looked at. Mermaid itself was not run.
+On 2026-11-23, `make test` passes, 569 of 569 under both models, on
+FreeBSD (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD
+(jherek, cymoril).

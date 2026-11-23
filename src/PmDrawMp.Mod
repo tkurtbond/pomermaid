@@ -47,7 +47,7 @@ END Col;
 (* lab as a picture, size points *)
 PROCEDURE Picture(lab: F.Label; size: REAL);
 BEGIN
-  W('textext("\framed[frame=off,offset=0pt,align=flushleft]{" & ');
+  W('textext("\framed[frame=off,offset=0pt,align=middle]{" & ');
   PmMp.Label(lab); W(' & "}") scaled '); PmIO.WriteReal(size / l.size, 4)
 END Picture;
 

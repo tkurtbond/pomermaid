@@ -17,13 +17,13 @@ enddef;
 begingroup interim linecap := butt;
 draw (71.725pt, -30.063pt) -- (321.725pt, -30.063pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 0.625pt dashed dashpattern(on 1.25pt off 1.25pt);
 fill pmhbox(19.4pt, 22.813pt, 30.45pt, 14.5pt, 2.5pt) withcolor (0,0,0.9255);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "main" & "}") scaled 1, (34.625pt, -30.063pt), 0, (1,1,1));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "main" & "}") scaled 1, (34.625pt, -30.063pt), 0, (1,1,1));
 draw (71.725pt, -86.313pt) -- (321.725pt, -86.313pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 0.625pt dashed dashpattern(on 1.25pt off 1.25pt);
 fill pmhbox(19.4pt, 79.063pt, 30.45pt, 14.5pt, 2.5pt) withcolor (0.8706,0.8706,0);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "feat" & "}") scaled 1, (34.625pt, -86.313pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "feat" & "}") scaled 1, (34.625pt, -86.313pt), 0, (0,0,0));
 draw (71.725pt, -142.563pt) -- (321.725pt, -142.563pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 0.625pt dashed dashpattern(on 1.25pt off 1.25pt);
 fill pmhbox(5pt, 135.313pt, 44.85pt, 14.5pt, 2.5pt) withcolor (0.6157,0.9255,0);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "develop" & "}") scaled 1, (27.425pt, -142.563pt), 0, (0,0,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "develop" & "}") scaled 1, (27.425pt, -142.563pt), 0, (0,0,0));
 begingroup interim linecap := rounded; draw (77.975pt, -30.063pt)
   .. controls (77.975pt, -30.063pt) and (109.225pt, -30.063pt) .. (109.225pt, -30.063pt) withcolor (0,0,0.9255) withpen pencircle scaled 5pt; endgroup;
 begingroup interim linecap := rounded; draw (109.225pt, -30.063pt)
@@ -77,41 +77,41 @@ fill fullcircle scaled 12.5pt shifted (296.725pt, -30.063pt) withcolor (0,0,0.92
 draw fullcircle scaled 12.5pt shifted (296.725pt, -30.063pt) withcolor (0,0,0.9255) withpen pencircle scaled 0.625pt;
 fill (54.817pt, -57.036pt) -- (75.234pt, -36.618pt) -- (82.306pt, -43.689pt) -- (61.888pt, -64.107pt) -- 
   cycle withcolor (1,1,0.9373);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "0-e745ced" & "}") scaled 0.625, (68.561pt, -50.362pt), -45, (0,0,0.1294));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "0-e745ced" & "}") scaled 0.625, (68.561pt, -50.362pt), -45, (0,0,0.1294));
 fill (103.214pt, -40.824pt) -- (107.103pt, -36.935pt) -- (114.174pt, -44.006pt) -- (110.285pt, -47.895pt) -- 
   cycle withcolor (1,1,0.9373);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "x" & "}") scaled 0.625, (108.694pt, -42.415pt), -45, (0,0,0.1294));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "x" & "}") scaled 0.625, (108.694pt, -42.415pt), -45, (0,0,0.1294));
 fill (98.662pt, -19.313pt) -- (98.662pt, -16.813pt) -- (103.662pt, -13.063pt) -- (114.787pt, -13.063pt) -- 
   (114.787pt, -23.063pt) -- (103.662pt, -23.063pt) -- cycle withcolor (0.9255,0.9255,1);
 draw (98.662pt, -19.313pt) -- (98.662pt, -16.813pt) -- (103.662pt, -13.063pt) -- (114.787pt, -13.063pt) -- 
   (114.787pt, -23.063pt) -- (103.662pt, -23.063pt) -- cycle withcolor (0.7804,0.7804,0.9451) withpen pencircle scaled 0.625pt;
 fill fullcircle scaled 1.875pt shifted (101.162pt, -18.063pt) withcolor (0.2,0.2,0.2);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "v1" & "}") scaled 0.625, (109.225pt, -17.875pt), 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "v1" & "}") scaled 0.625, (109.225pt, -17.875pt), 0, (0.0745,0.0745,0));
 fill (132.171pt, -155.491pt) -- (138.27pt, -149.392pt) -- (145.341pt, -156.464pt) -- (139.242pt, -162.562pt) -- 
   cycle withcolor (1,1,0.9373);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "d1" & "}") scaled 0.625, (138.756pt, -155.977pt), -45, (0,0,0.1294));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "d1" & "}") scaled 0.625, (138.756pt, -155.977pt), -45, (0,0,0.1294));
 fill (148.75pt, -169.362pt) -- (168.991pt, -149.121pt) -- (176.062pt, -156.192pt) -- (155.821pt, -176.433pt) -- 
   cycle withcolor (1,1,0.9373);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "3-adbfee0" & "}") scaled 0.625, (162.406pt, -162.777pt), -45, (0,0,0.1294));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "3-adbfee0" & "}") scaled 0.625, (162.406pt, -162.777pt), -45, (0,0,0.1294));
 fill (193.975pt, -19.313pt) -- (193.975pt, -16.813pt) -- (198.975pt, -13.063pt) -- (206.975pt, -13.063pt) -- 
   (206.975pt, -23.063pt) -- (198.975pt, -23.063pt) -- cycle withcolor (0.9255,0.9255,1);
 draw (193.975pt, -19.313pt) -- (193.975pt, -16.813pt) -- (198.975pt, -13.063pt) -- (206.975pt, -13.063pt) -- 
   (206.975pt, -23.063pt) -- (198.975pt, -23.063pt) -- cycle withcolor (0.7804,0.7804,0.9451) withpen pencircle scaled 0.625pt;
 fill fullcircle scaled 1.875pt shifted (196.475pt, -18.063pt) withcolor (0.2,0.2,0.2);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "m" & "}") scaled 0.625, (202.975pt, -17.875pt), 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "m" & "}") scaled 0.625, (202.975pt, -17.875pt), 0, (0.0745,0.0745,0));
 fill (210.975pt, -113.372pt) -- (231.481pt, -92.866pt) -- (238.552pt, -99.937pt) -- (218.046pt, -120.443pt) -- 
   cycle withcolor (1,1,0.9373);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "5-504eb8b" & "}") scaled 0.625, (224.764pt, -106.655pt), -45, (0,0,0.1294));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "5-504eb8b" & "}") scaled 0.625, (224.764pt, -106.655pt), -45, (0,0,0.1294));
 fill (238.037pt, -19.313pt) -- (238.037pt, -16.813pt) -- (243.037pt, -13.063pt) -- (287.912pt, -13.063pt) -- 
   (287.912pt, -23.063pt) -- (243.037pt, -23.063pt) -- cycle withcolor (0.9255,0.9255,1);
 draw (238.037pt, -19.313pt) -- (238.037pt, -16.813pt) -- (243.037pt, -13.063pt) -- (287.912pt, -13.063pt) -- 
   (287.912pt, -23.063pt) -- (243.037pt, -23.063pt) -- cycle withcolor (0.7804,0.7804,0.9451) withpen pencircle scaled 0.625pt;
 fill fullcircle scaled 1.875pt shifted (240.537pt, -18.063pt) withcolor (0.2,0.2,0.2);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "cherry-pick:d1" & "}") scaled 0.625, (265.475pt, -17.875pt), 0, (0.0745,0.0745,0));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "cherry-pick:d1" & "}") scaled 0.625, (265.475pt, -17.875pt), 0, (0.0745,0.0745,0));
 fill (273.567pt, -57.036pt) -- (293.984pt, -36.618pt) -- (301.056pt, -43.689pt) -- (280.638pt, -64.107pt) -- 
   cycle withcolor (1,1,0.9373);
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "7-f3c9d3a" & "}") scaled 0.625, (287.311pt, -50.362pt), -45, (0,0,0.1294));
-pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Example Git diagram" & "}") scaled 1.125, (163.363pt, -11.75pt), 0, (0.2,0.2,0.2));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "7-f3c9d3a" & "}") scaled 0.625, (287.311pt, -50.362pt), -45, (0,0,0.1294));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=middle]{" & "Example Git diagram" & "}") scaled 1.125, (163.363pt, -11.75pt), 0, (0.2,0.2,0.2));
 endgroup;
 setbounds currentpicture to (pmxx0, pmxx1) -- (pmxx2, pmxx1) -- (pmxx2, pmxx3) -- (pmxx0, pmxx3) -- cycle;
 \stopMPcode

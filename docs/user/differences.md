@@ -351,6 +351,20 @@ differences:
 - **Text heights** are set as for XY charts: a text's middle is 0.35
   of its size above its baseline.
 
+## Mindmaps
+
+- **Layout.** Mermaid lays mindmaps out with cose-bilkent, a
+  force-directed layout that starts at random; pomermaid lays them
+  out as a two-sided tree, the same on each run (decision 29). The
+  nodes' sizes, shapes and colours, and the edges' widths, are
+  Mermaid's.
+- **Icons and classes** are read, with a warning, and not drawn
+  (decision 30).
+- **Clouds and bangs** are polygons, each arc of their outlines taken
+  at 16 points, where Mermaid's are SVG arcs (decision 31).
+- **Themes.** The colours are the default theme's, changed by the
+  themeVariables; other themes are not drawn.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

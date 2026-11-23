@@ -75,7 +75,9 @@ journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
 (sankey diagrams: `PmSankey`, `PmSankeyLayout`, d3-sankey's layout,
 `PmSankeyPic` and `PmSankeyMp`) and 25 (git graphs: `PmGit`,
 `PmGitLayout`, Mermaid's renderer, drawn by the shared `PmDraw`,
-`PmDrawPic`, `PmDrawMp` and `PmDrawDump`) are done. See
+`PmDrawPic`, `PmDrawMp` and `PmDrawDump`) and 26 (mindmaps:
+`PmMindmap`, `PmMindmapLayout`, a two-sided tree, and
+`PmMindmapDump`) are done. See
 PLAN.md's State.
 
 ## Reference material

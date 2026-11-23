@@ -1,0 +1,59 @@
+layout width=428.98 height=66.15
+curve (196.09,33.07) (178.21,33.07) (178.21,18.01) (160.33,18.01) fill=none line=#ffff78 width=3.37
+curve (160.33,18.01) (136.77,18.01) (136.77,7.53) (113.21,7.53) fill=none line=#ffff78 width=1.53
+curve (160.33,18.01) (135.31,18.01) (135.31,25.54) (110.3,25.54) fill=none line=#ffff78 width=1.53
+curve (110.3,25.54) (74.68,25.54) (74.68,25.54) (39.05,25.54) fill=none line=#ffff78 width=0.92
+curve (196.09,33.07) (214.56,33.07) (214.56,33.07) (233.03,33.07) fill=none line=#d7ff86 width=3.37
+curve (233.03,33.07) (259.53,33.07) (259.53,10.47) (286.03,10.47) fill=none line=#d7ff86 width=1.53
+curve (233.03,33.07) (262.4,33.07) (262.4,43.55) (291.76,43.55) fill=none line=#d7ff86 width=1.53
+curve (291.76,43.55) (318.77,43.55) (318.77,43.55) (345.78,43.55) fill=none line=#d7ff86 width=0.92
+curve (345.78,43.55) (371.69,43.55) (371.69,28.48) (397.6,28.48) fill=none line=#d7ff86 width=0.92
+curve (345.78,43.55) (371.1,43.55) (371.1,43.55) (396.42,43.55) fill=none line=#d7ff86 width=0.92
+curve (345.78,43.55) (369.93,43.55) (369.93,58.62) (394.07,58.62) fill=none line=#d7ff86 width=0.92
+curve (196.09,33.07) (179.39,33.07) (179.39,51.08) (162.68,51.08) fill=none line=#c286ff width=3.37
+curve (162.68,51.08) (139.99,51.08) (139.99,43.55) (117.31,43.55) fill=none line=#c286ff width=1.53
+curve (162.68,51.08) (142.96,51.08) (142.96,58.62) (123.23,58.62) fill=none line=#c286ff width=1.53
+circle at=(196.09,33.07) r=11.8 fill=#0000ec line=none
+text at=(196.09,33.07) size=4.9 w=16.46 line=#ffffff text=md:"mindmap"
+rect at=(145.55,13.54) w=29.55 h=8.94 r=1.53 fill=#ffff78 line=none
+line (145.55,22.48) (175.1,22.48) fill=none line=#ababff width=0.92
+text at=(160.33,18.01) size=4.9 w=17.3 line=#000000 text=md:"Origins"
+rect at=(93.12,3.06) w=40.18 h=8.94 r=1.53 fill=#ffff78 line=none
+line (93.12,12.01) (133.3,12.01) fill=none line=#ababff width=0.92
+text at=(113.21,7.53) size=4.9 w=27.93 line=#000000 text=md:"Long history"
+rect at=(87.29,21.07) w=46.01 h=8.94 r=1.53 fill=#ffff78 line=none
+line (87.29,30.01) (133.3,30.01) fill=none line=#ababff width=0.92
+text at=(110.3,25.54) size=4.9 w=33.76 line=#000000 text=md:"Popularisation"
+rect at=(3.06,18.13) w=71.98 h=14.82 r=1.53 fill=#ffff78 line=none
+line (3.06,32.95) (75.04,32.95) fill=none line=#ababff width=0.92
+text at=(39.05,25.54) size=4.9 w=59.73 line=#000000 text=md:"British popular psychology"/"author Tony Buzan"
+rect at=(217.08,28.6) w=31.9 h=8.94 r=1.53 fill=#d7ff86 line=none
+line (217.08,37.55) (248.98,37.55) fill=none line=#d0b9ff width=0.92
+text at=(233.03,33.07) size=4.9 w=19.65 line=#000000 text=md:"Research"
+rect at=(261.23,3.06) w=49.59 h=14.82 r=1.53 fill=#d7ff86 line=none
+line (261.23,17.89) (310.82,17.89) fill=none line=#d0b9ff width=0.92
+text at=(286.03,10.47) size=4.9 w=37.34 line=#000000 text=md:"On effectiveness"/"and features"
+rect at=(261.23,39.08) w=61.05 h=8.94 r=1.53 fill=#d7ff86 line=none
+line (261.23,48.02) (322.29,48.02) fill=none line=#d0b9ff width=0.92
+text at=(291.76,43.55) size=4.9 w=48.8 line=#000000 text=md:"On Automatic creation"
+rect at=(334.54,39.08) w=22.49 h=8.94 r=1.53 fill=#d7ff86 line=none
+line (334.54,48.02) (357.03,48.02) fill=none line=#d0b9ff width=0.92
+text at=(345.78,43.55) size=4.9 w=10.24 line=#000000 text=md:"Uses"
+rect at=(369.28,24.01) w=56.64 h=8.94 r=1.53 fill=#d7ff86 line=none
+line (369.28,32.95) (425.92,32.95) fill=none line=#d0b9ff width=0.92
+text at=(397.6,28.48) size=4.9 w=44.39 line=#000000 text=md:"Creative techniques"
+rect at=(369.28,39.08) w=54.29 h=8.94 r=1.53 fill=#d7ff86 line=none
+line (369.28,48.02) (423.57,48.02) fill=none line=#d0b9ff width=0.92
+text at=(396.42,43.55) size=4.9 w=42.04 line=#000000 text=md:"Strategic planning"
+rect at=(369.28,54.14) w=49.59 h=8.94 r=1.53 fill=#d7ff86 line=none
+line (369.28,63.09) (418.87,63.09) fill=none line=#d0b9ff width=0.92
+text at=(394.07,58.62) size=4.9 w=37.34 line=#000000 text=md:"Argument mapping"
+rect at=(150.26,46.61) w=24.84 h=8.94 r=1.53 fill=#c286ff line=none
+line (150.26,55.55) (175.1,55.55) fill=none line=#dcffb9 width=0.92
+text at=(162.68,51.08) size=4.9 w=12.59 line=#ffffff text=md:"Tools"
+rect at=(96.6,39.08) w=41.41 h=8.94 r=1.53 fill=#c286ff line=none
+line (96.6,48.02) (138.01,48.02) fill=none line=#dcffb9 width=0.92
+text at=(117.31,43.55) size=4.9 w=29.16 line=#ffffff text=md:"Pen and paper"
+rect at=(108.46,54.14) w=29.55 h=8.94 r=1.53 fill=#c286ff line=none
+line (108.46,63.09) (138.01,63.09) fill=none line=#dcffb9 width=0.92
+text at=(123.23,58.62) size=4.9 w=17.3 line=#ffffff text=md:"Mermaid"

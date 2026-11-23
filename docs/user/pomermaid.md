@@ -19,8 +19,8 @@ diagrams (`erDiagram`), requirement diagrams
 user journeys (`journey`), timelines (`timeline`), Gantt
 charts (`gantt`), pie charts (`pie`), quadrant charts
 (`quadrantChart`), XY charts (`xychart`), radar charts
-(`radar-beta`), sankey diagrams (`sankey-beta`) and git graphs
-(`gitGraph`).
+(`radar-beta`), sankey diagrams (`sankey-beta`), git graphs
+(`gitGraph`) and mindmaps (`mindmap`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -809,6 +809,41 @@ commits' ids beside them, and their tags.
   `tagLabelColor`, `tagLabelBackground`, `tagLabelBorder`,
   `tagLabelFontSize`, `primaryColor`, `commitLineColor` (else
   `lineColor`) and `textColor`.
+
+### Mindmaps
+
+pomermaid reads Mermaid's mindmaps (`mindmap`), as Mermaid 12.3.0
+reads them, and draws them with Mermaid's shapes, colours and edges,
+but laid out as a two-sided tree: the root in the middle, its
+children to its left and right by turns, and each child's subtree
+spreading away from the root. Mermaid's own layout is force-directed
+and differs from run to run (see differences.md).
+
+- **The first line:** `mindmap`.
+- **Nodes:** one to a line; a node's parent is the nearest line
+  above it that is less indented. There is one root, the first node.
+  Indentation is spaces or tabs.
+- **Shapes:** `id` or text alone (the default, a box with a line
+  along its bottom), `id[text]` (a rectangle), `id(text)` (rounded),
+  `id((text))` (a circle), `id)text(` (a cloud), `id))text((` (a
+  bang) and `id{{text}}` (a hexagon). A label in quotation marks, or
+  in `` "` `` and `` `" ``, may hold brackets.
+- **`::icon(...)`** and **`:::class`,** on the line after a node:
+  read and kept, with a warning; neither is drawn.
+- **`%%` comments;** a `%%` inside a node's text is part of it, as in
+  Mermaid.
+- **Mermaid's errors:** a second root; an icon or class before any
+  node; text after a node on its line; a label without its end.
+- **Configuration:** `mindmap`'s `padding` (10) and `maxNodeWidth`
+  (200: a longer label is wrapped), and `colorBy`: `branch` (the
+  default: each child of the root and its subtree a colour) or
+  `depth` (each level a colour).
+- **Colours:** the default theme's, each changed by its
+  themeVariable: `git0` and `gitBranchLabel0` (the root), and
+  `cScale0` to `cScale11` (fills and edges), `cScaleLabel0` to
+  `cScaleLabel11` (text) and `cScaleInv0` to `cScaleInv11` (a default
+  node's bottom line). An edge is as wide as Mermaid's: narrower at
+  each level.
 
 Mermaid's other diagram types are not read yet.
 

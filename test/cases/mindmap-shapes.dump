@@ -1,0 +1,9 @@
+mindmap padding=10 maxNodeWidth=200 colorBy=branch nodes=8
+node 0 level=0 depth=0 section=-1 shape=rect id="id1" label=md:"I am a square"
+node 1 parent=0 level=4 depth=1 section=0 shape=rounded id="id2" label=md:"I am a rounded square"
+node 2 parent=0 level=4 depth=1 section=1 shape=circle id="id3" label=md:"I am a circle"
+node 3 parent=0 level=4 depth=1 section=2 shape=cloud id="id4" label=md:"I am a cloud"
+node 4 parent=0 level=4 depth=1 section=3 shape=bang id="id5" label=md:"I am a bang"
+node 5 parent=0 level=4 depth=1 section=4 shape=hexagon id="id6" label=md:"I am a hexagon"
+node 6 parent=0 level=4 depth=1 section=5 shape=default id="Default" label=md:"Default"
+node 7 parent=0 level=4 depth=1 section=6 shape=rect id="id7" label=md:"bold and it"=11110000022/"second line" class="urgent large"

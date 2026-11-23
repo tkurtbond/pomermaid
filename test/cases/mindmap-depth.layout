@@ -1,0 +1,39 @@
+layout width=431.3 height=92.54
+curve (318.23,46.27) (292.38,46.27) (292.38,33.13) (266.54,33.13) fill=none line=#ffff78 width=6.39
+curve (266.54,33.13) (243.75,33.13) (243.75,33.13) (220.97,33.13) fill=none line=#d7ff86 width=2.91
+curve (220.97,33.13) (195.86,33.13) (195.86,33.13) (170.75,33.13) fill=none line=#c286ff width=1.74
+curve (170.75,33.13) (143.31,33.13) (143.31,33.13) (115.88,33.13) fill=none line=#ff86ff width=1.74
+curve (115.88,33.13) (77.72,33.13) (77.72,33.13) (39.57,33.13) fill=none line=#ff86c3 width=1.74
+curve (318.23,46.27) (344.07,46.27) (344.07,46.27) (369.92,46.27) fill=none line=#ffff78 width=6.39
+curve (369.92,46.27) (392.7,46.27) (392.7,33.13) (415.49,33.13) fill=none line=#d7ff86 width=2.91
+curve (369.92,46.27) (392.7,46.27) (392.7,59.4) (415.49,59.4) fill=none line=#d7ff86 width=2.91
+curve (318.23,46.27) (292.38,46.27) (292.38,81.72) (266.54,81.72) fill=none line=#ffff78 width=6.39
+circle at=(318.23,46.27) r=24.25 fill=#0000ec line=none
+text at=(318.23,46.27) size=9.3 w=35.15 line=#ffffff text=md:"The root"
+rect at=(256.54,25.81) w=19.99 h=14.65 r=2.91 fill=#ffff78 line=none
+line (256.54,40.46) (276.54,40.46) fill=none line=#ababff width=1.74
+text at=(266.54,33.13) size=9.3 w=6.05 line=#000000 text=md:"A"
+rect at=(208.65,25.81) w=24.65 h=14.65 r=2.91 fill=#d7ff86 line=none
+line (208.65,40.46) (233.29,40.46) fill=none line=#d0b9ff width=1.74
+text at=(220.97,33.13) size=9.3 w=10.69 line=#000000 text=md:"A1"
+rect at=(156.1,25.81) w=29.3 h=14.65 r=2.91 fill=#c286ff line=none
+line (156.1,40.46) (185.4,40.46) fill=none line=#dcffb9 width=1.74
+text at=(170.75,33.13) size=9.3 w=15.35 line=#ffffff text=md:"A11"
+rect at=(98.91,25.81) w=33.94 h=14.65 r=2.91 fill=#ff86ff line=none
+line (98.91,40.46) (132.85,40.46) fill=none line=#b9ffb9 width=1.74
+text at=(115.88,33.13) size=9.3 w=20 line=#000000 text=md:"A111"
+rect at=(3.49,3.49) w=72.17 h=59.29 r=2.91 fill=#ff86c3 line=none
+line (3.49,62.78) (75.66,62.78) fill=none line=#b9ffdc width=1.74
+text at=(39.57,33.13) size=9.3 w=58.22 line=#000000 text=md:"A1111 with a"/"label long"/"enough to wrap"/"twice at this"/"width"
+rect at=(359.92,38.94) w=19.99 h=14.65 r=2.91 fill=#ffff78 line=none
+line (359.92,53.59) (379.91,53.59) fill=none line=#ababff width=1.74
+text at=(369.92,46.27) size=9.3 w=6.05 line=#000000 text=md:"B"
+rect at=(403.16,25.81) w=24.65 h=14.65 r=2.91 fill=#d7ff86 line=none
+line (403.16,40.46) (427.81,40.46) fill=none line=#d0b9ff width=1.74
+text at=(415.49,33.13) size=9.3 w=10.69 line=#000000 text=md:"B1"
+rect at=(403.16,52.08) w=24.65 h=14.65 r=2.91 fill=#d7ff86 line=none
+line (403.16,66.73) (427.81,66.73) fill=none line=#d0b9ff width=1.74
+text at=(415.49,59.4) size=9.3 w=10.69 line=#000000 text=md:"B2"
+rect at=(256.54,74.4) w=19.99 h=14.65 r=2.91 fill=#ffff78 line=none
+line (256.54,89.05) (276.54,89.05) fill=none line=#ababff width=1.74
+text at=(266.54,81.72) size=9.3 w=6.05 line=#000000 text=md:"C"
