@@ -1,0 +1,165 @@
+layout width=375 height=254.62
+link from=(6.25,41.65) to=(52.68,55.57) width=4.72 from=#a7bcd3 to=#f9c796
+link from=(58.93,67.92) to=(105.36,216.93) width=0.63 from=#f9c796 to=#f0abac
+link from=(58.93,53.72) to=(368.75,30.53) width=1.02 from=#f9c796 to=#bbdbd9
+link from=(58.93,59.53) to=(105.36,64.29) width=10.61 from=#f9c796 to=#acd0a7
+link from=(58.93,66.37) to=(105.36,84.95) width=3.07 from=#f9c796 to=#f6e4a4
+link from=(6.25,211.18) to=(105.36,217.6) width=1.32 from=#d7bdd0 to=#f0abac
+link from=(6.25,82.16) to=(105.36,70.25) width=1.32 from=#ffced3 to=#acd0a7
+link from=(6.25,73.78) to=(52.68,84.85) width=0.63 from=#cebaaf to=#ddd8d5
+link from=(6.25,91.53) to=(52.68,86.28) width=2.42 from=#a7bcd3 to=#ddd8d5
+link from=(58.93,86.06) to=(105.36,72.34) width=2.86 from=#ddd8d5 to=#acd0a7
+link from=(216.96,34.58) to=(368.75,70.53) width=0.63 from=#f9c796 to=#f0abac
+link from=(216.96,35.2) to=(368.75,99.78) width=0.85 from=#f9c796 to=#bbdbd9
+link from=(216.96,36.5) to=(368.75,112.81) width=1.75 from=#f9c796 to=#acd0a7
+link from=(216.96,132.44) to=(368.75,60.85) width=3.95 from=#f6e4a4 to=#d7bdd0
+link from=(216.96,151.06) to=(368.75,115.84) width=4.3 from=#f6e4a4 to=#acd0a7
+link from=(216.96,153.89) to=(263.39,151.79) width=1.03 from=#f6e4a4 to=#ffced3
+link from=(216.96,140.89) to=(368.75,80.8) width=12.95 from=#f6e4a4 to=#f0abac
+link from=(216.96,162.36) to=(368.75,198.87) width=1.43 from=#f6e4a4 to=#cebaaf
+link from=(216.96,153.3) to=(368.75,133.72) width=0.63 from=#f6e4a4 to=#ddd8d5
+link from=(216.96,148.14) to=(368.75,100.99) width=1.55 from=#f6e4a4 to=#bbdbd9
+link from=(216.96,129.39) to=(368.75,32.16) width=2.15 from=#f6e4a4 to=#bbdbd9
+link from=(216.96,161.5) to=(368.75,190.34) width=0.63 from=#f6e4a4 to=#a7bcd3
+link from=(216.96,156.11) to=(368.75,143.14) width=3.41 from=#f6e4a4 to=#f9c796
+link from=(216.96,159.58) to=(368.75,154.11) width=3.54 from=#f6e4a4 to=#f0abac
+link from=(6.25,124.21) to=(52.68,115.85) width=1.54 from=#bbdbd9 to=#acd0a7
+link from=(6.25,114.39) to=(52.68,113.53) width=3.11 from=#f6e4a4 to=#acd0a7
+link from=(111.61,91.06) to=(368.75,100.21) width=0.63 from=#f6e4a4 to=#bbdbd9
+link from=(111.61,83.44) to=(368.75,31.06) width=0.63 from=#f6e4a4 to=#bbdbd9
+link from=(111.61,86.34) to=(158.04,53.25) width=5.75 from=#f6e4a4 to=#d7bdd0
+link from=(111.61,91.1) to=(368.75,133.59) width=0.63 from=#f6e4a4 to=#ddd8d5
+link from=(111.61,90.14) to=(368.75,73.41) width=1.84 from=#f6e4a4 to=#f0abac
+link from=(6.25,132.62) to=(210.71,148.34) width=0.63 from=#ffced3 to=#f6e4a4
+link from=(269.64,151.91) to=(316.07,155.63) width=0.79 from=#ffced3 to=#cebaaf
+link from=(269.64,151.4) to=(368.75,33.35) width=0.63 from=#ffced3 to=#bbdbd9
+link from=(322.32,155.63) to=(368.75,199.98) width=0.79 from=#cebaaf to=#cebaaf
+link from=(6.25,140.38) to=(210.71,148.6) width=0.63 from=#ddd8d5 to=#f6e4a4
+link from=(111.61,219.21) to=(368.75,89.57) width=4.58 from=#f0abac to=#f0abac
+link from=(111.61,229.38) to=(368.75,215.46) width=4.87 from=#f0abac to=#a7bcd3
+link from=(111.61,224.37) to=(368.75,202.95) width=5.14 from=#f0abac to=#cebaaf
+link from=(111.61,232.09) to=(368.75,225.66) width=0.63 from=#f0abac to=#f9c796
+link from=(111.61,236.26) to=(368.75,237.34) width=7.81 from=#f0abac to=#f0abac
+link from=(111.61,221.57) to=(368.75,133.87) width=0.63 from=#f0abac to=#ddd8d5
+link from=(111.61,240.79) to=(368.75,249.37) width=1.26 from=#f0abac to=#bbdbd9
+link from=(111.61,221.72) to=(368.75,190.58) width=0.63 from=#f0abac to=#a7bcd3
+link from=(6.25,51.59) to=(52.68,58.01) width=0.63 from=#acd0a7 to=#f9c796
+link from=(58.93,114.3) to=(105.36,88.81) width=4.65 from=#acd0a7 to=#f6e4a4
+link from=(6.25,15.89) to=(158.04,19.34) width=31.79 from=#f6e4a4 to=#d7bdd0
+link from=(6.25,240.46) to=(52.68,236.21) width=19.08 from=#d7bdd0 to=#ffced3
+link from=(6.25,221.38) to=(52.68,224.63) width=4.08 from=#cebaaf to=#ffced3
+link from=(58.93,234.17) to=(105.36,229.84) width=23.16 from=#ffced3 to=#f0abac
+link from=(6.25,104.26) to=(105.36,74.85) width=2.14 from=#ddd8d5 to=#acd0a7
+link from=(6.25,101.72) to=(52.68,66.46) width=2.94 from=#ddd8d5 to=#f9c796
+link from=(6.25,154.34) to=(368.75,121.64) width=7.3 from=#a7bcd3 to=#acd0a7
+link from=(6.25,149.35) to=(368.75,103.1) width=2.67 from=#a7bcd3 to=#bbdbd9
+link from=(58.93,159.33) to=(210.71,149.87) width=2.27 from=#f9c796 to=#f6e4a4
+link from=(58.93,168.32) to=(368.75,125.66) width=0.73 from=#f0abac to=#acd0a7
+link from=(6.25,168.12) to=(52.68,168.32) width=0.73 from=#bbdbd9 to=#f0abac
+link from=(6.25,166.63) to=(52.68,159.33) width=2.27 from=#bbdbd9 to=#f9c796
+link from=(111.61,75.9) to=(368.75,133.54) width=0.63 from=#acd0a7 to=#ddd8d5
+link from=(111.61,66.55) to=(158.04,42.81) width=15.14 from=#acd0a7 to=#d7bdd0
+link from=(111.61,75) to=(368.75,71.61) width=1.76 from=#acd0a7 to=#f0abac
+link from=(164.29,46.18) to=(210.71,138.26) width=19.89 from=#d7bdd0 to=#f6e4a4
+link from=(164.29,18.34) to=(368.75,15.13) width=29.79 from=#d7bdd0 to=#bbdbd9
+link from=(164.29,34.74) to=(210.71,35.88) width=3 from=#d7bdd0 to=#f9c796
+link from=(6.25,176.17) to=(210.71,151.18) width=0.63 from=#acd0a7 to=#f6e4a4
+link from=(6.25,62.62) to=(52.68,61.54) width=6.89 from=#f6e4a4 to=#f9c796
+link from=(6.25,184.21) to=(210.71,151.72) width=0.72 from=#d7bdd0 to=#f6e4a4
+link from=(6.25,197.54) to=(210.71,157.55) width=10.95 from=#ffced3 to=#f6e4a4
+rect at=(0,39.29) w=6.25 h=4.72 fill=#4e79a7
+rect at=(52.68,53.21) w=6.25 h=14.72 fill=#f28e2c
+rect at=(105.36,216.92) w=6.25 h=24.51 fill=#e15759
+rect at=(368.75,0.23) w=6.25 h=33.24 fill=#76b7b2
+rect at=(105.36,58.98) w=6.25 h=16.93 fill=#59a14f
+rect at=(105.36,83.42) w=6.25 h=7.72 fill=#edc949
+rect at=(0,210.52) w=6.25 h=1.32 fill=#af7aa1
+rect at=(0,81.5) w=6.25 h=1.32 fill=#ff9da7
+rect at=(0,73.56) w=6.25 h=0.44 fill=#9c755f
+rect at=(52.68,84.63) w=6.25 h=2.86 fill=#bab0ab
+rect at=(0,90.32) w=6.25 h=2.42 fill=#4e79a7
+rect at=(210.71,34.38) w=6.25 h=3 fill=#f28e2c
+rect at=(368.75,70.33) w=6.25 h=21.53 fill=#e15759
+rect at=(368.75,99.36) w=6.25 h=5.08 fill=#76b7b2
+rect at=(368.75,111.94) w=6.25 h=14.09 fill=#59a14f
+rect at=(210.71,128.32) w=6.25 h=34.76 fill=#edc949
+rect at=(368.75,58.88) w=6.25 h=3.95 fill=#af7aa1
+rect at=(263.39,151.28) w=6.25 h=1.03 fill=#ff9da7
+rect at=(368.75,198.16) w=6.25 h=7.36 fill=#9c755f
+rect at=(368.75,133.52) w=6.25 h=0.42 fill=#bab0ab
+rect at=(368.75,190.19) w=6.25 h=0.46 fill=#4e79a7
+rect at=(368.75,141.44) w=6.25 h=3.41 fill=#f28e2c
+rect at=(368.75,152.34) w=6.25 h=3.54 fill=#e15759
+rect at=(0,123.44) w=6.25 h=1.54 fill=#76b7b2
+rect at=(52.68,111.97) w=6.25 h=4.65 fill=#59a14f
+rect at=(0,112.83) w=6.25 h=3.11 fill=#edc949
+rect at=(158.04,3.45) w=6.25 h=52.68 fill=#af7aa1
+rect at=(0,132.48) w=6.25 h=0.27 fill=#ff9da7
+rect at=(316.07,155.23) w=6.25 h=0.79 fill=#9c755f
+rect at=(0,140.25) w=6.25 h=0.26 fill=#bab0ab
+rect at=(368.75,213.02) w=6.25 h=4.87 fill=#4e79a7
+rect at=(368.75,225.39) w=6.25 h=0.55 fill=#f28e2c
+rect at=(368.75,233.44) w=6.25 h=7.81 fill=#e15759
+rect at=(368.75,248.74) w=6.25 h=1.26 fill=#76b7b2
+rect at=(0,51.51) w=6.25 h=0.17 fill=#59a14f
+rect at=(0,0) w=6.25 h=31.79 fill=#edc949
+rect at=(0,230.92) w=6.25 h=19.08 fill=#af7aa1
+rect at=(52.68,222.59) w=6.25 h=23.16 fill=#ff9da7
+rect at=(0,219.34) w=6.25 h=4.08 fill=#9c755f
+rect at=(0,100.24) w=6.25 h=5.09 fill=#bab0ab
+rect at=(0,148.01) w=6.25 h=9.98 fill=#4e79a7
+rect at=(52.68,158.19) w=6.25 h=2.27 fill=#f28e2c
+rect at=(52.68,167.96) w=6.25 h=0.73 fill=#e15759
+rect at=(0,165.49) w=6.25 h=3 fill=#76b7b2
+rect at=(0,175.99) w=6.25 h=0.36 fill=#59a14f
+rect at=(0,59.17) w=6.25 h=6.89 fill=#edc949
+rect at=(0,183.85) w=6.25 h=0.72 fill=#af7aa1
+rect at=(0,192.07) w=6.25 h=10.95 fill=#ff9da7
+text at=(10,41.65) size=8.75 w=80.33 start colour=#333333 text="Agricultural 'waste'"
+text at=(62.68,60.57) size=8.75 w=58.71 start colour=#333333 text="Bio-conversion"
+text at=(115.36,229.17) size=8.75 w=26.69 start colour=#333333 text="Liquid"
+text at=(365,16.85) size=8.75 w=26.69 end colour=#333333 text="Losses"
+text at=(115.36,67.45) size=8.75 w=22.49 start colour=#333333 text="Solid"
+text at=(115.36,87.28) size=8.75 w=14.09 start colour=#333333 text="Gas"
+text at=(10,211.18) size=8.75 w=62.48 start colour=#333333 text="Biofuel imports"
+text at=(10,82.16) size=8.75 w=62.48 start colour=#333333 text="Biomass imports"
+text at=(10,73.78) size=8.75 w=49.88 start colour=#333333 text="Coal imports"
+text at=(62.68,86.06) size=8.75 w=18.29 start colour=#333333 text="Coal"
+text at=(10,91.53) size=8.75 w=54.08 start colour=#333333 text="Coal reserves"
+text at=(206.96,35.88) size=8.75 w=66.68 end colour=#333333 text="District heating"
+text at=(365,81.09) size=8.75 w=35.09 end colour=#333333 text="Industry"
+text at=(365,101.9) size=8.75 w=126.26 end colour=#333333 text="Heating and cooling - commercial"
+text at=(365,118.98) size=8.75 w=105.26 end colour=#333333 text="Heating and cooling - homes"
+text at=(206.96,145.7) size=8.75 w=66.68 end colour=#333333 text="Electricity grid"
+text at=(365,60.85) size=8.75 w=98.88 end colour=#333333 text="Over generation / exports"
+text at=(259.64,151.79) size=8.75 w=54.25 end colour=#333333 text="H2 conversion"
+text at=(365,201.84) size=8.75 w=58.28 end colour=#333333 text="Road transport"
+text at=(365,133.73) size=8.75 w=47.69 end colour=#333333 text="Agriculture"
+text at=(365,190.43) size=8.75 w=58.28 end colour=#333333 text="Rail transport"
+text at=(365,143.14) size=8.75 w=133.09 end colour=#333333 text="Lighting & appliances - commercial"
+text at=(365,154.11) size=8.75 w=112.09 end colour=#333333 text="Lighting & appliances - homes"
+text at=(10,124.21) size=8.75 w=45.68 start colour=#333333 text="Gas imports"
+text at=(62.68,114.3) size=8.75 w=18.29 start colour=#333333 text="Ngas"
+text at=(10,114.39) size=8.75 w=49.88 start colour=#333333 text="Gas reserves"
+text at=(168.04,29.79) size=8.75 w=75.08 start colour=#333333 text="Thermal generation"
+text at=(10,132.62) size=8.75 w=43.49 start colour=#333333 text="Geothermal"
+text at=(312.32,155.63) size=8.75 w=10.06 end colour=#333333 text="H2"
+text at=(10,140.38) size=8.75 w=22.49 start colour=#333333 text="Hydro"
+text at=(365,215.46) size=8.75 w=91.88 end colour=#333333 text="International shipping"
+text at=(365,225.66) size=8.75 w=70.88 end colour=#333333 text="Domestic aviation"
+text at=(365,237.34) size=8.75 w=91.88 end colour=#333333 text="International aviation"
+text at=(365,249.37) size=8.75 w=79.28 end colour=#333333 text="National navigation"
+text at=(10,51.59) size=8.75 w=49.88 start colour=#333333 text="Marine algae"
+text at=(10,15.89) size=8.75 w=30.89 start colour=#333333 text="Nuclear"
+text at=(10,240.46) size=8.75 w=45.68 start colour=#333333 text="Oil imports"
+text at=(62.68,234.17) size=8.75 w=14.09 start colour=#333333 text="Oil"
+text at=(10,221.38) size=8.75 w=49.88 start colour=#333333 text="Oil reserves"
+text at=(10,102.79) size=8.75 w=45.68 start colour=#333333 text="Other waste"
+text at=(10,153) size=8.75 w=45.68 start colour=#333333 text="Pumped heat"
+text at=(62.68,159.33) size=8.75 w=36.05 start colour=#333333 text="Solar PV"
+text at=(62.68,168.32) size=8.75 w=55.56 start colour=#333333 text="Solar Thermal"
+text at=(10,166.99) size=8.75 w=22.49 start colour=#333333 text="Solar"
+text at=(10,176.17) size=8.75 w=22.49 start colour=#333333 text="Tidal"
+text at=(10,62.62) size=8.75 w=93.54 start colour=#333333 text="UK land based bioenergy"
+text at=(10,184.21) size=8.75 w=18.29 start colour=#333333 text="Wave"
+text at=(10,197.54) size=8.75 w=18.29 start colour=#333333 text="Wind"

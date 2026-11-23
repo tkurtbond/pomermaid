@@ -310,6 +310,26 @@ differences:
   middle half its size below its place, text on its baseline with its
   middle 0.35 of its size above it.
 
+## Sankey diagrams
+
+- **Transparency.** Mermaid draws its links at an opacity of 0.5,
+  multiplied over the nodes and labels. pic has no transparency, so
+  each link is its colour at 0.5 over white, a gradient drawn as 32
+  slices across the link, each of the colour where it is (decision
+  23); the links are drawn first, then the nodes, then the labels, so
+  that no link hides a label. Where links cross, the later covers the
+  earlier. MetaPost's are drawn the same.
+- **Outlined labels** have no halo.
+- **The title** is not drawn, as Mermaid does not draw it.
+- **Characters.** Mermaid's lexer takes only ASCII, and fails on
+  other characters; pomermaid takes any.
+- **Blank lines** may hold blanks; Mermaid's are empty.
+- **Zero.** A node whose values are all 0 has no height, and its
+  links are a pixel wide; where all of a diagram's values are 0,
+  Mermaid's layout divides by 0 and draws nothing in its place.
+- **Colours** that are not CSS's, in `nodeColors`, are black, as
+  Mermaid's SVG fill would be; in `linkColor`, no link is drawn.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

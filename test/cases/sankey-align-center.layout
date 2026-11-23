@@ -1,0 +1,25 @@
+layout width=375 height=250
+link from=(6.25,104.93) to=(184.38,142.8) width=104.93 from=#a7bcd3 to=#f9c796
+link from=(6.25,26.23) to=(184.38,26.23) width=52.47 from=#a7bcd3 to=#f0abac
+link from=(190.63,111.32) to=(368.75,91.43) width=41.97 from=#f9c796 to=#bbdbd9
+link from=(190.63,15.74) to=(368.75,54.7) width=31.48 from=#f0abac to=#bbdbd9
+link from=(190.63,163.78) to=(368.75,171.26) width=62.96 from=#f9c796 to=#acd0a7
+link from=(6.25,195.26) to=(184.38,62.96) width=20.99 from=#f6e4a4 to=#f0abac
+link from=(6.25,162.65) to=(184.38,217.38) width=10.49 from=#a7bcd3 to=#d7bdd0
+link from=(190.63,244.75) to=(368.75,117.66) width=10.49 from=#ffced3 to=#bbdbd9
+rect at=(0,0) w=6.25 h=167.89 fill=#4e79a7
+rect at=(184.38,90.33) w=6.25 h=104.93 fill=#f28e2c
+rect at=(184.38,0) w=6.25 h=73.45 fill=#e15759
+rect at=(368.75,38.96) w=6.25 h=83.95 fill=#76b7b2
+rect at=(368.75,139.78) w=6.25 h=62.96 fill=#59a14f
+rect at=(0,184.77) w=6.25 h=20.99 fill=#edc949
+rect at=(184.38,212.14) w=6.25 h=10.49 fill=#af7aa1
+rect at=(184.38,239.51) w=6.25 h=10.49 fill=#ff9da7
+text at=(10,80.88) size=8.75 w=16.63 start colour=#333333 text="A 16"
+text at=(194.38,139.73) size=8.75 w=16.63 start colour=#333333 text="B 10"
+text at=(194.38,33.66) size=8.75 w=12.25 start colour=#333333 text="C 7"
+text at=(365,77.87) size=8.75 w=12.25 end colour=#333333 text="D 8"
+text at=(365,168.2) size=8.75 w=12.25 end colour=#333333 text="E 6"
+text at=(10,192.2) size=8.75 w=12.25 start colour=#333333 text="F 2"
+text at=(194.38,214.32) size=8.75 w=12.25 start colour=#333333 text="G 1"
+text at=(194.38,241.69) size=8.75 w=12.25 start colour=#333333 text="H 1"

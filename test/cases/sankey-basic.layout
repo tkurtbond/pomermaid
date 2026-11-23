@@ -1,0 +1,12 @@
+layout width=375 height=250
+link from=(6.25,54.34) to=(368.75,46.04) width=92.08 from=#a7bcd3 to=#f9c796
+link from=(6.25,150.5) to=(368.75,159.08) width=100.25 from=#a7bcd3 to=#f0abac
+link from=(6.25,212.59) to=(368.75,238.04) width=23.92 from=#a7bcd3 to=#bbdbd9
+rect at=(0,8.3) w=6.25 h=216.25 fill=#4e79a7
+rect at=(368.75,0) w=6.25 h=92.08 fill=#f28e2c
+rect at=(368.75,108.95) w=6.25 h=100.25 fill=#e15759
+rect at=(368.75,226.08) w=6.25 h=23.92 fill=#76b7b2
+text at=(10,113.36) size=8.75 w=93.36 start colour=#333333 text="Electricity grid 245.32"
+text at=(365,42.98) size=8.75 w=125.57 end colour=#333333 text="Over generation / exports 104.45"
+text at=(365,156.01) size=8.75 w=131.95 end colour=#333333 text="Heating and cooling - homes 113.73"
+text at=(365,234.98) size=8.75 w=76.56 end colour=#333333 text="H2 conversion 27.14"

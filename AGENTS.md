@@ -71,7 +71,9 @@ journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
 `PmQuadrantPic`, with `PmPic.Rotated` for turned text, and
 `PmQuadrantMp`) and 22 (XY charts: `PmXy`, `PmXyLayout`,
 `PmXyPic`, with `PmPic.Along`, and `PmXyMp`) and 23 (radar charts:
-`PmRadar`, `PmRadarLayout`, `PmRadarPic` and `PmRadarMp`) are done. See
+`PmRadar`, `PmRadarLayout`, `PmRadarPic` and `PmRadarMp`) and 24
+(sankey diagrams: `PmSankey`, `PmSankeyLayout`, d3-sankey's layout,
+`PmSankeyPic` and `PmSankeyMp`) are done. See
 PLAN.md's State.
 
 ## Reference material

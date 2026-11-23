@@ -1,0 +1,8 @@
+sankey width=600 height=400 nodeWidth=10 nodePadding=12 nodeAlignment=justify showValues=true prefix="" suffix="" labelStyle=legacy linkColor=gradient
+node 0 "Electricity grid"
+node 1 "Over generation / exports"
+node 2 "Heating and cooling - homes"
+node 3 "H2 conversion"
+link 0 -> 1 value=104.453
+link 0 -> 2 value=113.726
+link 0 -> 3 value=27.14

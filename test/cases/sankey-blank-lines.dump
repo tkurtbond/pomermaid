@@ -1,0 +1,8 @@
+sankey width=600 height=400 nodeWidth=10 nodePadding=12 nodeAlignment=justify showValues=true prefix="" suffix="" labelStyle=legacy linkColor=gradient
+node 0 "Bio-conversion"
+node 1 "Losses"
+node 2 "Solid"
+node 3 "Gas"
+link 0 -> 1 value=26.862
+link 0 -> 2 value=280.322
+link 0 -> 3 value=81.144

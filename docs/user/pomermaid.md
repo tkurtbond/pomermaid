@@ -18,8 +18,8 @@ diagrams (`erDiagram`), requirement diagrams
 (`requirementDiagram`), sequence diagrams (`sequenceDiagram`),
 user journeys (`journey`), timelines (`timeline`), Gantt
 charts (`gantt`), pie charts (`pie`), quadrant charts
-(`quadrantChart`), XY charts (`xychart`) and radar charts
-(`radar-beta`).
+(`quadrantChart`), XY charts (`xychart`), radar charts
+(`radar-beta`) and sankey diagrams (`sankey-beta`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -725,6 +725,42 @@ title above.
 - **Comments:** `%%` comments.
 
 Read and ignored: `accTitle` and `accDescr`.
+
+### Sankey diagrams
+
+pomermaid reads Mermaid's sankey diagrams (`sankey-beta` and
+`sankey`), as Mermaid 12.3.0 reads them, and lays them out as
+d3-sankey 0.12.3 does for Mermaid: columns of nodes, each as tall as
+the greater of the values that come into it and go out of it, and
+between them the links, bands as wide as their values. Each node is
+labelled with its name and, unless `showValues` is false, its value.
+
+- **The first line:** `sankey-beta` or `sankey`, then a line end.
+- **Records,** one to a line, are CSV's: a source, a target and a
+  value, separated by commas. A field in double quotation marks may
+  hold commas and line ends, and `""` is a quotation mark in it.
+  Blanks around a field are not its own. The same name is the same
+  node; nodes are taken in the order they first appear.
+- **Values** are numbers, read as JavaScript's `parseFloat` reads
+  them: `12`, `.5`, `1e3`, and what follows the number is ignored. A
+  value that is not a number, or is negative, is an error, and so
+  are links that make a cycle.
+- **Blank lines** and `%%` comments are skipped.
+- **Configuration:** `sankey`'s `width` and `height` (600 by 400
+  pixels), `nodeWidth` (10), `nodePadding` (12, and 15 more when the
+  values are shown), `nodeAlignment` (`justify`, `left`, `right` or
+  `center`: where a node without links on one side goes), `showValues`
+  (true), `prefix` and `suffix` (around each value), `labelStyle`
+  (`legacy`, each label beside its node, inside the drawing; or
+  `outlined`, each label to the left of its node in the columns before
+  the largest node's and to the right from it on), `nodeColors` (a
+  colour for each node, by name) and `linkColor` (`gradient`, from the
+  source's colour to the target's; `source`; `target`; or a colour).
+  Sizes are in pixels, 16 of them to `--size`.
+- **Colours:** each node's from `nodeColors`, else Tableau10's, in
+  turn, as d3 gives them.
+- **Text the diagram cannot hold** widens the drawing, as Mermaid's
+  does.
 
 Mermaid's other diagram types are not read yet.
 

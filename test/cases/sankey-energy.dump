@@ -1,0 +1,118 @@
+config config.sankey.showValues="false"
+sankey width=600 height=400 nodeWidth=10 nodePadding=12 nodeAlignment=justify showValues=false prefix="" suffix="" labelStyle=legacy linkColor=gradient
+node 0 "Agricultural 'waste'"
+node 1 "Bio-conversion"
+node 2 "Liquid"
+node 3 "Losses"
+node 4 "Solid"
+node 5 "Gas"
+node 6 "Biofuel imports"
+node 7 "Biomass imports"
+node 8 "Coal imports"
+node 9 "Coal"
+node 10 "Coal reserves"
+node 11 "District heating"
+node 12 "Industry"
+node 13 "Heating and cooling - commercial"
+node 14 "Heating and cooling - homes"
+node 15 "Electricity grid"
+node 16 "Over generation / exports"
+node 17 "H2 conversion"
+node 18 "Road transport"
+node 19 "Agriculture"
+node 20 "Rail transport"
+node 21 "Lighting & appliances - commercial"
+node 22 "Lighting & appliances - homes"
+node 23 "Gas imports"
+node 24 "Ngas"
+node 25 "Gas reserves"
+node 26 "Thermal generation"
+node 27 "Geothermal"
+node 28 "H2"
+node 29 "Hydro"
+node 30 "International shipping"
+node 31 "Domestic aviation"
+node 32 "International aviation"
+node 33 "National navigation"
+node 34 "Marine algae"
+node 35 "Nuclear"
+node 36 "Oil imports"
+node 37 "Oil"
+node 38 "Oil reserves"
+node 39 "Other waste"
+node 40 "Pumped heat"
+node 41 "Solar PV"
+node 42 "Solar Thermal"
+node 43 "Solar"
+node 44 "Tidal"
+node 45 "UK land based bioenergy"
+node 46 "Wave"
+node 47 "Wind"
+link 0 -> 1 value=124.729
+link 1 -> 2 value=0.597
+link 1 -> 3 value=26.862
+link 1 -> 4 value=280.322
+link 1 -> 5 value=81.144
+link 6 -> 2 value=35
+link 7 -> 4 value=35
+link 8 -> 9 value=11.606
+link 10 -> 9 value=63.965
+link 9 -> 4 value=75.571
+link 11 -> 12 value=10.639
+link 11 -> 13 value=22.505
+link 11 -> 14 value=46.184
+link 15 -> 16 value=104.453
+link 15 -> 14 value=113.726
+link 15 -> 17 value=27.14
+link 15 -> 12 value=342.165
+link 15 -> 18 value=37.797
+link 15 -> 19 value=4.412
+link 15 -> 13 value=40.858
+link 15 -> 3 value=56.691
+link 15 -> 20 value=7.863
+link 15 -> 21 value=90.008
+link 15 -> 22 value=93.494
+link 23 -> 24 value=40.719
+link 25 -> 24 value=82.233
+link 5 -> 13 value=0.129
+link 5 -> 3 value=1.401
+link 5 -> 26 value=151.891
+link 5 -> 19 value=2.096
+link 5 -> 12 value=48.58
+link 27 -> 15 value=7.013
+link 17 -> 28 value=20.897
+link 17 -> 3 value=6.242
+link 28 -> 18 value=20.897
+link 29 -> 15 value=6.995
+link 2 -> 12 value=121.066
+link 2 -> 30 value=128.69
+link 2 -> 18 value=135.835
+link 2 -> 31 value=14.458
+link 2 -> 32 value=206.267
+link 2 -> 19 value=3.64
+link 2 -> 33 value=33.218
+link 2 -> 20 value=4.413
+link 34 -> 1 value=4.375
+link 24 -> 5 value=122.952
+link 35 -> 26 value=839.978
+link 36 -> 37 value=504.287
+link 38 -> 37 value=107.703
+link 37 -> 2 value=611.99
+link 39 -> 4 value=56.587
+link 39 -> 1 value=77.81
+link 40 -> 14 value=193.026
+link 40 -> 13 value=70.672
+link 41 -> 15 value=59.901
+link 42 -> 14 value=19.263
+link 43 -> 42 value=19.263
+link 43 -> 41 value=59.901
+link 4 -> 19 value=0.882
+link 4 -> 26 value=400.12
+link 4 -> 12 value=46.477
+link 26 -> 15 value=525.531
+link 26 -> 3 value=787.129
+link 26 -> 11 value=79.329
+link 44 -> 15 value=9.452
+link 45 -> 1 value=182.01
+link 46 -> 15 value=19.013
+link 47 -> 15 value=289.366

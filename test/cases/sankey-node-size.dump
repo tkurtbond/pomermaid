@@ -1,0 +1,11 @@
+config config.sankey.showValues="false"
+config config.sankey.nodeWidth="15"
+config config.sankey.nodePadding="20"
+sankey width=600 height=400 nodeWidth=15 nodePadding=20 nodeAlignment=justify showValues=false prefix="" suffix="" labelStyle=legacy linkColor=gradient
+node 0 "Electricity grid"
+node 1 "Heating and cooling - homes"
+node 2 "Industry"
+node 3 "Losses"
+link 0 -> 1 value=113.726
+link 0 -> 2 value=342.165
+link 0 -> 3 value=56.691

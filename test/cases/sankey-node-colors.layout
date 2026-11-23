@@ -1,0 +1,12 @@
+layout width=375 height=250
+link from=(6.25,32.12) to=(368.75,26.07) width=52.14 from=#a7bcd3 to=#a7bcd3
+link from=(6.25,136.62) to=(368.75,138.07) width=156.87 from=#a7bcd3 to=#f0abac
+link from=(6.25,228.05) to=(368.75,237) width=25.99 from=#a7bcd3 to=#ddd8d5
+rect at=(0,6.05) w=6.25 h=235 fill=#4e79a7
+rect at=(368.75,0) w=6.25 h=52.14 fill=#4e79a7
+rect at=(368.75,59.64) w=6.25 h=156.87 fill=#e15759
+rect at=(368.75,224.01) w=6.25 h=25.99 fill=#bab0ab
+text at=(10,123.55) size=8.75 w=66.68 start colour=#333333 text="Electricity grid"
+text at=(365,26.07) size=8.75 w=105.26 end colour=#333333 text="Heating and cooling - homes"
+text at=(365,138.07) size=8.75 w=35.09 end colour=#333333 text="Industry"
+text at=(365,237) size=8.75 w=26.69 end colour=#333333 text="Losses"

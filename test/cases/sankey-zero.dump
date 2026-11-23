@@ -1,0 +1,9 @@
+sankey width=600 height=400 nodeWidth=10 nodePadding=12 nodeAlignment=justify showValues=true prefix="" suffix="" labelStyle=legacy linkColor=gradient
+node 0 "A"
+node 1 "B"
+node 2 "C"
+node 3 "D"
+node 4 "E"
+link 0 -> 1 value=0
+link 0 -> 2 value=3
+link 3 -> 4 value=0

@@ -952,7 +952,7 @@ steps:
 - **23.4, MetaPost:** the same drawing, the curves as Béziers.
 - **23.5:** Mermaid's examples; the documentation.
 
-### Phase 24: sankey diagrams
+### Phase 24: sankey diagrams [done]
 
 **Change:** `sankey-beta` and `sankey`, read by a new module,
 `PmSankey`, into a model of its own (the nodes, in order, and the
@@ -1783,3 +1783,41 @@ through groff, and Mermaid's examples through ConTeXt, and looked at.
 `make test` passes, 423 of 423 under both models, on FreeBSD
 (alerik, rackhir), NetBSD (artos, yishana) and OpenBSD (jherek,
 cymoril).
+
+Phase 24, sankey diagrams, is done, 2026-11-23, on Mermaid 12.3.0
+and d3-sankey 0.12.3. `PmSankey` reads `sankey-beta` and `sankey`:
+CSV records of a source, a target and a value (quoted fields with
+commas, line ends and `""`, blanks around fields, blank lines, `%%`
+comments), values as `parseFloat` reads them, nodes in order of first
+appearance, and `config.sankey` (`width`, `height`, `nodeWidth`,
+`nodePadding`, `nodeAlignment`, `showValues`, `prefix`, `suffix`,
+`labelStyle`, `nodeColors`, `linkColor`); a value that is not a
+number or is negative, a missing field or quotation mark, and links
+that make a cycle are errors. `PmSankeyLayout` is d3-sankey's layout,
+ported: depths and heights, layers by the alignment, the breadths
+relaxed 6 times with collisions resolved, the links' breadths, in
+d3's orders (stable sorts); then Mermaid's labels, legacy and
+outlined, and colours (Tableau10 by node, `nodeColors`; links by
+gradient, source, target or a colour). Its arithmetic is LONGREAL,
+each item's places rounded once to a 1/8192 point. The links are
+blended over white, a gradient drawn as 32 slices, and drawn under the
+nodes and labels (decision 23). `PmSankeyPic` draws it in pic, SVG
+coming from that through groff (`PmSvg`'s `WriteSankeyDocument`);
+`PmSankeyMp` writes the MetaPost. `PmStyle`'s colour table grew from
+256 to 4096 colours, for the gradients' slices: Mermaid's energy
+example needs about 2,000. `make test` passes under `-O2` and `-OC`:
+520 case tests, with Mermaid's eight sankey examples
+(`docs/syntax/sankey.md`: `sankey-energy`, `sankey-basic`,
+`sankey-blank-lines`, `sankey-commas`, `sankey-quotes`,
+`sankey-outlined`, `sankey-node-size`, `sankey-node-colors`), each
+alignment (`sankey-align-*`), `sankey-prefix`, `sankey-target`,
+`sankey-fixed`, `sankey-fixed-bad`, `sankey-outlined-small`,
+`sankey-csv` and `sankey-zero` (dump and layout; pic, mp and svg-ms
+but for the energy example's and `sankey-zero`'s, which are large or
+have pic only), and seven error cases (`sankey-cycle`, `sankey-empty`,
+`sankey-keyword`, `sankey-nan`, `sankey-negative`, `sankey-quote`,
+`sankey-twofields`). The cases were drawn as SVG through groff and
+through ConTeXt, and looked at; d3-sankey itself was not run, so the
+layout is checked against its source, not its output. On 2026-11-23,
+`make test` passes, 520 of 520 under both models, on FreeBSD (alerik,
+rackhir), NetBSD (artos, yishana) and OpenBSD (jherek, cymoril).

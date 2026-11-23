@@ -23,7 +23,8 @@ IMPORT PmIO, F := PmFlow, FL := PmFlowLayout, L := PmLayout, PmPic, R := PmRun,
   SL := PmSeqLayout, PmSeqPic, JL := PmJourneyLayout, PmJourneyPic,
   TL := PmTimelineLayout, PmTimelinePic, GL := PmGanttLayout, PmGanttPic,
   PL := PmPieLayout, PmPiePic, QL := PmQuadrantLayout, PmQuadrantPic,
-  XL := PmXyLayout, PmXyPic, RL := PmRadarLayout, PmRadarPic;
+  XL := PmXyLayout, PmXyPic, RL := PmRadarLayout, PmRadarPic,
+  KL := PmSankeyLayout, PmSankeyPic;
 
 CONST
   MinMargin = 2; (* points round the drawing, at least, for lines' widths *)
@@ -39,6 +40,7 @@ VAR
   quadrant: QL.Layout;                (* what Write draws: one of them *)
   xy: XL.Layout;
   radar: RL.Layout;
+  sankey: KL.Layout;
 
 (* The page's size for a drawing w by h points, pic's line space
    lvs, its widest line widest points wide, rounded as it is written *)
@@ -128,6 +130,13 @@ BEGIN
   Header(l.vs, PmRadarPic.Widest(l), l.width, l.height);
   PmRadarPic.Write(l, font)
 END WriteRadarDocument;
+
+(* Writes the sankey diagram l as WriteDocument does a flowchart *)
+PROCEDURE WriteSankeyDocument*(l: KL.Layout; font: ARRAY OF CHAR);
+BEGIN
+  Header(l.vs, PmSankeyPic.Widest(l), l.width, l.height);
+  PmSankeyPic.Write(l, font)
+END WriteSankeyDocument;
 
 (* Crop *)
 
@@ -409,6 +418,7 @@ BEGIN
   ELSIF quadrant # NIL THEN WriteQuadrantDocument(quadrant, font)
   ELSIF xy # NIL THEN WriteXyDocument(xy, font)
   ELSIF radar # NIL THEN WriteRadarDocument(radar, font)
+  ELSIF sankey # NIL THEN WriteSankeyDocument(sankey, font)
   ELSE WriteDocument(flow, font) END;
   PmIO.CloseOutput;
   c := R.New(); R.AddText(c, "groff -p -Tpdf");
@@ -438,72 +448,80 @@ BEGIN
   R.RemoveDir(dir)
 END Run;
 
+(* Sets every layout to NIL, before one is set to be drawn *)
+PROCEDURE None;
+BEGIN
+  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL;
+  quadrant := NIL; xy := NIL; radar := NIL; sankey := NIL
+END None;
+
 PROCEDURE Write*(l: FL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := l; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL; quadrant := NIL; xy := NIL; radar := NIL; Run(font, fontPath, output, outline, engine)
+  None; flow := l; Run(font, fontPath, output, outline, engine)
 END Write;
 
 (* Writes the sequence diagram l as SVG, as Write does a flowchart *)
 PROCEDURE WriteSeq*(l: SL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := l; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL; quadrant := NIL; xy := NIL; radar := NIL; Run(font, fontPath, output, outline, engine)
+  None; seq := l; Run(font, fontPath, output, outline, engine)
 END WriteSeq;
 
 (* Writes the user journey l as SVG, as Write does a flowchart *)
 PROCEDURE WriteJourney*(l: JL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := l; timeline := NIL; gantt := NIL; pie := NIL; quadrant := NIL; xy := NIL; radar := NIL; Run(font, fontPath, output, outline, engine)
+  None; journey := l; Run(font, fontPath, output, outline, engine)
 END WriteJourney;
 
 (* Writes the timeline l as SVG, as Write does a flowchart *)
 PROCEDURE WriteTimeline*(l: TL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := l; gantt := NIL; pie := NIL; quadrant := NIL; xy := NIL; radar := NIL;
-  Run(font, fontPath, output, outline, engine)
+  None; timeline := l; Run(font, fontPath, output, outline, engine)
 END WriteTimeline;
 
 (* Writes the Gantt chart l as SVG, as Write does a flowchart *)
 PROCEDURE WriteGantt*(l: GL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := l; pie := NIL; quadrant := NIL; xy := NIL; radar := NIL;
-  Run(font, fontPath, output, outline, engine)
+  None; gantt := l; Run(font, fontPath, output, outline, engine)
 END WriteGantt;
 
 (* Writes the pie chart l as SVG, as Write does a flowchart *)
 PROCEDURE WritePie*(l: PL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := l; quadrant := NIL; xy := NIL; radar := NIL;
-  Run(font, fontPath, output, outline, engine)
+  None; pie := l; Run(font, fontPath, output, outline, engine)
 END WritePie;
 
 (* Writes the quadrant chart l as SVG, as Write does a flowchart *)
 PROCEDURE WriteQuadrant*(l: QL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL;
-  xy := NIL; radar := NIL; quadrant := l; Run(font, fontPath, output, outline, engine)
+  None; quadrant := l; Run(font, fontPath, output, outline, engine)
 END WriteQuadrant;
 
 (* Writes the XY chart l as SVG, as Write does a flowchart *)
 PROCEDURE WriteXy*(l: XL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL;
-  quadrant := NIL; xy := l; radar := NIL; Run(font, fontPath, output, outline, engine)
+  None; xy := l; Run(font, fontPath, output, outline, engine)
 END WriteXy;
 
 (* Writes the radar chart l as SVG, as Write does a flowchart *)
 PROCEDURE WriteRadar*(l: RL.Layout; font, fontPath, output: ARRAY OF CHAR;
   outline: BOOLEAN; engine: INTEGER);
 BEGIN
-  flow := NIL; seq := NIL; journey := NIL; timeline := NIL; gantt := NIL; pie := NIL;
-  quadrant := NIL; xy := NIL; radar := l; Run(font, fontPath, output, outline, engine)
+  None; radar := l; Run(font, fontPath, output, outline, engine)
 END WriteRadar;
+
+(* Writes the sankey diagram l as SVG, as Write does a flowchart *)
+PROCEDURE WriteSankey*(l: KL.Layout; font, fontPath, output: ARRAY OF CHAR;
+  outline: BOOLEAN; engine: INTEGER);
+BEGIN
+  None; sankey := l; Run(font, fontPath, output, outline, engine)
+END WriteSankey;
 
 END PmSvg.

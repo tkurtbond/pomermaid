@@ -13,7 +13,7 @@ MODULE PmStyle;
 IMPORT PmIO, F := PmFlow, Lx := PmLex, Y := PmYaml;
 
 CONST
-  MaxColours = 256;
+  MaxColours = 4096;
   NoColour* = -1;
   (* Mermaid's default theme *)
   NodeFill = 0ECECFFH; NodeLine = 09370DBH; TextColour = 0333333H;
@@ -315,6 +315,12 @@ PROCEDURE DefaultLabelBackground*(): BOOLEAN;
 BEGIN
   RETURN labelBack = LabelBack
 END DefaultLabelBackground;
+
+(* The theme's text colour, textColor, 0RRGGBBH, as Reset set it *)
+PROCEDURE TextRgb*(): LONGINT;
+BEGIN
+  RETURN textColour
+END TextRgb;
 
 (* The index of the diagram's title's colour, or NoColour *)
 PROCEDURE TitleColour*(): INTEGER;

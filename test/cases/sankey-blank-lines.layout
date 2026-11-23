@@ -1,0 +1,12 @@
+layout width=375 height=250.83
+link from=(6.25,30.35) to=(368.75,8.31) width=14.96 from=#a7bcd3 to=#f9c796
+link from=(6.25,115.88) to=(368.75,110.72) width=156.1 from=#a7bcd3 to=#f0abac
+link from=(6.25,216.53) to=(368.75,228.24) width=45.19 from=#a7bcd3 to=#bbdbd9
+rect at=(0,22.87) w=6.25 h=216.25 fill=#4e79a7
+rect at=(368.75,0.83) w=6.25 h=14.96 fill=#f28e2c
+rect at=(368.75,32.67) w=6.25 h=156.1 fill=#e15759
+rect at=(368.75,205.65) w=6.25 h=45.19 fill=#76b7b2
+text at=(10,127.93) size=8.75 w=85.4 start colour=#333333 text="Bio-conversion 388.33"
+text at=(365,5.25) size=8.75 w=49 end colour=#333333 text="Losses 26.86"
+text at=(365,107.66) size=8.75 w=49.18 end colour=#333333 text="Solid 280.32"
+text at=(365,225.18) size=8.75 w=36.4 end colour=#333333 text="Gas 81.14"

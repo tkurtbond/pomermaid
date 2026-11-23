@@ -1,0 +1,158 @@
+.\" pomermaid -t svg: groff -p -Tpdf -P-p266p,379p
+.pl 266p
+.po 2p
+.ll 375p
+.sp 2p
+.defcolor pm-a7bcd3 rgb #a7bcd3
+.defcolor pm-a9bcd2 rgb #a9bcd2
+.defcolor pm-acbbd0 rgb #acbbd0
+.defcolor pm-afbacf rgb #afbacf
+.defcolor pm-b2b9cd rgb #b2b9cd
+.defcolor pm-b4b9cc rgb #b4b9cc
+.defcolor pm-b7b8ca rgb #b7b8ca
+.defcolor pm-b9b8c9 rgb #b9b8c9
+.defcolor pm-bcb7c8 rgb #bcb7c8
+.defcolor pm-beb7c7 rgb #beb7c7
+.defcolor pm-c0b6c6 rgb #c0b6c6
+.defcolor pm-c2b6c5 rgb #c2b6c5
+.defcolor pm-c4b5c4 rgb #c4b5c4
+.defcolor pm-c5b5c3 rgb #c5b5c3
+.defcolor pm-c7b5c2 rgb #c7b5c2
+.defcolor pm-c9b4c1 rgb #c9b4c1
+.defcolor pm-cbb4c0 rgb #cbb4c0
+.defcolor pm-ccb3bf rgb #ccb3bf
+.defcolor pm-ceb3be rgb #ceb3be
+.defcolor pm-d0b2bd rgb #d0b2bd
+.defcolor pm-d2b2bc rgb #d2b2bc
+.defcolor pm-d3b2bb rgb #d3b2bb
+.defcolor pm-d5b1ba rgb #d5b1ba
+.defcolor pm-d7b1b9 rgb #d7b1b9
+.defcolor pm-d9b0b8 rgb #d9b0b8
+.defcolor pm-dbb0b7 rgb #dbb0b7
+.defcolor pm-deafb6 rgb #deafb6
+.defcolor pm-e0afb5 rgb #e0afb5
+.defcolor pm-e3aeb3 rgb #e3aeb3
+.defcolor pm-e5aeb2 rgb #e5aeb2
+.defcolor pm-e8adb0 rgb #e8adb0
+.defcolor pm-ebacaf rgb #ebacaf
+.defcolor pm-eeabad rgb #eeabad
+.defcolor pm-a8bdd3 rgb #a8bdd3
+.defcolor pm-abbed3 rgb #abbed3
+.defcolor pm-adbfd3 rgb #adbfd3
+.defcolor pm-afc0d3 rgb #afc0d3
+.defcolor pm-b1c1d3 rgb #b1c1d3
+.defcolor pm-b3c2d3 rgb #b3c2d3
+.defcolor pm-b5c3d4 rgb #b5c3d4
+.defcolor pm-b6c4d4 rgb #b6c4d4
+.defcolor pm-b8c5d4 rgb #b8c5d4
+.defcolor pm-b9c5d4 rgb #b9c5d4
+.defcolor pm-bbc6d4 rgb #bbc6d4
+.defcolor pm-bcc7d4 rgb #bcc7d4
+.defcolor pm-bdc8d4 rgb #bdc8d4
+.defcolor pm-bfc8d4 rgb #bfc8d4
+.defcolor pm-c0c9d4 rgb #c0c9d4
+.defcolor pm-c1cad4 rgb #c1cad4
+.defcolor pm-c3cad4 rgb #c3cad4
+.defcolor pm-c4cbd4 rgb #c4cbd4
+.defcolor pm-c5ccd4 rgb #c5ccd4
+.defcolor pm-c7ccd4 rgb #c7ccd4
+.defcolor pm-c8cdd4 rgb #c8cdd4
+.defcolor pm-c9ced4 rgb #c9ced4
+.defcolor pm-cbcfd4 rgb #cbcfd4
+.defcolor pm-cccfd4 rgb #cccfd4
+.defcolor pm-ced0d4 rgb #ced0d4
+.defcolor pm-cfd1d4 rgb #cfd1d4
+.defcolor pm-d1d2d5 rgb #d1d2d5
+.defcolor pm-d3d3d5 rgb #d3d3d5
+.defcolor pm-d5d4d5 rgb #d5d4d5
+.defcolor pm-d7d5d5 rgb #d7d5d5
+.defcolor pm-d9d6d5 rgb #d9d6d5
+.defcolor pm-dcd7d5 rgb #dcd7d5
+.defcolor pm-4e79a7 rgb #4e79a7
+.defcolor pm-e15759 rgb #e15759
+.defcolor pm-bab0ab rgb #bab0ab
+.defcolor pm-333333 rgb #333333
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 5.208 ht 3.472 at (2.604, -1.736)
+"\M[pm-a7bcd3]\v'-0.22m'\D'P 0.228i 0i 0.214i -0.001i 0.201i -0.001i 0.189i -0.002i 0.178i -0.002i 0.168i -0.002i 0.159i -0.002i 0.15i -0.003i 0.143i -0.003i 0.137i -0.003i 0.131i -0.004i 0.127i -0.003i 0.123i -0.004i 0.12i -0.004i 0.119i -0.004i 0.118i -0.004i 0.118i -0.004i 0.12i -0.004i 0.121i -0.004i 0.124i -0.003i 0.128i -0.004i 0.133i -0.003i 0.139i -0.004i 0.145i -0.003i 0.152i -0.003i 0.161i -0.002i 0.169i -0.002i 0.18i -0.002i 0.191i -0.002i 0.203i -0.001i 0.216i -0.001i 0.23i 0i 0i 0.724i -0.228i 0i -0.215i 0.001i -0.201i 0.001i -0.189i 0.002i -0.178i 0.002i -0.168i 0.002i -0.159i 0.002i -0.15i 0.003i -0.143i 0.003i -0.137i 0.004i -0.131i 0.003i -0.126i 0.004i -0.123i 0.003i -0.121i 0.004i -0.119i 0.004i -0.118i 0.004i -0.118i 0.004i -0.119i 0.004i -0.122i 0.004i -0.124i 0.003i -0.128i 0.004i -0.133i 0.004i -0.138i 0.003i -0.145i 0.003i -0.153i 0.003i -0.16i 0.002i -0.17i 0.003i -0.18i 0.002i -0.191i 0.001i -0.203i 0.001i -0.216i 0.001i -0.229i 0i'\M[]" ljust at (0.087, -0.084)
+"\M[pm-a9bcd2]\v'-0.22m'\D'P 0.229i 0i 0.216i 0i -0.003i 2.179i -0.214i 0i -0.228i 0i'\M[]" ljust at (0.087, -0.808)
+"\M[pm-acbbd0]\v'-0.22m'\D'P 0.216i 0i 0.202i 0.001i -0.003i 2.178i -0.202i 0i -0.214i 0i'\M[]" ljust at (0.316, -0.808)
+"\M[pm-afbacf]\v'-0.22m'\D'P 0.202i 0.001i 0.191i 0i -0.005i 2.179i -0.189i -0.001i -0.202i 0i'\M[]" ljust at (0.532, -0.808)
+"\M[pm-b2b9cd]\v'-0.22m'\D'P 0.191i 0i 0.18i 0i -0.006i 2.179i -0.179i 0i -0.189i -0.001i'\M[]" ljust at (0.734, -0.809)
+"\M[pm-b4b9cc]\v'-0.22m'\D'P 0.18i 0i 0.169i 0.001i -0.007i 2.179i -0.168i -0.001i -0.179i 0i'\M[]" ljust at (0.925, -0.809)
+"\M[pm-b7b8ca]\v'-0.22m'\D'P 0.169i 0.001i 0.161i 0.001i -0.009i 2.178i -0.159i 0i -0.168i -0.001i'\M[]" ljust at (1.105, -0.809)
+"\M[pm-b9b8c9]\v'-0.22m'\D'P 0.161i 0.001i 0.152i 0i -0.011i 2.179i -0.15i -0.001i -0.159i 0i'\M[]" ljust at (1.274, -0.81)
+"\M[pm-bcb7c8]\v'-0.22m'\D'P 0.152i 0i 0.144i 0.001i -0.011i 2.179i -0.144i -0.001i -0.15i -0.001i'\M[]" ljust at (1.435, -0.811)
+"\M[pm-beb7c7]\v'-0.22m'\D'P 0.144i 0.001i 0.139i 0.001i -0.014i 2.179i -0.136i -0.001i -0.144i -0.001i'\M[]" ljust at (1.587, -0.811)
+"\M[pm-c0b6c6]\v'-0.22m'\D'P 0.139i 0.001i 0.132i 0.001i -0.014i 2.178i -0.132i 0i -0.136i -0.001i'\M[]" ljust at (1.731, -0.812)
+"\M[pm-c2b6c5]\v'-0.22m'\D'P 0.132i 0.001i 0.128i 0.001i -0.015i 2.178i -0.127i -0.001i -0.132i 0i'\M[]" ljust at (1.87, -0.813)
+"\M[pm-c4b5c4]\v'-0.22m'\D'P 0.128i 0.001i 0.124i 0i -0.016i 2.179i -0.123i -0.001i -0.127i -0.001i'\M[]" ljust at (2.002, -0.814)
+"\M[pm-c5b5c3]\v'-0.22m'\D'P 0.124i 0i 0.121i 0.001i -0.017i 2.179i -0.12i -0.001i -0.123i -0.001i'\M[]" ljust at (2.13, -0.815)
+"\M[pm-c7b5c2]\v'-0.22m'\D'P 0.121i 0.001i 0.12i 0.001i -0.018i 2.179i -0.119i -0.001i -0.12i -0.001i'\M[]" ljust at (2.254, -0.815)
+"\M[pm-c9b4c1]\v'-0.22m'\D'P 0.12i 0.001i 0.118i 0.001i -0.018i 2.179i -0.118i -0.001i -0.119i -0.001i'\M[]" ljust at (2.375, -0.816)
+"\M[pm-cbb4c0]\v'-0.22m'\D'P 0.118i 0.001i 0.118i 0.001i -0.017i 2.179i -0.119i -0.001i -0.118i -0.001i'\M[]" ljust at (2.495, -0.817)
+"\M[pm-ccb3bf]\v'-0.22m'\D'P 0.118i 0.001i 0.119i 0.001i -0.017i 2.179i -0.119i -0.001i -0.119i -0.001i'\M[]" ljust at (2.613, -0.818)
+"\M[pm-ceb3be]\v'-0.22m'\D'P 0.119i 0.001i 0.12i 0.001i -0.016i 2.179i -0.121i -0.001i -0.119i -0.001i'\M[]" ljust at (2.731, -0.819)
+"\M[pm-d0b2bd]\v'-0.22m'\D'P 0.12i 0.001i 0.124i 0.001i -0.016i 2.179i -0.124i -0.001i -0.121i -0.001i'\M[]" ljust at (2.85, -0.82)
+"\M[pm-d2b2bc]\v'-0.22m'\D'P 0.124i 0.001i 0.127i 0.001i -0.015i 2.179i -0.128i -0.001i -0.124i -0.001i'\M[]" ljust at (2.97, -0.821)
+"\M[pm-d3b2bb]\v'-0.22m'\D'P 0.127i 0.001i 0.131i 0.001i -0.013i 2.178i -0.133i 0i -0.128i -0.001i'\M[]" ljust at (3.094, -0.822)
+"\M[pm-d5b1ba]\v'-0.22m'\D'P 0.131i 0.001i 0.137i 0i -0.012i 2.179i -0.138i -0.001i -0.133i 0i'\M[]" ljust at (3.221, -0.823)
+"\M[pm-d7b1b9]\v'-0.22m'\D'P 0.137i 0i 0.143i 0.001i -0.01i 2.179i -0.145i -0.001i -0.138i -0.001i'\M[]" ljust at (3.352, -0.824)
+"\M[pm-d9b0b8]\v'-0.22m'\D'P 0.143i 0.001i 0.151i 0.001i -0.009i 2.179i -0.152i -0.001i -0.145i -0.001i'\M[]" ljust at (3.489, -0.824)
+"\M[pm-dbb0b7]\v'-0.22m'\D'P 0.151i 0.001i 0.159i 0i -0.008i 2.179i -0.16i 0i -0.152i -0.001i'\M[]" ljust at (3.632, -0.825)
+"\M[pm-deafb6]\v'-0.22m'\D'P 0.159i 0i 0.168i 0.001i -0.006i 2.179i -0.17i -0.001i -0.16i 0i'\M[]" ljust at (3.783, -0.826)
+"\M[pm-e0afb5]\v'-0.22m'\D'P 0.168i 0.001i 0.178i 0i -0.005i 2.179i -0.179i 0i -0.17i -0.001i'\M[]" ljust at (3.942, -0.826)
+"\M[pm-e3aeb3]\v'-0.22m'\D'P 0.178i 0i 0.19i 0.001i -0.004i 2.179i -0.191i -0.001i -0.179i 0i'\M[]" ljust at (4.11, -0.827)
+"\M[pm-e5aeb2]\v'-0.22m'\D'P 0.19i 0.001i 0.201i 0i -0.002i 2.179i -0.203i 0i -0.191i -0.001i'\M[]" ljust at (4.288, -0.827)
+"\M[pm-e8adb0]\v'-0.22m'\D'P 0.201i 0i 0.214i 0i -0.001i 2.179i -0.215i 0i -0.203i 0i'\M[]" ljust at (4.478, -0.828)
+"\M[pm-ebacaf]\v'-0.22m'\D'P 0.214i 0i 0.229i 0i 0i 2.179i -0.23i 0i -0.215i 0i'\M[]" ljust at (4.679, -0.828)
+"\M[pm-eeabad]\v'-0.22m'\D'P 0.229i 0i 0i 2.179i -0.23i 0i'\M[]" ljust at (4.893, -0.828)
+"\M[pm-a8bdd3]\v'-0.22m'\D'P 0.229i 0i 0.216i 0.001i -0.003i 0.361i -0.214i -0.001i -0.228i 0i'\M[]" ljust at (0.087, -2.987)
+"\M[pm-abbed3]\v'-0.22m'\D'P 0.216i 0.001i 0.202i 0.002i -0.003i 0.361i -0.202i -0.002i -0.214i -0.001i'\M[]" ljust at (0.316, -2.987)
+"\M[pm-adbfd3]\v'-0.22m'\D'P 0.202i 0.002i 0.191i 0.002i -0.005i 0.361i -0.189i -0.002i -0.202i -0.002i'\M[]" ljust at (0.532, -2.988)
+"\M[pm-afc0d3]\v'-0.22m'\D'P 0.191i 0.002i 0.18i 0.003i -0.007i 0.361i -0.178i -0.003i -0.189i -0.002i'\M[]" ljust at (0.734, -2.99)
+"\M[pm-b1c1d3]\v'-0.22m'\D'P 0.18i 0.003i 0.169i 0.003i -0.007i 0.361i -0.169i -0.003i -0.178i -0.003i'\M[]" ljust at (0.925, -2.992)
+"\M[pm-b3c2d3]\v'-0.22m'\D'P 0.169i 0.003i 0.161i 0.004i -0.009i 0.361i -0.159i -0.004i -0.169i -0.003i'\M[]" ljust at (1.105, -2.995)
+"\M[pm-b5c3d4]\v'-0.22m'\D'P 0.161i 0.004i 0.152i 0.004i -0.011i 0.361i -0.15i -0.004i -0.159i -0.004i'\M[]" ljust at (1.274, -2.998)
+"\M[pm-b6c4d4]\v'-0.22m'\D'P 0.152i 0.004i 0.145i 0.005i -0.013i 0.361i -0.143i -0.005i -0.15i -0.004i'\M[]" ljust at (1.435, -3.002)
+"\M[pm-b8c5d4]\v'-0.22m'\D'P 0.145i 0.005i 0.138i 0.005i -0.014i 0.361i -0.137i -0.005i -0.143i -0.005i'\M[]" ljust at (1.587, -3.006)
+"\M[pm-b9c5d4]\v'-0.22m'\D'P 0.138i 0.005i 0.132i 0.005i -0.014i 0.361i -0.132i -0.005i -0.137i -0.005i'\M[]" ljust at (1.732, -3.011)
+"\M[pm-bbc6d4]\v'-0.22m'\D'P 0.132i 0.005i 0.128i 0.005i -0.016i 0.361i -0.126i -0.005i -0.132i -0.005i'\M[]" ljust at (1.87, -3.016)
+"\M[pm-bcc7d4]\v'-0.22m'\D'P 0.128i 0.005i 0.124i 0.006i -0.016i 0.361i -0.124i -0.006i -0.126i -0.005i'\M[]" ljust at (2.002, -3.021)
+"\M[pm-bdc8d4]\v'-0.22m'\D'P 0.124i 0.006i 0.122i 0.006i -0.018i 0.36i -0.12i -0.005i -0.124i -0.006i'\M[]" ljust at (2.13, -3.026)
+"\M[pm-bfc8d4]\v'-0.22m'\D'P 0.122i 0.006i 0.119i 0.005i -0.018i 0.361i -0.119i -0.006i -0.12i -0.005i'\M[]" ljust at (2.254, -3.032)
+"\M[pm-c0c9d4]\v'-0.22m'\D'P 0.119i 0.005i 0.118i 0.006i -0.018i 0.361i -0.118i -0.006i -0.119i -0.006i'\M[]" ljust at (2.376, -3.038)
+"\M[pm-c1cad4]\v'-0.22m'\D'P 0.118i 0.006i 0.118i 0.006i -0.018i 0.361i -0.118i -0.006i -0.118i -0.006i'\M[]" ljust at (2.495, -3.043)
+"\M[pm-c3cad4]\v'-0.22m'\D'P 0.118i 0.006i 0.119i 0.006i -0.017i 0.36i -0.12i -0.005i -0.118i -0.006i'\M[]" ljust at (2.613, -3.049)
+"\M[pm-c4cbd4]\v'-0.22m'\D'P 0.119i 0.006i 0.121i 0.006i -0.017i 0.36i -0.121i -0.006i -0.12i -0.005i'\M[]" ljust at (2.731, -3.055)
+"\M[pm-c5ccd4]\v'-0.22m'\D'P 0.121i 0.006i 0.123i 0.005i -0.016i 0.361i -0.124i -0.006i -0.121i -0.006i'\M[]" ljust at (2.85, -3.061)
+"\M[pm-c7ccd4]\v'-0.22m'\D'P 0.123i 0.005i 0.127i 0.005i -0.015i 0.361i -0.128i -0.005i -0.124i -0.006i'\M[]" ljust at (2.971, -3.067)
+"\M[pm-c8cdd4]\v'-0.22m'\D'P 0.127i 0.005i 0.131i 0.006i -0.013i 0.36i -0.133i -0.005i -0.128i -0.005i'\M[]" ljust at (3.094, -3.072)
+"\M[pm-c9ced4]\v'-0.22m'\D'P 0.131i 0.006i 0.137i 0.004i -0.012i 0.361i -0.138i -0.005i -0.133i -0.005i'\M[]" ljust at (3.221, -3.077)
+"\M[pm-cbcfd4]\v'-0.22m'\D'P 0.137i 0.004i 0.143i 0.005i -0.011i 0.361i -0.144i -0.005i -0.138i -0.005i'\M[]" ljust at (3.352, -3.083)
+"\M[pm-cccfd4]\v'-0.22m'\D'P 0.143i 0.005i 0.151i 0.004i -0.009i 0.361i -0.153i -0.004i -0.144i -0.005i'\M[]" ljust at (3.489, -3.087)
+"\M[pm-ced0d4]\v'-0.22m'\D'P 0.151i 0.004i 0.159i 0.004i -0.008i 0.361i -0.16i -0.004i -0.153i -0.004i'\M[]" ljust at (3.632, -3.092)
+"\M[pm-cfd1d4]\v'-0.22m'\D'P 0.159i 0.004i 0.168i 0.003i -0.007i 0.361i -0.169i -0.003i -0.16i -0.004i'\M[]" ljust at (3.783, -3.096)
+"\M[pm-d1d2d5]\v'-0.22m'\D'P 0.168i 0.003i 0.178i 0.003i -0.005i 0.361i -0.18i -0.003i -0.169i -0.003i'\M[]" ljust at (3.942, -3.1)
+"\M[pm-d3d3d5]\v'-0.22m'\D'P 0.178i 0.003i 0.19i 0.002i -0.004i 0.361i -0.191i -0.002i -0.18i -0.003i'\M[]" ljust at (4.11, -3.103)
+"\M[pm-d5d4d5]\v'-0.22m'\D'P 0.19i 0.002i 0.201i 0.002i -0.002i 0.361i -0.203i -0.002i -0.191i -0.002i'\M[]" ljust at (4.288, -3.106)
+"\M[pm-d7d5d5]\v'-0.22m'\D'P 0.201i 0.002i 0.214i 0.001i -0.001i 0.361i -0.215i -0.001i -0.203i -0.002i'\M[]" ljust at (4.478, -3.108)
+"\M[pm-d9d6d5]\v'-0.22m'\D'P 0.214i 0.001i 0.229i 0i 0i 0.361i -0.23i 0i -0.215i -0.001i'\M[]" ljust at (4.679, -3.11)
+"\M[pm-dcd7d5]\v'-0.22m'\D'P 0.229i 0i 0i 0.361i -0.23i 0i'\M[]" ljust at (4.893, -3.111)
+box wid 0.087 ht 3.264 at (0.043, -1.716) shaded "pm-4e79a7" outlined "pm-4e79a7" thickness 0
+box wid 0.087 ht 0.724 at (5.165, -0.362) shaded "pm-4e79a7" outlined "pm-4e79a7" thickness 0
+box wid 0.087 ht 2.179 at (5.165, -1.918) shaded "pm-e15759" outlined "pm-e15759" thickness 0
+box wid 0.087 ht 0.361 at (5.165, -3.292) shaded "pm-bab0ab" outlined "pm-bab0ab" thickness 0
+"\s[8.75]\f[TS]\m[pm-333333]Electricity grid\m[]\f[]\s[0]" ljust  at (0.139, -1.716)
+"\s[8.75]\f[TS]\m[pm-333333]Heating and cooling - homes\m[]\f[]\s[0]" rjust  at (5.069, -0.362)
+"\s[8.75]\f[TS]\m[pm-333333]Industry\m[]\f[]\s[0]" rjust  at (5.069, -1.918)
+"\s[8.75]\f[TS]\m[pm-333333]Losses\m[]\f[]\s[0]" rjust  at (5.069, -3.292)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

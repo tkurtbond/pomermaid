@@ -1,0 +1,6 @@
+sankey width=600 height=400 nodeWidth=10 nodePadding=12 nodeAlignment=justify showValues=true prefix="" suffix="" labelStyle=legacy linkColor=gradient
+node 0 "Pumped heat"
+node 1 "Heating and cooling, \"homes\""
+node 2 "Heating and cooling, \"commercial\""
+link 0 -> 1 value=193.026
+link 0 -> 2 value=70.672

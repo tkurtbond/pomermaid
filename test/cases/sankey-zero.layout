@@ -1,0 +1,14 @@
+layout width=375 height=260.5
+link from=(6.25,23.64) to=(368.75,8.31) width=0.63 from=#a7bcd3 to=#f9c796
+link from=(6.25,131.76) to=(368.75,133.31) width=216.25 from=#a7bcd3 to=#f0abac
+link from=(6.25,256.76) to=(368.75,258.31) width=0.63 from=#bbdbd9 to=#acd0a7
+rect at=(0,23.64) w=6.25 h=216.25 fill=#4e79a7
+rect at=(368.75,8.31) w=6.25 h=0 fill=#f28e2c
+rect at=(368.75,25.19) w=6.25 h=216.25 fill=#e15759
+rect at=(0,256.76) w=6.25 h=0 fill=#76b7b2
+rect at=(368.75,258.31) w=6.25 h=0 fill=#59a14f
+text at=(10,128.7) size=8.75 w=12.25 start colour=#333333 text="A 3"
+text at=(365,5.25) size=8.75 w=12.25 end colour=#333333 text="B 0"
+text at=(365,130.25) size=8.75 w=12.25 end colour=#333333 text="C 3"
+text at=(10,253.7) size=8.75 w=12.25 start colour=#333333 text="D 0"
+text at=(365,255.25) size=8.75 w=12.25 end colour=#333333 text="E 0"

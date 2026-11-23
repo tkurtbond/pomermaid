@@ -1,0 +1,19 @@
+layout width=430 height=161.25
+link from=(5.38,43.16) to=(212.31,43.16) width=86.32 from=#a7bcd3 to=#a7bcd3
+link from=(5.38,107.9) to=(212.31,122.41) width=43.16 from=#a7bcd3 to=#a7bcd3
+link from=(217.69,17.26) to=(424.63,17.26) width=34.53 from=#f9c796 to=#f9c796
+link from=(217.69,113.78) to=(424.63,47.47) width=25.89 from=#f0abac to=#f0abac
+link from=(217.69,60.42) to=(424.63,100.83) width=51.79 from=#f9c796 to=#f9c796
+link from=(5.38,152.62) to=(212.31,152.62) width=17.26 from=#f6e4a4 to=#f6e4a4
+rect at=(0,0) w=5.38 h=129.47 fill=#4e79a7
+rect at=(212.31,0) w=5.38 h=86.32 fill=#f28e2c
+rect at=(212.31,100.83) w=5.38 h=60.42 fill=#e15759
+rect at=(424.63,0) w=5.38 h=60.42 fill=#76b7b2
+rect at=(424.63,74.93) w=5.38 h=51.79 fill=#59a14f
+rect at=(0,143.99) w=5.38 h=17.26 fill=#edc949
+text at=(8.6,62.1) size=7.53 w=23.33 start colour=#333333 text="A $15 M"
+text at=(220.91,40.52) size=7.53 w=23.33 start colour=#333333 text="B $10 M"
+text at=(220.91,128.41) size=7.53 w=19.57 start colour=#333333 text="C $7 M"
+text at=(421.4,27.58) size=7.53 w=19.57 end colour=#333333 text="D $7 M"
+text at=(421.4,98.19) size=7.53 w=19.57 end colour=#333333 text="E $6 M"
+text at=(8.6,149.98) size=7.53 w=19.57 start colour=#333333 text="F $2 M"

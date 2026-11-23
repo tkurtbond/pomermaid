@@ -1,0 +1,9 @@
+layout width=375 height=250
+link from=(6.25,88.28) to=(368.75,85.32) width=170.65 from=#a7bcd3 to=#f9c796
+link from=(6.25,204.84) to=(368.75,218.76) width=62.48 from=#a7bcd3 to=#f0abac
+rect at=(0,2.96) w=6.25 h=233.13 fill=#4e79a7
+rect at=(368.75,0) w=6.25 h=170.65 fill=#f28e2c
+rect at=(368.75,187.52) w=6.25 h=62.48 fill=#e15759
+text at=(10,116.46) size=8.75 w=67.99 start colour=#333333 text="Pumped heat 263.7"
+text at=(365,82.26) size=8.75 w=129.76 end colour=#333333 text="Heating and cooling, homes 193.03"
+text at=(365,215.7) size=8.75 w=146.39 end colour=#333333 text="Heating and cooling, commercial 70.67"
