@@ -1,0 +1,18 @@
+radar showLegend=true ticks=2.5 min=0 graticule=circle width=600 height=600 marginTop=50 marginRight=50 marginBottom=50 marginLeft=50 axisScaleFactor=1 axisLabelFactor=1.05 curveTension=0.17
+axis a label="a"
+axis b label="b"
+axis c label="c"
+curve 0 c0 label="c0" values 1 2 3
+curve 1 c1 label="c1" values 2 3 1
+curve 2 c2 label="c2" values 3 1 2
+curve 3 c3 label="c3" values 1 1 1
+curve 4 c4 label="c4" values 2 2 2
+curve 5 c5 label="c5" values 3 3 3
+curve 6 c6 label="c6" values 1 3 2
+curve 7 c7 label="c7" values 2 1 3
+curve 8 c8 label="c8" values 3 2 1
+curve 9 c9 label="c9" values 1 2 2
+curve 10 c10 label="c10" values 2 2 1
+curve 11 c11 label="c11" values 2 1 1
+curve 12 c12 label="thirteenth" values 3 1 1
+curve 13 short label="short" values 1 2

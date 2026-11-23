@@ -18,7 +18,8 @@ diagrams (`erDiagram`), requirement diagrams
 (`requirementDiagram`), sequence diagrams (`sequenceDiagram`),
 user journeys (`journey`), timelines (`timeline`), Gantt
 charts (`gantt`), pie charts (`pie`), quadrant charts
-(`quadrantChart`) and XY charts (`xychart`).
+(`quadrantChart`), XY charts (`xychart`) and radar charts
+(`radar-beta`).
 Mermaid's other diagram types are planned, one
 after another.
 
@@ -676,6 +677,50 @@ the plots that have titles, unless `showLegend` is false.
   `xAxisLabelColor`, `xAxisTickColor`, `xAxisLineColor`, the same
   four for `yAxis`, and `plotColorPalette`, colours separated by
   commas, one for each plot in turn.
+- **Text the chart cannot hold** widens the drawing (decision 19).
+- **Comments:** `%%` comments.
+
+Read and ignored: `accTitle` and `accDescr`.
+
+### Radar charts
+
+pomermaid reads Mermaid's radar charts (`radar-beta`), as Mermaid
+12.3.0 reads them, and draws them as Mermaid does: a chart 600 by 600
+pixels in margins of 50, its axes from the centre, the first at 12
+o'clock and the others clockwise, its graticule's rings, a closed
+curve for each set of values, a legend at the top right, and the
+title above.
+
+- **The first line:** `radar-beta`, or `radar-beta:`. Keywords are
+  read in this case only. Statements end at the end of the line, or
+  follow each other on one.
+- **The title:** `title text`, the rest of the line.
+- **Axes:** `axis a, b["Label"], c`, each a name and, in brackets, a
+  string, its label; without one, the name is its label. Several
+  `axis` statements add to the axes before.
+- **Curves:** `curve a["Label"]{1, 2, 3}`, a value for each axis in
+  order; or `curve b{x: 1, y: 2, z: 3}`, each value with its axis's
+  name, `:` if wanted, in any order. Line ends may come inside the
+  braces. A curve without a value for each axis is not drawn, but is
+  in the legend, as in Mermaid.
+- **Options,** separated by commas or on lines of their own:
+  `showLegend true|false`, `ticks n` (the rings, at most 32),
+  `max n`, `min n` (values are clipped to them; `max` is the greatest
+  value if not given) and `graticule circle|polygon` (circles, else
+  polygons with a corner on each axis, and straight curves).
+- **Names** are letters, digits, `_` and `-`; one that is a keyword,
+  or starts with `true`, `false`, `circle`, `polygon` or `title`, is
+  not read, as Mermaid's lexer does not read it. **Numbers** have no
+  sign and no leading 0.
+- **Configuration:** `radar`'s `width`, `height`, `marginTop`,
+  `marginRight`, `marginBottom`, `marginLeft`, `axisScaleFactor`,
+  `axisLabelFactor` and `curveTension`. Sizes are in pixels, 16 of
+  them to `--size`.
+- **Colours:** the default theme's `cScale0` to `cScale11`, one for
+  each curve in turn; and the theme variables `radar.axisColor`,
+  `axisStrokeWidth`, `axisLabelFontSize`, `curveOpacity`,
+  `curveStrokeWidth`, `graticuleColor`, `graticuleStrokeWidth`,
+  `graticuleOpacity` and `legendFontSize`.
 - **Text the chart cannot hold** widens the drawing (decision 19).
 - **Comments:** `%%` comments.
 

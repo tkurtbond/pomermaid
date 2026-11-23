@@ -1,0 +1,43 @@
+layout width=428.75 height=428.75
+circle at=(214.38,214.38) r=183.75 fill=#f5f5f5 line=#dedede width=0.61
+circle at=(214.38,214.38) r=178.01 fill=#eeeeee line=#dedede width=0.61
+circle at=(214.38,214.38) r=172.27 fill=#e9e9e9 line=#dedede width=0.61
+circle at=(214.38,214.38) r=166.52 fill=#e6e6e6 line=#dedede width=0.61
+circle at=(214.38,214.38) r=160.78 fill=#e4e4e4 line=#dedede width=0.61
+circle at=(214.38,214.38) r=155.04 fill=#e2e2e2 line=#dedede width=0.61
+circle at=(214.38,214.38) r=149.3 fill=#e1e1e1 line=#dedede width=0.61
+circle at=(214.38,214.38) r=143.55 fill=#e0e0e0 line=#dedede width=0.61
+circle at=(214.38,214.38) r=137.81 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=132.07 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=126.33 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=120.59 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=114.84 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=109.1 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=103.36 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=97.62 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=91.88 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=86.13 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=80.39 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=74.65 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=68.91 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=63.16 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=57.42 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=51.68 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=45.94 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=40.2 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=34.45 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=28.71 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=22.97 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=17.23 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=11.48 fill=#dfdfdf line=#dedede width=0.61
+circle at=(214.38,214.38) r=5.74 fill=#dfdfdf line=#dedede width=0.61
+line (214.38,214.38) (214.38,30.63) line=#333333 width=1.22
+text at=(214.38,16.42) size=7.35 w=3.53 centre colour=#333333 text="a"
+line (214.38,214.38) (373.51,306.25) line=#333333 width=1.22
+text at=(383.59,315.74) size=7.35 w=3.53 start colour=#333333 text="b"
+line (214.38,214.38) (55.24,306.25) line=#333333 width=1.22
+text at=(45.16,315.74) size=7.35 w=3.53 end colour=#333333 text="c"
+curve (214.38,153.13) .. (259.46,147.92) (347.52,249.59) .. (320.46,275.63) .. (293.41,301.66) (73.28,327.07) .. (55.24,306.25) .. (37.21,285.43) (169.29,158.33) .. fill=#c3c3ff line=none width=0
+curve (214.38,153.13) .. (259.46,147.92) (347.52,249.59) .. (320.46,275.63) .. (293.41,301.66) (73.28,327.07) .. (55.24,306.25) .. (37.21,285.43) (169.29,158.33) .. fill=none line=#8686ff width=1.22
+rect at=(375.16,53.59) w=7.35 h=7.35 fill=#c3c3ff line=#8686ff width=0.61
+text at=(384.96,57.27) size=7.35 w=3.53 start colour=#333333 text="x"

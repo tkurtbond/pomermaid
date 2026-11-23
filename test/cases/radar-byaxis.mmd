@@ -1,0 +1,11 @@
+%% values given by axis, a min above 0, and values past max and min
+radar-beta:
+  title Skills %% a comment
+  axis speed, power['Raw power'], range
+  curve x["By axis"]{ range: 3, speed 9,
+    power: 12 }
+  curve y{
+    1.5, 4, 0.5
+  }, z["Z"]{range 6, power 6, speed 6, other 1, speed 2}
+  min 2, max 10
+  ticks 4

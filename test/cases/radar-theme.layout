@@ -1,0 +1,19 @@
+layout width=304.6 height=188.5
+polygon (135.85,32.25) (195.29,75.44) (172.59,145.31) (99.11,145.31) (76.41,75.44) fill=#cce6cc line=#99cc99 width=0.63
+polygon (135.85,44.75) (183.4,79.3) (165.24,135.2) (106.46,135.2) (88.3,79.3) fill=#b3d9b3 line=#99cc99 width=0.63
+polygon (135.85,57.25) (171.51,83.16) (157.89,125.09) (113.81,125.09) (100.19,83.16) fill=#a6d3a6 line=#99cc99 width=0.63
+polygon (135.85,69.75) (159.63,87.02) (150.54,114.98) (121.16,114.98) (112.07,87.02) fill=#a0d0a0 line=#99cc99 width=0.63
+polygon (135.85,82.25) (147.74,90.89) (143.2,104.86) (128.5,104.86) (123.96,90.89) fill=#9dce9d line=#99cc99 width=0.63
+line (135.85,94.75) (135.85,32.25) line=#aa0000 width=0.63
+text at=(135.85,13.75) size=10 w=25.7 centre colour=#333333 text="North"
+line (135.85,94.75) (195.29,75.44) line=#aa0000 width=0.63
+text at=(209.56,67.3) size=10 w=42.6 start colour=#333333 text="East side"
+line (135.85,94.75) (172.59,145.31) line=#aa0000 width=0.63
+text at=(181.4,162.45) size=10 w=25.7 start colour=#333333 text="South"
+line (135.85,94.75) (99.11,145.31) line=#aa0000 width=0.63
+text at=(90.3,162.45) size=10 w=39.5 end colour=#333333 text="The West"
+line (135.85,94.75) (76.41,75.44) line=#aa0000 width=0.63
+text at=(62.14,67.3) size=10 w=9.6 end colour=#333333 text="up"
+polygon (135.85,32.25) (183.4,79.3) (157.89,125.09) (121.16,114.98) (123.96,90.89) fill=#ccd9e6 line=none width=0
+polygon (135.85,32.25) (183.4,79.3) (157.89,125.09) (121.16,114.98) (123.96,90.89) fill=none line=#336699 width=1.88
+text at=(135.85,6) size=10 w=271.7 centre colour=#333333 text="A wide title that the margins of this chart cannot hold at all"

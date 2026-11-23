@@ -1,0 +1,10 @@
+title text="Restaurant Comparison"
+radar showLegend=true ticks=5 max=5 min=0 graticule=polygon width=600 height=600 marginTop=50 marginRight=50 marginBottom=50 marginLeft=50 axisScaleFactor=1 axisLabelFactor=1.05 curveTension=0.17
+axis food label="Food Quality"
+axis service label="Service"
+axis price label="Price"
+axis ambiance label="Ambiance"
+curve 0 a label="Restaurant A" values 4 3 2 4
+curve 1 b label="Restaurant B" values 3 4 3 3
+curve 2 c label="Restaurant C" values 2 3 4 2
+curve 3 d label="Restaurant D" values 2 2 4 3

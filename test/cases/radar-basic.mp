@@ -1,0 +1,46 @@
+\startMPcode
+numeric pmxx[]; picture pmxp;
+pmxx0 := 0; pmxx1 := -429.73pt; pmxx2 := 428.75pt; pmxx3 := 0;
+def pmxtext(expr p, q, a, c) =
+  pmxp := p shifted -(if (a = 0): xpart llcorner p elseif (a = 1): xpart center p else: xpart lrcorner p fi, ypart center p) shifted q;
+  draw pmxp withcolor c;
+  pmxx0 := min(pmxx0, xpart llcorner pmxp); pmxx1 := min(pmxx1, ypart llcorner pmxp);
+  pmxx2 := max(pmxx2, xpart urcorner pmxp); pmxx3 := max(pmxx3, ypart urcorner pmxp);
+enddef;
+begingroup interim linecap := butt; interim linejoin := mitered;
+fill fullcircle scaled 367.5pt shifted (214.375pt, -215.355pt) withcolor (0.9608,0.9608,0.9608);
+draw fullcircle scaled 367.5pt shifted (214.375pt, -215.355pt) withcolor (0.8706,0.8706,0.8706) withpen pencircle scaled 0.613pt;
+fill fullcircle scaled 294pt shifted (214.375pt, -215.355pt) withcolor (0.9333,0.9333,0.9333);
+draw fullcircle scaled 294pt shifted (214.375pt, -215.355pt) withcolor (0.8706,0.8706,0.8706) withpen pencircle scaled 0.613pt;
+fill fullcircle scaled 220.5pt shifted (214.375pt, -215.355pt) withcolor (0.9137,0.9137,0.9137);
+draw fullcircle scaled 220.5pt shifted (214.375pt, -215.355pt) withcolor (0.8706,0.8706,0.8706) withpen pencircle scaled 0.613pt;
+fill fullcircle scaled 147pt shifted (214.375pt, -215.355pt) withcolor (0.902,0.902,0.902);
+draw fullcircle scaled 147pt shifted (214.375pt, -215.355pt) withcolor (0.8706,0.8706,0.8706) withpen pencircle scaled 0.613pt;
+fill fullcircle scaled 73.5pt shifted (214.375pt, -215.355pt) withcolor (0.8941,0.8941,0.8941);
+draw fullcircle scaled 73.5pt shifted (214.375pt, -215.355pt) withcolor (0.8706,0.8706,0.8706) withpen pencircle scaled 0.613pt;
+draw (214.375pt, -215.355pt) -- (214.375pt, -31.605pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 1.225pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Math" & "}") scaled 0.75, (214.375pt, -17.395pt), 1, (0.2,0.2,0.2));
+draw (214.375pt, -215.355pt) -- (373.507pt, -123.48pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 1.225pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Science" & "}") scaled 0.75, (383.586pt, -115.089pt), 0, (0.2,0.2,0.2));
+draw (214.375pt, -215.355pt) -- (373.507pt, -307.23pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 1.225pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "English" & "}") scaled 0.75, (383.586pt, -316.724pt), 0, (0.2,0.2,0.2));
+draw (214.375pt, -215.355pt) -- (214.375pt, -399.105pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 1.225pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "History" & "}") scaled 0.75, (214.375pt, -414.417pt), 1, (0.2,0.2,0.2));
+draw (214.375pt, -215.355pt) -- (55.243pt, -307.23pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 1.225pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Geography" & "}") scaled 0.75, (45.164pt, -316.724pt), 2, (0.2,0.2,0.2));
+draw (214.375pt, -215.355pt) -- (55.243pt, -123.48pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 1.225pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Art" & "}") scaled 0.75, (45.164pt, -115.089pt), 2, (0.2,0.2,0.2));
+fill (214.375pt, -59.167pt) .. controls (263.069pt, -59.167pt) and (335.952pt, -93.621pt) .. (357.594pt, -132.667pt) .. controls (379.236pt, -171.714pt) and (366.028pt, -252.932pt) .. (341.681pt, -288.855pt) .. controls (317.333pt, -324.778pt) and (256.306pt, -344.761pt) .. (214.375pt, -343.98pt) .. controls (172.444pt, -343.199pt) and (119.373pt, -320.184pt) .. (95.026pt, -284.261pt) .. controls (70.679pt, -248.338pt) and (50.867pt, -170.933pt) .. (71.156pt, -132.667pt) .. controls (91.445pt, -94.401pt) and (165.681pt, -59.167pt) .. cycle withcolor (0.7647,0.7647,1);
+fill (214.375pt, -86.73pt) .. controls (257.659pt, -88.292pt) and (310.729pt, -111.307pt) .. (333.724pt, -146.449pt) .. controls (356.719pt, -181.591pt) and (369.927pt, -256.745pt) .. (349.637pt, -293.449pt) .. controls (329.348pt, -330.153pt) and (261.717pt, -361.574pt) .. (214.375pt, -362.355pt) .. controls (167.033pt, -363.136pt) and (94.151pt, -336.308pt) .. (71.156pt, -298.042pt) .. controls (48.161pt, -259.776pt) and (54.765pt, -173.184pt) .. (79.113pt, -137.261pt) .. controls (103.46pt, -101.338pt) and (171.091pt, -85.168pt) .. cycle withcolor (1,1,0.7373);
+draw (214.375pt, -59.167pt) .. controls (263.069pt, -59.167pt) and (335.952pt, -93.621pt) .. (357.594pt, -132.667pt) .. controls (379.236pt, -171.714pt) and (366.028pt, -252.932pt) .. (341.681pt, -288.855pt) .. controls (317.333pt, -324.778pt) and (256.306pt, -344.761pt) .. (214.375pt, -343.98pt) .. controls (172.444pt, -343.199pt) and (119.373pt, -320.184pt) .. (95.026pt, -284.261pt) .. controls (70.679pt, -248.338pt) and (50.867pt, -170.933pt) .. (71.156pt, -132.667pt) .. controls (91.445pt, -94.401pt) and (165.681pt, -59.167pt) .. cycle withcolor (0.5255,0.5255,1) withpen pencircle scaled 1.225pt;
+draw (214.375pt, -86.73pt) .. controls (257.659pt, -88.292pt) and (310.729pt, -111.307pt) .. (333.724pt, -146.449pt) .. controls (356.719pt, -181.591pt) and (369.927pt, -256.745pt) .. (349.637pt, -293.449pt) .. controls (329.348pt, -330.153pt) and (261.717pt, -361.574pt) .. (214.375pt, -362.355pt) .. controls (167.033pt, -363.136pt) and (94.151pt, -336.308pt) .. (71.156pt, -298.042pt) .. controls (48.161pt, -259.776pt) and (54.765pt, -173.184pt) .. (79.113pt, -137.261pt) .. controls (103.46pt, -101.338pt) and (171.091pt, -85.168pt) .. cycle withcolor (1,1,0.4706) withpen pencircle scaled 1.225pt;
+fill unitsquare xscaled 7.35pt yscaled 7.35pt shifted (375.156pt, -61.924pt) withcolor (0.7647,0.7647,1);
+draw unitsquare xscaled 7.35pt yscaled 7.35pt shifted (375.156pt, -61.924pt) withcolor (0.5255,0.5255,1) withpen pencircle scaled 0.613pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Alice" & "}") scaled 0.75, (384.956pt, -58.249pt), 0, (0.2,0.2,0.2));
+fill unitsquare xscaled 7.35pt yscaled 7.35pt shifted (375.156pt, -74.174pt) withcolor (1,1,0.7373);
+draw unitsquare xscaled 7.35pt yscaled 7.35pt shifted (375.156pt, -74.174pt) withcolor (1,1,0.4706) withpen pencircle scaled 0.613pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Bob" & "}") scaled 0.75, (384.956pt, -70.499pt), 0, (0.2,0.2,0.2));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Grades" & "}") scaled 1, (214.375pt, -5.88pt), 1, (0.2,0.2,0.2));
+endgroup;
+setbounds currentpicture to (pmxx0, pmxx1) -- (pmxx2, pmxx1) -- (pmxx2, pmxx3) -- (pmxx0, pmxx3) -- cycle;
+\stopMPcode

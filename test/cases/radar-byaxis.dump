@@ -1,0 +1,8 @@
+title text="Skills"
+radar showLegend=true ticks=4 max=10 min=2 graticule=circle width=600 height=600 marginTop=50 marginRight=50 marginBottom=50 marginLeft=50 axisScaleFactor=1 axisLabelFactor=1.05 curveTension=0.17
+axis speed label="speed"
+axis power label="Raw power"
+axis range label="range"
+curve 0 x label="By axis" values 9 12 3
+curve 1 y label="y" values 1.5 4 0.5
+curve 2 z label="Z" values 6 6 6

@@ -1,0 +1,31 @@
+layout width=427.98 height=412.19
+polygon (215.68,30.32) (391.93,206.57) (215.68,382.82) (39.43,206.57) fill=#f5f5f5 line=#dedede width=0.59
+polygon (215.68,65.57) (356.68,206.57) (215.68,347.57) (74.68,206.57) fill=#eeeeee line=#dedede width=0.59
+polygon (215.68,100.82) (321.43,206.57) (215.68,312.32) (109.93,206.57) fill=#e9e9e9 line=#dedede width=0.59
+polygon (215.68,136.07) (286.18,206.57) (215.68,277.07) (145.18,206.57) fill=#e6e6e6 line=#dedede width=0.59
+polygon (215.68,171.32) (250.93,206.57) (215.68,241.82) (180.43,206.57) fill=#e4e4e4 line=#dedede width=0.59
+line (215.68,206.57) (215.68,30.32) line=#333333 width=1.18
+text at=(215.68,16.69) size=7.05 w=41.38 centre colour=#333333 text="Food Quality"
+line (215.68,206.57) (391.93,206.57) line=#333333 width=1.18
+text at=(403.1,206.57) size=7.05 w=24.89 start colour=#333333 text="Service"
+line (215.68,206.57) (215.68,382.82) line=#333333 width=1.18
+text at=(215.68,397.5) size=7.05 w=18.12 centre colour=#333333 text="Price"
+line (215.68,206.57) (39.43,206.57) line=#333333 width=1.18
+text at=(28.27,206.57) size=7.05 w=28.27 end colour=#333333 text="Ambiance"
+polygon (215.68,65.57) (321.43,206.57) (215.68,277.07) (74.68,206.57) fill=#c3c3ff line=none width=0
+polygon (215.68,100.82) (356.68,206.57) (215.68,312.32) (109.93,206.57) fill=#ffffbc line=none width=0
+polygon (215.68,136.07) (321.43,206.57) (215.68,347.57) (145.18,206.57) fill=#ebffc3 line=none width=0
+polygon (215.68,136.07) (286.18,206.57) (215.68,347.57) (109.93,206.57) fill=#e1c3ff line=none width=0
+polygon (215.68,65.57) (321.43,206.57) (215.68,277.07) (74.68,206.57) fill=none line=#8686ff width=1.18
+polygon (215.68,100.82) (356.68,206.57) (215.68,312.32) (109.93,206.57) fill=none line=#ffff78 width=1.18
+polygon (215.68,136.07) (321.43,206.57) (215.68,347.57) (145.18,206.57) fill=none line=#d7ff86 width=1.18
+polygon (215.68,136.07) (286.18,206.57) (215.68,347.57) (109.93,206.57) fill=none line=#c286ff width=1.18
+rect at=(369.9,52.35) w=7.05 h=7.05 fill=#c3c3ff line=#8686ff width=0.59
+text at=(379.3,55.87) size=7.05 w=41.38 start colour=#333333 text="Restaurant A"
+rect at=(369.9,64.1) w=7.05 h=7.05 fill=#ffffbc line=#ffff78 width=0.59
+text at=(379.3,67.62) size=7.05 w=41.38 start colour=#333333 text="Restaurant B"
+rect at=(369.9,75.85) w=7.05 h=7.05 fill=#ebffc3 line=#d7ff86 width=0.59
+text at=(379.3,79.37) size=7.05 w=41.38 start colour=#333333 text="Restaurant C"
+rect at=(369.9,87.6) w=7.05 h=7.05 fill=#e1c3ff line=#c286ff width=0.59
+text at=(379.3,91.12) size=7.05 w=41.38 start colour=#333333 text="Restaurant D"
+text at=(215.68,5.64) size=9.4 w=95.79 centre colour=#333333 text="Restaurant Comparison"

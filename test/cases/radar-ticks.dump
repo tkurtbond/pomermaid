@@ -1,0 +1,5 @@
+radar showLegend=true ticks=32 min=0 graticule=circle width=600 height=600 marginTop=50 marginRight=50 marginBottom=50 marginLeft=50 axisScaleFactor=1 axisLabelFactor=1.05 curveTension=0.17
+axis a label="a"
+axis b label="b"
+axis c label="c"
+curve 0 x label="x" values 1 2 3

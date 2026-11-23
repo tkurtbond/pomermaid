@@ -1,0 +1,10 @@
+title text="Grades"
+radar showLegend=true ticks=5 max=100 min=0 graticule=circle width=600 height=600 marginTop=50 marginRight=50 marginBottom=50 marginLeft=50 axisScaleFactor=1 axisLabelFactor=1.05 curveTension=0.17
+axis m label="Math"
+axis s label="Science"
+axis e label="English"
+axis h label="History"
+axis g label="Geography"
+axis a label="Art"
+curve 0 a label="Alice" values 85 90 80 70 75 90
+curve 1 b label="Bob" values 70 75 85 80 90 85

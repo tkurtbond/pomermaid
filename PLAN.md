@@ -919,6 +919,73 @@ default theme. In steps:
   ConTeXt's widths.
 - **22.5:** Mermaid's examples; the documentation.
 
+### Phase 23: radar charts [done]
+
+**Change:** `radar-beta`, read by a new module, `PmRadar`, into a
+model of its own (the axes, the curves, the options, the title),
+laid out by `PmRadarLayout` on Mermaid's geometry, and drawn in pic,
+SVG and MetaPost.
+
+**Check:** case tests for each construct and error: axes with and
+without labels, curves with plain and named entries, the options
+(`showLegend`, `ticks`, `max`, `min`, `graticule`), circle and
+polygon graticules, the configuration and themeVariables; Mermaid's
+own radar examples read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/radar.md`,
+`diagrams/radar/` (`radar.langium`, `db.ts`, `renderer.ts`,
+`styles.ts`), the configuration's schema and the default theme. In
+steps:
+
+- **23.1, the model and the reader:** `radar-beta`, `title`,
+  `accTitle` and `accDescr`, `axis` (names, labels, several lines),
+  `curve` (names, labels, entries plain or by axis), the options,
+  comments, front matter and directives; Mermaid's errors;
+  `config.radar`; the dump.
+- **23.2, the layout:** Mermaid's pixels, the chart 600 by 600 in
+  margins of 50: the graticule, the axes and their labels, the
+  curves (closed Catmull-Rom curves or polygons), the legend, the
+  title; the drawing widened for text that does not fit; the layout
+  dump.
+- **23.3, pic and SVG:** the fills over white (decision 22), the
+  outlines, the texts; the colours changed by themeVariables.
+- **23.4, MetaPost:** the same drawing, the curves as Béziers.
+- **23.5:** Mermaid's examples; the documentation.
+
+### Phase 24: sankey diagrams
+
+**Change:** `sankey-beta` and `sankey`, read by a new module,
+`PmSankey`, into a model of its own (the nodes, in order, and the
+links, each a source, a target and a value), laid out by
+`PmSankeyLayout` as d3-sankey 0.12.3 lays it out for Mermaid, and
+drawn in pic, SVG and MetaPost.
+
+**Check:** case tests for the CSV (quoted fields, `""`, blanks, blank
+lines, comments), each node alignment, the configuration (`width`,
+`height`, `nodeWidth`, `nodePadding`, `showValues`, `prefix`,
+`suffix`, `labelStyle`, `nodeColors`, `linkColor`), and the errors
+(a missing field, a value that is not a number, a circular link);
+Mermaid's own sankey examples read and drawn.
+
+Mermaid 12.3.0 is followed: `docs/syntax/sankey.md`,
+`diagrams/sankey/` (`parser/sankey.jison`, `sankeyDB.ts`,
+`sankeyRenderer.ts`, `sankeyUtils.ts`, `styles.js`), the
+configuration's schema, and d3-sankey 0.12.3's `sankey.js`,
+`align.js` and `sankeyLinkHorizontal.js`. In steps:
+
+- **24.1, the model and the reader:** the first line, the records,
+  nodes in order of first appearance; comments, front matter and
+  directives; `config.sankey`; the errors; the dump.
+- **24.2, the layout:** d3-sankey's: the nodes' depths and heights,
+  their layers by the alignment, their breadths, relaxed 6 times,
+  collisions resolved, the links' breadths; Mermaid's labels, legacy
+  and outlined; the colours (Tableau10 by node, `nodeColors`) and the
+  links' (gradient, source, target or a colour); the layout dump.
+- **24.3, pic and SVG:** the links as bands, sliced for a gradient,
+  blended over white, then the nodes, then the labels (decision 23).
+- **24.4, MetaPost:** the same drawing.
+- **24.5:** Mermaid's examples; the documentation.
+
 ### Phases 12 and later: the other diagram types
 
 All of Mermaid's diagram types are in scope (decision 1). Each is a
@@ -1073,6 +1140,32 @@ None at present.
 21. **Each bar shows its own value.** With `showDataLabel`, Mermaid
     labels the bars of every bar plot with the first plot's values.
     pomermaid labels each bar with its own.
+
+2026-11-23, in Phase 23, under decision 2:
+
+22. **A radar chart's transparent fills are blended.** pic has no
+    transparency, so, as for pie charts' and Gantt charts' opacity,
+    each fill Mermaid draws with an opacity is drawn in its colour
+    taken over the colour beneath it: the graticule's rings, from the
+    outermost in, each over the one before, starting from white, and
+    each curve in its colour over white, in order. Each curve's
+    outline is drawn after all the fills, so that no curve hides
+    another's. MetaPost draws the same, so that the outputs agree.
+    A radar chart's texts widen the drawing, as decision 19 says.
+
+2026-11-23, in Phase 24, under decision 2:
+
+23. **A sankey diagram's links are opaque bands under the labels.**
+    Mermaid strokes each link with its gradient, or a colour, at an
+    opacity of 0.5, blended by multiplying, over the nodes and
+    labels. pic has neither, so, as decision 22 says, each link is
+    its colour taken over white, its gradient drawn as slices across
+    it, each of its colour where it is; and the links are drawn
+    first, then the nodes, then the labels, so that no link hides a
+    label. Where links cross, the later covers the earlier. The
+    outlined labels' halo is not drawn. MetaPost draws the same. A
+    sankey diagram's texts widen the drawing, as Mermaid's do: its
+    bounds are its items'.
 
 ## Later
 
@@ -1659,3 +1752,34 @@ examples (`docs/syntax/xyChart.md`) were drawn through groff, through
 ConTeXt and as SVG, and looked at. `make test` passes, 392 of 392
 under both models, on FreeBSD (alerik, rackhir), NetBSD (artos,
 yishana) and OpenBSD (jherek, cymoril).
+
+Phase 23, radar charts, is done, 2026-11-23, on Mermaid 12.3.0.
+`PmRadar` reads `radar-beta` (and `radar-beta:`): `title`,
+`accTitle`/`accDescr`, `axis` with names and labels, `curve` with
+plain values or values by axis, the options `showLegend`, `ticks`
+(at most 32, with Mermaid's warning), `max`, `min` and `graticule`,
+and `config.radar`, with Mermaid's lexer's names and numbers and its
+errors for curves by axis. `PmRadarLayout` lays it out on the
+renderer's pixels at the labels' size: the graticule's rings
+(circles or polygons), the axes and their labels, the curves (closed
+Catmull-Rom Béziers with `curveTension`, or polygons), the legend and
+the title; the drawing grows for text that does not fit (decision
+19). Its arithmetic is LONGREAL, each item's places rounded once to a
+1/8192 point, as `PmXyLayout`'s. The fills are blended over white
+(decision 22); an opacity of 0 is no fill, as Mermaid's third radar
+example needs. `PmRadarPic` draws it in pic, each curve taken at 16
+points a Bézier, SVG coming from that through groff (`PmSvg`'s
+`WriteRadarDocument`); `PmRadarMp` writes the MetaPost, the curves
+as MetaPost's Béziers. The colours are `cScale0` to `cScale11` and
+the `radar` themeVariables (`PmStyle.RadarColours`), which Mermaid
+merges over the theme's, so 0 is kept. `make test` passes under `-O2`
+and `-OC`: 423 case tests, with `radar-basic`, `radar-polygon` and
+`radar-config` (Mermaid's three examples, `docs/syntax/radar.md`),
+`radar-byaxis`, `radar-legend`, `radar-theme` and `radar-ticks`
+(dump, layout, and pic and mp for most, svg-ms for two) and four
+error cases (`radar-noaxes`, `radar-missing`, `radar-badnumber`,
+`radar-keyword`). The cases and Mermaid's examples were drawn as SVG
+through groff, and Mermaid's examples through ConTeXt, and looked at.
+`make test` passes, 423 of 423 under both models, on FreeBSD
+(alerik, rackhir), NetBSD (artos, yishana) and OpenBSD (jherek,
+cymoril).

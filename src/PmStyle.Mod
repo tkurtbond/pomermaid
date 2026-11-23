@@ -89,6 +89,16 @@ TYPE
     nPalette*: INTEGER
   END;
 
+  (* A radar chart's colours, as 0RRGGBBH, or -1 for none, and its
+     lengths, in Mermaid's pixels *)
+  RadarTheme* = RECORD
+    scale*: ARRAY 12 OF LONGINT;       (* the curves', cScale0 .. cScale11 *)
+    axis*, graticule*, text*: LONGINT;
+    axisWidth*, curveWidth*, graticuleWidth*: REAL;
+    axisLabelSize*, legendSize*: REAL;
+    curveOpacity*, graticuleOpacity*: REAL  (* from 0 to 1 *)
+  END;
+
   Style* = RECORD
     fill*, line*, text*: INTEGER;  (* indexes into the colours, or NoColour *)
     inner*: INTEGER;               (* a composite state's body's fill, below
@@ -638,6 +648,42 @@ BEGIN
   END;
   IF t.nPalette = 0 THEN t.palette[0] := 0ECECFFH; t.nPalette := 1 END
 END XyColours;
+
+(* t, a radar chart's colours and lengths: the default theme's,
+   changed by themeVariables: cScale0 to cScale11, textColor, and
+   radar's axisColor (else lineColor), axisStrokeWidth,
+   axisLabelFontSize, curveOpacity, curveStrokeWidth, graticuleColor,
+   graticuleStrokeWidth, graticuleOpacity and legendFontSize; a number
+   given as 0 is 0, as Mermaid's styles merge them over the theme's;
+   the opacities are kept to 0 to 1 *)
+PROCEDURE RadarColours*(VAR t: RadarTheme);
+  VAR tl: TimelineTheme; set: BOOLEAN; k: INTEGER;
+
+  PROCEDURE Num(name: ARRAY OF CHAR; VAR x: REAL; default: REAL);
+    VAR y: REAL;
+  BEGIN
+    x := default;
+    IF VarNumber(name, y) THEN x := y END
+  END Num;
+
+BEGIN
+  TimelineColours(tl);
+  FOR k := 0 TO 11 DO t.scale[k] := tl.scale[k] END;
+  t.axis := edgeLine; set := Var("radar.axisColor", t.axis);
+  t.graticule := 0DEDEDEH; set := Var("radar.graticuleColor", t.graticule);
+  t.text := textColour;
+  Num("radar.axisStrokeWidth", t.axisWidth, 2);
+  Num("radar.axisLabelFontSize", t.axisLabelSize, 12);
+  Num("radar.curveOpacity", t.curveOpacity, 0.5);
+  Num("radar.curveStrokeWidth", t.curveWidth, 2);
+  Num("radar.graticuleStrokeWidth", t.graticuleWidth, 1);
+  Num("radar.graticuleOpacity", t.graticuleOpacity, 0.3);
+  Num("radar.legendFontSize", t.legendSize, 12);
+  IF t.curveOpacity < 0 THEN t.curveOpacity := 0 ELSIF t.curveOpacity > 1 THEN t.curveOpacity := 1 END;
+  IF t.graticuleOpacity < 0 THEN t.graticuleOpacity := 0
+  ELSIF t.graticuleOpacity > 1 THEN t.graticuleOpacity := 1
+  END
+END RadarColours;
 
 (* Applies the classDefs named name *)
 PROCEDURE ApplyClass(g: F.Graph; VAR st: Style; name: ARRAY OF CHAR);

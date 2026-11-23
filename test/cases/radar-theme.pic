@@ -1,0 +1,50 @@
+.defcolor pm-cce6cc rgb #cce6cc
+.defcolor pm-99cc99 rgb #99cc99
+.defcolor pm-b3d9b3 rgb #b3d9b3
+.defcolor pm-a6d3a6 rgb #a6d3a6
+.defcolor pm-a0d0a0 rgb #a0d0a0
+.defcolor pm-9dce9d rgb #9dce9d
+.defcolor pm-aa0000 rgb #aa0000
+.defcolor pm-333333 rgb #333333
+.defcolor pm-ccd9e6 rgb #ccd9e6
+.defcolor pm-336699 rgb #336699
+.nr pm*ps \n[.ps]
+.nr pm*vs \n[.v]
+.ps 10
+.vs 12p
+.PS
+maxpswid = 1000; maxpsht = 1000
+arrowht = 0.069; arrowwid = 0.069
+box invis wid 4.231 ht 2.618 at (2.115, -1.309)
+"\M[pm-cce6cc]\v'-0.22m'\D'P 0.825i 0.6i -0.315i 0.97i -1.02i 0i -0.316i -0.97i'\M[]" ljust at (1.887, -0.448)
+line from (1.887, -0.448) to (2.712, -1.048) to (2.397, -2.018) to (1.377, -2.018) \
+  to (1.061, -1.048) to (1.887, -0.448) outlined "pm-99cc99" thickness 0.625
+"\M[pm-b3d9b3]\v'-0.22m'\D'P 0.66i 0.479i -0.252i 0.777i -0.816i 0i -0.253i -0.777i'\M[]" ljust at (1.887, -0.622)
+line from (1.887, -0.622) to (2.547, -1.101) to (2.295, -1.878) to (1.479, -1.878) \
+  to (1.226, -1.101) to (1.887, -0.622) outlined "pm-99cc99" thickness 0.625
+"\M[pm-a6d3a6]\v'-0.22m'\D'P 0.495i 0.36i -0.189i 0.582i -0.612i 0i -0.19i -0.582i'\M[]" ljust at (1.887, -0.795)
+line from (1.887, -0.795) to (2.382, -1.155) to (2.193, -1.737) to (1.581, -1.737) \
+  to (1.391, -1.155) to (1.887, -0.795) outlined "pm-99cc99" thickness 0.625
+"\M[pm-a0d0a0]\v'-0.22m'\D'P 0.33i 0.24i -0.126i 0.388i -0.408i 0i -0.126i -0.388i'\M[]" ljust at (1.887, -0.969)
+line from (1.887, -0.969) to (2.217, -1.209) to (2.091, -1.597) to (1.683, -1.597) \
+  to (1.557, -1.209) to (1.887, -0.969) outlined "pm-99cc99" thickness 0.625
+"\M[pm-9dce9d]\v'-0.22m'\D'P 0.165i 0.12i -0.063i 0.194i -0.204i 0i -0.063i -0.194i'\M[]" ljust at (1.887, -1.142)
+line from (1.887, -1.142) to (2.052, -1.262) to (1.989, -1.456) to (1.785, -1.456) \
+  to (1.722, -1.262) to (1.887, -1.142) outlined "pm-99cc99" thickness 0.625
+line from (1.887, -1.316) to (1.887, -0.448) outlined "pm-aa0000" thickness 0.625
+"\s[10]\f[TS]North\f[]\s[0]"  at (1.887, -0.191)
+line from (1.887, -1.316) to (2.712, -1.048) outlined "pm-aa0000" thickness 0.625
+"\s[10]\f[TS]East side\f[]\s[0]" ljust  at (2.911, -0.935)
+line from (1.887, -1.316) to (2.397, -2.018) outlined "pm-aa0000" thickness 0.625
+"\s[10]\f[TS]South\f[]\s[0]" ljust  at (2.519, -2.256)
+line from (1.887, -1.316) to (1.377, -2.018) outlined "pm-aa0000" thickness 0.625
+"\s[10]\f[TS]The West\f[]\s[0]" rjust  at (1.254, -2.256)
+line from (1.887, -1.316) to (1.061, -1.048) outlined "pm-aa0000" thickness 0.625
+"\s[10]\f[TS]up\f[]\s[0]" rjust  at (0.863, -0.935)
+"\M[pm-ccd9e6]\v'-0.22m'\D'P 0.66i 0.653i -0.354i 0.636i -0.51i -0.14i 0.039i -0.335i'\M[]" ljust at (1.887, -0.448)
+line from (1.887, -0.448) to (2.547, -1.101) to (2.193, -1.737) to (1.683, -1.597) \
+  to (1.722, -1.262) to (1.887, -0.448) outlined "pm-336699" thickness 1.875
+"\s[10]\f[TS]A wide title that the margins of this chart cannot hold at all\f[]\s[0]"  at (1.887, -0.083)
+.PE
+.ps \n[pm*ps]u
+.vs \n[pm*vs]u

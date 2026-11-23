@@ -1,0 +1,43 @@
+\startMPcode
+numeric pmxx[]; picture pmxp;
+pmxx0 := 0; pmxx1 := -429.73pt; pmxx2 := 428.75pt; pmxx3 := 0;
+def pmxtext(expr p, q, a, c) =
+  pmxp := p shifted -(if (a = 0): xpart llcorner p elseif (a = 1): xpart center p else: xpart lrcorner p fi, ypart center p) shifted q;
+  draw pmxp withcolor c;
+  pmxx0 := min(pmxx0, xpart llcorner pmxp); pmxx1 := min(pmxx1, ypart llcorner pmxp);
+  pmxx2 := max(pmxx2, xpart urcorner pmxp); pmxx3 := max(pmxx3, ypart urcorner pmxp);
+enddef;
+begingroup interim linecap := butt; interim linejoin := mitered;
+fill fullcircle scaled 367.5pt shifted (214.375pt, -215.355pt) withcolor (0.9608,0.9608,0.9608);
+draw fullcircle scaled 367.5pt shifted (214.375pt, -215.355pt) withcolor (0.8706,0.8706,0.8706) withpen pencircle scaled 0.613pt;
+fill fullcircle scaled 275.625pt shifted (214.375pt, -215.355pt) withcolor (0.9333,0.9333,0.9333);
+draw fullcircle scaled 275.625pt shifted (214.375pt, -215.355pt) withcolor (0.8706,0.8706,0.8706) withpen pencircle scaled 0.613pt;
+fill fullcircle scaled 183.75pt shifted (214.375pt, -215.355pt) withcolor (0.9137,0.9137,0.9137);
+draw fullcircle scaled 183.75pt shifted (214.375pt, -215.355pt) withcolor (0.8706,0.8706,0.8706) withpen pencircle scaled 0.613pt;
+fill fullcircle scaled 91.875pt shifted (214.375pt, -215.355pt) withcolor (0.902,0.902,0.902);
+draw fullcircle scaled 91.875pt shifted (214.375pt, -215.355pt) withcolor (0.8706,0.8706,0.8706) withpen pencircle scaled 0.613pt;
+draw (214.375pt, -215.355pt) -- (214.375pt, -31.605pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 1.225pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "speed" & "}") scaled 0.75, (214.375pt, -17.395pt), 1, (0.2,0.2,0.2));
+draw (214.375pt, -215.355pt) -- (373.507pt, -307.23pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 1.225pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Raw power" & "}") scaled 0.75, (383.586pt, -316.724pt), 0, (0.2,0.2,0.2));
+draw (214.375pt, -215.355pt) -- (55.243pt, -307.23pt) withcolor (0.2,0.2,0.2) withpen pencircle scaled 1.225pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "range" & "}") scaled 0.75, (45.164pt, -316.724pt), 2, (0.2,0.2,0.2));
+fill (214.375pt, -54.574pt) .. controls (244.809pt, -68.24pt) and (376.889pt, -277.945pt) .. (373.507pt, -307.23pt) .. controls (370.126pt, -336.515pt) and (221.536pt, -269.791pt) .. (194.484pt, -226.839pt) .. controls (167.431pt, -183.888pt) and (183.941pt, -40.907pt) .. cycle withcolor (0.7647,0.7647,1);
+fill (214.375pt, -215.355pt) .. controls (221.138pt, -219.26pt) and (254.158pt, -238.324pt) .. (254.158pt, -238.324pt) .. controls (254.158pt, -238.324pt) and (221.138pt, -219.26pt) .. (214.375pt, -215.355pt) .. controls (207.612pt, -211.45pt) and (207.612pt, -211.45pt) .. cycle withcolor (1,1,0.7373);
+fill (214.375pt, -123.48pt) .. controls (241.427pt, -123.48pt) and (307.467pt, -237.864pt) .. (293.941pt, -261.292pt) .. controls (280.415pt, -284.721pt) and (148.335pt, -284.721pt) .. (134.809pt, -261.292pt) .. controls (121.283pt, -237.864pt) and (187.323pt, -123.48pt) .. cycle withcolor (0.9216,1,0.7647);
+draw (214.375pt, -54.574pt) .. controls (244.809pt, -68.24pt) and (376.889pt, -277.945pt) .. (373.507pt, -307.23pt) .. controls (370.126pt, -336.515pt) and (221.536pt, -269.791pt) .. (194.484pt, -226.839pt) .. controls (167.431pt, -183.888pt) and (183.941pt, -40.907pt) .. cycle withcolor (0.5255,0.5255,1) withpen pencircle scaled 1.225pt;
+draw (214.375pt, -215.355pt) .. controls (221.138pt, -219.26pt) and (254.158pt, -238.324pt) .. (254.158pt, -238.324pt) .. controls (254.158pt, -238.324pt) and (221.138pt, -219.26pt) .. (214.375pt, -215.355pt) .. controls (207.612pt, -211.45pt) and (207.612pt, -211.45pt) .. cycle withcolor (1,1,0.4706) withpen pencircle scaled 1.225pt;
+draw (214.375pt, -123.48pt) .. controls (241.427pt, -123.48pt) and (307.467pt, -237.864pt) .. (293.941pt, -261.292pt) .. controls (280.415pt, -284.721pt) and (148.335pt, -284.721pt) .. (134.809pt, -261.292pt) .. controls (121.283pt, -237.864pt) and (187.323pt, -123.48pt) .. cycle withcolor (0.8431,1,0.5255) withpen pencircle scaled 1.225pt;
+fill unitsquare xscaled 7.35pt yscaled 7.35pt shifted (375.156pt, -61.924pt) withcolor (0.7647,0.7647,1);
+draw unitsquare xscaled 7.35pt yscaled 7.35pt shifted (375.156pt, -61.924pt) withcolor (0.5255,0.5255,1) withpen pencircle scaled 0.613pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "By axis" & "}") scaled 0.75, (384.956pt, -58.249pt), 0, (0.2,0.2,0.2));
+fill unitsquare xscaled 7.35pt yscaled 7.35pt shifted (375.156pt, -74.174pt) withcolor (1,1,0.7373);
+draw unitsquare xscaled 7.35pt yscaled 7.35pt shifted (375.156pt, -74.174pt) withcolor (1,1,0.4706) withpen pencircle scaled 0.613pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "y" & "}") scaled 0.75, (384.956pt, -70.499pt), 0, (0.2,0.2,0.2));
+fill unitsquare xscaled 7.35pt yscaled 7.35pt shifted (375.156pt, -86.424pt) withcolor (0.9216,1,0.7647);
+draw unitsquare xscaled 7.35pt yscaled 7.35pt shifted (375.156pt, -86.424pt) withcolor (0.8431,1,0.5255) withpen pencircle scaled 0.613pt;
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Z" & "}") scaled 0.75, (384.956pt, -82.749pt), 0, (0.2,0.2,0.2));
+pmxtext(textext("\framed[frame=off,offset=0pt,align=flushleft]{" & "Skills" & "}") scaled 1, (214.375pt, -5.88pt), 1, (0.2,0.2,0.2));
+endgroup;
+setbounds currentpicture to (pmxx0, pmxx1) -- (pmxx2, pmxx1) -- (pmxx2, pmxx3) -- (pmxx0, pmxx3) -- cycle;
+\stopMPcode

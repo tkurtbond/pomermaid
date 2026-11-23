@@ -70,7 +70,8 @@ journeys: `PmJourney`, `PmJourneyLayout`, `PmJourneyPic`, and
 21 (quadrant charts: `PmQuadrant`, `PmQuadrantLayout`,
 `PmQuadrantPic`, with `PmPic.Rotated` for turned text, and
 `PmQuadrantMp`) and 22 (XY charts: `PmXy`, `PmXyLayout`,
-`PmXyPic`, with `PmPic.Along`, and `PmXyMp`) are done. See
+`PmXyPic`, with `PmPic.Along`, and `PmXyMp`) and 23 (radar charts:
+`PmRadar`, `PmRadarLayout`, `PmRadarPic` and `PmRadarMp`) are done. See
 PLAN.md's State.
 
 ## Reference material

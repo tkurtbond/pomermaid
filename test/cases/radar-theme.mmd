@@ -1,0 +1,26 @@
+---
+config:
+  radar:
+    width: 300
+    height: 200
+    marginLeft: 10
+    marginRight: 120
+    axisLabelFactor: 1.2
+  themeVariables:
+    cScale0: "#336699"
+    radar:
+      axisColor: "#aa0000"
+      axisStrokeWidth: 1
+      graticuleColor: "#99cc99"
+      graticuleOpacity: 0.5
+      curveOpacity: 0.25
+      curveStrokeWidth: 3
+      axisLabelFontSize: 16
+      legendFontSize: 14
+---
+radar-beta
+  title A wide title that the margins of this chart cannot hold at all
+  axis north["North"], east["East side"], south["South"], west["The West"], up
+  curve one["One"]{5, 4, 3, 2, 1}
+  showLegend false
+  graticule polygon

@@ -293,6 +293,23 @@ differences:
 - **Baselines.** Text Mermaid sets on its alphabetic baseline is set
   with its middle 0.35 of its size above that.
 
+## Radar charts
+
+- **Transparency.** pic has none, so the fills are opaque and blended
+  as Mermaid's would look (decision 22): each graticule ring is its
+  colour at `graticuleOpacity` over the ring outside it, white outside
+  the largest; each curve is its colour at `curveOpacity` over white,
+  so a curve hides the graticule and the curves beneath it. The
+  outlines are drawn after all the fills, so each curve's outline
+  shows. MetaPost's are drawn the same. An opacity of 0 is no fill.
+- **Colours** for more than 12 curves start again at `cScale0`;
+  Mermaid has no style for the 13th and later, and draws them black.
+- **Text the chart cannot hold,** a long title or an axis label past
+  the margins, widens the drawing (decision 19); Mermaid's is cut off.
+- **Text heights** are set as for XY charts: hanging text with its
+  middle half its size below its place, text on its baseline with its
+  middle 0.35 of its size above it.
+
 ## What is read but not drawn
 
 - **Links.** `click` and `href` links and tooltips exist only in SVG,

@@ -1,0 +1,16 @@
+config config.radar.axisScaleFactor="0.25"
+config config.radar.curveTension="0.1"
+config config.theme="base"
+config config.themeVariables.cScale0="#FF0000"
+config config.themeVariables.cScale1="#00FF00"
+config config.themeVariables.cScale2="#0000FF"
+config config.themeVariables.radar.curveOpacity="0"
+radar showLegend=true ticks=5 min=0 graticule=circle width=600 height=600 marginTop=50 marginRight=50 marginBottom=50 marginLeft=50 axisScaleFactor=0.25 axisLabelFactor=1.05 curveTension=0.1
+axis A label="A"
+axis B label="B"
+axis C label="C"
+axis D label="D"
+axis E label="E"
+curve 0 c1 label="c1" values 1 2 3 4 5
+curve 1 c2 label="c2" values 5 4 3 2 1
+curve 2 c3 label="c3" values 3 3 3 3 3

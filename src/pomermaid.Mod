@@ -2,7 +2,7 @@ MODULE pomermaid;
 (* pomermaid: Mermaid diagrams drawn in pic, for groff, and MetaPost,
    for ConTeXt, and SVG made from the pic through groff. The command line is PmOptions'. See PLAN.md. *)
 
-IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmGantt, PmGanttDump, GL := PmGanttLayout, PmGanttPic, PmGanttMp, PmPie, PmPieDump, PL := PmPieLayout, PmPiePic, PmPieMp, PmQuadrant, PmQuadrantDump, QL := PmQuadrantLayout, PmQuadrantPic, PmQuadrantMp, PmXy, PmXyDump, XL := PmXyLayout, PmXyPic, PmXyMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
+IMPORT PmIO, O := PmOptions, L := PmLex, PmFlow, PmState, PmClass, PmEr, PmReq, PmSeq, PmSeqDump, SL := PmSeqLayout, PmSeqPic, PmSeqMp, PmJourney, PmJourneyDump, JL := PmJourneyLayout, PmJourneyPic, PmJourneyMp, PmTimeline, PmTimelineDump, TL := PmTimelineLayout, PmTimelinePic, PmTimelineMp, PmGantt, PmGanttDump, GL := PmGanttLayout, PmGanttPic, PmGanttMp, PmPie, PmPieDump, PL := PmPieLayout, PmPiePic, PmPieMp, PmQuadrant, PmQuadrantDump, QL := PmQuadrantLayout, PmQuadrantPic, PmQuadrantMp, PmXy, PmXyDump, XL := PmXyLayout, PmXyPic, PmXyMp, PmRadar, PmRadarDump, RL := PmRadarLayout, PmRadarPic, PmRadarMp, PmDump, M := PmMetrics, FL := PmFlowLayout, PmPic, PmMp, PmSvg;
 
 VAR
   text: PmIO.Text;
@@ -16,6 +16,7 @@ VAR
   pie: PmPie.Diagram;
   quad: PmQuadrant.Diagram;
   xy: PmXy.Diagram;
+  radar: PmRadar.Diagram;
   font: M.Font;
   lay: FL.Layout;
   slay: SL.Layout;
@@ -25,6 +26,7 @@ VAR
   play: PL.Layout;
   qlay: QL.Layout;
   xlay: XL.Layout;
+  rlay: RL.Layout;
 
 BEGIN
   O.Parse;
@@ -46,8 +48,9 @@ BEGIN
     ELSIF PmPie.IsPie(sc) THEN PmPie.Read(sc, pie)
     ELSIF PmQuadrant.IsQuadrant(sc) THEN PmQuadrant.Read(sc, quad)
     ELSIF PmXy.IsXy(sc) THEN PmXy.Read(sc, xy)
+    ELSIF PmRadar.IsRadar(sc) THEN PmRadar.Read(sc, radar)
     ELSIF PmFlow.IsFlowchart(sc) THEN PmFlow.Read(sc, g)
-    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey, timeline, gantt, pie, quadrantChart and xychart")
+    ELSE sc.Error("not a diagram pomermaid knows; it reads flowchart, graph, stateDiagram, classDiagram, erDiagram, requirementDiagram, sequenceDiagram, journey, timeline, gantt, pie, quadrantChart, xychart and radar-beta")
     END;
     IF O.to # "dump" THEN
       IF O.fontPath # "" THEN M.SetPath(O.fontPath) END;
@@ -56,7 +59,19 @@ BEGIN
       END;
       M.LoadStyles(font)
     END;
-    IF (xy # NIL) & (O.to = "svg") THEN
+    IF (radar # NIL) & (O.to = "svg") THEN
+      RL.Fit(radar, font, O.size, O.width, rlay);
+      PmSvg.WriteRadar(rlay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
+    ELSIF radar # NIL THEN
+      PmIO.OpenOutput(O.output);
+      IF O.to = "dump" THEN PmRadarDump.Write(radar)
+      ELSIF O.to = "layout" THEN RL.Fit(radar, font, O.size, O.width, rlay); PmRadarDump.WriteLayout(rlay)
+      ELSIF O.to = "pic" THEN RL.Fit(radar, font, O.size, O.width, rlay); PmRadarPic.Write(rlay, O.font)
+      ELSIF O.to = "svg-ms" THEN RL.Fit(radar, font, O.size, O.width, rlay); PmSvg.WriteRadarDocument(rlay, O.font)
+      ELSIF O.to = "mp" THEN RL.Fit(radar, font, O.size, O.width, rlay); PmRadarMp.Write(rlay)
+      ELSE PmIO.Fail("", "no writer for this format yet", PmIO.UnknownWriter)
+      END
+    ELSIF (xy # NIL) & (O.to = "svg") THEN
       XL.Fit(xy, font, O.size, O.width, xlay);
       PmSvg.WriteXy(xlay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSIF xy # NIL THEN
@@ -144,7 +159,7 @@ BEGIN
       PmSvg.Write(lay, O.font, O.fontPath, O.output, O.svgOutline, O.svgEngine)
     ELSE PmIO.OpenOutput(O.output)
     END;
-    IF (seq # NIL) OR (jour # NIL) OR (tim # NIL) OR (gan # NIL) OR (pie # NIL) OR (quad # NIL) OR (xy # NIL) OR (O.to = "svg") THEN
+    IF (seq # NIL) OR (jour # NIL) OR (tim # NIL) OR (gan # NIL) OR (pie # NIL) OR (quad # NIL) OR (xy # NIL) OR (radar # NIL) OR (O.to = "svg") THEN
     ELSIF O.to = "svg-ms" THEN FL.Fit(g, font, O.size, O.width, lay); PmSvg.WriteDocument(lay, O.font)
     ELSIF O.to = "dump" THEN PmDump.Write(g)
     ELSIF O.to = "layout" THEN FL.Fit(g, font, O.size, O.width, lay); PmDump.WriteLayout(lay)
